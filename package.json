@@ -1,8 +1,13 @@
 {
     "name": "cms",
+    "packageManager": "npm@8.19.3",
+    "private": true,
+    "scripts": {
+        "dev": "turbo run dev --parallel",
+        "build": "turbo run build"
+    },
     "workspaces": [
-        "/workspaces/panel/*", 
-        "/workspaces/store/*"
-    ],
-    "packageManager": "npm"
+        "workspaces/panel/**", 
+        "workspaces/store/**"
+    ]
 }
