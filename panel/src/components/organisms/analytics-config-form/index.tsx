@@ -36,11 +36,11 @@ const AnalyticsConfigForm = ({ form }: Props) => {
         })}
       >
         <div className="flex flex-col flex-1 gap-y-2xsmall">
-          <h2 className="inter-base-semibold">Anonymize my usage data</h2>
+          <h2 className="inter-base-semibold">Anonymizace mých údajů o používání</h2>
           <p className="inter-base-regular text-grey-50">
-            You can choose to anonymize your usage data. If this option is
-            selected, we will not collect your personal information, such as
-            your name and email address.
+            Můžete si zvolit anonymizaci údajů o používání. Pokud je tato možnost
+            nebudeme shromažďovat vaše osobní údaje, jako např.
+            vaše jméno a e-mailová adresa.
           </p>
         </div>
         <Controller
@@ -60,10 +60,10 @@ const AnalyticsConfigForm = ({ form }: Props) => {
       <div className="flex items-start">
         <div className="flex flex-col flex-1 gap-y-2xsmall">
           <h2 className="inter-base-semibold">
-            Opt out of sharing my usage data
+            Odmítnutí sdílení mých údajů o používání
           </h2>
           <p className="inter-base-regular text-grey-50">
-            You can always opt out of sharing your usage data at any time.
+            Sdílení údajů o používání můžete kdykoli odmítnout.
           </p>
         </div>
         <Controller

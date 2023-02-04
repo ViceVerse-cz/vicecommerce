@@ -91,20 +91,20 @@ const AddDenominationModal: React.FC<AddDenominationModalProps> = ({
       },
       {
         onSuccess: () => {
-          notification("Success", "Denomination added successfully", "success")
+          notification("Úspěch", "Úspěšně přidaná nominální hodnota", "success")
           handleClose()
         },
         onError: (error) => {
           const errorMessage = () => {
             // @ts-ignore
             if (error.response?.data?.type === "duplicate_error") {
-              return `A denomination with that default value already exists`
+              return `Nominál s touto výchozí hodnotou již existuje.`
             } else {
               return getErrorMessage(error)
             }
           }
 
-          notification("Error", errorMessage(), "error")
+          notification("Chyba", errorMessage(), "error")
         },
       }
     )
@@ -115,19 +115,19 @@ const AddDenominationModal: React.FC<AddDenominationModalProps> = ({
       <form onSubmit={handleSubmit(onSubmit)}>
         <Modal.Body>
           <Modal.Header handleClose={handleClose}>
-            <span className="inter-xlarge-semibold">Add Denomination</span>
+            <span className="inter-xlarge-semibold">Přidat nominální hodnotu</span>
           </Modal.Header>
           <Modal.Content>
             <div className="flex-1 mb-xlarge">
               <div className="flex gap-x-2 mb-base">
-                <h3 className="inter-base-semibold">Default Value</h3>
-                <IconTooltip content="This is the denomination in your store's default currency" />
+                <h3 className="inter-base-semibold">Výchozí hodnota</h3>
+                <IconTooltip content="Tohle bude nominální hodnota ve výchozí měně vašeho obchodu" />
               </div>
               <Controller
                 control={control}
                 name="default_price"
                 rules={{
-                  required: "Default value is required",
+                  required: "Je vyžadována výchozí hodnota",
                   max: FormValidator.maxInteger("Default value", storeCurrency),
                 }}
                 render={({ field: { onChange, value, ref } }) => {
@@ -150,8 +150,8 @@ const AddDenominationModal: React.FC<AddDenominationModalProps> = ({
             </div>
             <div>
               <div className="flex gap-x-2 mb-base">
-                <h3 className="inter-base-semibold">Other Values</h3>
-                <IconTooltip content="Here you can add values in other currencies" />
+                <h3 className="inter-base-semibold">Další hodnoty</h3>
+                <IconTooltip content="Zde můžete přidat hodnoty v jiných měnách." />
               </div>
               <div className="flex flex-col gap-y-xsmall">
                 {fields.map((field, index) => {
@@ -230,7 +230,7 @@ const AddDenominationModal: React.FC<AddDenominationModalProps> = ({
                   disabled={availableCurrencies?.length === 0}
                 >
                   <PlusIcon size={20} />
-                  Add a price
+                    Přidat cenu
                 </Button>
               </div>
             </div>
@@ -243,7 +243,7 @@ const AddDenominationModal: React.FC<AddDenominationModalProps> = ({
                 onClick={handleClose}
                 className="mr-2 min-w-[130px] justify-center"
               >
-                Cancel
+                Zrušit
               </Button>
               <Button
                 variant="primary"
@@ -253,7 +253,7 @@ const AddDenominationModal: React.FC<AddDenominationModalProps> = ({
                 loading={isLoading}
                 disabled={isLoading}
               >
-                Save
+                Uložit
               </Button>
             </div>
           </Modal.Footer>

@@ -35,13 +35,13 @@ const LoginCard: React.FC<LoginCardProps> = ({ toResetPassword }) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col items-center">
         <span className="inter-2xlarge-semibold mt-4 text-grey-90">
-          Welcome back!
+          Vítejte zpět!
         </span>
         <span className="inter-base-regular text-grey-50 mt-2">
-          It's great to see you 👋🏼
+          Je skvělé vás vidět 👋🏼
         </span>
         <span className="inter-base-regular text-grey-50 mb-xlarge">
-          Log in to your account below
+          Přihlaste se ke svému účtu níže
         </span>
         <SigninInput
           placeholder="Email..."
@@ -49,14 +49,14 @@ const LoginCard: React.FC<LoginCardProps> = ({ toResetPassword }) => {
           autoComplete="email"
         />
         <SigninInput
-          placeholder="Password..."
+          placeholder="Heslo..."
           type={"password"}
           {...register("password", { required: true })}
           autoComplete="current-password"
         />
         {isInvalidLogin && (
           <span className="text-rose-50 w-full mt-2 inter-small-regular">
-            These credentials do not match our records
+            Tyto údaje nejsou správné!
           </span>
         )}
         <Button
@@ -66,13 +66,13 @@ const LoginCard: React.FC<LoginCardProps> = ({ toResetPassword }) => {
           type="submit"
           loading={login.isLoading}
         >
-          Continue
+          Pokračovat
         </Button>
         <span
           className="inter-small-regular text-grey-50 mt-8 cursor-pointer"
           onClick={toResetPassword}
         >
-          Reset password
+          Změnit heslo
         </span>
       </div>
     </form>

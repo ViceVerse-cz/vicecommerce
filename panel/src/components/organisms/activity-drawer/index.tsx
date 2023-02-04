@@ -40,11 +40,11 @@ const EmptyActivityDrawer = () => {
     <div className="p-4 h-full w-full flex flex-col justify-center items-center">
       <SidedMouthFaceIcon size={36} />
       <span className={"mt-4 inter-large-semibold text-grey-90"}>
-        It's quite in here...
+        Je tu docela ticho...
       </span>
       <span className={"mt-4 text-grey-60 text-center inter-base-regular"}>
-        You don't have any notifications at the moment, but once you do they
-        will live here.
+        V tuto chvíli nemáte žádná oznámení, ale jakmile je budete mít.
+        budou zde.
       </span>
     </div>
   )
@@ -54,15 +54,15 @@ const ErrorActivityDrawer = () => {
   return (
     <div className="p-4 h-full w-full flex flex-col justify-center items-center">
       <SadFaceIcon size={36} />
-      <span className={"mt-4 inter-large-semibold text-grey-90"}>Oh no...</span>
+      <span className={"mt-4 inter-large-semibold text-grey-90"}>Ale ne...</span>
       <span className={"mt-2 text-grey-60 text-center inter-base-regular"}>
-        Something went wrong while trying to fetch your notifications - We will
-        keep trying!
+        Při pokusu o načtení vašich oznámení se něco pokazilo - Budeme
+        Pokračujte v pokusech!
       </span>
 
       <div className="flex items-center mt-4">
         <Spinner size={"small"} variant={"secondary"} />
-        <span className="ml-2.5">Processing...</span>
+        <span className="ml-2.5">Zpracování...</span>
       </div>
     </div>
   )

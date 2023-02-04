@@ -60,8 +60,8 @@ const AnalyticsPreferencesModal = () => {
     mutate(config, {
       onSuccess: () => {
         notification(
-          "Success",
-          "Your preferences were successfully updated",
+          "Úspěch",
+          "Vaše předvolby byly úspěšně aktualizovány",
           "success"
         )
 
@@ -84,21 +84,21 @@ const AnalyticsPreferencesModal = () => {
         <div className="flex flex-col items-center">
           <div className="mt-5xlarge flex flex-col max-w-[664px] w-full">
             <h1 className="inter-xlarge-semibold mb-large">
-              Help us get better
+              Pomozte nám zlepšit se
             </h1>
             <p className="text-grey-50">
-              To create the most compelling e-commerce experience we would like
-              to gain insights in how you use Medusa. User insights allow us to
-              build a better, more engaging, and more usable products. We only
-              collect data for product improvements. Read what data we gather in
-              our{" "}
+              Abychom vytvořili co nejpřesvědčivější zážitek z elektronického obchodování, chtěli bychom.
+              získat informace o tom, jak Medusu používáte. Poznatky o uživatelích nám umožňují
+              vytvářet lepší, poutavější a použitelnější produkty. Pouze
+              sbíráme data pro vylepšování produktů. Přečtěte si, jaká data shromažďujeme v
+              našich stránkách .{" "}
               <a
                 href="https://docs.medusajs.com/usage"
                 rel="noreferrer noopener"
                 target="_blank"
                 className="text-violet-60"
               >
-                documentation
+                dokumentace
               </a>
               .
             </p>
@@ -112,7 +112,7 @@ const AnalyticsPreferencesModal = () => {
                 })}
                 {...register("email", {
                   pattern: {
-                    message: "Please enter a valid email",
+                    message: "Zadejte prosím platný e-mail",
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                   },
                 })}
@@ -127,7 +127,7 @@ const AnalyticsPreferencesModal = () => {
                 loading={isLoading}
                 onClick={onSubmit}
               >
-                Continue
+                Pokračovat
               </Button>
             </div>
           </div>
