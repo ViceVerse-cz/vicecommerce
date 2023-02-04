@@ -2,15 +2,16 @@
     "$schema": "https://turbo.build/schema.json",
     "pipeline": {
         "start": {
-
+            "cache": true
         },
 
         "build": {
-
+            "cache": true
         },
 
         "dev": {
-            "cache": false
+            "cache": false,
+            "persistent": true
         }
     }
 }
