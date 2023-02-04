@@ -1,0 +1,8 @@
+{
+    "name": "cms",
+    "workspaces": [
+        "/workspaces/panel/*", 
+        "/workspaces/store/*"
+    ],
+    "packageManager": "npm"
+}
