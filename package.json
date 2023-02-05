@@ -1,6 +1,6 @@
 {
     "name": "cms",
-    "packageManager": "npm@8.19.3",
+    "packageManager": "pnpm@2.26.3",
     "private": true,
     "scripts": {
         "dev": "turbo run dev --parallel",
@@ -8,7 +8,14 @@
         "start": "turbo run start"
     },
     "workspaces": [
-        "workspaces/panel/**", 
-        "workspaces/store/**"
-    ]
+        "apps/**", 
+        "packages/**"
+    ],
+    "devDependencies": {
+        "turbo": "latest",
+        "@commitlint/config-conventional": "^17.4.2",
+        "eslint": "7.32.0",
+        "eslint-config-prettier": "^8.6.0",
+        "husky": "^8.0.3"
+    }
 }
