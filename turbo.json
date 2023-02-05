@@ -1,17 +1,44 @@
 {
-    "$schema": "https://turbo.build/schema.json",
+    "$schema": "https://turborepo.org/schema.json",
+    "globalDependencies": [
+      ".env"
+    ],
+    "globalEnv": [
+      "NODE_ENV",
+      "CI"
+    ],
     "pipeline": {
-        "start": {
-            "cache": true
-        },
-
-        "build": {
-            "cache": true
-        },
-
-        "dev": {
-            "cache": false,
-            "persistent": true
-        }
+      "clean": {
+        "dependsOn": [
+          "^clean"
+        ]
+      },
+      "build": {
+        "dependsOn": [
+          "clean",
+          "^build"
+        ],
+        "outputs": [
+          "dist/**",
+          ".next/**"
+        ]
+      },
+      "test": {
+        "outputs": []
+      },
+      "test:ci": {
+        "outputs": []
+      },
+      "lint": {
+        "outputs": []
+      },
+      "dev": {
+        "cache": false
+      },
+      "start": {
+        "dependsOn": [
+          "^build"
+        ]
+      }
     }
-}
+  }
