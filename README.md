@@ -6,16 +6,12 @@ A content management system to easily bootstrap all e-shop projects.
 
 The things you need before installing the software.
 
-* Either Yarn or NPM package manager installed
+* Either PNPM package manager installed
 * Docker (docker-compose, does not come with docker on Linux) installed
 * Turborepo and Medusa CMS cli tool, they can be installed using npm like this: 
 
 ```bash
-npm install -g @medusajs/medusa-cli turbo
-```
-or with yarn
-```bash
-yarn global add @medusajs/medusa-cli turbo
+pnpm install -g @medusajs/medusa-cli turbo
 ```
 
 ### Installation
@@ -28,11 +24,7 @@ Thanks to Turborepo, just run following command and all packages in subdirectori
 automatically installed
 
 ```bash
-npm install
-```
-or with yarn
-```
-yarn install
+pnpm install
 ```
 
 2. Environment variables
