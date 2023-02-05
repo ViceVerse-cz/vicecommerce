@@ -11,7 +11,6 @@
     "lint": "turbo run lint -- --fix --cache",
     "format": "prettier --write \"**/*.{ts,tsx,md}\" --cache",
     "prepare": "husky install",
-    "pre-commit": "lint-staged",
     "docker:build": "cross-env COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose -f docker-compose.yml build --parallel",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
