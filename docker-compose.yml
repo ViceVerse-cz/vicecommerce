@@ -27,16 +27,16 @@ services:
     volumes:
       - minio-data:/bitnami
 
-  meilisearch:
-    image: getmeili/meilisearch:latest
-    ports:
-      - "7700:7700"
-    environment:
-      MEILI_ALLOW_UPTO_MB: ${MEILI_ALLOW_UPTO_MB}
-      MEILI_HEALTH_PASSWORD: ${MEILI_HEALTH_PASSWORD}
-      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY}
-    volumes:
-      - meilisearch-data:/data
+  # meilisearch:
+  #   image: getmeili/meilisearch:latest
+  #   ports:
+  #     - "7700:7700"
+  #   environment:
+  #     MEILI_ALLOW_UPTO_MB: ${MEILI_ALLOW_UPTO_MB}
+  #     MEILI_HEALTH_PASSWORD: ${MEILI_HEALTH_PASSWORD}
+  #     MEILI_MASTER_KEY: ${MEILI_MASTER_KEY}
+  #   volumes:
+  #     - meilisearch-data:/data
 
 volumes:
   minio-data:

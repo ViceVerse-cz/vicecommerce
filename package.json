@@ -17,17 +17,18 @@
         "docker:artillery": "pnpm artillery run ./e2e/artillery-vite.yml"
     },
     "workspaces": [
-        "apps/**", 
+        "apps/**",
         "packages/**"
     ],
     "devDependencies": {
-        "turbo": "latest",
+        "@changesets/cli": "^2.26.0",
         "@commitlint/config-conventional": "^17.4.2",
         "eslint": "7.32.0",
         "eslint-config-prettier": "^8.6.0",
         "husky": "^8.0.3",
         "postcss": "^8.4.21",
         "prettier": "^2.8.3",
-        "prettier-plugin-tailwindcss": "^0.1.13"
+        "prettier-plugin-tailwindcss": "^0.1.13",
+        "turbo": "latest"
     }
 }
