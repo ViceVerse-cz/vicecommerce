@@ -1,31 +1,26 @@
-import { Product, ProductType, ShippingOption } from "@medusajs/medusa"
-import React, { useEffect, useMemo } from "react"
-import {
-  ColumnInstance,
-  usePagination,
-  useRowSelect,
-  useTable,
-} from "react-table"
-import IndeterminateCheckbox from "../../../components/molecules/indeterminate-checkbox"
-import Table from "../../../components/molecules/table"
-import TableContainer from "../../../components/organisms/table-container"
-import { PaginationProps } from "../../../types/shared"
+import { Product, ProductType, ShippingOption } from '@medusajs/medusa';
+import React, { useEffect, useMemo } from 'react';
+import { ColumnInstance, usePagination, useRowSelect, useTable } from 'react-table';
+import IndeterminateCheckbox from '../../../components/molecules/indeterminate-checkbox';
+import Table from '../../../components/molecules/table';
+import TableContainer from '../../../components/organisms/table-container';
+import { PaginationProps } from '../../../types/shared';
 
 type SelectableTableProps = {
-  showSearch?: boolean
-  objectName?: string
-  label?: string
-  isLoading?: boolean
-  pagination: PaginationProps
-  totalCount?: number
-  data?: Product[] | ProductType[] | ShippingOption[]
-  selectedIds?: string[]
-  columns: Partial<ColumnInstance>[]
-  onPaginationChange: (pagination: PaginationProps) => void
-  onChange: (items: string[]) => void
-  onSearch?: (search: string) => void
-  searchValue?: string
-}
+  showSearch?: boolean;
+  objectName?: string;
+  label?: string;
+  isLoading?: boolean;
+  pagination: PaginationProps;
+  totalCount?: number;
+  data?: Product[] | ProductType[] | ShippingOption[];
+  selectedIds?: string[];
+  columns: Partial<ColumnInstance>[];
+  onPaginationChange: (pagination: PaginationProps) => void;
+  onChange: (items: string[]) => void;
+  onSearch?: (search: string) => void;
+  searchValue?: string;
+};
 
 export const SelectableTable: React.FC<SelectableTableProps> = ({
   showSearch = true,
@@ -43,19 +38,19 @@ export const SelectableTable: React.FC<SelectableTableProps> = ({
   onSearch,
 }) => {
   const handleQueryChange = (newQuery) => {
-    onPaginationChange(newQuery)
-  }
+    onPaginationChange(newQuery);
+  };
 
   const currentPage = useMemo(() => {
-    return Math.floor(pagination.offset / pagination.limit)
-  }, [pagination])
+    return Math.floor(pagination.offset / pagination.limit);
+  }, [pagination]);
 
   const numPages = useMemo(() => {
     if (totalCount && pagination.limit) {
-      return Math.ceil(totalCount / pagination.limit)
+      return Math.ceil(totalCount / pagination.limit);
     }
-    return 0
-  }, [totalCount, pagination])
+    return 0;
+  }, [totalCount, pagination]);
 
   const {
     getTableProps,
@@ -78,8 +73,8 @@ export const SelectableTable: React.FC<SelectableTableProps> = ({
         pageIndex: currentPage,
         pageSize: pagination.limit,
         selectedRowIds: selectedIds.reduce((prev, id) => {
-          prev[id] = true
-          return prev
+          prev[id] = true;
+          return prev;
         }, {}),
       },
       pageCount: numPages,
@@ -93,7 +88,7 @@ export const SelectableTable: React.FC<SelectableTableProps> = ({
       hooks.visibleColumns.push((columns) => [
         // Let's make a column for selection
         {
-          id: "selection",
+          id: 'selection',
           // The header can use the table's getToggleAllRowsSelectedProps method
           // to render a checkbox
           Header: ({ getToggleAllRowsSelectedProps }) => {
@@ -101,7 +96,7 @@ export const SelectableTable: React.FC<SelectableTableProps> = ({
               <div>
                 <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
               </div>
-            )
+            );
           },
           // The cell can use the individual row's getToggleRowSelectedProps method
           // to the render a checkbox
@@ -110,41 +105,41 @@ export const SelectableTable: React.FC<SelectableTableProps> = ({
               <div>
                 <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
               </div>
-            )
+            );
           },
         },
         ...columns,
-      ])
-    }
-  )
+      ]);
+    },
+  );
 
   useEffect(() => {
-    onChange(Object.keys(selectedRowIds))
-  }, [selectedRowIds])
+    onChange(Object.keys(selectedRowIds));
+  }, [selectedRowIds]);
 
   const handleNext = () => {
     if (canNextPage) {
       handleQueryChange({
         ...pagination,
         offset: pagination.offset + pagination.limit,
-      })
-      nextPage()
+      });
+      nextPage();
     }
-  }
+  };
 
   const handlePrev = () => {
     if (canPreviousPage) {
       handleQueryChange({
         ...pagination,
         offset: Math.max(pagination.offset - pagination.limit, 0),
-      })
-      previousPage()
+      });
+      previousPage();
     }
-  }
+  };
 
   return (
     <div>
-      <div className="inter-base-semibold my-large">{label}</div>
+      <div className='inter-base-semibold my-large'>{label}</div>
       <TableContainer
         isLoading={isLoading}
         hasPagination
@@ -165,29 +160,25 @@ export const SelectableTable: React.FC<SelectableTableProps> = ({
         <Table
           immediateSearchFocus={showSearch}
           enableSearch={showSearch}
-          searchPlaceholder="Search Products.."
+          searchPlaceholder='Search Products..'
           handleSearch={onSearch}
           searchValue={searchValue}
           {...getTableProps()}
         >
           <Table.Body {...getTableBodyProps()}>
             {rows.map((row) => {
-              prepareRow(row)
+              prepareRow(row);
               return (
                 <Table.Row {...row.getRowProps()}>
                   {row.cells.map((cell) => {
-                    return (
-                      <Table.Cell {...cell.getCellProps()}>
-                        {cell.render("Cell")}
-                      </Table.Cell>
-                    )
+                    return <Table.Cell {...cell.getCellProps()}>{cell.render('Cell')}</Table.Cell>;
                   })}
                 </Table.Row>
-              )
+              );
             })}
           </Table.Body>
         </Table>
       </TableContainer>
     </div>
-  )
-}
+  );
+};

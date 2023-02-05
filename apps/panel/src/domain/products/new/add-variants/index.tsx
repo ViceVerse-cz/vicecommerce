@@ -1,51 +1,47 @@
-import clsx from "clsx"
-import React, { useCallback, useEffect, useMemo } from "react"
-import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form"
-import { v4 as uuidv4 } from "uuid"
-import Button from "../../../../components/fundamentals/button"
-import PlusIcon from "../../../../components/fundamentals/icons/plus-icon"
-import TrashIcon from "../../../../components/fundamentals/icons/trash-icon"
-import IconTooltip from "../../../../components/molecules/icon-tooltip"
-import InputField from "../../../../components/molecules/input"
-import Modal from "../../../../components/molecules/modal"
-import TagInput from "../../../../components/molecules/tag-input"
-import { useDebounce } from "../../../../hooks/use-debounce"
-import useToggleState from "../../../../hooks/use-toggle-state"
-import { NestedForm } from "../../../../utils/nested-form"
-import { CustomsFormType } from "../../components/customs-form"
-import { DimensionsFormType } from "../../components/dimensions-form"
+import clsx from 'clsx';
+import React, { useCallback, useEffect, useMemo } from 'react';
+import { Controller, useFieldArray, useForm, useWatch } from 'react-hook-form';
+import { v4 as uuidv4 } from 'uuid';
+import Button from '../../../../components/fundamentals/button';
+import PlusIcon from '../../../../components/fundamentals/icons/plus-icon';
+import TrashIcon from '../../../../components/fundamentals/icons/trash-icon';
+import IconTooltip from '../../../../components/molecules/icon-tooltip';
+import InputField from '../../../../components/molecules/input';
+import Modal from '../../../../components/molecules/modal';
+import TagInput from '../../../../components/molecules/tag-input';
+import { useDebounce } from '../../../../hooks/use-debounce';
+import useToggleState from '../../../../hooks/use-toggle-state';
+import { NestedForm } from '../../../../utils/nested-form';
+import { CustomsFormType } from '../../components/customs-form';
+import { DimensionsFormType } from '../../components/dimensions-form';
 import CreateFlowVariantForm, {
   CreateFlowVariantFormType,
-} from "../../components/variant-form/create-flow-variant-form"
-import { VariantOptionType } from "../../components/variant-form/variant-select-options-form"
-import useCheckOptions from "../../components/variant-form/variant-select-options-form/hooks"
-import NewVariant from "./new-variant"
+} from '../../components/variant-form/create-flow-variant-form';
+import { VariantOptionType } from '../../components/variant-form/variant-select-options-form';
+import useCheckOptions from '../../components/variant-form/variant-select-options-form/hooks';
+import NewVariant from './new-variant';
 
 type ProductOptionType = {
-  id: string
-  title: string
-  values: string[]
-}
+  id: string;
+  title: string;
+  values: string[];
+};
 
 export type AddVariantsFormType = {
-  options: ProductOptionType[]
-  entries: CreateFlowVariantFormType[]
-}
+  options: ProductOptionType[];
+  entries: CreateFlowVariantFormType[];
+};
 
 type Props = {
-  form: NestedForm<AddVariantsFormType>
-  productCustoms: CustomsFormType
-  productDimensions: DimensionsFormType
-}
+  form: NestedForm<AddVariantsFormType>;
+  productCustoms: CustomsFormType;
+  productDimensions: DimensionsFormType;
+};
 
-const AddVariantsForm = ({
-  form,
-  productCustoms,
-  productDimensions,
-}: Props) => {
-  const { control, path, register } = form
+const AddVariantsForm = ({ form, productCustoms, productDimensions }: Props) => {
+  const { control, path, register } = form;
 
-  const { checkForDuplicate, getOptions } = useCheckOptions(form)
+  const { checkForDuplicate, getOptions } = useCheckOptions(form);
 
   const {
     fields: options,
@@ -54,10 +50,10 @@ const AddVariantsForm = ({
     update: updateOption,
   } = useFieldArray({
     control,
-    name: path("options"),
-    keyName: "fieldId",
+    name: path('options'),
+    keyName: 'fieldId',
     shouldUnregister: true,
-  })
+  });
 
   const {
     fields: variants,
@@ -67,72 +63,67 @@ const AddVariantsForm = ({
     move: moveVariant,
   } = useFieldArray({
     control,
-    name: path("entries"),
+    name: path('entries'),
     shouldUnregister: true,
-  })
+  });
 
   const watchedOptions = useWatch({
     control,
-    name: path("options"),
-  })
+    name: path('options'),
+  });
 
   const watchedEntries = useWatch({
     control,
-    name: path("entries"),
-  })
+    name: path('entries'),
+  });
 
-  const debouncedOptions = useDebounce(watchedOptions, 500)
+  const debouncedOptions = useDebounce(watchedOptions, 500);
 
   useEffect(() => {
     if (debouncedOptions?.length) {
       const optionMap = debouncedOptions.reduce((acc, option) => {
-        acc[option.id] = option
-        return acc
-      }, {} as Record<string, ProductOptionType>)
+        acc[option.id] = option;
+        return acc;
+      }, {} as Record<string, ProductOptionType>);
 
       const indexedVars = watchedEntries?.map((variant, index) => ({
         variant,
         index,
-      }))
+      }));
 
       if (indexedVars) {
         indexedVars.forEach((indexedVar) => {
-          const { variant, index } = indexedVar
+          const { variant, index } = indexedVar;
 
-          const options = variant.options
-          const validOptions: VariantOptionType[] = []
+          const options = variant.options;
+          const validOptions: VariantOptionType[] = [];
 
           options.forEach((option) => {
-            const { option_id } = option
-            const optionData = optionMap[option_id]
+            const { option_id } = option;
+            const optionData = optionMap[option_id];
 
             if (optionData) {
-              option.title = optionData.title
+              option.title = optionData.title;
 
-              if (
-                !option.option?.value ||
-                !optionData.values.includes(option.option.value)
-              ) {
-                option.option = null
+              if (!option.option?.value || !optionData.values.includes(option.option.value)) {
+                option.option = null;
               }
 
-              validOptions.push(option)
+              validOptions.push(option);
             }
-          })
+          });
 
-          const validIds = validOptions.map((option) => option.option_id)
-          const missingIds = Object.keys(optionMap).filter(
-            (id) => !validIds.includes(id)
-          )
+          const validIds = validOptions.map((option) => option.option_id);
+          const missingIds = Object.keys(optionMap).filter((id) => !validIds.includes(id));
 
           missingIds.forEach((id) => {
-            const optionData = optionMap[id]
+            const optionData = optionMap[id];
             validOptions.push({
               option_id: id,
               title: optionData.title,
               option: null,
-            })
-          })
+            });
+          });
 
           updateVariant(index, {
             ...variant,
@@ -143,86 +134,84 @@ const AddVariantsForm = ({
                 title: va.title,
                 value: va,
                 option: va.option,
-              }
+              };
             }),
-          })
-        })
+          });
+        });
       }
     }
-  }, [debouncedOptions])
+  }, [debouncedOptions]);
 
   const onDeleteProductOption = (index: number) => {
-    const option = watchedOptions[index]
+    const option = watchedOptions[index];
 
-    removeOption(index)
+    removeOption(index);
 
     if (!option) {
-      return
+      return;
     }
 
     watchedEntries?.forEach((variant, index) => {
-      const options = variant.options
+      const options = variant.options;
 
-      const validOptions = options.filter((vo) => vo.option_id !== option.id)
+      const validOptions = options.filter((vo) => vo.option_id !== option.id);
 
       updateVariant(index, {
         ...variant,
         options: validOptions,
-      })
-    })
-  }
+      });
+    });
+  };
 
   const onUpdateVariant = (index: number, data: CreateFlowVariantFormType) => {
     const toCheck = {
       id: data._internal_id!,
       options: data.options.map((vo) => vo.option!),
-    } // We can be sure that the value is set as this point.
-    const exists = checkForDuplicate(toCheck)
+    }; // We can be sure that the value is set as this point.
+    const exists = checkForDuplicate(toCheck);
 
     if (exists) {
-      return false
+      return false;
     }
 
-    updateVariant(index, data)
-    return true
-  }
+    updateVariant(index, data);
+    return true;
+  };
 
   const enableVariants = useMemo(() => {
-    return watchedOptions?.length > 0
-      ? watchedOptions.some((wo) => wo.values.length > 0)
-      : false
-  }, [watchedOptions])
+    return watchedOptions?.length > 0 ? watchedOptions.some((wo) => wo.values.length > 0) : false;
+  }, [watchedOptions]);
 
   const appendNewOption = () => {
     appendOption({
       id: uuidv4(),
-      title: "",
+      title: '',
       values: [],
-    })
-  }
+    });
+  };
 
-  const newVariantForm = useForm<CreateFlowVariantFormType>()
-  const { reset, handleSubmit: submitVariant } = newVariantForm
-  const { state, toggle } = useToggleState()
+  const newVariantForm = useForm<CreateFlowVariantFormType>();
+  const { reset, handleSubmit: submitVariant } = newVariantForm;
+  const { state, toggle } = useToggleState();
 
   const onToggleForm = () => {
-    reset(createEmptyVariant(watchedOptions))
-    toggle()
-  }
+    reset(createEmptyVariant(watchedOptions));
+    toggle();
+  };
 
   const onAppendVariant = submitVariant((data) => {
     const toCheck = {
       id: data._internal_id!,
       options: data.options.map((da) => da.option).filter((o) => !!o),
-    }
-    const exists = checkForDuplicate(toCheck)
+    };
+    const exists = checkForDuplicate(toCheck);
 
     if (exists) {
-      newVariantForm.setError("options", {
-        type: "deps",
-        message: "A variant with these options already exists.",
-      })
-      return
+      newVariantForm.setError('options', {
+        type: 'deps',
+        message: 'A variant with these options already exists.',
+      });
+      return;
     }
 
     appendVariant({
@@ -232,56 +221,50 @@ const AddVariantsForm = ({
         ...data.general,
         title: data.general.title
           ? data.general.title
-          : data.options.map((vo) => vo.option?.value).join(" / "),
+          : data.options.map((vo) => vo.option?.value).join(' / '),
       },
-    })
-    onToggleForm()
-  })
+    });
+    onToggleForm();
+  });
 
   const moveCard = useCallback((dragIndex: number, hoverIndex: number) => {
-    moveVariant(dragIndex, hoverIndex)
-  }, [])
+    moveVariant(dragIndex, hoverIndex);
+  }, []);
 
   const onAddNewProductOptionValue = (optionId: string, value: string) => {
-    const option = watchedOptions?.find((wo) => wo.id === optionId)
+    const option = watchedOptions?.find((wo) => wo.id === optionId);
 
     if (!option) {
-      return
+      return;
     }
 
-    const index = watchedOptions?.findIndex((wo) => wo.id === optionId)
+    const index = watchedOptions?.findIndex((wo) => wo.id === optionId);
 
-    updateOption(index, { ...option, values: [...option.values, value] })
-  }
+    updateOption(index, { ...option, values: [...option.values, value] });
+  };
 
   return (
     <>
       <div>
-        <div className="flex items-center gap-x-2xsmall">
-          <h3 className="inter-base-semibold">Product options</h3>
+        <div className='flex items-center gap-x-2xsmall'>
+          <h3 className='inter-base-semibold'>Product options</h3>
           <IconTooltip
-            type="info"
-            content="Options are used to define the color, size, etc. of the product."
+            type='info'
+            content='Options are used to define the color, size, etc. of the product.'
           />
         </div>
         <div>
           {options.length > 0 && (
-            <div className="mt-small">
-              <div className="grid grid-cols-[230px_1fr_40px] gap-x-xsmall inter-small-semibold text-grey-50 mb-small">
+            <div className='mt-small'>
+              <div className='grid grid-cols-[230px_1fr_40px] gap-x-xsmall inter-small-semibold text-grey-50 mb-small'>
                 <span>Option title</span>
                 <span>Variations (comma separated)</span>
               </div>
-              <div className="grid grid-cols-1 gap-y-xsmall">
+              <div className='grid grid-cols-1 gap-y-xsmall'>
                 {options.map((field, index) => {
                   return (
-                    <div
-                      key={field.fieldId}
-                      className="grid grid-cols-[230px_1fr_40px] gap-x-xsmall"
-                    >
-                      <InputField
-                        placeholder="Color..."
-                        {...register(path(`options.${index}.title`))}
-                      />
+                    <div key={field.fieldId} className='grid grid-cols-[230px_1fr_40px] gap-x-xsmall'>
+                      <InputField placeholder='Color...' {...register(path(`options.${index}.title`))} />
                       <Controller
                         control={control}
                         name={path(`options.${index}.values`)}
@@ -290,69 +273,67 @@ const AddVariantsForm = ({
                             <TagInput
                               onValidate={(newVal) => {
                                 if (value.includes(newVal)) {
-                                  return null
+                                  return null;
                                 }
 
-                                return newVal
+                                return newVal;
                               }}
-                              invalidMessage="already exists"
+                              invalidMessage='already exists'
                               showLabel={false}
                               values={value}
                               onChange={onChange}
-                              placeholder="Blue, Red, Black..."
+                              placeholder='Blue, Red, Black...'
                             />
-                          )
+                          );
                         }}
                       />
                       <Button
-                        variant="secondary"
-                        size="small"
-                        type="button"
-                        className="h-10"
+                        variant='secondary'
+                        size='small'
+                        type='button'
+                        className='h-10'
                         onClick={() => onDeleteProductOption(index)}
                       >
-                        <TrashIcon size={20} className="text-grey-40" />
+                        <TrashIcon size={20} className='text-grey-40' />
                       </Button>
                     </div>
-                  )
+                  );
                 })}
               </div>
             </div>
           )}
           <Button
-            variant="secondary"
-            size="small"
-            className="h-10 w-full mt-base"
-            type="button"
+            variant='secondary'
+            size='small'
+            className='h-10 w-full mt-base'
+            type='button'
             onClick={appendNewOption}
           >
             <PlusIcon size={20} />
             <span>Add an option</span>
           </Button>
-          <div className="mt-xlarge">
-            <div className="flex items-center gap-x-2xsmall">
+          <div className='mt-xlarge'>
+            <div className='flex items-center gap-x-2xsmall'>
               <h3
-                className={clsx("inter-base-semibold", {
-                  "opacity-50": !options.length,
+                className={clsx('inter-base-semibold', {
+                  'opacity-50': !options.length,
                 })}
               >
-                Product variants{" "}
-                <span className="inter-base-regular text-grey-50">
-                  ({variants?.length || 0})
-                </span>
+                Product variants{' '}
+                <span className='inter-base-regular text-grey-50'>({variants?.length || 0})</span>
               </h3>
               {!enableVariants && (
                 <IconTooltip
-                  type="info"
-                  content="You must add at least one product option before you can begin adding product variants."
+                  type='info'
+                  content='You must add at least one product option before you can begin adding product variants.'
                 />
               )}
             </div>
             {variants?.length > 0 && (
-              <div className="mt-small">
-                <div className="grid grid-cols-[1fr_90px_100px_48px] inter-small-semibold text-grey-50 pr-base">
+              <div className='mt-small'>
+                <div className='grid grid-cols-[1fr_90px_100px_48px] inter-small-semibold text-grey-50 pr-base'>
                   <p>Variant</p>
-                  <div className="flex justify-end mr-xlarge">
+                  <div className='flex justify-end mr-xlarge'>
                     <p>Inventory</p>
                   </div>
                 </div>
@@ -372,16 +353,16 @@ const AddVariantsForm = ({
                         productDimensions={productDimensions}
                         productCustoms={productCustoms}
                       />
-                    )
+                    );
                   })}
                 </div>
               </div>
             )}
             <Button
-              variant="secondary"
-              size="small"
-              className="h-10 w-full mt-base"
-              type="button"
+              variant='secondary'
+              size='small'
+              className='h-10 w-full mt-base'
+              type='button'
               disabled={!enableVariants}
               onClick={onToggleForm}
             >
@@ -395,7 +376,7 @@ const AddVariantsForm = ({
       <Modal open={state} handleClose={onToggleForm}>
         <Modal.Body>
           <Modal.Header handleClose={onToggleForm}>
-            <h1 className="inter-xlarge-semibold">Create Variant</h1>
+            <h1 className='inter-xlarge-semibold'>Create Variant</h1>
           </Modal.Header>
           <Modal.Content>
             <CreateFlowVariantForm
@@ -405,21 +386,11 @@ const AddVariantsForm = ({
             />
           </Modal.Content>
           <Modal.Footer>
-            <div className="flex items-center gap-x-xsmall justify-end w-full">
-              <Button
-                variant="secondary"
-                size="small"
-                type="button"
-                onClick={onToggleForm}
-              >
+            <div className='flex items-center gap-x-xsmall justify-end w-full'>
+              <Button variant='secondary' size='small' type='button' onClick={onToggleForm}>
                 Cancel
               </Button>
-              <Button
-                variant="primary"
-                size="small"
-                type="button"
-                onClick={onAppendVariant}
-              >
+              <Button variant='primary' size='small' type='button' onClick={onAppendVariant}>
                 Save and close
               </Button>
             </div>
@@ -427,12 +398,10 @@ const AddVariantsForm = ({
         </Modal.Body>
       </Modal>
     </>
-  )
-}
+  );
+};
 
-const createEmptyVariant = (
-  options: ProductOptionType[]
-): CreateFlowVariantFormType => {
+const createEmptyVariant = (options: ProductOptionType[]): CreateFlowVariantFormType => {
   return {
     _internal_id: uuidv4(),
     general: {
@@ -468,7 +437,7 @@ const createEmptyVariant = (
         option_id: option.id,
         option: null,
       })) || [],
-  }
-}
+  };
+};
 
-export default AddVariantsForm
+export default AddVariantsForm;

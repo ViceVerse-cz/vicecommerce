@@ -1,24 +1,24 @@
-import { ComponentMeta } from "@storybook/react"
-import React from "react"
-import EyeIcon from "."
+import { ComponentMeta } from '@storybook/react';
+import React from 'react';
+import EyeIcon from '.';
 
 export default {
-  title: "Fundamentals/Icons/EyeIcon",
+  title: 'Fundamentals/Icons/EyeIcon',
   component: EyeIcon,
   argTypes: {
     size: {
       control: {
-        type: "select",
-        options: ["24", "20", "16"],
+        type: 'select',
+        options: ['24', '20', '16'],
       },
     },
   },
-} as ComponentMeta<typeof EyeIcon>
+} as ComponentMeta<typeof EyeIcon>;
 
-const Template = (args) => <EyeIcon {...args} />
+const Template = (args) => <EyeIcon {...args} />;
 
-export const Icon = Template.bind({})
+export const Icon = Template.bind({});
 Icon.args = {
-  size: "20",
-  color: "currentColor",
-}
+  size: '20',
+  color: 'currentColor',
+};

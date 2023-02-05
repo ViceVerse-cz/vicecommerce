@@ -1,40 +1,39 @@
-import { isEmpty } from "lodash"
-import { useAdminProducts } from "medusa-react"
-import qs from "qs"
-import React, { useEffect, useState } from "react"
-import { useLocation } from "react-router-dom"
-import { usePagination, useTable } from "react-table"
-import { useAnalytics } from "../../../context/analytics"
-import { useFeatureFlag } from "../../../context/feature-flag"
-import ProductsFilter from "../../../domain/products/filter-dropdown"
-import Table from "../../molecules/table"
-import TableContainer from "../../organisms/table-container"
-import ProductOverview from "./overview"
-import useProductActions from "./use-product-actions"
-import useProductTableColumn from "./use-product-column"
-import { useProductFilters } from "./use-product-filters"
+import { isEmpty } from 'lodash';
+import { useAdminProducts } from 'medusa-react';
+import qs from 'qs';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { usePagination, useTable } from 'react-table';
+import { useAnalytics } from '../../../context/analytics';
+import { useFeatureFlag } from '../../../context/feature-flag';
+import ProductsFilter from '../../../domain/products/filter-dropdown';
+import Table from '../../molecules/table';
+import TableContainer from '../../organisms/table-container';
+import ProductOverview from './overview';
+import useProductActions from './use-product-actions';
+import useProductTableColumn from './use-product-column';
+import { useProductFilters } from './use-product-filters';
 
-const DEFAULT_PAGE_SIZE = 15
-const DEFAULT_PAGE_SIZE_TILE_VIEW = 18
+const DEFAULT_PAGE_SIZE = 15;
+const DEFAULT_PAGE_SIZE_TILE_VIEW = 18;
 
 const defaultQueryProps = {
-  fields: "id,title,thumbnail,status,handle,collection_id",
-  expand:
-    "variants,options,variants.prices,variants.options,collection,tags,type,images",
+  fields: 'id,title,thumbnail,status,handle,collection_id',
+  expand: 'variants,options,variants.prices,variants.options,collection,tags,type,images',
   is_giftcard: false,
-}
+};
 
 const ProductTable = () => {
-  const location = useLocation()
+  const location = useLocation();
 
-  const { isFeatureEnabled } = useFeatureFlag()
-  const { trackNumberOfProducts } = useAnalytics()
+  const { isFeatureEnabled } = useFeatureFlag();
+  const { trackNumberOfProducts } = useAnalytics();
 
-  let hiddenColumns = ["sales_channel"]
-  if (isFeatureEnabled("sales_channels")) {
+  let hiddenColumns = ['sales_channel'];
+  if (isFeatureEnabled('sales_channels')) {
     defaultQueryProps.expand =
-      "variants,options,variants.prices,variants.options,collection,tags,type,images,sales_channels"
-    hiddenColumns = []
+      'variants,options,variants.prices,variants.options,collection,tags,type,images,sales_channels';
+    hiddenColumns = [];
   }
 
   const {
@@ -51,18 +50,18 @@ const ProductTable = () => {
     setQuery: setFreeText,
     queryObject,
     representationObject,
-  } = useProductFilters(location.search, defaultQueryProps)
+  } = useProductFilters(location.search, defaultQueryProps);
 
-  const offs = parseInt(queryObject.offset) || 0
-  const limit = parseInt(queryObject.limit)
+  const offs = parseInt(queryObject.offset) || 0;
+  const limit = parseInt(queryObject.limit);
 
-  const [query, setQuery] = useState(queryObject.query)
-  const [numPages, setNumPages] = useState(0)
+  const [query, setQuery] = useState(queryObject.query);
+  const [numPages, setNumPages] = useState(0);
 
   const clearFilters = () => {
-    reset()
-    setQuery("")
-  }
+    reset();
+    setQuery('');
+  };
 
   const { products, isLoading, count } = useAdminProducts(
     {
@@ -71,50 +70,50 @@ const ProductTable = () => {
     {
       keepPreviousData: true,
       onSuccess: ({ count }) => trackNumberOfProducts({ count }),
-    }
-  )
+    },
+  );
 
   useEffect(() => {
-    if (typeof count !== "undefined") {
-      const controlledPageCount = Math.ceil(count / limit)
-      setNumPages(controlledPageCount)
+    if (typeof count !== 'undefined') {
+      const controlledPageCount = Math.ceil(count / limit);
+      setNumPages(controlledPageCount);
     }
-  }, [count])
+  }, [count]);
 
   const updateUrlFromFilter = (obj = {}) => {
-    const stringified = qs.stringify(obj)
-    window.history.replaceState(`/a/products`, "", `${`?${stringified}`}`)
-  }
+    const stringified = qs.stringify(obj);
+    window.history.replaceState(`/a/products`, '', `${`?${stringified}`}`);
+  };
 
   const refreshWithFilters = () => {
-    const filterObj = representationObject
+    const filterObj = representationObject;
 
     if (isEmpty(filterObj)) {
-      updateUrlFromFilter({ offset: 0, limit: DEFAULT_PAGE_SIZE })
+      updateUrlFromFilter({ offset: 0, limit: DEFAULT_PAGE_SIZE });
     } else {
-      updateUrlFromFilter(filterObj)
+      updateUrlFromFilter(filterObj);
     }
-  }
+  };
 
   useEffect(() => {
-    refreshWithFilters()
-  }, [representationObject])
+    refreshWithFilters();
+  }, [representationObject]);
 
   const setTileView = () => {
-    setLimit(DEFAULT_PAGE_SIZE_TILE_VIEW)
-    setShowList(false)
-  }
+    setLimit(DEFAULT_PAGE_SIZE_TILE_VIEW);
+    setShowList(false);
+  };
 
   const setListView = () => {
-    setLimit(DEFAULT_PAGE_SIZE)
-    setShowList(true)
-  }
-  const [showList, setShowList] = React.useState(true)
+    setLimit(DEFAULT_PAGE_SIZE);
+    setShowList(true);
+  };
+  const [showList, setShowList] = React.useState(true);
   const [columns] = useProductTableColumn({
     setTileView,
     setListView,
     showList,
-  })
+  });
 
   const {
     getTableProps,
@@ -143,39 +142,39 @@ const ProductTable = () => {
       pageCount: numPages,
       autoResetPage: false,
     },
-    usePagination
-  )
+    usePagination,
+  );
 
   // Debounced search
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       if (query) {
-        setFreeText(query)
-        gotoPage(0)
+        setFreeText(query);
+        gotoPage(0);
       } else {
-        if (typeof query !== "undefined") {
+        if (typeof query !== 'undefined') {
           // if we delete query string, we reset the table view
-          reset()
+          reset();
         }
       }
-    }, 400)
+    }, 400);
 
-    return () => clearTimeout(delayDebounceFn)
-  }, [query])
+    return () => clearTimeout(delayDebounceFn);
+  }, [query]);
 
   const handleNext = () => {
     if (canNextPage) {
-      paginate(1)
-      nextPage()
+      paginate(1);
+      nextPage();
     }
-  }
+  };
 
   const handlePrev = () => {
     if (canPreviousPage) {
-      paginate(-1)
-      previousPage()
+      paginate(-1);
+      previousPage();
     }
-  }
+  };
 
   return (
     <TableContainer
@@ -185,7 +184,7 @@ const ProductTable = () => {
         count: count!,
         offset: offs,
         pageSize: offs + rows.length,
-        title: "Products",
+        title: 'Products',
         currentPage: pageIndex + 1,
         pageCount: pageCount,
         nextPage: handleNext,
@@ -219,11 +218,8 @@ const ProductTable = () => {
               {headerGroups?.map((headerGroup) => (
                 <Table.HeadRow {...headerGroup.getHeaderGroupProps()}>
                   {headerGroup.headers.map((col) => (
-                    <Table.HeadCell
-                      className="min-w-[100px]"
-                      {...col.getHeaderProps()}
-                    >
-                      {col.render("Header")}
+                    <Table.HeadCell className='min-w-[100px]' {...col.getHeaderProps()}>
+                      {col.render('Header')}
                     </Table.HeadCell>
                   ))}
                 </Table.HeadRow>
@@ -232,8 +228,8 @@ const ProductTable = () => {
 
             <Table.Body {...getTableBodyProps()}>
               {rows.map((row) => {
-                prepareRow(row)
-                return <ProductRow row={row} {...row.getRowProps()} />
+                prepareRow(row);
+                return <ProductRow row={row} {...row.getRowProps()} />;
               })}
             </Table.Body>
           </>
@@ -242,28 +238,19 @@ const ProductTable = () => {
         )}
       </Table>
     </TableContainer>
-  )
-}
+  );
+};
 
 const ProductRow = ({ row, ...rest }) => {
-  const product = row.original
-  const { getActions } = useProductActions(product)
+  const product = row.original;
+  const { getActions } = useProductActions(product);
 
   return (
-    <Table.Row
-      color={"inherit"}
-      linkTo={`/a/products/${product.id}`}
-      actions={getActions()}
-      {...rest}
-    >
+    <Table.Row color={'inherit'} linkTo={`/a/products/${product.id}`} actions={getActions()} {...rest}>
       {row.cells.map((cell, index) => {
-        return (
-          <Table.Cell {...cell.getCellProps()}>
-            {cell.render("Cell", { index })}
-          </Table.Cell>
-        )
+        return <Table.Cell {...cell.getCellProps()}>{cell.render('Cell', { index })}</Table.Cell>;
       })}
     </Table.Row>
-  )
-}
-export default ProductTable
+  );
+};
+export default ProductTable;

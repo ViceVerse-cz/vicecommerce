@@ -1,30 +1,30 @@
-import { MutableRefObject, useEffect, useRef, useState } from "react"
+import { MutableRefObject, useEffect, useRef, useState } from 'react';
 
 export const useObserveWidth = (ref: MutableRefObject<any>): number => {
-  const [currentWidth, setCurrentWidth] = useState(0)
+  const [currentWidth, setCurrentWidth] = useState(0);
 
   const observer = useRef(
     new ResizeObserver((entries) => {
-      const { width } = entries[0].contentRect
+      const { width } = entries[0].contentRect;
 
-      setCurrentWidth(width)
-    })
-  )
+      setCurrentWidth(width);
+    }),
+  );
 
   useEffect(() => {
-    const currentRef = ref.current
-    const currentObserver = observer.current
+    const currentRef = ref.current;
+    const currentObserver = observer.current;
 
     if (currentRef && currentObserver) {
-      currentObserver.observe(currentRef)
+      currentObserver.observe(currentRef);
     }
 
     return () => {
       if (currentObserver && currentRef) {
-        currentObserver.unobserve(currentRef)
+        currentObserver.unobserve(currentRef);
       }
-    }
-  }, [ref, observer])
+    };
+  }, [ref, observer]);
 
-  return currentWidth
-}
+  return currentWidth;
+};

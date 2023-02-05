@@ -1,27 +1,23 @@
-import { Store } from "@medusajs/medusa"
-import React, { createContext, useContext } from "react"
-import LayeredModal, {
-  LayeredModalContext,
-} from "../../../../../components/molecules/modal/layered-modal"
-import CurrentCurrenciesScreen from "./current-currencies-screen"
+import { Store } from '@medusajs/medusa';
+import React, { createContext, useContext } from 'react';
+import LayeredModal, { LayeredModalContext } from '../../../../../components/molecules/modal/layered-modal';
+import CurrentCurrenciesScreen from './current-currencies-screen';
 
 type Props = {
-  store: Store
-  open: boolean
-  onClose: () => void
-}
+  store: Store;
+  open: boolean;
+  onClose: () => void;
+};
 
 type EditCurrenciesModalContextType = {
-  onClose: () => void
-  store: Store
-}
+  onClose: () => void;
+  store: Store;
+};
 
-const EditCurrenciesModalContext = createContext<EditCurrenciesModalContextType | null>(
-  null
-)
+const EditCurrenciesModalContext = createContext<EditCurrenciesModalContextType | null>(null);
 
 const EditCurrenciesModal = ({ store, open, onClose }: Props) => {
-  const context = useContext(LayeredModalContext)
+  const context = useContext(LayeredModalContext);
 
   return (
     <EditCurrenciesModalContext.Provider value={{ onClose, store }}>
@@ -29,19 +25,17 @@ const EditCurrenciesModal = ({ store, open, onClose }: Props) => {
         <CurrentCurrenciesScreen />
       </LayeredModal>
     </EditCurrenciesModalContext.Provider>
-  )
-}
+  );
+};
 
 export const useEditCurrenciesModal = () => {
-  const context = useContext(EditCurrenciesModalContext)
+  const context = useContext(EditCurrenciesModalContext);
 
   if (!context) {
-    throw new Error(
-      "useEditCurrenciesModal must be used within EditCurrenciesModal"
-    )
+    throw new Error('useEditCurrenciesModal must be used within EditCurrenciesModal');
   }
 
-  return context
-}
+  return context;
+};
 
-export default EditCurrenciesModal
+export default EditCurrenciesModal;

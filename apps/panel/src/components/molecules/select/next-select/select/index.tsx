@@ -1,25 +1,17 @@
-import React, {
-  forwardRef,
-  MutableRefObject,
-  ReactElement,
-  RefAttributes,
-  useContext,
-  useRef,
-} from "react"
-import type { GroupBase, Props, SelectInstance } from "react-select"
-import ReactSelect from "react-select"
-import { ModalContext } from "../../../modal"
-import { AdjacentContainer } from "../components"
-import { useSelectProps } from "../use-select-props"
+import React, { forwardRef, MutableRefObject, ReactElement, RefAttributes, useContext, useRef } from 'react';
+import type { GroupBase, Props, SelectInstance } from 'react-select';
+import ReactSelect from 'react-select';
+import { ModalContext } from '../../../modal';
+import { AdjacentContainer } from '../components';
+import { useSelectProps } from '../use-select-props';
 
 export type SelectComponent = <
   Option = unknown,
   IsMulti extends boolean = true,
-  Group extends GroupBase<Option> = GroupBase<Option>
+  Group extends GroupBase<Option> = GroupBase<Option>,
 >(
-  props: Props<Option, IsMulti, Group> &
-    RefAttributes<SelectInstance<Option, IsMulti, Group>>
-) => ReactElement
+  props: Props<Option, IsMulti, Group> & RefAttributes<SelectInstance<Option, IsMulti, Group>>,
+) => ReactElement;
 
 const Select = forwardRef(
   <Option, IsMulti extends boolean, Group extends GroupBase<Option>>(
@@ -27,14 +19,14 @@ const Select = forwardRef(
     ref:
       | ((instance: SelectInstance<Option, IsMulti, Group> | null) => void)
       | MutableRefObject<SelectInstance<Option, IsMulti, Group> | null>
-      | null
+      | null,
   ) => {
-    const selectProps = useSelectProps(props)
+    const selectProps = useSelectProps(props);
 
-    const { label, required, helperText, name, errors } = selectProps
-    const containerRef = useRef<HTMLDivElement>(null)
+    const { label, required, helperText, name, errors } = selectProps;
+    const containerRef = useRef<HTMLDivElement>(null);
 
-    const { portalRef } = useContext(ModalContext)
+    const { portalRef } = useContext(ModalContext);
 
     return (
       <AdjacentContainer
@@ -53,8 +45,8 @@ const Select = forwardRef(
           menuShouldBlockScroll={true}
         />
       </AdjacentContainer>
-    )
-  }
-) as SelectComponent
+    );
+  },
+) as SelectComponent;
 
-export default Select
+export default Select;

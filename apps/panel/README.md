@@ -31,7 +31,6 @@ Medusa is an open-source headless commerce engine that enables developers to cre
 
 Follow our [quickstart guide](https://docs.medusajs.com/quickstart/quick-start) to learn how to set up a Medusa server.
 
-
 ## Setting up Admin
 
 1. **Clone this repository**
@@ -54,7 +53,9 @@ Back in your Medusa engine installation directory, you can create your own user 
 ```
 medusa user -e some@email.com -p some-password
 ```
+
 Alternatively, if you've seeded your server with our dummy data, you can use the following credentials:
+
 ```
 admin@medusa-test.com // supersecret
 ```
@@ -74,7 +75,6 @@ The Medusa repository is a mono-repository managed using Lerna. Lerna allows us 
 ## Licensed
 
 Licensed under the [MIT License](https://github.com/medusajs/medusa/blob/master/LICENSE)
-
 
 ## Community & Support
 

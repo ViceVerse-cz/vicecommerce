@@ -1,18 +1,18 @@
-import React from "react"
-import InputField from "../../../../components/molecules/input"
-import FormValidator from "../../../../utils/form-validator"
-import { NestedForm } from "../../../../utils/nested-form"
+import React from 'react';
+import InputField from '../../../../components/molecules/input';
+import FormValidator from '../../../../utils/form-validator';
+import { NestedForm } from '../../../../utils/nested-form';
 
 export type DimensionsFormType = {
-  length: number | null
-  width: number | null
-  height: number | null
-  weight: number | null
-}
+  length: number | null;
+  width: number | null;
+  height: number | null;
+  weight: number | null;
+};
 
 type DimensionsFormProps = {
-  form: NestedForm<DimensionsFormType>
-}
+  form: NestedForm<DimensionsFormType>;
+};
 
 /**
  * Re-usable nested form used to submit dimensions information for products and their variants.
@@ -24,52 +24,52 @@ const DimensionsForm = ({ form }: DimensionsFormProps) => {
     register,
     path,
     formState: { errors },
-  } = form
+  } = form;
 
   return (
-    <div className="grid grid-cols-4 gap-x-large">
+    <div className='grid grid-cols-4 gap-x-large'>
       <InputField
-        label="Width"
-        placeholder="100..."
-        type="number"
-        {...register(path("width"), {
-          min: FormValidator.nonNegativeNumberRule("Width"),
+        label='Width'
+        placeholder='100...'
+        type='number'
+        {...register(path('width'), {
+          min: FormValidator.nonNegativeNumberRule('Width'),
           valueAsNumber: true,
         })}
         errors={errors}
       />
       <InputField
-        label="Length"
-        placeholder="100..."
-        type="number"
-        {...register(path("length"), {
-          min: FormValidator.nonNegativeNumberRule("Length"),
+        label='Length'
+        placeholder='100...'
+        type='number'
+        {...register(path('length'), {
+          min: FormValidator.nonNegativeNumberRule('Length'),
           valueAsNumber: true,
         })}
         errors={errors}
       />
       <InputField
-        label="Height"
-        placeholder="100..."
-        type="number"
-        {...register(path("height"), {
-          min: FormValidator.nonNegativeNumberRule("Height"),
+        label='Height'
+        placeholder='100...'
+        type='number'
+        {...register(path('height'), {
+          min: FormValidator.nonNegativeNumberRule('Height'),
           valueAsNumber: true,
         })}
         errors={errors}
       />
       <InputField
-        label="Weight"
-        placeholder="100..."
-        type="number"
-        {...register(path("weight"), {
-          min: FormValidator.nonNegativeNumberRule("Weight"),
+        label='Weight'
+        placeholder='100...'
+        type='number'
+        {...register(path('weight'), {
+          min: FormValidator.nonNegativeNumberRule('Weight'),
           valueAsNumber: true,
         })}
         errors={errors}
       />
     </div>
-  )
-}
+  );
+};
 
-export default DimensionsForm
+export default DimensionsForm;

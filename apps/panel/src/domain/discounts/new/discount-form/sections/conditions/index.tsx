@@ -1,20 +1,18 @@
-import { Discount } from "@medusajs/medusa"
-import React, { useEffect, useMemo, useState } from "react"
-import Button from "../../../../../../components/fundamentals/button"
-import PlusIcon from "../../../../../../components/fundamentals/icons/plus-icon"
-import AddConditionsModal from "../../add-conditions-modal"
-import { useDiscountForm } from "../../form/discount-form-context"
-import ConditionItem from "./condition-item"
+import { Discount } from '@medusajs/medusa';
+import React, { useEffect, useMemo, useState } from 'react';
+import Button from '../../../../../../components/fundamentals/button';
+import PlusIcon from '../../../../../../components/fundamentals/icons/plus-icon';
+import AddConditionsModal from '../../add-conditions-modal';
+import { useDiscountForm } from '../../form/discount-form-context';
+import ConditionItem from './condition-item';
 
 type DiscountNewConditionsProps = {
-  discount?: Discount
-}
+  discount?: Discount;
+};
 
-const DiscountNewConditions: React.FC<DiscountNewConditionsProps> = ({
-  discount,
-}) => {
-  const { setConditions, conditions } = useDiscountForm()
-  const [showConditionsModal, setShowConditionsModal] = useState(false)
+const DiscountNewConditions: React.FC<DiscountNewConditionsProps> = ({ discount }) => {
+  const { setConditions, conditions } = useDiscountForm();
+  const [showConditionsModal, setShowConditionsModal] = useState(false);
 
   useEffect(() => {
     if (discount?.rule?.conditions) {
@@ -27,27 +25,27 @@ const DiscountNewConditions: React.FC<DiscountNewConditionsProps> = ({
             operator: condtion.operator,
             type: condtion.type,
           },
-        }))
+        }));
       }
     }
-  }, [discount?.rule?.conditions])
+  }, [discount?.rule?.conditions]);
 
   const allSet = useMemo(() => {
     const allSet = Object.values(conditions).every((condition) => {
-      return condition.items.length
-    })
-    return allSet
-  }, [conditions])
+      return condition.items.length;
+    });
+    return allSet;
+  }, [conditions]);
 
   const filteredConditions = useMemo(() => {
     return Object.values(conditions).filter((condition) => {
-      return condition.id || condition.items.length
-    })
-  }, [conditions])
+      return condition.id || condition.items.length;
+    });
+  }, [conditions]);
 
   return (
-    <div className="pt-5">
-      <div className="flex flex-col gap-y-small">
+    <div className='pt-5'>
+      <div className='flex flex-col gap-y-small'>
         {filteredConditions.map((values, i) => (
           <ConditionItem
             index={i}
@@ -62,23 +60,20 @@ const DiscountNewConditions: React.FC<DiscountNewConditionsProps> = ({
       </div>
       {!allSet && (
         <Button
-          size="small"
-          variant="ghost"
+          size='small'
+          variant='ghost'
           onClick={() => setShowConditionsModal(true)}
-          className="mt-4 p-2 w-full rounded-rounded border"
+          className='mt-4 p-2 w-full rounded-rounded border'
         >
           <PlusIcon size={18} />
           <span>Add Condition</span>
         </Button>
       )}
       {showConditionsModal && (
-        <AddConditionsModal
-          onClose={() => setShowConditionsModal(false)}
-          conditions={conditions}
-        />
+        <AddConditionsModal onClose={() => setShowConditionsModal(false)} conditions={conditions} />
       )}
     </div>
-  )
-}
+  );
+};
 
-export default DiscountNewConditions
+export default DiscountNewConditions;

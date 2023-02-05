@@ -1,27 +1,23 @@
-import { useAdminProducts } from "medusa-react"
-import React, { useEffect, useState } from "react"
-import Modal from "../../../../../../../components/molecules/modal"
-import { SelectableTable } from "../../../../../../../components/templates/selectable-table"
-import useQueryFilters from "../../../../../../../hooks/use-query-filters"
-import { defaultQueryProps } from "../../../../../new/discount-form/condition-tables/shared/common"
+import { useAdminProducts } from 'medusa-react';
+import React, { useEffect, useState } from 'react';
+import Modal from '../../../../../../../components/molecules/modal';
+import { SelectableTable } from '../../../../../../../components/templates/selectable-table';
+import useQueryFilters from '../../../../../../../hooks/use-query-filters';
+import { defaultQueryProps } from '../../../../../new/discount-form/condition-tables/shared/common';
 import {
   ProductRow,
   ProductsHeader,
   useProductColumns,
-} from "../../../../../new/discount-form/condition-tables/shared/products"
-import { useEditConditionContext } from "../../edit-condition-provider"
-import ExistingConditionTableActions from "../../condition-table-actions"
+} from '../../../../../new/discount-form/condition-tables/shared/products';
+import { useEditConditionContext } from '../../edit-condition-provider';
+import ExistingConditionTableActions from '../../condition-table-actions';
 
 const ProductConditionsTable = () => {
-  const params = useQueryFilters(defaultQueryProps)
+  const params = useQueryFilters(defaultQueryProps);
 
-  const [selectedResources, setSelectedResources] = useState<string[]>([])
+  const [selectedResources, setSelectedResources] = useState<string[]>([]);
 
-  const {
-    condition,
-    removeConditionResources,
-    isLoading,
-  } = useEditConditionContext()
+  const { condition, removeConditionResources, isLoading } = useEditConditionContext();
 
   const {
     isLoading: isLoadingProducts,
@@ -32,26 +28,26 @@ const ProductConditionsTable = () => {
     { discount_condition_id: condition.id },
     {
       keepPreviousData: true,
-    }
-  )
+    },
+  );
 
-  const columns = useProductColumns()
+  const columns = useProductColumns();
 
   const onDeselect = () => {
-    setSelectedResources([])
-  }
+    setSelectedResources([]);
+  };
 
   const onRemove = () => {
-    removeConditionResources(selectedResources)
-    onDeselect()
-  }
+    removeConditionResources(selectedResources);
+    onDeselect();
+  };
 
   useEffect(() => {
     if (!isLoading) {
-      refetch() // if loading is flipped, we've either added or removed resources -> refetch
-      onDeselect()
+      refetch(); // if loading is flipped, we've either added or removed resources -> refetch
+      onDeselect();
     }
-  }, [isLoading])
+  }, [isLoading]);
 
   return (
     <Modal.Content>
@@ -66,7 +62,7 @@ const ProductConditionsTable = () => {
             />
           ),
         }}
-        resourceName="Products"
+        resourceName='Products'
         totalCount={count ?? 0}
         selectedIds={selectedResources}
         data={products || []}
@@ -78,7 +74,7 @@ const ProductConditionsTable = () => {
         {...params}
       />
     </Modal.Content>
-  )
-}
+  );
+};
 
-export default ProductConditionsTable
+export default ProductConditionsTable;

@@ -2,19 +2,17 @@ import {
   AdminPostPriceListsPriceListPriceListReq,
   AdminPostPriceListsPriceListReq,
   PriceList,
-} from "@medusajs/medusa"
-import xorObjFields from "../../../../utils/xorObjFields"
+} from '@medusajs/medusa';
+import xorObjFields from '../../../../utils/xorObjFields';
 import {
   CreatePriceListFormValues,
   CreatePriceListPricesFormValues,
   PriceListFormValues,
   PriceListStatus,
   PriceListType,
-} from "../types"
+} from '../types';
 
-export const mapPriceListToFormValues = (
-  priceList: PriceList
-): PriceListFormValues => {
+export const mapPriceListToFormValues = (priceList: PriceList): PriceListFormValues => {
   return {
     description: priceList.description,
     type: priceList.type,
@@ -34,26 +32,26 @@ export const mapPriceListToFormValues = (
       value: pl.id,
     })),
     includes_tax: priceList.includes_tax,
-  }
-}
+  };
+};
 
 export const mapFormValuesToCreatePriceList = (
   values: CreatePriceListFormValues,
-  status: PriceListStatus
+  status: PriceListStatus,
 ): AdminPostPriceListsPriceListReq => {
-  let prices
+  let prices;
   if (values.prices) {
     prices = Object.entries(values.prices)
       .map(([variantId, price]) =>
         price.map((pr) => ({
           variant_id: variantId,
           amount: pr.amount,
-          ...xorObjFields(pr, "currency_code", "region_id"),
+          ...xorObjFields(pr, 'currency_code', 'region_id'),
           min_quantity: pr.min_quantity,
           max_quantity: pr.max_quantity,
-        }))
+        })),
       )
-      .flat(1)
+      .flat(1);
   }
 
   return {
@@ -67,43 +65,41 @@ export const mapFormValuesToCreatePriceList = (
     ends_at: values.ends_at || undefined,
     starts_at: values.starts_at || undefined,
     prices,
-  }
-}
+  };
+};
 
 export const mapFormValuesToUpdatePriceListDetails = (
-  values: PriceListFormValues
+  values: PriceListFormValues,
 ): AdminPostPriceListsPriceListPriceListReq => {
   return {
     name: values.name || undefined,
     description: values.description || undefined,
-    customer_groups: values.customer_groups
-      ? values.customer_groups.map((cg) => ({ id: cg.value }))
-      : [],
+    customer_groups: values.customer_groups ? values.customer_groups.map((cg) => ({ id: cg.value })) : [],
     ends_at: values.ends_at,
     starts_at: values.starts_at,
     type: values.type || undefined,
-  }
-}
+  };
+};
 
 export const mapFormValuesToUpdatePriceListPrices = (
-  values: PriceListFormValues & { prices: CreatePriceListPricesFormValues }
+  values: PriceListFormValues & { prices: CreatePriceListPricesFormValues },
 ): AdminPostPriceListsPriceListPriceListReq | void => {
-  let prices
+  let prices;
   if (values.prices) {
     prices = Object.entries(values.prices)
       .map(([variantId, price]) =>
         price.map((pr) => ({
           variant_id: variantId,
           amount: pr.amount,
-          ...xorObjFields(pr, "currency_code", "region_id"),
+          ...xorObjFields(pr, 'currency_code', 'region_id'),
           min_quantity: pr.min_quantity,
           max_quantity: pr.max_quantity,
-        }))
+        })),
       )
-      .flat(1)
+      .flat(1);
 
     return {
       prices,
-    }
+    };
   }
-}
+};

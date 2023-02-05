@@ -1,25 +1,25 @@
-import { useAdminPriceLists } from "medusa-react"
-import useSetSearchParams from "../../hooks/use-set-search-params"
-import { usePriceListTableColumns } from "../../components/templates/price-list-table/use-price-list-columns"
-import { usePriceListFilters } from "../../components/templates/price-list-table/use-price-list-filters"
-import { PriceListTable } from "../../components/templates/price-list-table/price-list-table"
-import PriceListsFilter from "../../components/templates/price-list-table/price-list-filters"
-import { useLocation } from "react-router-dom"
+import { useAdminPriceLists } from 'medusa-react';
+import useSetSearchParams from '../../hooks/use-set-search-params';
+import { usePriceListTableColumns } from '../../components/templates/price-list-table/use-price-list-columns';
+import { usePriceListFilters } from '../../components/templates/price-list-table/use-price-list-filters';
+import { PriceListTable } from '../../components/templates/price-list-table/price-list-table';
+import PriceListsFilter from '../../components/templates/price-list-table/price-list-filters';
+import { useLocation } from 'react-router-dom';
 
 /**
  * Default filtering config for querying price lists endpoint.
  */
-const DEFAULT_PAGE_SIZE = 15
+const DEFAULT_PAGE_SIZE = 15;
 const defaultQueryProps = {
-  expand: "customer_groups,prices",
+  expand: 'customer_groups,prices',
   offset: 0,
   limit: DEFAULT_PAGE_SIZE,
-}
+};
 
 const PricingTable = () => {
-  const location = useLocation()
-  const params = usePriceListFilters(location.search, defaultQueryProps)
-  const [columns] = usePriceListTableColumns()
+  const location = useLocation();
+  const params = usePriceListFilters(location.search, defaultQueryProps);
+  const [columns] = usePriceListTableColumns();
 
   const {
     price_lists,
@@ -27,14 +27,14 @@ const PricingTable = () => {
     count = 0,
   } = useAdminPriceLists(params.queryObject, {
     keepPreviousData: true,
-  })
+  });
 
-  useSetSearchParams(params.representationObject)
+  useSetSearchParams(params.representationObject);
 
   const resetFilters = () => {
-    params.setQuery("")
-    params.reset()
-  }
+    params.setQuery('');
+    params.reset();
+  };
 
   return (
     <div>
@@ -61,7 +61,7 @@ const PricingTable = () => {
         {...params}
       />
     </div>
-  )
-}
+  );
+};
 
-export default PricingTable
+export default PricingTable;

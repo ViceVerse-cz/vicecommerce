@@ -7,7 +7,7 @@ class WelcomeSubscriber {
   constructor({ welcomeService, eventBusService }) {
     this.welcomeService_ = welcomeService;
 
-    eventBusService.subscribe("order.placed", this.handleWelcome);
+    eventBusService.subscribe('order.placed', this.handleWelcome);
   }
 
   handleWelcome = async (data) => {

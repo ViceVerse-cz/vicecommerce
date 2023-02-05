@@ -1,24 +1,24 @@
-import { ComponentMeta } from "@storybook/react"
-import React from "react"
-import GiftIcon from "."
+import { ComponentMeta } from '@storybook/react';
+import React from 'react';
+import GiftIcon from '.';
 
 export default {
-  title: "Fundamentals/Icons/GiftIcon",
+  title: 'Fundamentals/Icons/GiftIcon',
   component: GiftIcon,
   argTypes: {
     size: {
       control: {
-        type: "select",
-        options: ["24", "20", "16"],
+        type: 'select',
+        options: ['24', '20', '16'],
       },
     },
   },
-} as ComponentMeta<typeof GiftIcon>
+} as ComponentMeta<typeof GiftIcon>;
 
-const Template = args => <GiftIcon {...args} />
+const Template = (args) => <GiftIcon {...args} />;
 
-export const Icon = Template.bind({})
+export const Icon = Template.bind({});
 Icon.args = {
-  size: "24",
-  color: "currentColor",
-}
+  size: '24',
+  color: 'currentColor',
+};

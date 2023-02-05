@@ -1,17 +1,17 @@
-import { useAdminDeleteVariant } from "medusa-react"
-import React, { useState } from "react"
-import EditIcon from "../../../components/fundamentals/icons/edit-icon"
-import TrashIcon from "../../../components/fundamentals/icons/trash-icon"
-import Table from "../../../components/molecules/table"
-import DeletePrompt from "../../../components/organisms/delete-prompt"
-import { stringDisplayPrice } from "../../../utils/prices"
+import { useAdminDeleteVariant } from 'medusa-react';
+import React, { useState } from 'react';
+import EditIcon from '../../../components/fundamentals/icons/edit-icon';
+import TrashIcon from '../../../components/fundamentals/icons/trash-icon';
+import Table from '../../../components/molecules/table';
+import DeletePrompt from '../../../components/organisms/delete-prompt';
+import { stringDisplayPrice } from '../../../utils/prices';
 
 type DenominationTableProps = {
-  giftCardId: string
-  denominations: any[]
-  defaultCurrency: string
-  setEditDenom: (denom) => void
-}
+  giftCardId: string;
+  denominations: any[];
+  defaultCurrency: string;
+  setEditDenom: (denom) => void;
+};
 
 const DenominationTable: React.FC<DenominationTableProps> = ({
   giftCardId,
@@ -19,55 +19,51 @@ const DenominationTable: React.FC<DenominationTableProps> = ({
   defaultCurrency,
   setEditDenom,
 }) => {
-  const [selectedDenom, setSelectedDenom] = useState<string | null>(null)
+  const [selectedDenom, setSelectedDenom] = useState<string | null>(null);
 
-  const deleteDenomination = useAdminDeleteVariant(giftCardId)
+  const deleteDenomination = useAdminDeleteVariant(giftCardId);
 
   const getDenominationPrices = (denomination) => {
     const sortHelper = (p1, p2) => {
-      const curr1 = p1.currency_code
-      const curr2 = p2.currency_code
+      const curr1 = p1.currency_code;
+      const curr2 = p2.currency_code;
 
       if (curr1 < curr2) {
-        return -1
+        return -1;
       }
       if (curr1 > curr2) {
-        return 1
+        return 1;
       }
-      return 0
-    }
+      return 0;
+    };
 
     return denomination.prices
       .filter((p) => p.currency_code !== defaultCurrency) // without default
       .sort(sortHelper) // sort by currency code
-      .map((p) =>
-        stringDisplayPrice({ currencyCode: p.currency_code, amount: p.amount })
-      ) // get formatted price
-      .join(", ") // concatenate to single comma separated string
-  }
+      .map((p) => stringDisplayPrice({ currencyCode: p.currency_code, amount: p.amount })) // get formatted price
+      .join(', '); // concatenate to single comma separated string
+  };
 
   const getDenominationRow = (denomination, index) => {
-    let defaultPrice = denomination.prices.find(
-      (p) => p.currency_code === defaultCurrency
-    )
+    let defaultPrice = denomination.prices.find((p) => p.currency_code === defaultCurrency);
 
     if (!defaultPrice) {
-      defaultPrice = denomination.prices[0]
+      defaultPrice = denomination.prices[0];
     }
 
     return (
       <Table.Row
         key={`denomination-${index}`}
-        color={"inherit"}
+        color={'inherit'}
         actions={[
           {
-            label: "Edit denomination",
+            label: 'Edit denomination',
             onClick: () => setEditDenom(denomination),
             icon: <EditIcon size={20} />,
           },
           {
-            label: "Delete denomination",
-            variant: "danger",
+            label: 'Delete denomination',
+            variant: 'danger',
             onClick: () => setSelectedDenom(denomination.id),
             icon: <TrashIcon size={20} />,
           },
@@ -82,15 +78,15 @@ const DenominationTable: React.FC<DenominationTableProps> = ({
         <Table.Cell>{getDenominationPrices(denomination)}</Table.Cell>
         <Table.Cell></Table.Cell>
       </Table.Row>
-    )
-  }
+    );
+  };
 
   const handleDeleteDenomination = async () => {
-    deleteDenomination.mutateAsync(selectedDenom!)
-  }
+    deleteDenomination.mutateAsync(selectedDenom!);
+  };
 
   return (
-    <div className="w-full h-full overflow-y-auto">
+    <div className='w-full h-full overflow-y-auto'>
       <Table>
         <Table.Head>
           <Table.HeadRow>
@@ -98,22 +94,22 @@ const DenominationTable: React.FC<DenominationTableProps> = ({
             <Table.HeadCell>Other Values</Table.HeadCell>
           </Table.HeadRow>
         </Table.Head>
-        <Table.Body className="text-grey-90">
+        <Table.Body className='text-grey-90'>
           {denominations?.map((d, idx) => getDenominationRow(d, idx))}
         </Table.Body>
       </Table>
       {selectedDenom && (
         <DeletePrompt
           handleClose={() => setSelectedDenom(null)}
-          text="Are you sure you want to delete this denomination from your Medusa Store?"
-          heading="Delete denomination"
+          text='Are you sure you want to delete this denomination from your Medusa Store?'
+          heading='Delete denomination'
           onDelete={() => handleDeleteDenomination()}
-          successText="Successfully deleted denomination"
-          confirmText="Yes, delete"
+          successText='Successfully deleted denomination'
+          confirmText='Yes, delete'
         />
       )}
     </div>
-  )
-}
+  );
+};
 
-export default DenominationTable
+export default DenominationTable;

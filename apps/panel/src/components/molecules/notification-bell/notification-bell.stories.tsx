@@ -1,20 +1,20 @@
-import { ComponentMeta } from "@storybook/react"
-import React from "react"
-import NotificationBell from "."
+import { ComponentMeta } from '@storybook/react';
+import React from 'react';
+import NotificationBell from '.';
 
 export default {
-  title: "Molecules/NotificationBell",
+  title: 'Molecules/NotificationBell',
   component: NotificationBell,
-} as ComponentMeta<typeof NotificationBell>
+} as ComponentMeta<typeof NotificationBell>;
 
-const Template = args => <NotificationBell {...args} />
+const Template = (args) => <NotificationBell {...args} />;
 
-export const HasNotifications = Template.bind({})
+export const HasNotifications = Template.bind({});
 HasNotifications.args = {
   hasNotifications: true,
-}
+};
 
-export const NoNotifications = Template.bind({})
+export const NoNotifications = Template.bind({});
 NoNotifications.args = {
   hasNotifications: false,
-}
+};

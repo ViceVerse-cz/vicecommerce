@@ -1,24 +1,24 @@
-import { ComponentMeta } from "@storybook/react"
-import React from "react"
-import LongArrowRight from "."
+import { ComponentMeta } from '@storybook/react';
+import React from 'react';
+import LongArrowRight from '.';
 
 export default {
-  title: "Fundamentals/Icons/LongArrowRight",
+  title: 'Fundamentals/Icons/LongArrowRight',
   component: LongArrowRight,
   argTypes: {
     size: {
       control: {
-        type: "select",
-        options: ["24", "20", "16"],
+        type: 'select',
+        options: ['24', '20', '16'],
       },
     },
   },
-} as ComponentMeta<typeof LongArrowRight>
+} as ComponentMeta<typeof LongArrowRight>;
 
-const Template = (args) => <LongArrowRight {...args} />
+const Template = (args) => <LongArrowRight {...args} />;
 
-export const Icon = Template.bind({})
+export const Icon = Template.bind({});
 Icon.args = {
-  size: "24",
-  color: "currentColor",
-}
+  size: '24',
+  color: 'currentColor',
+};

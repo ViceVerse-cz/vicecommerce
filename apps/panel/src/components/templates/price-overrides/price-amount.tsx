@@ -1,40 +1,33 @@
-import React from "react"
-import useToggleState from "../../../hooks/use-toggle-state"
-import { currencies } from "../../../utils/currencies"
-import Button from "../../fundamentals/button"
-import EyeIcon from "../../fundamentals/icons/eye-icon"
-import EyeOffIcon from "../../fundamentals/icons/eye-off-icon"
-import MedusaPriceInput from "../../organisms/medusa-price-input"
+import React from 'react';
+import useToggleState from '../../../hooks/use-toggle-state';
+import { currencies } from '../../../utils/currencies';
+import Button from '../../fundamentals/button';
+import EyeIcon from '../../fundamentals/icons/eye-icon';
+import EyeOffIcon from '../../fundamentals/icons/eye-off-icon';
+import MedusaPriceInput from '../../organisms/medusa-price-input';
 
 const PriceAmount = ({ value, onChange }) => {
-  const { state: showRegions, toggle } = useToggleState()
+  const { state: showRegions, toggle } = useToggleState();
 
-  const currencyName = currencies[value.currency_code?.toUpperCase()]?.name
+  const currencyName = currencies[value.currency_code?.toUpperCase()]?.name;
   return (
-    <div className="flex flex-col gap-3 py-3 first:border-t border-grey-20 border-solid border-b last:border-b-0">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="inter-base-semibold">
-            <span className="mr-2 uppercase">{value.currency_code}</span>
-            <span className="inter-base-regular text-grey-50 capitalize">
-              {currencyName}
-            </span>
+    <div className='flex flex-col gap-3 py-3 first:border-t border-grey-20 border-solid border-b last:border-b-0'>
+      <div className='flex items-center justify-between'>
+        <div className='flex items-center gap-3'>
+          <div className='inter-base-semibold'>
+            <span className='mr-2 uppercase'>{value.currency_code}</span>
+            <span className='inter-base-regular text-grey-50 capitalize'>{currencyName}</span>
           </div>
           {value.region?.countries ? (
-            <Button
-              variant="secondary"
-              size="small"
-              className="rounded-rounded h-[32px]"
-              onClick={toggle}
-            >
-              <div className="flex items-center gap-2">
+            <Button variant='secondary' size='small' className='rounded-rounded h-[32px]' onClick={toggle}>
+              <div className='flex items-center gap-2'>
                 {showRegions ? <EyeOffIcon size={20} /> : <EyeIcon size={20} />}
                 <span>Show regions</span>
               </div>
             </Button>
           ) : null}
         </div>
-        <div className="basis-[220px]">
+        <div className='basis-[220px]'>
           <MedusaPriceInput
             amount={value.amount}
             onChange={onChange}
@@ -69,7 +62,7 @@ const PriceAmount = ({ value, onChange }) => {
         </ul>
       )} */}
     </div>
-  )
-}
+  );
+};
 
-export default PriceAmount
+export default PriceAmount;

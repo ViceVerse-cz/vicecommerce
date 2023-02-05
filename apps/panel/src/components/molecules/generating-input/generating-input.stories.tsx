@@ -1,27 +1,25 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react"
-import React from "react"
-import GeneratingInput from "."
+import { ComponentMeta, ComponentStory } from '@storybook/react';
+import React from 'react';
+import GeneratingInput from '.';
 
 export default {
-  title: "Molecules/GeneratingInput",
+  title: 'Molecules/GeneratingInput',
   component: GeneratingInput,
-} as ComponentMeta<typeof GeneratingInput>
+} as ComponentMeta<typeof GeneratingInput>;
 
-const Template: ComponentStory<typeof GeneratingInput> = (args) => (
-  <GeneratingInput {...args} />
-)
+const Template: ComponentStory<typeof GeneratingInput> = (args) => <GeneratingInput {...args} />;
 
-export const Default = Template.bind({})
+export const Default = Template.bind({});
 Default.args = {
-  label: "Code",
+  label: 'Code',
   required: true,
-  placeholder: "MEDUSA15",
-}
+  placeholder: 'MEDUSA15',
+};
 
-export const HasValue = Template.bind({})
+export const HasValue = Template.bind({});
 HasValue.args = {
-  label: "Code",
+  label: 'Code',
   required: true,
-  placeholder: "MEDUSA15",
-  value: "SUMMER2014",
-}
+  placeholder: 'MEDUSA15',
+  value: 'SUMMER2014',
+};

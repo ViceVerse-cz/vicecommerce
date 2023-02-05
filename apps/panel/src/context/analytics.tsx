@@ -1,167 +1,160 @@
-import { useLocation } from "react-router-dom"
-import { AnalyticsBrowser } from "@segment/analytics-next"
-import { useAdminGetSession, useAdminStore, useAdminUsers } from "medusa-react"
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react"
-import Fade from "../components/atoms/fade-wrapper"
-import AnalyticsPreferencesModal from "../components/organisms/analytics-preferences"
-import { useDebounce } from "../hooks/use-debounce"
-import { useAdminAnalyticsConfig } from "../services/analytics"
-import { useFeatureFlag } from "./feature-flag"
+import { useLocation } from 'react-router-dom';
+import { AnalyticsBrowser } from '@segment/analytics-next';
+import { useAdminGetSession, useAdminStore, useAdminUsers } from 'medusa-react';
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import Fade from '../components/atoms/fade-wrapper';
+import AnalyticsPreferencesModal from '../components/organisms/analytics-preferences';
+import { useDebounce } from '../hooks/use-debounce';
+import { useAdminAnalyticsConfig } from '../services/analytics';
+import { useFeatureFlag } from './feature-flag';
 
 type Props = {
-  children?: React.ReactNode
-  writeKey: string
-}
+  children?: React.ReactNode;
+  writeKey: string;
+};
 
 type Event =
-  | "numProducts"
-  | "numOrders"
-  | "numDiscounts"
-  | "numUsers"
-  | "regions"
-  | "currencies"
-  | "storeName"
+  | 'numProducts'
+  | 'numOrders'
+  | 'numDiscounts'
+  | 'numUsers'
+  | 'regions'
+  | 'currencies'
+  | 'storeName';
 
 type AnalyticsContextType = {
-  trackCurrencies: (properties: TrackCurrenciesPayload) => void
-  trackNumberOfOrders: (properties: TrackCountPayload) => void
-  trackNumberOfDiscounts: (properties: TrackCountPayload) => void
-  trackNumberOfProducts: (properties: TrackCountPayload) => void
-  trackRegions: (properties: TrackRegionsPayload) => void
-  setSubmittingConfig: (status: boolean) => void
-}
+  trackCurrencies: (properties: TrackCurrenciesPayload) => void;
+  trackNumberOfOrders: (properties: TrackCountPayload) => void;
+  trackNumberOfDiscounts: (properties: TrackCountPayload) => void;
+  trackNumberOfProducts: (properties: TrackCountPayload) => void;
+  trackRegions: (properties: TrackRegionsPayload) => void;
+  setSubmittingConfig: (status: boolean) => void;
+};
 
-const AnalyticsContext = createContext<AnalyticsContextType | null>(null)
+const AnalyticsContext = createContext<AnalyticsContextType | null>(null);
 
 const AnalyticsProvider = ({ writeKey, children }: Props) => {
-  const [submittingConfig, setSubmittingConfig] = useState(false)
-  const { analytics_config: config, isLoading } = useAdminAnalyticsConfig()
+  const [submittingConfig, setSubmittingConfig] = useState(false);
+  const { analytics_config: config, isLoading } = useAdminAnalyticsConfig();
 
-  const location = useLocation()
+  const location = useLocation();
 
-  const { user } = useAdminGetSession()
-  const { users } = useAdminUsers()
-  const { store } = useAdminStore()
+  const { user } = useAdminGetSession();
+  const { users } = useAdminUsers();
+  const { store } = useAdminStore();
 
-  const { isFeatureEnabled } = useFeatureFlag()
+  const { isFeatureEnabled } = useFeatureFlag();
   const isEnabled = useMemo(() => {
-    return isFeatureEnabled("analytics")
-  }, [isFeatureEnabled])
+    return isFeatureEnabled('analytics');
+  }, [isFeatureEnabled]);
 
   const analytics = useMemo(() => {
     if (!config || !isEnabled) {
-      return null // Don't initialize analytics if not enabled or the user's preferences are not loaded yet
+      return null; // Don't initialize analytics if not enabled or the user's preferences are not loaded yet
     }
 
     if (config.opt_out) {
-      return null // Don't initialize if user has opted out
+      return null; // Don't initialize if user has opted out
     }
 
-    return AnalyticsBrowser.load({ writeKey })
-  }, [config, writeKey, isEnabled])
+    return AnalyticsBrowser.load({ writeKey });
+  }, [config, writeKey, isEnabled]);
 
   useEffect(() => {
     if (!analytics || !config || !user || !store) {
-      return
+      return;
     }
 
     analytics.identify(user.id, {
       store: store.name,
-    })
-  }, [config, analytics, user, store])
+    });
+  }, [config, analytics, user, store]);
 
   const askPermission = useMemo(() => {
     if (submittingConfig) {
-      return true
+      return true;
     }
 
     if (!isEnabled || !user) {
-      return false // Don't ask for permission if feature is not enabled
+      return false; // Don't ask for permission if feature is not enabled
     }
 
-    return !config && !isLoading
-  }, [config, isLoading, isEnabled, user, submittingConfig])
+    return !config && !isLoading;
+  }, [config, isLoading, isEnabled, user, submittingConfig]);
 
   /**
    * Ensure that the focus modal is animated smoothly.
    */
-  const animateIn = useDebounce(askPermission, 1000)
+  const animateIn = useDebounce(askPermission, 1000);
 
   const track = useCallback(
     (event: Event, properties?: Record<string, unknown>) => {
       if (!analytics) {
         // If analytics is not initialized, then we return early
-        return
+        return;
       }
 
-      analytics.track(event, properties)
+      analytics.track(event, properties);
     },
-    [analytics]
-  )
+    [analytics],
+  );
 
   const trackNumberOfUsers = useCallback(
     (properties: TrackCountPayload) => {
-      track("numUsers", properties)
+      track('numUsers', properties);
     },
-    [track]
-  )
+    [track],
+  );
 
   const trackStoreName = useCallback(
     (properties: TrackStoreNamePayload) => {
-      track("storeName", properties)
+      track('storeName', properties);
     },
-    [track]
-  )
+    [track],
+  );
 
   const trackNumberOfProducts = (properties: TrackCountPayload) => {
-    track("numProducts", properties)
-  }
+    track('numProducts', properties);
+  };
 
   const trackNumberOfOrders = (properties: TrackCountPayload) => {
-    track("numOrders", properties)
-  }
+    track('numOrders', properties);
+  };
 
   const trackRegions = (properties: TrackRegionsPayload) => {
-    track("regions", properties)
-  }
+    track('regions', properties);
+  };
 
   const trackCurrencies = (properties: TrackCurrenciesPayload) => {
-    track("currencies", properties)
-  }
+    track('currencies', properties);
+  };
 
   const trackNumberOfDiscounts = (properties: TrackCountPayload) => {
-    track("numDiscounts", properties)
-  }
+    track('numDiscounts', properties);
+  };
 
   // Track number of users
   useEffect(() => {
     if (users) {
-      trackNumberOfUsers({ count: users.length })
+      trackNumberOfUsers({ count: users.length });
     }
-  }, [users, trackNumberOfUsers])
+  }, [users, trackNumberOfUsers]);
 
   // Track store name
   useEffect(() => {
     if (store) {
-      trackStoreName({ name: store.name })
+      trackStoreName({ name: store.name });
     }
-  }, [store, trackStoreName])
+  }, [store, trackStoreName]);
 
   // Track pages visited when location changes
   useEffect(() => {
     if (!analytics) {
-      return
+      return;
     }
 
-    analytics.page()
-  }, [location])
+    analytics.page();
+  }, [location]);
 
   return (
     <AnalyticsContext.Provider
@@ -181,34 +174,34 @@ const AnalyticsProvider = ({ writeKey, children }: Props) => {
       )}
       {children}
     </AnalyticsContext.Provider>
-  )
-}
+  );
+};
 
 type TrackCurrenciesPayload = {
-  used_currencies: string[]
-}
+  used_currencies: string[];
+};
 
 type TrackStoreNamePayload = {
-  name: string
-}
+  name: string;
+};
 
 type TrackCountPayload = {
-  count: number
-}
+  count: number;
+};
 
 type TrackRegionsPayload = {
-  regions: string[]
-  count: number
-}
+  regions: string[];
+  count: number;
+};
 
 export const useAnalytics = () => {
-  const context = useContext(AnalyticsContext)
+  const context = useContext(AnalyticsContext);
 
   if (!context) {
-    throw new Error("useAnalytics must be used within a AnalyticsProvider")
+    throw new Error('useAnalytics must be used within a AnalyticsProvider');
   }
 
-  return context
-}
+  return context;
+};
 
-export default AnalyticsProvider
+export default AnalyticsProvider;

@@ -1,44 +1,44 @@
-import React from "react"
-import { Controller } from "react-hook-form"
-import { NextSelect } from "../../../../../components/molecules/select/next-select"
-import { Option } from "../../../../../types/shared"
-import { NestedForm } from "../../../../../utils/nested-form"
-import { useStoreData } from "./use-store-data"
+import React from 'react';
+import { Controller } from 'react-hook-form';
+import { NextSelect } from '../../../../../components/molecules/select/next-select';
+import { Option } from '../../../../../types/shared';
+import { NestedForm } from '../../../../../utils/nested-form';
+import { useStoreData } from './use-store-data';
 
 export type RegionProvidersFormType = {
-  payment_providers: Option[]
-  fulfillment_providers: Option[]
-}
+  payment_providers: Option[];
+  fulfillment_providers: Option[];
+};
 
 type Props = {
-  form: NestedForm<RegionProvidersFormType>
-}
+  form: NestedForm<RegionProvidersFormType>;
+};
 
 const RegionProvidersForm = ({ form }: Props) => {
   const {
     control,
     path,
     formState: { errors },
-  } = form
-  const { fulfillmentProviderOptions, paymentProviderOptions } = useStoreData()
+  } = form;
+  const { fulfillmentProviderOptions, paymentProviderOptions } = useStoreData();
 
   return (
-    <div className="grid grid-cols-2 gap-large">
+    <div className='grid grid-cols-2 gap-large'>
       <Controller
         control={control}
-        name={path("payment_providers")}
+        name={path('payment_providers')}
         rules={{
-          required: "Payment providers are required",
+          required: 'Payment providers are required',
           minLength: {
             value: 1,
-            message: "Payment providers are required",
+            message: 'Payment providers are required',
           },
         }}
         render={({ field: { value, onBlur, onChange } }) => {
           return (
             <NextSelect
-              label="Payment Providers"
-              placeholder="Choose payment providers..."
+              label='Payment Providers'
+              placeholder='Choose payment providers...'
               options={paymentProviderOptions}
               isMulti
               isClearable
@@ -47,27 +47,27 @@ const RegionProvidersForm = ({ form }: Props) => {
               value={value}
               onChange={onChange}
               onBlur={onBlur}
-              name={path("payment_providers")}
+              name={path('payment_providers')}
               errors={errors}
             />
-          )
+          );
         }}
       />
       <Controller
         control={control}
-        name={path("fulfillment_providers")}
+        name={path('fulfillment_providers')}
         rules={{
-          required: "Fulfillment providers are required",
+          required: 'Fulfillment providers are required',
           minLength: {
             value: 1,
-            message: "Fulfillment providers are required",
+            message: 'Fulfillment providers are required',
           },
         }}
         render={({ field: { onBlur, onChange, value } }) => {
           return (
             <NextSelect
-              label="Fulfillment Providers"
-              placeholder="Choose fulfillment providers..."
+              label='Fulfillment Providers'
+              placeholder='Choose fulfillment providers...'
               options={fulfillmentProviderOptions}
               required
               isMulti
@@ -76,14 +76,14 @@ const RegionProvidersForm = ({ form }: Props) => {
               value={value}
               onChange={onChange}
               onBlur={onBlur}
-              name={path("fulfillment_providers")}
+              name={path('fulfillment_providers')}
               errors={errors}
             />
-          )
+          );
         }}
       />
     </div>
-  )
-}
+  );
+};
 
-export default RegionProvidersForm
+export default RegionProvidersForm;

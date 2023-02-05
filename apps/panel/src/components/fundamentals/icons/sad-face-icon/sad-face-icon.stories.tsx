@@ -1,24 +1,24 @@
-import { ComponentMeta } from "@storybook/react"
-import React from "react"
-import SadFaceIcon from "./index"
+import { ComponentMeta } from '@storybook/react';
+import React from 'react';
+import SadFaceIcon from './index';
 
 export default {
-  title: "Fundamentals/Icons/CrossIcon",
+  title: 'Fundamentals/Icons/CrossIcon',
   component: SadFaceIcon,
   argTypes: {
     size: {
       control: {
-        type: "select",
-        options: ["24", "20", "16"],
+        type: 'select',
+        options: ['24', '20', '16'],
       },
     },
   },
-} as ComponentMeta<typeof SadFaceIcon>
+} as ComponentMeta<typeof SadFaceIcon>;
 
-const Template = args => <SadFaceIcon {...args} />
+const Template = (args) => <SadFaceIcon {...args} />;
 
-export const Icon = Template.bind({})
+export const Icon = Template.bind({});
 Icon.args = {
-  size: "24",
-  color: "currentColor",
-}
+  size: '24',
+  color: 'currentColor',
+};

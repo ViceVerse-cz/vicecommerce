@@ -1,27 +1,24 @@
-import path from "path"
-import { env } from "process"
-import dns from "dns"
-import { defineConfig } from "vite"
-import react from "@vitejs/plugin-react"
+import path from 'path';
+import { env } from 'process';
+import dns from 'dns';
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
 // Resolve localhost for Node v16 and older.
 // @see https://vitejs.dev/config/server-options.html#server-host.
-dns.setDefaultResultOrder("verbatim")
+dns.setDefaultResultOrder('verbatim');
 
 export default defineConfig({
   plugins: [react()],
   // Backwards-compat with Gatsby.
-  publicDir: "static",
+  publicDir: 'static',
   build: {
-    outDir: "public",
+    outDir: 'public',
   },
   resolve: {
     alias: {
-      gatsby: path.resolve(__dirname, "src/compat/gatsby-compat.tsx"),
-      "@reach/router": path.resolve(
-        __dirname,
-        "src/compat/reach-router-compat.tsx"
-      ),
+      gatsby: path.resolve(__dirname, 'src/compat/gatsby-compat.tsx'),
+      '@reach/router': path.resolve(__dirname, 'src/compat/reach-router-compat.tsx'),
     },
   },
   define: {
@@ -30,10 +27,10 @@ export default defineConfig({
         // Backwards-compat with Gatsby.
         env.GATSBY_MEDUSA_BACKEND_URL ||
         env.GATSBY_STORE_URL ||
-        ""
+        '',
     ),
   },
   optimizeDeps: {
-    exclude: ["typeorm", "medusa-interfaces"],
+    exclude: ['typeorm', 'medusa-interfaces'],
   },
-})
+});

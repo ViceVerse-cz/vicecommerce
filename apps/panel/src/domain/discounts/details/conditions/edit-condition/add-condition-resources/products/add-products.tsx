@@ -1,33 +1,33 @@
-import { useAdminProducts } from "medusa-react"
-import React, { useContext, useEffect, useState } from "react"
-import Button from "../../../../../../../components/fundamentals/button"
-import Modal from "../../../../../../../components/molecules/modal"
-import { LayeredModalContext } from "../../../../../../../components/molecules/modal/layered-modal"
-import { SelectableTable } from "../../../../../../../components/templates/selectable-table"
-import { useDebounce } from "../../../../../../../hooks/use-debounce"
-import useQueryFilters from "../../../../../../../hooks/use-query-filters"
-import { defaultQueryProps } from "../../../../..//new/discount-form/condition-tables/shared/common"
+import { useAdminProducts } from 'medusa-react';
+import React, { useContext, useEffect, useState } from 'react';
+import Button from '../../../../../../../components/fundamentals/button';
+import Modal from '../../../../../../../components/molecules/modal';
+import { LayeredModalContext } from '../../../../../../../components/molecules/modal/layered-modal';
+import { SelectableTable } from '../../../../../../../components/templates/selectable-table';
+import { useDebounce } from '../../../../../../../hooks/use-debounce';
+import useQueryFilters from '../../../../../../../hooks/use-query-filters';
+import { defaultQueryProps } from '../../../../..//new/discount-form/condition-tables/shared/common';
 import {
   ProductRow,
   ProductsHeader,
   useProductColumns,
-} from "../../../../../new/discount-form/condition-tables/shared/products"
-import { useEditConditionContext } from "../../edit-condition-provider"
+} from '../../../../../new/discount-form/condition-tables/shared/products';
+import { useEditConditionContext } from '../../edit-condition-provider';
 
 const AddProductConditionsScreen = () => {
-  const params = useQueryFilters(defaultQueryProps)
+  const params = useQueryFilters(defaultQueryProps);
 
-  const { pop } = useContext(LayeredModalContext)
+  const { pop } = useContext(LayeredModalContext);
 
-  const [selectedResources, setSelectedResources] = useState<string[]>([])
+  const [selectedResources, setSelectedResources] = useState<string[]>([]);
 
-  const columns = useProductColumns()
+  const columns = useProductColumns();
 
   const { isLoading, count, products } = useAdminProducts(params.queryObject, {
     keepPreviousData: true,
-  })
+  });
 
-  const { saveAndClose, saveAndGoBack } = useEditConditionContext()
+  const { saveAndClose, saveAndGoBack } = useEditConditionContext();
 
   return (
     <>
@@ -36,9 +36,9 @@ const AddProductConditionsScreen = () => {
           options={{
             enableSearch: true,
             immediateSearchFocus: true,
-            searchPlaceholder: "Search...",
+            searchPlaceholder: 'Search...',
           }}
-          resourceName="Products"
+          resourceName='Products'
           totalCount={count ?? 0}
           selectedIds={selectedResources}
           data={products || []}
@@ -51,28 +51,20 @@ const AddProductConditionsScreen = () => {
         />
       </Modal.Content>
       <Modal.Footer>
-        <div className="flex justify-end w-full space-x-xsmall">
-          <Button variant="secondary" size="small" onClick={pop}>
+        <div className='flex justify-end w-full space-x-xsmall'>
+          <Button variant='secondary' size='small' onClick={pop}>
             Cancel
           </Button>
-          <Button
-            variant="primary"
-            size="small"
-            onClick={() => saveAndGoBack(selectedResources)}
-          >
+          <Button variant='primary' size='small' onClick={() => saveAndGoBack(selectedResources)}>
             Save and go back
           </Button>
-          <Button
-            variant="primary"
-            size="small"
-            onClick={() => saveAndClose(selectedResources)}
-          >
+          <Button variant='primary' size='small' onClick={() => saveAndClose(selectedResources)}>
             Save and close
           </Button>
         </div>
       </Modal.Footer>
     </>
-  )
-}
+  );
+};
 
-export default AddProductConditionsScreen
+export default AddProductConditionsScreen;

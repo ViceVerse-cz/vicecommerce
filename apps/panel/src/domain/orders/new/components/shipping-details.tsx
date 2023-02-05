@@ -1,33 +1,31 @@
-import qs from "query-string"
-import React, { useContext, useEffect, useMemo, useState } from "react"
-import Spinner from "../../../../components/atoms/spinner"
-import Button from "../../../../components/fundamentals/button"
-import AddressForm, {
-  AddressType,
-} from "../../../../components/templates/address-form"
-import Medusa from "../../../../services/api"
+import qs from 'query-string';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
+import Spinner from '../../../../components/atoms/spinner';
+import Button from '../../../../components/fundamentals/button';
+import AddressForm, { AddressType } from '../../../../components/templates/address-form';
+import Medusa from '../../../../services/api';
 
-import { useAdminCustomer } from "medusa-react"
-import { Controller, useWatch } from "react-hook-form"
-import LockIcon from "../../../../components/fundamentals/icons/lock-icon"
-import InputField from "../../../../components/molecules/input"
-import { SteppedContext } from "../../../../components/molecules/modal/stepped-modal"
-import Select from "../../../../components/molecules/select"
-import RadioGroup from "../../../../components/organisms/radio-group"
-import { Option } from "../../../../types/shared"
-import isNullishObject from "../../../../utils/is-nullish-object"
-import mapAddressToForm from "../../../../utils/map-address-to-form"
-import { nestedForm } from "../../../../utils/nested-form"
-import { useNewOrderForm } from "../form"
+import { useAdminCustomer } from 'medusa-react';
+import { Controller, useWatch } from 'react-hook-form';
+import LockIcon from '../../../../components/fundamentals/icons/lock-icon';
+import InputField from '../../../../components/molecules/input';
+import { SteppedContext } from '../../../../components/molecules/modal/stepped-modal';
+import Select from '../../../../components/molecules/select';
+import RadioGroup from '../../../../components/organisms/radio-group';
+import { Option } from '../../../../types/shared';
+import isNullishObject from '../../../../utils/is-nullish-object';
+import mapAddressToForm from '../../../../utils/map-address-to-form';
+import { nestedForm } from '../../../../utils/nested-form';
+import { useNewOrderForm } from '../form';
 
 const ShippingDetails = () => {
-  const [addNew, setAddNew] = useState(false)
-  const { disableNextPage, enableNextPage } = useContext(SteppedContext)
+  const [addNew, setAddNew] = useState(false);
+  const { disableNextPage, enableNextPage } = useContext(SteppedContext);
 
   const {
     context: { validCountries },
     form,
-  } = useNewOrderForm()
+  } = useNewOrderForm();
 
   const debouncedFetch = async (filter: string): Promise<Option[]> => {
     const prepared = qs.stringify(
@@ -36,91 +34,90 @@ const ShippingDetails = () => {
         offset: 0,
         limit: 10,
       },
-      { skipNull: true, skipEmptyString: true }
-    )
+      { skipNull: true, skipEmptyString: true },
+    );
 
     return await Medusa.customers
       .list(`?${prepared}`)
       .then(({ data }) =>
         data.customers.map(({ id, first_name, last_name, email }) => ({
-          label: `${first_name || ""} ${last_name || ""} (${email})`,
+          label: `${first_name || ''} ${last_name || ''} (${email})`,
           value: id,
-        }))
+        })),
       )
-      .catch(() => [])
-  }
+      .catch(() => []);
+  };
 
   const customerId = useWatch({
     control: form.control,
-    name: "customer_id",
-  })
+    name: 'customer_id',
+  });
 
   const { customer, isLoading } = useAdminCustomer(customerId?.value!, {
     enabled: !!customerId?.value,
-  })
+  });
 
   const validAddresses = useMemo(() => {
     if (!customer) {
-      return []
+      return [];
     }
 
-    const validCountryCodes = validCountries.map(({ value }) => value)
+    const validCountryCodes = validCountries.map(({ value }) => value);
 
     return customer.shipping_addresses.filter(
-      ({ country_code }) =>
-        !country_code || validCountryCodes.includes(country_code)
-    )
-  }, [customer])
+      ({ country_code }) => !country_code || validCountryCodes.includes(country_code),
+    );
+  }, [customer]);
 
   const onCustomerSelect = (val: Option) => {
-    const email = /\(([^()]*)\)$/.exec(val?.label)
+    const email = /\(([^()]*)\)$/.exec(val?.label);
 
     if (email) {
-      form.setValue("email", email[1])
+      form.setValue('email', email[1]);
     }
-  }
+  };
 
   const onCreateNew = () => {
-    form.setValue("shipping_address_id", undefined)
-    setAddNew(true)
-  }
+    form.setValue('shipping_address_id', undefined);
+    setAddNew(true);
+  };
 
   const onSelectExistingAddress = (id: string) => {
     if (!customer) {
-      return
+      return;
     }
 
-    const address = customer.shipping_addresses?.find((a) => a.id === id)
+    const address = customer.shipping_addresses?.find((a) => a.id === id);
 
     if (address) {
-      form.setValue("shipping_address", mapAddressToForm(address))
+      form.setValue('shipping_address', mapAddressToForm(address));
     }
-  }
+  };
 
   const email = useWatch({
     control: form.control,
-    name: "email",
-  })
+    name: 'email',
+  });
 
   useEffect(() => {
     if (!email) {
-      disableNextPage()
+      disableNextPage();
     } else {
-      enableNextPage()
+      enableNextPage();
     }
-  }, [email])
+  }, [email]);
 
   const shippingAddress = useWatch({
     control: form.control,
-    name: "shipping_address",
-  })
+    name: 'shipping_address',
+  });
 
-  const [requiredFields, setRequiredFields] = useState(false)
+  const [requiredFields, setRequiredFields] = useState(false);
 
   useEffect(() => {
     if (!email) {
-      disableNextPage()
-      return
+      disableNextPage();
+      return;
     }
 
     if (shippingAddress && !isNullishObject(shippingAddress)) {
@@ -132,104 +129,98 @@ const ShippingDetails = () => {
         !shippingAddress.country_code ||
         !shippingAddress.postal_code
       ) {
-        disableNextPage()
-        setRequiredFields(true)
+        disableNextPage();
+        setRequiredFields(true);
       } else {
-        enableNextPage()
+        enableNextPage();
       }
     } else {
-      enableNextPage()
-      setRequiredFields(false)
+      enableNextPage();
+      setRequiredFields(false);
     }
-  }, [shippingAddress, email])
+  }, [shippingAddress, email]);
 
   return (
-    <div className="min-h-[705px] flex flex-col gap-y-8">
+    <div className='min-h-[705px] flex flex-col gap-y-8'>
       <div>
-        <span className="inter-base-semibold">
-          Customer and shipping details
-        </span>
+        <span className='inter-base-semibold'>Customer and shipping details</span>
         <Controller
           control={form.control}
-          name="customer_id"
+          name='customer_id'
           render={({ field: { value, onChange } }) => {
             return (
               <Select
-                className="mt-4"
-                label="Find existing customer"
+                className='mt-4'
+                label='Find existing customer'
                 options={[]}
                 enableSearch
                 value={value || null}
                 onChange={(val) => {
-                  onCustomerSelect(val)
-                  onChange(val)
+                  onCustomerSelect(val);
+                  onChange(val);
                 }}
                 filterOptions={debouncedFetch as any}
                 clearSelected
               />
-            )
+            );
           }}
         />
       </div>
 
-      <div className="flex flex-col gap-y-4">
-        <span className="inter-base-semibold">Email</span>
+      <div className='flex flex-col gap-y-4'>
+        <span className='inter-base-semibold'>Email</span>
         <InputField
-          {...form.register("email")}
-          label="Email"
-          placeholder="lebron@james.com"
+          {...form.register('email')}
+          label='Email'
+          placeholder='lebron@james.com'
           disabled={!!customerId}
           required
           // @ts-ignore
-          prefix={
-            !!customerId ? (
-              <LockIcon size={16} className="text-grey-40" />
-            ) : undefined
-          }
+          prefix={!!customerId ? <LockIcon size={16} className='text-grey-40' /> : undefined}
           tabIndex={!!customerId ? -1 : 0}
         />
       </div>
 
       {isLoading ? (
         <div>
-          <Spinner variant="primary" />
+          <Spinner variant='primary' />
         </div>
       ) : validAddresses.length && !addNew ? (
         <div>
-          <span className="inter-base-semibold">Choose existing addresses</span>
+          <span className='inter-base-semibold'>Choose existing addresses</span>
           <Controller
             control={form.control}
-            name="shipping_address_id"
+            name='shipping_address_id'
             render={({ field: { value, onChange } }) => {
               return (
                 <RadioGroup.Root
-                  className="mt-4"
+                  className='mt-4'
                   value={value}
                   onValueChange={(id) => {
-                    onChange(id)
-                    onSelectExistingAddress(id)
+                    onChange(id);
+                    onSelectExistingAddress(id);
                   }}
                 >
                   {validAddresses.map((sa, i) => (
                     <RadioGroup.Item
                       label={`${sa.first_name} ${sa.last_name}`}
                       checked={!!value && sa.id === value}
-                      description={`${sa.address_1}, ${sa.address_2} ${
-                        sa.postal_code
-                      } ${sa.city} ${sa.country_code?.toUpperCase()}`}
+                      description={`${sa.address_1}, ${sa.address_2} ${sa.postal_code} ${
+                        sa.city
+                      } ${sa.country_code?.toUpperCase()}`}
                       value={sa.id}
                       key={i}
                     ></RadioGroup.Item>
                   ))}
                 </RadioGroup.Root>
-              )
+              );
             }}
           />
-          <div className="mt-4 flex w-full justify-end">
+          <div className='mt-4 flex w-full justify-end'>
             <Button
-              variant="ghost"
-              size="small"
-              className="border border-grey-20 w-[112px]"
+              variant='ghost'
+              size='small'
+              className='border border-grey-20 w-[112px]'
               onClick={onCreateNew}
             >
               Create new
@@ -239,7 +230,7 @@ const ShippingDetails = () => {
       ) : (
         <div>
           <AddressForm
-            form={nestedForm(form, "shipping_address")}
+            form={nestedForm(form, 'shipping_address')}
             countryOptions={validCountries}
             type={AddressType.SHIPPING}
             required={requiredFields}
@@ -247,7 +238,7 @@ const ShippingDetails = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default ShippingDetails
+export default ShippingDetails;

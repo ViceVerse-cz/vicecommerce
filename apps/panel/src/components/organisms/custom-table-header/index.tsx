@@ -1,29 +1,25 @@
-import clsx from "clsx"
-import { capitalize } from "lodash"
-import React from "react"
+import clsx from 'clsx';
+import { capitalize } from 'lodash';
+import React from 'react';
 
 type TableViewHeaderProps<T = string> = {
-  views: T[]
-  activeView?: T
-  setActiveView?: (view: T) => void
-}
+  views: T[];
+  activeView?: T;
+  setActiveView?: (view: T) => void;
+};
 
-const TableViewHeader: React.FC<TableViewHeaderProps> = ({
-  views,
-  activeView = views[0],
-  setActiveView,
-}) => {
+const TableViewHeader: React.FC<TableViewHeaderProps> = ({ views, activeView = views[0], setActiveView }) => {
   return (
-    <div className="flex inter-large-semibold gap-x-base text-grey-40">
+    <div className='flex inter-large-semibold gap-x-base text-grey-40'>
       {views.map((k, i) => (
         <div
           key={i}
-          className={clsx("cursor-pointer", {
-            ["text-grey-90"]: k === activeView,
+          className={clsx('cursor-pointer', {
+            ['text-grey-90']: k === activeView,
           })}
           onClick={() => {
             if (setActiveView) {
-              setActiveView(k)
+              setActiveView(k);
             }
           }}
         >
@@ -31,7 +27,7 @@ const TableViewHeader: React.FC<TableViewHeaderProps> = ({
         </div>
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default TableViewHeader
+export default TableViewHeader;

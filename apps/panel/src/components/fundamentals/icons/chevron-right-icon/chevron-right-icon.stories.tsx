@@ -1,24 +1,24 @@
-import { ComponentMeta } from "@storybook/react"
-import React from "react"
-import ChevronRightIcon from "."
+import { ComponentMeta } from '@storybook/react';
+import React from 'react';
+import ChevronRightIcon from '.';
 
 export default {
-  title: "Fundamentals/Icons/ChevronRightIcon",
+  title: 'Fundamentals/Icons/ChevronRightIcon',
   component: ChevronRightIcon,
   argTypes: {
     size: {
       control: {
-        type: "select",
-        options: ["24", "20", "16"],
+        type: 'select',
+        options: ['24', '20', '16'],
       },
     },
   },
-} as ComponentMeta<typeof ChevronRightIcon>
+} as ComponentMeta<typeof ChevronRightIcon>;
 
-const Template = args => <ChevronRightIcon {...args} />
+const Template = (args) => <ChevronRightIcon {...args} />;
 
-export const Icon = Template.bind({})
+export const Icon = Template.bind({});
 Icon.args = {
-  size: "24",
-  color: "currentColor",
-}
+  size: '24',
+  color: 'currentColor',
+};

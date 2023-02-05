@@ -1,18 +1,9 @@
-import {
-  AdjacentContainer,
-  IndicatorsContainer,
-  SelectContainer,
-  ValueContainer,
-} from "./containers"
-import Control, {
-  ClearIndicator,
-  DropdownIndicator,
-  LoadingIndicator,
-} from "./control"
-import Input from "./input"
-import Menu, { LoadingMessage, MenuList, Option } from "./menu"
-import Placeholder from "./placeholder"
-import SingleValue from "./single-value"
+import { AdjacentContainer, IndicatorsContainer, SelectContainer, ValueContainer } from './containers';
+import Control, { ClearIndicator, DropdownIndicator, LoadingIndicator } from './control';
+import Input from './input';
+import Menu, { LoadingMessage, MenuList, Option } from './menu';
+import Placeholder from './placeholder';
+import SingleValue from './single-value';
 
 const Components = {
   ClearIndicator,
@@ -33,7 +24,7 @@ const Components = {
   IndicatorsContainer,
   LoadingMessage,
   IndicatorSeparator: null,
-}
+};
 
-export { AdjacentContainer }
-export default Components
+export { AdjacentContainer };
+export default Components;

@@ -1,38 +1,32 @@
-import { useAdminTaxRate } from "medusa-react"
-import React, { useContext } from "react"
-import Spinner from "../../../components/atoms/spinner"
-import Modal from "../../../components/molecules/modal"
-import LayeredModal, {
-  LayeredModalContext,
-} from "../../../components/molecules/modal/layered-modal"
-import EditForm, { SimpleEditForm } from "./edit-form"
+import { useAdminTaxRate } from 'medusa-react';
+import React, { useContext } from 'react';
+import Spinner from '../../../components/atoms/spinner';
+import Modal from '../../../components/molecules/modal';
+import LayeredModal, { LayeredModalContext } from '../../../components/molecules/modal/layered-modal';
+import EditForm, { SimpleEditForm } from './edit-form';
 
 const EditTaxRate = ({ taxRate, taxRateId, regionId, onDismiss }) => {
   const { isLoading, tax_rate } = useAdminTaxRate(
     taxRateId,
     {
-      expand: ["products", "product_types", "shipping_options"],
+      expand: ['products', 'product_types', 'shipping_options'],
     },
     {
-      enabled: taxRate.type === "rate",
-    }
-  )
+      enabled: taxRate.type === 'rate',
+    },
+  );
 
-  const layeredModalContext = useContext(LayeredModalContext)
+  const layeredModalContext = useContext(LayeredModalContext);
 
   return (
-    <LayeredModal
-      isLargeModal
-      context={layeredModalContext}
-      handleClose={onDismiss}
-    >
+    <LayeredModal isLargeModal context={layeredModalContext} handleClose={onDismiss}>
       <Modal.Body>
         <Modal.Header handleClose={onDismiss}>
           <div>
-            <h1 className="inter-xlarge-semibold">Edit Tax Rate</h1>
+            <h1 className='inter-xlarge-semibold'>Edit Tax Rate</h1>
           </div>
         </Modal.Header>
-        {taxRate.type === "region" ? (
+        {taxRate.type === 'region' ? (
           <SimpleEditForm taxRate={taxRate} onDismiss={onDismiss} />
         ) : isLoading || !tax_rate ? (
           <Spinner />
@@ -46,7 +40,7 @@ const EditTaxRate = ({ taxRate, taxRateId, regionId, onDismiss }) => {
         )}
       </Modal.Body>
     </LayeredModal>
-  )
-}
+  );
+};
 
-export default EditTaxRate
+export default EditTaxRate;

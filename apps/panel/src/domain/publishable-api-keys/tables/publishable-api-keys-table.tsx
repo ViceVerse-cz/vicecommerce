@@ -1,47 +1,47 @@
-import { useEffect, useState } from "react"
-import moment from "moment"
-import { debounce } from "lodash"
-import { Column, Row, usePagination, useTable } from "react-table"
+import { useEffect, useState } from 'react';
+import moment from 'moment';
+import { debounce } from 'lodash';
+import { Column, Row, usePagination, useTable } from 'react-table';
 
 import {
   useAdminDeletePublishableApiKey,
   useAdminPublishableApiKeys,
   useAdminRevokePublishableApiKey,
-} from "medusa-react"
-import { PublishableApiKey } from "@medusajs/medusa"
+} from 'medusa-react';
+import { PublishableApiKey } from '@medusajs/medusa';
 
-import TableContainer from "../../../components/organisms/table-container"
-import Table from "../../../components/molecules/table"
-import { ActionType } from "../../../components/molecules/actionables"
-import TrashIcon from "../../../components/fundamentals/icons/trash-icon"
-import ClipboardCopyIcon from "../../../components/fundamentals/icons/clipboard-copy-icon"
-import EditIcon from "../../../components/fundamentals/icons/edit-icon"
-import StatusIndicator from "../../../components/fundamentals/status-indicator"
-import StopIcon from "../../../components/fundamentals/icons/stop-icon"
-import Tooltip from "../../../components/atoms/tooltip"
-import CheckIcon from "../../../components/fundamentals/icons/check-icon"
-import DeletePrompt from "../../../components/organisms/delete-prompt"
+import TableContainer from '../../../components/organisms/table-container';
+import Table from '../../../components/molecules/table';
+import { ActionType } from '../../../components/molecules/actionables';
+import TrashIcon from '../../../components/fundamentals/icons/trash-icon';
+import ClipboardCopyIcon from '../../../components/fundamentals/icons/clipboard-copy-icon';
+import EditIcon from '../../../components/fundamentals/icons/edit-icon';
+import StatusIndicator from '../../../components/fundamentals/status-indicator';
+import StopIcon from '../../../components/fundamentals/icons/stop-icon';
+import Tooltip from '../../../components/atoms/tooltip';
+import CheckIcon from '../../../components/fundamentals/icons/check-icon';
+import DeletePrompt from '../../../components/organisms/delete-prompt';
 
-const PAGE_SIZE = 12
+const PAGE_SIZE = 12;
 
 const COLUMNS: Column<PublishableApiKey>[] = [
   {
-    accessor: "title",
-    Header: <div className="text-gray-500 text-small font-semibold">Name</div>,
+    accessor: 'title',
+    Header: <div className='text-gray-500 text-small font-semibold'>Name</div>,
     Cell: ({ row: { original } }) => {
-      return <span className="text-gray-900">{original.title}</span>
+      return <span className='text-gray-900'>{original.title}</span>;
     },
   },
   {
-    accessor: "id",
-    Header: <div className="text-gray-500 text-small font-semibold">Token</div>,
+    accessor: 'id',
+    Header: <div className='text-gray-500 text-small font-semibold'>Token</div>,
     Cell: ({ row: { original } }) => {
-      const [copied, setCopied] = useState(false)
+      const [copied, setCopied] = useState(false);
 
       const onClick = () => {
-        setCopied(true)
-        navigator.clipboard.writeText(original.id)
-      }
+        setCopied(true);
+        navigator.clipboard.writeText(original.id);
+      };
 
       return (
         <Tooltip
@@ -49,113 +49,103 @@ const COLUMNS: Column<PublishableApiKey>[] = [
           onMouseLeave={debounce(() => setCopied(false), 1000)}
           content={
             copied ? (
-              <span className="flex flex-row gap-1 justify-between items-center">
-                <CheckIcon size={16} className="text-green-700" /> done
+              <span className='flex flex-row gap-1 justify-between items-center'>
+                <CheckIcon size={16} className='text-green-700' /> done
               </span>
             ) : (
-              <span onClick={onClick} className="cursor-pointer">
+              <span onClick={onClick} className='cursor-pointer'>
                 Copy to clipboard
               </span>
             )
           }
         >
-          <span className="text-gray-500">{original.id}</span>
+          <span className='text-gray-500'>{original.id}</span>
         </Tooltip>
-      )
+      );
     },
   },
   {
-    accessor: "created_at",
-    Header: (
-      <div className="text-gray-500 text-small font-semibold">Created</div>
-    ),
+    accessor: 'created_at',
+    Header: <div className='text-gray-500 text-small font-semibold'>Created</div>,
     Cell: ({ row: { original } }) => {
       return (
-        <span className="text-gray-900">
-          {moment(original.created_at).format("MMM Do YYYY, h:mm:ss")}
-        </span>
-      )
+        <span className='text-gray-900'>{moment(original.created_at).format('MMM Do YYYY, h:mm:ss')}</span>
+      );
     },
   },
   {
-    accessor: "revoked_at",
-    Header: (
-      <div className="text-gray-500 text-small font-semibold">Status</div>
-    ),
+    accessor: 'revoked_at',
+    Header: <div className='text-gray-500 text-small font-semibold'>Status</div>,
     Cell: ({ row: { original } }) => {
       return (
-        <span className="text-gray-900 min-w-[50px]">
+        <span className='text-gray-900 min-w-[50px]'>
           {original.revoked_at ? (
-            <StatusIndicator title="Revoked" variant="danger" />
+            <StatusIndicator title='Revoked' variant='danger' />
           ) : (
-            <StatusIndicator title="Live" variant="success" />
+            <StatusIndicator title='Live' variant='success' />
           )}
         </span>
-      )
+      );
     },
   },
-]
+];
 
 type PublishableKeyTableRowProps = {
-  row: Row<PublishableApiKey>
-  isRevoked: boolean
-  showDetails: () => void
-  showChannelsModal: () => void
-}
+  row: Row<PublishableApiKey>;
+  isRevoked: boolean;
+  showDetails: () => void;
+  showChannelsModal: () => void;
+};
 
 /**
  * Component rendering a single PK table row.
  */
 function PublishableKeyTableRow(props: PublishableKeyTableRowProps) {
-  const { row, isRevoked, showChannelsModal, showDetails } = props
-  const pubKeyId = row.original.id
+  const { row, isRevoked, showChannelsModal, showDetails } = props;
+  const pubKeyId = row.original.id;
 
-  const [showDelete, setShowDelete] = useState(false)
-  const [showRevoke, setShowRevoke] = useState(false)
+  const [showDelete, setShowDelete] = useState(false);
+  const [showRevoke, setShowRevoke] = useState(false);
 
-  const { mutateAsync: revokePublicKey } =
-    useAdminRevokePublishableApiKey(pubKeyId)
+  const { mutateAsync: revokePublicKey } = useAdminRevokePublishableApiKey(pubKeyId);
 
-  const { mutateAsync: deletePublicKey } =
-    useAdminDeletePublishableApiKey(pubKeyId)
+  const { mutateAsync: deletePublicKey } = useAdminDeletePublishableApiKey(pubKeyId);
 
   const actions: ActionType[] = [
     {
-      label: "Edit API key details",
+      label: 'Edit API key details',
       onClick: showDetails,
       icon: <EditIcon size={16} />,
     },
     {
-      label: "Edit sales channels",
+      label: 'Edit sales channels',
       onClick: showChannelsModal,
       icon: <EditIcon size={16} />,
     },
     {
-      label: "Copy token",
+      label: 'Copy token',
       onClick: () => navigator.clipboard.writeText(pubKeyId),
       icon: <ClipboardCopyIcon size={16} />,
     },
     {
-      label: "Revoke token",
+      label: 'Revoke token',
       onClick: () => setShowRevoke(true),
       icon: <StopIcon size={16} />,
       disabled: isRevoked,
     },
     {
-      label: "Delete API key",
+      label: 'Delete API key',
       onClick: () => setShowDelete(true),
       icon: <TrashIcon size={16} />,
-      variant: "danger",
+      variant: 'danger',
     },
-  ]
+  ];
 
   return (
     <>
       <Table.Row {...props.row.getRowProps()} actions={actions}>
         {props.row.cells.map((cell) => (
-          <Table.Cell {...cell.getCellProps()}>
-            {cell.render("Cell")}
-          </Table.Cell>
+          <Table.Cell {...cell.getCellProps()}>{cell.render('Cell')}</Table.Cell>
         ))}
       </Table.Row>
 
@@ -163,10 +153,10 @@ function PublishableKeyTableRow(props: PublishableKeyTableRowProps) {
         <DeletePrompt
           handleClose={() => setShowDelete(false)}
           onDelete={async () => deletePublicKey()}
-          confirmText="Yes, delete"
-          successText="API key deleted"
+          confirmText='Yes, delete'
+          successText='API key deleted'
           text={`Are you sure you want to delete this public key?`}
-          heading="Delete key"
+          heading='Delete key'
         />
       )}
 
@@ -174,34 +164,34 @@ function PublishableKeyTableRow(props: PublishableKeyTableRowProps) {
         <DeletePrompt
           handleClose={() => setShowRevoke(false)}
           onDelete={async () => revokePublicKey()}
-          confirmText="Yes, revoke"
-          successText="API key revoked"
+          confirmText='Yes, revoke'
+          successText='API key revoked'
           text={`Are you sure you want to revoke this public key?`}
-          heading="Revoke key"
+          heading='Revoke key'
         />
       )}
     </>
-  )
+  );
 }
 
 type PublishableApiKeysTableProps = {
-  showDetailsModal: (pubKey: PublishableApiKey) => void
-  showChannelsModal: (pubKey: PublishableApiKey) => void
-}
+  showDetailsModal: (pubKey: PublishableApiKey) => void;
+  showChannelsModal: (pubKey: PublishableApiKey) => void;
+};
 
 /**
  * Container component that displays paginated publishable api keys table.
  */
 function PublishableApiKeysTable(props: PublishableApiKeysTableProps) {
-  const [offset, setOffset] = useState(0)
-  const [numPages, setNumPages] = useState(0)
-  const [currentPage, setCurrentPage] = useState(0)
+  const [offset, setOffset] = useState(0);
+  const [numPages, setNumPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
 
   const {
     publishable_api_keys: keys,
     count,
     isLoading,
-  } = useAdminPublishableApiKeys({ offset, limit: PAGE_SIZE })
+  } = useAdminPublishableApiKeys({ offset, limit: PAGE_SIZE });
 
   const table = useTable(
     {
@@ -218,30 +208,30 @@ function PublishableApiKeysTable(props: PublishableApiKeysTableProps) {
       autoResetPage: false,
       getRowId: (row) => row.id,
     },
-    usePagination
-  )
+    usePagination,
+  );
 
   useEffect(() => {
-    if (typeof count !== "undefined") {
-      setNumPages(Math.ceil(count / PAGE_SIZE))
+    if (typeof count !== 'undefined') {
+      setNumPages(Math.ceil(count / PAGE_SIZE));
     }
-  }, [count])
+  }, [count]);
 
   const handleNext = () => {
     if (table.canNextPage) {
-      setOffset((old) => old + table.state.pageSize)
-      setCurrentPage((old) => old + 1)
-      table.nextPage()
+      setOffset((old) => old + table.state.pageSize);
+      setCurrentPage((old) => old + 1);
+      table.nextPage();
     }
-  }
+  };
 
   const handlePrev = () => {
     if (table.canPreviousPage) {
-      setOffset((old) => Math.max(old - table.state.pageSize, 0))
-      setCurrentPage((old) => old - 1)
-      table.previousPage()
+      setOffset((old) => Math.max(old - table.state.pageSize, 0));
+      setCurrentPage((old) => old - 1);
+      table.previousPage();
     }
-  }
+  };
 
   return (
     <TableContainer
@@ -251,7 +241,7 @@ function PublishableApiKeysTable(props: PublishableApiKeysTableProps) {
       pagingState={{
         count,
         offset,
-        title: "API Keys",
+        title: 'API Keys',
         pageCount: table.pageCount,
         pageSize: offset + table.rows.length,
         currentPage: table.state.pageIndex + 1,
@@ -266,9 +256,7 @@ function PublishableApiKeysTable(props: PublishableApiKeysTableProps) {
         {table.headerGroups.map((headerGroup) => (
           <Table.HeadRow {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((col) => (
-              <Table.HeadCell {...col.getHeaderProps()}>
-                {col.render("Header")}
-              </Table.HeadCell>
+              <Table.HeadCell {...col.getHeaderProps()}>{col.render('Header')}</Table.HeadCell>
             ))}
           </Table.HeadRow>
         ))}
@@ -276,7 +264,7 @@ function PublishableApiKeysTable(props: PublishableApiKeysTableProps) {
         {/* === BODY === */}
         <Table.Body {...table.getTableBodyProps()}>
           {table.rows.map((row) => {
-            table.prepareRow(row)
+            table.prepareRow(row);
             return (
               <PublishableKeyTableRow
                 key={row.id}
@@ -285,22 +273,21 @@ function PublishableApiKeysTable(props: PublishableApiKeysTableProps) {
                 showChannelsModal={() => props.showChannelsModal(row.original)}
                 isRevoked={!!row.original.revoked_at}
               />
-            )
+            );
           })}
         </Table.Body>
       </Table>
 
       {/* === PLACEHOLDER === */}
       {!keys?.length && !isLoading && (
-        <div className="flex justify-center items-center h-[480px] w-[100%]">
-          <span className="text-gray-400">
-            No keys yet, use the above button to create your first publishable
-            key
+        <div className='flex justify-center items-center h-[480px] w-[100%]'>
+          <span className='text-gray-400'>
+            No keys yet, use the above button to create your first publishable key
           </span>
         </div>
       )}
     </TableContainer>
-  )
+  );
 }
 
-export default PublishableApiKeysTable
+export default PublishableApiKeysTable;

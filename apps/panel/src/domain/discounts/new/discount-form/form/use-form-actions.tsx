@@ -1,13 +1,13 @@
-import { useAdminCreateDiscount } from "medusa-react"
-import { useNavigate } from "react-router-dom"
-import { useDiscountForm } from "./discount-form-context"
-import { DiscountFormValues, formValuesToCreateDiscountMapper } from "./mappers"
+import { useAdminCreateDiscount } from 'medusa-react';
+import { useNavigate } from 'react-router-dom';
+import { useDiscountForm } from './discount-form-context';
+import { DiscountFormValues, formValuesToCreateDiscountMapper } from './mappers';
 
 export const useFormActions = () => {
-  const navigate = useNavigate()
-  const createDiscount = useAdminCreateDiscount()
+  const navigate = useNavigate();
+  const createDiscount = useAdminCreateDiscount();
 
-  const { conditions } = useDiscountForm()
+  const { conditions } = useDiscountForm();
 
   const onSaveAsInactive = async (values: DiscountFormValues) => {
     await createDiscount.mutateAsync(
@@ -17,11 +17,11 @@ export const useFormActions = () => {
       },
       {
         onSuccess: () => {
-          navigate("/a/discounts")
+          navigate('/a/discounts');
         },
-      }
-    )
-  }
+      },
+    );
+  };
 
   const onSaveAsActive = async (values: DiscountFormValues) => {
     await createDiscount.mutateAsync(
@@ -31,14 +31,14 @@ export const useFormActions = () => {
       },
       {
         onSuccess: () => {
-          navigate("/a/discounts")
+          navigate('/a/discounts');
         },
-      }
-    )
-  }
+      },
+    );
+  };
 
   return {
     onSaveAsInactive,
     onSaveAsActive,
-  }
-}
+  };
+};

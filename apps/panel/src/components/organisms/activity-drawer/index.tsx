@@ -1,26 +1,26 @@
-import React, { useContext, useEffect } from "react"
-import { PollingContext } from "../../../context/polling"
-import useOutsideClick from "../../../hooks/use-outside-click"
-import Spinner from "../../atoms/spinner"
-import SadFaceIcon from "../../fundamentals/icons/sad-face-icon"
-import SidedMouthFaceIcon from "../../fundamentals/icons/sided-mouth-face"
-import BatchJobActivityList from "../batch-jobs-activity-list"
+import React, { useContext, useEffect } from 'react';
+import { PollingContext } from '../../../context/polling';
+import useOutsideClick from '../../../hooks/use-outside-click';
+import Spinner from '../../atoms/spinner';
+import SadFaceIcon from '../../fundamentals/icons/sad-face-icon';
+import SidedMouthFaceIcon from '../../fundamentals/icons/sided-mouth-face';
+import BatchJobActivityList from '../batch-jobs-activity-list';
 
 const ActivityDrawer = ({ onDismiss }) => {
-  const ref = React.useRef<HTMLDivElement>(null)
-  const { batchJobs, hasPollingError, refetch } = useContext(PollingContext)
-  useOutsideClick(onDismiss, ref)
+  const ref = React.useRef<HTMLDivElement>(null);
+  const { batchJobs, hasPollingError, refetch } = useContext(PollingContext);
+  useOutsideClick(onDismiss, ref);
 
   useEffect(() => {
-    refetch()
-  }, [])
+    refetch();
+  }, []);
 
   return (
     <div
       ref={ref}
-      className="bg-grey-0 w-[400px] shadow-dropdown rounded-rounded top-[64px] bottom-2 right-3 rounded overflow-x-hidden fixed flex flex-col"
+      className='bg-grey-0 w-[400px] shadow-dropdown rounded-rounded top-[64px] bottom-2 right-3 rounded overflow-x-hidden fixed flex flex-col'
     >
-      <div className="inter-large-semibold pt-7 pl-8 pb-1">Activity</div>
+      <div className='inter-large-semibold pt-7 pl-8 pb-1'>Activity</div>
 
       {!hasPollingError ? (
         batchJobs ? (
@@ -32,40 +32,36 @@ const ActivityDrawer = ({ onDismiss }) => {
         <ErrorActivityDrawer />
       )}
     </div>
-  )
-}
+  );
+};
 
 const EmptyActivityDrawer = () => {
   return (
-    <div className="p-4 h-full w-full flex flex-col justify-center items-center">
+    <div className='p-4 h-full w-full flex flex-col justify-center items-center'>
       <SidedMouthFaceIcon size={36} />
-      <span className={"mt-4 inter-large-semibold text-grey-90"}>
-        Je tu docela ticho...
-      </span>
-      <span className={"mt-4 text-grey-60 text-center inter-base-regular"}>
-        V tuto chvíli nemáte žádná oznámení, ale jakmile je budete mít.
-        budou zde.
+      <span className={'mt-4 inter-large-semibold text-grey-90'}>Je tu docela ticho...</span>
+      <span className={'mt-4 text-grey-60 text-center inter-base-regular'}>
+        V tuto chvíli nemáte žádná oznámení, ale jakmile je budete mít. budou zde.
       </span>
     </div>
-  )
-}
+  );
+};
 
 const ErrorActivityDrawer = () => {
   return (
-    <div className="p-4 h-full w-full flex flex-col justify-center items-center">
+    <div className='p-4 h-full w-full flex flex-col justify-center items-center'>
       <SadFaceIcon size={36} />
-      <span className={"mt-4 inter-large-semibold text-grey-90"}>Ale ne...</span>
-      <span className={"mt-2 text-grey-60 text-center inter-base-regular"}>
-        Při pokusu o načtení vašich oznámení se něco pokazilo - Budeme
-        Pokračujte v pokusech!
+      <span className={'mt-4 inter-large-semibold text-grey-90'}>Ale ne...</span>
+      <span className={'mt-2 text-grey-60 text-center inter-base-regular'}>
+        Při pokusu o načtení vašich oznámení se něco pokazilo - Budeme Pokračujte v pokusech!
       </span>
 
-      <div className="flex items-center mt-4">
-        <Spinner size={"small"} variant={"secondary"} />
-        <span className="ml-2.5">Zpracování...</span>
+      <div className='flex items-center mt-4'>
+        <Spinner size={'small'} variant={'secondary'} />
+        <span className='ml-2.5'>Zpracování...</span>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ActivityDrawer
+export default ActivityDrawer;

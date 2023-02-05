@@ -1,221 +1,216 @@
-import { OrderEdit, Return, Swap } from "@medusajs/medusa"
-import {
-  useAdminNotes,
-  useAdminNotifications,
-  useAdminOrder,
-  useAdminOrderEdits,
-} from "medusa-react"
-import { useContext, useMemo } from "react"
-import { FeatureFlagContext } from "../context/feature-flag"
+import { OrderEdit, Return, Swap } from '@medusajs/medusa';
+import { useAdminNotes, useAdminNotifications, useAdminOrder, useAdminOrderEdits } from 'medusa-react';
+import { useContext, useMemo } from 'react';
+import { FeatureFlagContext } from '../context/feature-flag';
 
 export interface TimelineEvent {
-  id: string
-  time: Date
-  first?: boolean
-  orderId: string
-  noNotification?: boolean
+  id: string;
+  time: Date;
+  first?: boolean;
+  orderId: string;
+  noNotification?: boolean;
   type:
-    | "payment"
-    | "note"
-    | "notification"
-    | "placed"
-    | "shipped"
-    | "delivered"
-    | "fulfilled"
-    | "canceled"
-    | "return"
-    | "refund"
-    | "exchange"
-    | "exchange_fulfilled"
-    | "claim"
-    | "edit-created"
-    | "edit-requested"
-    | "edit-declined"
-    | "edit-canceled"
-    | "edit-confirmed"
-    | "payment-required"
-    | "refund-required"
+    | 'payment'
+    | 'note'
+    | 'notification'
+    | 'placed'
+    | 'shipped'
+    | 'delivered'
+    | 'fulfilled'
+    | 'canceled'
+    | 'return'
+    | 'refund'
+    | 'exchange'
+    | 'exchange_fulfilled'
+    | 'claim'
+    | 'edit-created'
+    | 'edit-requested'
+    | 'edit-declined'
+    | 'edit-canceled'
+    | 'edit-confirmed'
+    | 'payment-required'
+    | 'refund-required';
 }
 
 export interface RefundRequiredEvent extends TimelineEvent {
-  currency_code: string
+  currency_code: string;
 }
 
 export interface PaymentRequiredEvent extends TimelineEvent {
-  currency_code: string
+  currency_code: string;
 }
 
 export interface OrderEditEvent extends TimelineEvent {
-  edit: OrderEdit
+  edit: OrderEdit;
 }
 
 export interface OrderEditRequestedEvent extends OrderEditEvent {
-  email: string
+  email: string;
 }
 
 interface CancelableEvent {
-  canceledAt?: Date
-  isCanceled?: boolean
+  canceledAt?: Date;
+  isCanceled?: boolean;
 }
 
 export interface OrderPlacedEvent extends TimelineEvent {
-  amount: number
-  currency_code: string
-  tax?: number
+  amount: number;
+  currency_code: string;
+  tax?: number;
 }
 
 interface OrderItem {
-  title: string
-  quantity: number
-  thumbnail?: string
+  title: string;
+  quantity: number;
+  thumbnail?: string;
   variant: {
-    title: string
-  }
+    title: string;
+  };
 }
 
 interface ReturnItem extends OrderItem {
-  requestedQuantity: number
-  receivedQuantity: number
+  requestedQuantity: number;
+  receivedQuantity: number;
 }
 
 interface FulfillmentEvent extends TimelineEvent {
-  sourceType: "claim" | "exchange" | undefined
+  sourceType: 'claim' | 'exchange' | undefined;
 }
 
 export interface ItemsFulfilledEvent extends FulfillmentEvent {
-  items: OrderItem[]
+  items: OrderItem[];
 }
 
 export interface ItemsShippedEvent extends FulfillmentEvent {
-  items: OrderItem[]
+  items: OrderItem[];
 }
 
 export interface RefundEvent extends TimelineEvent {
-  amount: number
-  reason: string
-  currencyCode: string
-  note?: string
+  amount: number;
+  reason: string;
+  currencyCode: string;
+  note?: string;
 }
 
 enum ReturnStatus {
-  REQUESTED = "requested",
-  RECEIVED = "received",
-  REQUIRES_ACTION = "requires_action",
-  CANCELED = "canceled",
+  REQUESTED = 'requested',
+  RECEIVED = 'received',
+  REQUIRES_ACTION = 'requires_action',
+  CANCELED = 'canceled',
 }
 
 export interface ReturnEvent extends TimelineEvent {
-  items: ReturnItem[]
-  status: ReturnStatus
-  currentStatus?: ReturnStatus
-  raw: Return
-  refunded?: boolean
+  items: ReturnItem[];
+  status: ReturnStatus;
+  currentStatus?: ReturnStatus;
+  raw: Return;
+  refunded?: boolean;
 }
 
 export interface NoteEvent extends TimelineEvent {
-  value: string
-  authorId: string
+  value: string;
+  authorId: string;
 }
 
 export interface ExchangeEvent extends TimelineEvent, CancelableEvent {
-  paymentStatus: string
-  fulfillmentStatus: string
-  returnStatus: string
-  returnId: string
-  returnItems: (ReturnItem | undefined)[]
-  newItems: OrderItem[]
-  exchangeCartId?: string
-  raw: Swap
+  paymentStatus: string;
+  fulfillmentStatus: string;
+  returnStatus: string;
+  returnId: string;
+  returnItems: (ReturnItem | undefined)[];
+  newItems: OrderItem[];
+  exchangeCartId?: string;
+  raw: Swap;
 }
 
 export interface ClaimEvent extends TimelineEvent, CancelableEvent {
-  fulfillmentStatus?: string
-  refundStatus?: string
-  refundAmount?: number
-  currencyCode: string
-  claimItems: OrderItem[]
-  newItems: OrderItem[]
-  claimType: string
-  claim: any
-  order: any
+  fulfillmentStatus?: string;
+  refundStatus?: string;
+  refundAmount?: number;
+  currencyCode: string;
+  claimItems: OrderItem[];
+  newItems: OrderItem[];
+  claimType: string;
+  claim: any;
+  order: any;
 }
 
 export interface NotificationEvent extends TimelineEvent {
-  to: string
-  title: string
+  to: string;
+  title: string;
 }
 
 export const useBuildTimeline = (orderId: string) => {
-  const { order, refetch } = useAdminOrder(orderId, {})
+  const { order, refetch } = useAdminOrder(orderId, {});
 
-  const { order_edits: edits } = useAdminOrderEdits({ order_id: orderId })
+  const { order_edits: edits } = useAdminOrderEdits({ order_id: orderId });
 
-  const { isFeatureEnabled } = useContext(FeatureFlagContext)
+  const { isFeatureEnabled } = useContext(FeatureFlagContext);
 
   const { notes } = useAdminNotes({
     resource_id: orderId,
     limit: 100,
     offset: 0,
-  })
+  });
 
-  const { notifications } = useAdminNotifications({ resource_id: orderId })
+  const { notifications } = useAdminNotifications({ resource_id: orderId });
 
   const events: TimelineEvent[] | undefined = useMemo(() => {
     if (!order) {
-      return undefined
+      return undefined;
     }
 
-    let allItems = [...order.items]
+    let allItems = [...order.items];
 
     if (order.swaps && order.swaps.length) {
       for (const swap of order.swaps) {
-        allItems = [...allItems, ...swap.additional_items]
+        allItems = [...allItems, ...swap.additional_items];
       }
     }
 
     if (order.claims && order.claims.length) {
       for (const claim of order.claims) {
-        allItems = [...allItems, ...claim.additional_items]
+        allItems = [...allItems, ...claim.additional_items];
       }
     }
 
-    const events: TimelineEvent[] = []
+    const events: TimelineEvent[] = [];
 
     events.push({
-      id: "refund-event",
+      id: 'refund-event',
       time: new Date(),
       orderId: order.id,
-      type: "refund-required",
+      type: 'refund-required',
       currency_code: order.currency_code,
-    } as RefundRequiredEvent)
+    } as RefundRequiredEvent);
 
     events.push({
-      id: "payment-required",
+      id: 'payment-required',
       time: new Date(),
       orderId: order.id,
-      type: "payment-required",
+      type: 'payment-required',
       currency_code: order.currency_code,
-    } as PaymentRequiredEvent)
+    } as PaymentRequiredEvent);
 
-    if (isFeatureEnabled("order_editing")) {
+    if (isFeatureEnabled('order_editing')) {
       for (const edit of edits || []) {
         events.push({
           id: edit.id,
           time: edit.created_at,
           orderId: order.id,
-          type: "edit-created",
+          type: 'edit-created',
           edit: edit,
-        } as OrderEditEvent)
+        } as OrderEditEvent);
 
         if (edit.requested_at) {
           events.push({
             id: edit.id,
             time: edit.requested_at,
             orderId: order.id,
-            type: "edit-requested",
+            type: 'edit-requested',
             email: order.email,
             edit: edit,
-          } as OrderEditRequestedEvent)
+          } as OrderEditRequestedEvent);
         }
 
         // // declined
@@ -224,9 +219,9 @@ export const useBuildTimeline = (orderId: string) => {
             id: edit.id,
             time: edit.declined_at,
             orderId: order.id,
-            type: "edit-declined",
+            type: 'edit-declined',
             edit: edit,
-          } as OrderEditEvent)
+          } as OrderEditEvent);
         }
 
         // // canceled
@@ -235,9 +230,9 @@ export const useBuildTimeline = (orderId: string) => {
             id: edit.id,
             time: edit.canceled_at,
             orderId: order.id,
-            type: "edit-canceled",
+            type: 'edit-canceled',
             edit: edit,
-          } as OrderEditEvent)
+          } as OrderEditEvent);
         }
 
         // confirmed
@@ -246,9 +241,9 @@ export const useBuildTimeline = (orderId: string) => {
             id: edit.id,
             time: edit.confirmed_at,
             orderId: order.id,
-            type: "edit-confirmed",
+            type: 'edit-confirmed',
             edit: edit,
-          } as OrderEditEvent)
+          } as OrderEditEvent);
         }
       }
     }
@@ -259,17 +254,17 @@ export const useBuildTimeline = (orderId: string) => {
       amount: order.total,
       currency_code: order.currency_code,
       tax: order.tax_rate,
-      type: "placed",
+      type: 'placed',
       orderId: order.id,
-    } as OrderPlacedEvent)
+    } as OrderPlacedEvent);
 
-    if (order.status === "canceled") {
+    if (order.status === 'canceled') {
       events.push({
         id: `${order.id}-canceled`,
         time: order.updated_at,
-        type: "canceled",
+        type: 'canceled',
         orderId: order.id,
-      } as TimelineEvent)
+      } as TimelineEvent);
     }
 
     if (notes) {
@@ -277,11 +272,11 @@ export const useBuildTimeline = (orderId: string) => {
         events.push({
           id: note.id,
           time: note.created_at,
-          type: "note",
+          type: 'note',
           authorId: note.author_id,
           value: note.value,
           orderId: order.id,
-        } as NoteEvent)
+        } as NoteEvent);
       }
     }
 
@@ -293,29 +288,29 @@ export const useBuildTimeline = (orderId: string) => {
         note: event.note,
         reason: event.reason,
         time: event.created_at,
-        type: "refund",
-      } as RefundEvent)
+        type: 'refund',
+      } as RefundEvent);
     }
 
     for (const event of order.fulfillments) {
       events.push({
         id: event.id,
         time: event.created_at,
-        type: "fulfilled",
+        type: 'fulfilled',
         items: event.items.map((item) => getLineItem(allItems, item.item_id)),
         noNotification: event.no_notification,
         orderId: order.id,
-      } as ItemsFulfilledEvent)
+      } as ItemsFulfilledEvent);
 
       if (event.shipped_at) {
         events.push({
           id: event.id,
           time: event.shipped_at,
-          type: "shipped",
+          type: 'shipped',
           items: event.items.map((item) => getLineItem(allItems, item.item_id)),
           noNotification: event.no_notification,
           orderId: order.id,
-        } as ItemsShippedEvent)
+        } as ItemsShippedEvent);
       }
     }
 
@@ -326,24 +321,24 @@ export const useBuildTimeline = (orderId: string) => {
         status: event.status,
         currentStatus: event.status,
         time: event.updated_at,
-        type: "return",
+        type: 'return',
         noNotification: event.no_notification,
         orderId: order.id,
         raw: event as unknown as Return,
         refunded: getWasRefundClaim(event.claim_order_id, order),
-      } as ReturnEvent)
+      } as ReturnEvent);
 
-      if (event.status !== "requested") {
+      if (event.status !== 'requested') {
         events.push({
           id: event.id,
           items: event.items.map((i) => getReturnItems(allItems, i)),
-          status: "requested",
+          status: 'requested',
           time: event.created_at,
-          type: "return",
+          type: 'return',
           currentStatus: event.status,
           noNotification: event.no_notification,
           orderId: order.id,
-        } as ReturnEvent)
+        } as ReturnEvent);
       }
     }
 
@@ -356,42 +351,36 @@ export const useBuildTimeline = (orderId: string) => {
         returnId: event.return_order.id,
         paymentStatus: event.payment_status,
         returnStatus: event.return_order.status,
-        type: "exchange",
+        type: 'exchange',
         newItems: event.additional_items.map((i) => getSwapItem(i)),
-        returnItems: event.return_order.items.map((i) =>
-          getReturnItems(allItems, i)
-        ),
-        exchangeCartId:
-          event.payment_status !== "captured" ? event.cart_id : undefined,
+        returnItems: event.return_order.items.map((i) => getReturnItems(allItems, i)),
+        exchangeCartId: event.payment_status !== 'captured' ? event.cart_id : undefined,
         canceledAt: event.canceled_at,
         orderId: event.order_id,
         raw: event as unknown as Swap,
-      } as ExchangeEvent)
+      } as ExchangeEvent);
 
-      if (
-        event.fulfillment_status === "fulfilled" ||
-        event.fulfillment_status === "shipped"
-      ) {
+      if (event.fulfillment_status === 'fulfilled' || event.fulfillment_status === 'shipped') {
         events.push({
           id: event.id,
           time: event.fulfillments[0].created_at,
-          type: "fulfilled",
+          type: 'fulfilled',
           items: event.additional_items.map((i) => getSwapItem(i)),
           noNotification: event.no_notification,
           orderId: order.id,
-          sourceType: "exchange",
-        } as ItemsFulfilledEvent)
+          sourceType: 'exchange',
+        } as ItemsFulfilledEvent);
 
         if (event.fulfillments[0].shipped_at) {
           events.push({
             id: event.id,
             time: event.fulfillments[0].shipped_at,
-            type: "shipped",
+            type: 'shipped',
             items: event.additional_items.map((i) => getSwapItem(i)),
             noNotification: event.no_notification,
             orderId: order.id,
-            sourceType: "exchange",
-          } as ItemsShippedEvent)
+            sourceType: 'exchange',
+          } as ItemsShippedEvent);
         }
       }
     }
@@ -400,7 +389,7 @@ export const useBuildTimeline = (orderId: string) => {
       for (const claim of order.claims) {
         events.push({
           id: claim.id,
-          type: "claim",
+          type: 'claim',
           newItems: claim.additional_items.map((i) => ({
             quantity: i.quantity,
             title: i.title,
@@ -421,38 +410,35 @@ export const useBuildTimeline = (orderId: string) => {
           orderId: order.id,
           claim,
           order,
-        } as ClaimEvent)
+        } as ClaimEvent);
 
-        if (
-          claim.fulfillment_status === "fulfilled" ||
-          claim.fulfillment_status === "shipped"
-        ) {
+        if (claim.fulfillment_status === 'fulfilled' || claim.fulfillment_status === 'shipped') {
           events.push({
             id: claim.id,
             time: claim.fulfillments[0].created_at,
-            type: "fulfilled",
+            type: 'fulfilled',
             items: claim.additional_items.map((i) => getSwapItem(i)),
             noNotification: claim.no_notification,
             orderId: order.id,
-            sourceType: "claim",
-          } as ItemsFulfilledEvent)
+            sourceType: 'claim',
+          } as ItemsFulfilledEvent);
 
           if (claim.fulfillments[0].shipped_at) {
             events.push({
               id: claim.id,
               time: claim.fulfillments[0].shipped_at,
-              type: "shipped",
+              type: 'shipped',
               items: claim.additional_items.map((i) => getSwapItem(i)),
               noNotification: claim.no_notification,
               orderId: order.id,
-              sourceType: "claim",
-            } as ItemsShippedEvent)
+              sourceType: 'claim',
+            } as ItemsShippedEvent);
           }
         }
         if (claim.canceled_at) {
           events.push({
             id: `${claim.id}-created`,
-            type: "claim",
+            type: 'claim',
             newItems: claim.additional_items.map((i) => ({
               quantity: i.quantity,
               title: i.title,
@@ -471,7 +457,7 @@ export const useBuildTimeline = (orderId: string) => {
             claimType: claim.type,
             isCanceled: true,
             orderId: order.id,
-          } as ClaimEvent)
+          } as ClaimEvent);
         }
       }
     }
@@ -482,53 +468,53 @@ export const useBuildTimeline = (orderId: string) => {
           id: notification.id,
           time: notification.created_at,
           to: notification.to,
-          type: "notification",
+          type: 'notification',
           title: notification.event_name,
           orderId: order.id,
-        } as NotificationEvent)
+        } as NotificationEvent);
       }
     }
 
     events.sort((a, b) => {
       if (a.time > b.time) {
-        return -1
+        return -1;
       }
 
       if (a.time < b.time) {
-        return 1
+        return 1;
       }
 
-      return 0
-    })
+      return 0;
+    });
 
-    events[events.length - 1].first = true
+    events[events.length - 1].first = true;
 
-    return events
-  }, [order, edits, notes, notifications, isFeatureEnabled])
+    return events;
+  }, [order, edits, notes, notifications, isFeatureEnabled]);
 
-  return { events, refetch }
-}
+  return { events, refetch };
+};
 
 function getLineItem(allItems, itemId) {
-  const line = allItems.find((line) => line.id === itemId)
+  const line = allItems.find((line) => line.id === itemId);
 
   if (!line) {
-    return
+    return;
   }
 
   return {
     title: line.title,
     quantity: line.quantity,
     thumbnail: line.thumbnail,
-    variant: { title: line?.variant?.title || "-" },
-  }
+    variant: { title: line?.variant?.title || '-' },
+  };
 }
 
 function getReturnItems(allItems, item) {
-  const line = allItems.find((li) => li.id === item.item_id)
+  const line = allItems.find((li) => li.id === item.item_id);
 
   if (!line) {
-    return
+    return;
   }
 
   return {
@@ -537,10 +523,10 @@ function getReturnItems(allItems, item) {
     requestedQuantity: item.requested_quantity,
     receivedQuantity: item.received_quantity,
     variant: {
-      title: line?.variant?.title || "-",
+      title: line?.variant?.title || '-',
     },
     thumbnail: line.thumbnail,
-  }
+  };
 }
 
 function getClaimItem(claimItem) {
@@ -551,7 +537,7 @@ function getClaimItem(claimItem) {
     variant: {
       title: claimItem.item.variant?.title,
     },
-  }
+  };
 }
 
 function getSwapItem(item) {
@@ -560,15 +546,15 @@ function getSwapItem(item) {
     quantity: item.quantity,
     thumbnail: item.thumbnail,
     variant: { title: item.variant?.title },
-  }
+  };
 }
 
 function getWasRefundClaim(claimId, order) {
-  const claim = order.claims.find((c) => c.id === claimId)
+  const claim = order.claims.find((c) => c.id === claimId);
 
   if (!claim) {
-    return false
+    return false;
   }
 
-  return claim.type === "refund"
+  return claim.type === 'refund';
 }

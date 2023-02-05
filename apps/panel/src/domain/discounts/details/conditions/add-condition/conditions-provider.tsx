@@ -1,33 +1,27 @@
-import { Discount } from "@medusajs/medusa"
-import { useAdminUpdateDiscount } from "medusa-react"
-import React, {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from "react"
-import useNotification from "../../../../../hooks/use-notification"
-import { getErrorMessage } from "../../../../../utils/error-messages"
+import { Discount } from '@medusajs/medusa';
+import { useAdminUpdateDiscount } from 'medusa-react';
+import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import useNotification from '../../../../../hooks/use-notification';
+import { getErrorMessage } from '../../../../../utils/error-messages';
 import {
   ConditionMap,
   DiscountConditionOperator,
   DiscountConditionType,
   UpdateConditionProps,
-} from "../../../types"
+} from '../../../types';
 
 type ConditionsProviderProps = {
-  discount: Discount
-  children: ReactNode
-}
+  discount: Discount;
+  children: ReactNode;
+};
 
 type ConditionContext = {
-  conditions: ConditionMap
-  updateCondition: (props: UpdateConditionProps) => void
-  save: () => void
-  updateAndSave: (props: UpdateConditionProps) => void
-  reset: () => void
-}
+  conditions: ConditionMap;
+  updateCondition: (props: UpdateConditionProps) => void;
+  save: () => void;
+  updateAndSave: (props: UpdateConditionProps) => void;
+  reset: () => void;
+};
 
 const defaultConditions: ConditionMap = {
   products: {
@@ -60,22 +54,19 @@ const defaultConditions: ConditionMap = {
     type: DiscountConditionType.CUSTOMER_GROUPS,
     items: [],
   },
-}
+};
 
-const ConditionsContext = createContext<ConditionContext | null>(null)
+const ConditionsContext = createContext<ConditionContext | null>(null);
 
-export const ConditionsProvider = ({
-  discount,
-  children,
-}: ConditionsProviderProps) => {
-  const [conditions, setConditions] = useState<ConditionMap>(defaultConditions)
-  const { mutate } = useAdminUpdateDiscount(discount.id)
+export const ConditionsProvider = ({ discount, children }: ConditionsProviderProps) => {
+  const [conditions, setConditions] = useState<ConditionMap>(defaultConditions);
+  const { mutate } = useAdminUpdateDiscount(discount.id);
 
-  const notification = useNotification()
+  const notification = useNotification();
 
   const reset = () => {
     if (discount.rule.conditions.length) {
-      let initialConditions = defaultConditions
+      let initialConditions = defaultConditions;
 
       for (const condition of discount.rule.conditions) {
         initialConditions = {
@@ -84,18 +75,18 @@ export const ConditionsProvider = ({
             ...initialConditions[condition.type],
             id: condition.id,
           },
-        }
+        };
 
-        setConditions(initialConditions)
+        setConditions(initialConditions);
       }
     } else {
-      setConditions(defaultConditions)
+      setConditions(defaultConditions);
     }
-  }
+  };
 
   useEffect(() => {
-    reset()
-  }, [discount])
+    reset();
+  }, [discount]);
 
   const updateCondition = ({ type, items, operator }: UpdateConditionProps) => {
     setConditions((prevConditions) => ({
@@ -105,8 +96,8 @@ export const ConditionsProvider = ({
         items,
         operator,
       },
-    }))
-  }
+    }));
+  };
 
   const handleSubmit = (conditions: ConditionMap) => {
     const conditionsToSubmit = Object.values(conditions)
@@ -114,10 +105,10 @@ export const ConditionsProvider = ({
       .map((condition) => ({
         [condition.type]: condition.items.map((i) => i.id),
         operator: condition.operator,
-      }))
+      }));
 
     if (!conditionsToSubmit.length) {
-      return
+      return;
     }
 
     mutate(
@@ -129,22 +120,18 @@ export const ConditionsProvider = ({
       },
       {
         onSuccess: () => {
-          notification(
-            "Condtions were succesfully added",
-            "Discount conditions updated",
-            "success"
-          )
+          notification('Condtions were succesfully added', 'Discount conditions updated', 'success');
         },
         onError: (err) => {
-          notification("Error", getErrorMessage(err), "error")
+          notification('Error', getErrorMessage(err), 'error');
         },
-      }
-    )
-  }
+      },
+    );
+  };
 
   const save = () => {
-    handleSubmit(conditions)
-  }
+    handleSubmit(conditions);
+  };
 
   const updateAndSave = ({ type, items, operator }: UpdateConditionProps) => {
     const update = {
@@ -154,10 +141,10 @@ export const ConditionsProvider = ({
         items,
         operator,
       },
-    }
+    };
 
-    handleSubmit(update)
-  }
+    handleSubmit(update);
+  };
 
   return (
     <ConditionsContext.Provider
@@ -171,13 +158,13 @@ export const ConditionsProvider = ({
     >
       {children}
     </ConditionsContext.Provider>
-  )
-}
+  );
+};
 
 export const useConditions = () => {
-  const context = useContext(ConditionsContext)
+  const context = useContext(ConditionsContext);
   if (context === null) {
-    throw new Error("useConditions must be used within a ConditionsProvider")
+    throw new Error('useConditions must be used within a ConditionsProvider');
   }
-  return context
-}
+  return context;
+};

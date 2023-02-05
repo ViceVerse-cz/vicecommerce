@@ -1,48 +1,42 @@
-import React, { useState } from "react"
-import { useAdminNotifications } from "medusa-react"
+import React, { useState } from 'react';
+import { useAdminNotifications } from 'medusa-react';
 
-import { OrderEditRequestedEvent } from "../../../../hooks/use-build-timeline"
-import MailIcon from "../../../fundamentals/icons/mail-icon"
-import EventContainer from "../event-container"
-import Button from "../../../fundamentals/button"
-import ResendModal from "../notification/resend-modal"
+import { OrderEditRequestedEvent } from '../../../../hooks/use-build-timeline';
+import MailIcon from '../../../fundamentals/icons/mail-icon';
+import EventContainer from '../event-container';
+import Button from '../../../fundamentals/button';
+import ResendModal from '../notification/resend-modal';
 
 type RequestedProps = {
-  event: OrderEditRequestedEvent
-}
+  event: OrderEditRequestedEvent;
+};
 
 const EditRequested: React.FC<RequestedProps> = ({ event }) => {
-  const [showResend, setShowResend] = useState(false)
+  const [showResend, setShowResend] = useState(false);
 
   const { notifications } = useAdminNotifications({
     resource_id: event.edit?.id,
-  })
+  });
 
-  const notification = notifications?.find(
-    (n) => n.event_name === "order-edit.requested"
-  )
+  const notification = notifications?.find((n) => n.event_name === 'order-edit.requested');
 
   if (!notification) {
-    return null
+    return null;
   }
 
   return (
     <>
       <EventContainer
-        title={"Order Edit confirmation-request sent"}
+        title={'Order Edit confirmation-request sent'}
         icon={<MailIcon size={20} />}
         time={event.time}
         isFirst={event.first}
-        midNode={
-          <span className="inter-small-regular text-grey-50">
-            {event.email}
-          </span>
-        }
+        midNode={<span className='inter-small-regular text-grey-50'>{event.email}</span>}
       >
         <Button
-          className="w-full border border-grey-20 mb-5"
-          size="small"
-          variant="ghost"
+          className='w-full border border-grey-20 mb-5'
+          size='small'
+          variant='ghost'
           onClick={() => setShowResend(true)}
         >
           Resend Confirmation-Request
@@ -56,7 +50,7 @@ const EditRequested: React.FC<RequestedProps> = ({ event }) => {
         />
       )}
     </>
-  )
-}
+  );
+};
 
-export default EditRequested
+export default EditRequested;

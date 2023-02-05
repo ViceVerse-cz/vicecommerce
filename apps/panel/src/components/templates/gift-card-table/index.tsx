@@ -1,22 +1,22 @@
-import clsx from "clsx"
-import { isEmpty } from "lodash"
-import { useAdminGiftCards } from "medusa-react"
-import qs from "qs"
-import { useEffect, useState } from "react"
-import { useLocation } from "react-router-dom"
-import { usePagination, useTable } from "react-table"
-import Spinner from "../../atoms/spinner"
-import Table from "../../molecules/table"
-import TableContainer from "../../organisms/table-container"
-import useGiftCardTableColums from "./use-gift-card-column"
-import { useGiftCardFilters } from "./use-gift-card-filters"
+import clsx from 'clsx';
+import { isEmpty } from 'lodash';
+import { useAdminGiftCards } from 'medusa-react';
+import qs from 'qs';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { usePagination, useTable } from 'react-table';
+import Spinner from '../../atoms/spinner';
+import Table from '../../molecules/table';
+import TableContainer from '../../organisms/table-container';
+import useGiftCardTableColums from './use-gift-card-column';
+import { useGiftCardFilters } from './use-gift-card-filters';
 
-const DEFAULT_PAGE_SIZE = 15
+const DEFAULT_PAGE_SIZE = 15;
 
-const defaultQueryProps = {}
+const defaultQueryProps = {};
 
 const GiftCardTable = () => {
-  const location = useLocation()
+  const location = useLocation();
 
   const {
     reset,
@@ -24,25 +24,25 @@ const GiftCardTable = () => {
     setQuery: setFreeText,
     queryObject,
     representationObject,
-  } = useGiftCardFilters(location.search, defaultQueryProps)
-  const filtersOnLoad = queryObject
+  } = useGiftCardFilters(location.search, defaultQueryProps);
+  const filtersOnLoad = queryObject;
 
-  const offs = parseInt(filtersOnLoad?.offset) || 0
-  const lim = parseInt(filtersOnLoad.limit) || DEFAULT_PAGE_SIZE
+  const offs = parseInt(filtersOnLoad?.offset) || 0;
+  const lim = parseInt(filtersOnLoad.limit) || DEFAULT_PAGE_SIZE;
 
-  const [query, setQuery] = useState(filtersOnLoad?.query)
-  const [numPages, setNumPages] = useState(0)
+  const [query, setQuery] = useState(filtersOnLoad?.query);
+  const [numPages, setNumPages] = useState(0);
 
   const { gift_cards, isLoading, count } = useAdminGiftCards(queryObject, {
     keepPreviousData: true,
-  })
+  });
 
   useEffect(() => {
-    const controlledPageCount = Math.ceil(count! / queryObject.limit)
-    setNumPages(controlledPageCount)
-  }, [gift_cards])
+    const controlledPageCount = Math.ceil(count! / queryObject.limit);
+    setNumPages(controlledPageCount);
+  }, [gift_cards]);
 
-  const [columns] = useGiftCardTableColums()
+  const [columns] = useGiftCardTableColums();
 
   const {
     getTableProps,
@@ -70,56 +70,56 @@ const GiftCardTable = () => {
       pageCount: numPages,
       autoResetPage: false,
     },
-    usePagination
-  )
+    usePagination,
+  );
 
   // Debounced search
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       if (query) {
-        setFreeText(query)
-        gotoPage(0)
+        setFreeText(query);
+        gotoPage(0);
       } else {
         // if we delete query string, we reset the table view
-        reset()
+        reset();
       }
-    }, 400)
+    }, 400);
 
-    return () => clearTimeout(delayDebounceFn)
-  }, [query])
+    return () => clearTimeout(delayDebounceFn);
+  }, [query]);
 
   const handleNext = () => {
     if (canNextPage) {
-      paginate(1)
-      nextPage()
+      paginate(1);
+      nextPage();
     }
-  }
+  };
 
   const handlePrev = () => {
     if (canPreviousPage) {
-      paginate(-1)
-      previousPage()
+      paginate(-1);
+      previousPage();
     }
-  }
+  };
 
   const updateUrlFromFilter = (obj = {}) => {
-    const stringified = qs.stringify(obj)
-    window.history.replaceState(`/a/gift-cards`, "", `${`?${stringified}`}`)
-  }
+    const stringified = qs.stringify(obj);
+    window.history.replaceState(`/a/gift-cards`, '', `${`?${stringified}`}`);
+  };
 
   const refreshWithFilters = () => {
-    const filterObj = representationObject
+    const filterObj = representationObject;
 
     if (isEmpty(filterObj)) {
-      updateUrlFromFilter({ offset: 0, limit: DEFAULT_PAGE_SIZE })
+      updateUrlFromFilter({ offset: 0, limit: DEFAULT_PAGE_SIZE });
     } else {
-      updateUrlFromFilter(filterObj)
+      updateUrlFromFilter(filterObj);
     }
-  }
+  };
 
   useEffect(() => {
-    refreshWithFilters()
-  }, [representationObject])
+    refreshWithFilters();
+  }, [representationObject]);
 
   return (
     <TableContainer
@@ -130,7 +130,7 @@ const GiftCardTable = () => {
         count: count!,
         offset: queryObject.offset,
         pageSize: queryObject.offset + rows.length,
-        title: "Gift cards",
+        title: 'Gift cards',
         currentPage: pageIndex + 1,
         pageCount: pageCount,
         nextPage: handleNext,
@@ -145,15 +145,13 @@ const GiftCardTable = () => {
         handleSearch={setQuery}
         searchValue={query}
         {...getTableProps()}
-        className={clsx({ ["relative"]: isLoading })}
+        className={clsx({ ['relative']: isLoading })}
       >
         <Table.Head>
           {headerGroups?.map((headerGroup) => (
             <Table.HeadRow {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((col) => (
-                <Table.HeadCell {...col.getHeaderProps()}>
-                  {col.render("Header")}
-                </Table.HeadCell>
+                <Table.HeadCell {...col.getHeaderProps()}>{col.render('Header')}</Table.HeadCell>
               ))}
             </Table.HeadRow>
           ))}
@@ -162,9 +160,9 @@ const GiftCardTable = () => {
           <Table.Body {...getTableBodyProps()}>
             <Table.Row>
               <Table.Cell colSpan={columns.length}>
-                <div className="flex w-full h-full absolute items-center justify-center mt-10">
-                  <div className="">
-                    <Spinner size={"large"} variant={"secondary"} />
+                <div className='flex w-full h-full absolute items-center justify-center mt-10'>
+                  <div className=''>
+                    <Spinner size={'large'} variant={'secondary'} />
                   </div>
                 </div>
               </Table.Cell>
@@ -173,25 +171,25 @@ const GiftCardTable = () => {
         ) : (
           <Table.Body {...getTableBodyProps()}>
             {rows.map((row) => {
-              prepareRow(row)
+              prepareRow(row);
               return (
                 <Table.Row
-                  color={"inherit"}
+                  color={'inherit'}
                   linkTo={row.original.id}
                   {...row.getRowProps()}
-                  className="group"
+                  className='group'
                 >
                   {row.cells.map((cell, index) => {
-                    return cell.render("Cell", { index })
+                    return cell.render('Cell', { index });
                   })}
                 </Table.Row>
-              )
+              );
             })}
           </Table.Body>
         )}
       </Table>
     </TableContainer>
-  )
-}
+  );
+};
 
-export default GiftCardTable
+export default GiftCardTable;

@@ -1,40 +1,39 @@
-import clsx from "clsx"
-import { isEmpty } from "lodash"
-import { useAdminOrders } from "medusa-react"
-import qs from "qs"
-import React, { useEffect, useState } from "react"
-import { useLocation } from "react-router-dom"
-import { usePagination, useTable } from "react-table"
-import { useAnalytics } from "../../../context/analytics"
-import { FeatureFlagContext } from "../../../context/feature-flag"
-import Table from "../../molecules/table"
-import TableContainer from "../../organisms/table-container"
-import OrderFilters from "../order-filter-dropdown"
-import useOrderTableColums from "./use-order-column"
-import { useOrderFilters } from "./use-order-filters"
+import clsx from 'clsx';
+import { isEmpty } from 'lodash';
+import { useAdminOrders } from 'medusa-react';
+import qs from 'qs';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { usePagination, useTable } from 'react-table';
+import { useAnalytics } from '../../../context/analytics';
+import { FeatureFlagContext } from '../../../context/feature-flag';
+import Table from '../../molecules/table';
+import TableContainer from '../../organisms/table-container';
+import OrderFilters from '../order-filter-dropdown';
+import useOrderTableColums from './use-order-column';
+import { useOrderFilters } from './use-order-filters';
 
-const DEFAULT_PAGE_SIZE = 15
+const DEFAULT_PAGE_SIZE = 15;
 
 const defaultQueryProps = {
-  expand: "shipping_address",
-  fields:
-    "id,status,display_id,created_at,email,fulfillment_status,payment_status,total,currency_code",
-}
+  expand: 'shipping_address',
+  fields: 'id,status,display_id,created_at,email,fulfillment_status,payment_status,total,currency_code',
+};
 
 type OrderTableProps = {
-  setContextFilters: (filters: Record<string, { filter: string[] }>) => void
-}
+  setContextFilters: (filters: Record<string, { filter: string[] }>) => void;
+};
 
 const OrderTable = ({ setContextFilters }: OrderTableProps) => {
-  const location = useLocation()
+  const location = useLocation();
 
-  const { isFeatureEnabled } = React.useContext(FeatureFlagContext)
-  const { trackNumberOfOrders } = useAnalytics()
+  const { isFeatureEnabled } = React.useContext(FeatureFlagContext);
+  const { trackNumberOfOrders } = useAnalytics();
 
-  let hiddenColumns = ["sales_channel"]
-  if (isFeatureEnabled("sales_channels")) {
-    defaultQueryProps.expand = "shipping_address,sales_channel"
-    hiddenColumns = []
+  let hiddenColumns = ['sales_channel'];
+  if (isFeatureEnabled('sales_channels')) {
+    defaultQueryProps.expand = 'shipping_address,sales_channel';
+    hiddenColumns = [];
   }
 
   const {
@@ -50,34 +49,34 @@ const OrderTable = ({ setContextFilters }: OrderTableProps) => {
     setQuery: setFreeText,
     queryObject,
     representationObject,
-  } = useOrderFilters(location.search, defaultQueryProps)
-  const filtersOnLoad = queryObject
+  } = useOrderFilters(location.search, defaultQueryProps);
+  const filtersOnLoad = queryObject;
 
-  const offs = parseInt(filtersOnLoad?.offset) || 0
-  const lim = parseInt(filtersOnLoad.limit) || DEFAULT_PAGE_SIZE
+  const offs = parseInt(filtersOnLoad?.offset) || 0;
+  const lim = parseInt(filtersOnLoad.limit) || DEFAULT_PAGE_SIZE;
 
-  const [query, setQuery] = useState(filtersOnLoad?.query)
-  const [numPages, setNumPages] = useState(0)
+  const [query, setQuery] = useState(filtersOnLoad?.query);
+  const [numPages, setNumPages] = useState(0);
 
   const { orders, isLoading, count } = useAdminOrders(queryObject, {
     keepPreviousData: true,
     onSuccess: ({ count }) => {
       trackNumberOfOrders({
         count,
-      })
+      });
     },
-  })
+  });
 
   useEffect(() => {
-    const controlledPageCount = Math.ceil(count! / queryObject.limit)
-    setNumPages(controlledPageCount)
-  }, [orders])
+    const controlledPageCount = Math.ceil(count! / queryObject.limit);
+    setNumPages(controlledPageCount);
+  }, [orders]);
 
   useEffect(() => {
-    setContextFilters(filters as {})
-  }, [filters])
+    setContextFilters(filters as {});
+  }, [filters]);
 
-  const [columns] = useOrderTableColums()
+  const [columns] = useOrderTableColums();
 
   const {
     getTableProps,
@@ -106,61 +105,61 @@ const OrderTable = ({ setContextFilters }: OrderTableProps) => {
       pageCount: numPages,
       autoResetPage: false,
     },
-    usePagination
-  )
+    usePagination,
+  );
 
   // Debounced search
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       if (query) {
-        setFreeText(query)
-        gotoPage(0)
+        setFreeText(query);
+        gotoPage(0);
       } else {
         // if we delete query string, we reset the table view
-        reset()
+        reset();
       }
-    }, 400)
+    }, 400);
 
-    return () => clearTimeout(delayDebounceFn)
-  }, [query])
+    return () => clearTimeout(delayDebounceFn);
+  }, [query]);
 
   const handleNext = () => {
     if (canNextPage) {
-      paginate(1)
-      nextPage()
+      paginate(1);
+      nextPage();
     }
-  }
+  };
 
   const handlePrev = () => {
     if (canPreviousPage) {
-      paginate(-1)
-      previousPage()
+      paginate(-1);
+      previousPage();
     }
-  }
+  };
 
   const updateUrlFromFilter = (obj = {}) => {
-    const stringified = qs.stringify(obj)
-    window.history.replaceState(`/a/orders`, "", `${`?${stringified}`}`)
-  }
+    const stringified = qs.stringify(obj);
+    window.history.replaceState(`/a/orders`, '', `${`?${stringified}`}`);
+  };
 
   const refreshWithFilters = () => {
-    const filterObj = representationObject
+    const filterObj = representationObject;
 
     if (isEmpty(filterObj)) {
-      updateUrlFromFilter({ offset: 0, limit: DEFAULT_PAGE_SIZE })
+      updateUrlFromFilter({ offset: 0, limit: DEFAULT_PAGE_SIZE });
     } else {
-      updateUrlFromFilter(filterObj)
+      updateUrlFromFilter(filterObj);
     }
-  }
+  };
 
   const clearFilters = () => {
-    reset()
-    setQuery("")
-  }
+    reset();
+    setQuery('');
+  };
 
   useEffect(() => {
-    refreshWithFilters()
-  }, [representationObject])
+    refreshWithFilters();
+  }, [representationObject]);
 
   return (
     <div>
@@ -172,7 +171,7 @@ const OrderTable = ({ setContextFilters }: OrderTableProps) => {
           count: count!,
           offset: queryObject.offset,
           pageSize: queryObject.offset + rows.length,
-          title: "Orders",
+          title: 'Orders',
           currentPage: pageIndex + 1,
           pageCount: pageCount,
           nextPage: handleNext,
@@ -198,44 +197,38 @@ const OrderTable = ({ setContextFilters }: OrderTableProps) => {
           handleSearch={setQuery}
           searchValue={query}
           {...getTableProps()}
-          className={clsx({ ["relative"]: isLoading })}
+          className={clsx({ ['relative']: isLoading })}
         >
           <Table.Head>
             {headerGroups?.map((headerGroup) => (
               <Table.HeadRow {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((col) => (
-                  <Table.HeadCell {...col.getHeaderProps()}>
-                    {col.render("Header")}
-                  </Table.HeadCell>
+                  <Table.HeadCell {...col.getHeaderProps()}>{col.render('Header')}</Table.HeadCell>
                 ))}
               </Table.HeadRow>
             ))}
           </Table.Head>
           <Table.Body {...getTableBodyProps()}>
             {rows.map((row) => {
-              prepareRow(row)
+              prepareRow(row);
               return (
                 <Table.Row
-                  color={"inherit"}
+                  color={'inherit'}
                   linkTo={row.original.id}
                   {...row.getRowProps()}
-                  className="group"
+                  className='group'
                 >
                   {row.cells.map((cell) => {
-                    return (
-                      <Table.Cell {...cell.getCellProps()}>
-                        {cell.render("Cell")}
-                      </Table.Cell>
-                    )
+                    return <Table.Cell {...cell.getCellProps()}>{cell.render('Cell')}</Table.Cell>;
                   })}
                 </Table.Row>
-              )
+              );
             })}
           </Table.Body>
         </Table>
       </TableContainer>
     </div>
-  )
-}
+  );
+};
 
-export default React.memo(OrderTable)
+export default React.memo(OrderTable);

@@ -5,19 +5,19 @@ You may define custom services that will be registered on the global container b
 ```js
 // my.js
 
-import { BaseService } from "medusa-interfaces";
+import { BaseService } from 'medusa-interfaces';
 
 class MyService extends BaseService {
   constructor({ productService }) {
     super();
 
-    this.productService_ = productService
+    this.productService_ = productService;
   }
 
   async getProductMessage() {
-    const [product] = await this.productService_.list({}, { take: 1 })
+    const [product] = await this.productService_.list({}, { take: 1 });
 
-    return `Welcome to ${product.title}!`
+    return `Welcome to ${product.title}!`;
   }
 }
 
@@ -29,19 +29,19 @@ The first argument to the `constructor` is the global giving you access to easy 
 You may use the services you define here in custom endpoints by resolving the services defined.
 
 ```js
-import { Router } from "express"
+import { Router } from 'express';
 
 export default () => {
-  const router = Router()
+  const router = Router();
 
-  router.get("/hello-product", async (req, res) => {
-    const myService = req.scope.resolve("myService")
+  router.get('/hello-product', async (req, res) => {
+    const myService = req.scope.resolve('myService');
 
     res.json({
-      message: await myService.getProductMessage()
-    })
-  })
+      message: await myService.getProductMessage(),
+    });
+  });
 
   return router;
-}
+};
 ```

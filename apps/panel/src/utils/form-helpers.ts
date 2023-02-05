@@ -1,22 +1,20 @@
-import { DeepMap } from "react-hook-form"
+import { DeepMap } from 'react-hook-form';
 
 export const stringOrNull = (value: string) => {
-  return value === "" ? null : value
-}
+  return value === '' ? null : value;
+};
 
 export const numberOrNull = (value: string) => {
-  const tmp = parseInt(value, 10)
+  const tmp = parseInt(value, 10);
 
-  return isNaN(tmp) ? null : tmp
-}
+  return isNaN(tmp) ? null : tmp;
+};
 
 export const checkForDirtyState = (
   dirtyFields: DeepMap<Record<string, any>, true>,
-  otherValues: Record<string, boolean>
+  otherValues: Record<string, boolean>,
 ) => {
-  const otherDirtyState = otherValues
-    ? Object.values(otherValues).some((v) => v)
-    : false
+  const otherDirtyState = otherValues ? Object.values(otherValues).some((v) => v) : false;
 
-  return !!Object.keys(dirtyFields).length || otherDirtyState
-}
+  return !!Object.keys(dirtyFields).length || otherDirtyState;
+};

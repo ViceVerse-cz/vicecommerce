@@ -1,24 +1,24 @@
-import { ComponentMeta } from "@storybook/react"
-import React from "react"
-import OSShortcut from "."
+import { ComponentMeta } from '@storybook/react';
+import React from 'react';
+import OSShortcut from '.';
 
 export default {
-  title: "Atoms/OSShortcut",
+  title: 'Atoms/OSShortcut',
   component: OSShortcut,
-} as ComponentMeta<typeof OSShortcut>
+} as ComponentMeta<typeof OSShortcut>;
 
-const Template = args => <OSShortcut {...args} />
+const Template = (args) => <OSShortcut {...args} />;
 
-export const CmdK = Template.bind({})
+export const CmdK = Template.bind({});
 CmdK.args = {
-  winModifiers: "Control",
-  macModifiers: "⌘",
-  keys: "K",
-}
+  winModifiers: 'Control',
+  macModifiers: '⌘',
+  keys: 'K',
+};
 
-export const CmdKL = Template.bind({})
+export const CmdKL = Template.bind({});
 CmdKL.args = {
-  winModifiers: "Control",
-  macModifiers: "⌘",
-  keys: ["K", "L"],
-}
+  winModifiers: 'Control',
+  macModifiers: '⌘',
+  keys: ['K', 'L'],
+};

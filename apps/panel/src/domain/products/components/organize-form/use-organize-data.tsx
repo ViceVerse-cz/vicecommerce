@@ -1,12 +1,12 @@
-import { useAdminCollections, useAdminProductTypes } from "medusa-react"
-import { useMemo } from "react"
+import { useAdminCollections, useAdminProductTypes } from 'medusa-react';
+import { useMemo } from 'react';
 
 const useOrganizeData = () => {
   const { product_types } = useAdminProductTypes(undefined, {
     staleTime: 0,
     refetchOnWindowFocus: true,
-  })
-  const { collections } = useAdminCollections()
+  });
+  const { collections } = useAdminCollections();
 
   const productTypeOptions = useMemo(() => {
     return (
@@ -14,8 +14,8 @@ const useOrganizeData = () => {
         value: id,
         label: value,
       })) || []
-    )
-  }, [product_types])
+    );
+  }, [product_types]);
 
   const collectionOptions = useMemo(() => {
     return (
@@ -23,13 +23,13 @@ const useOrganizeData = () => {
         value: id,
         label: title,
       })) || []
-    )
-  }, [collections])
+    );
+  }, [collections]);
 
   return {
     productTypeOptions,
     collectionOptions,
-  }
-}
+  };
+};
 
-export default useOrganizeData
+export default useOrganizeData;

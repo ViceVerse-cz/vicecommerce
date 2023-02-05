@@ -1,27 +1,25 @@
-import { useAdminCollections } from "medusa-react"
-import React, { useEffect, useState } from "react"
-import { usePagination, useTable } from "react-table"
-import { useDebounce } from "../../../hooks/use-debounce"
-import Spinner from "../../atoms/spinner"
-import Table from "../../molecules/table"
-import { FilteringOptionProps } from "../../molecules/table/filtering-option"
-import TableContainer from "../../organisms/table-container"
-import useCollectionActions from "./use-collection-actions"
-import useCollectionTableColumn from "./use-collection-column"
+import { useAdminCollections } from 'medusa-react';
+import React, { useEffect, useState } from 'react';
+import { usePagination, useTable } from 'react-table';
+import { useDebounce } from '../../../hooks/use-debounce';
+import Spinner from '../../atoms/spinner';
+import Table from '../../molecules/table';
+import { FilteringOptionProps } from '../../molecules/table/filtering-option';
+import TableContainer from '../../organisms/table-container';
+import useCollectionActions from './use-collection-actions';
+import useCollectionTableColumn from './use-collection-column';
 
-const DEFAULT_PAGE_SIZE = 15
+const DEFAULT_PAGE_SIZE = 15;
 
 const CollectionsTable: React.FC = () => {
-  const [filteringOptions, setFilteringOptions] = useState<
-    FilteringOptionProps[]
-  >([])
-  const [offset, setOffset] = useState(0)
-  const limit = DEFAULT_PAGE_SIZE
+  const [filteringOptions, setFilteringOptions] = useState<FilteringOptionProps[]>([]);
+  const [offset, setOffset] = useState(0);
+  const limit = DEFAULT_PAGE_SIZE;
 
-  const [query, setQuery] = useState("")
-  const [numPages, setNumPages] = useState(0)
+  const [query, setQuery] = useState('');
+  const [numPages, setNumPages] = useState(0);
 
-  const debouncedSearchTerm = useDebounce(query, 300)
+  const debouncedSearchTerm = useDebounce(query, 300);
   const { collections, isLoading, isRefetching, count } = useAdminCollections(
     {
       q: debouncedSearchTerm,
@@ -30,17 +28,17 @@ const CollectionsTable: React.FC = () => {
     },
     {
       keepPreviousData: true,
-    }
-  )
+    },
+  );
 
   useEffect(() => {
-    if (typeof count !== "undefined") {
-      const controlledPageCount = Math.ceil(count / limit)
-      setNumPages(controlledPageCount)
+    if (typeof count !== 'undefined') {
+      const controlledPageCount = Math.ceil(count / limit);
+      setNumPages(controlledPageCount);
     }
-  }, [count])
+  }, [count]);
 
-  const [columns] = useCollectionTableColumn()
+  const [columns] = useCollectionTableColumn();
 
   const {
     getTableProps,
@@ -67,42 +65,42 @@ const CollectionsTable: React.FC = () => {
       pageCount: numPages,
       autoResetPage: false,
     },
-    usePagination
-  )
+    usePagination,
+  );
 
   const handleNext = () => {
     if (canNextPage) {
-      setOffset(offset + limit)
-      nextPage()
+      setOffset(offset + limit);
+      nextPage();
     }
-  }
+  };
 
   const handleSearch = (q: string) => {
-    setOffset(0)
-    setQuery(q)
-  }
+    setOffset(0);
+    setQuery(q);
+  };
 
   const handlePrev = () => {
     if (canPreviousPage) {
-      setOffset(offset - limit)
-      previousPage()
+      setOffset(offset - limit);
+      previousPage();
     }
-  }
+  };
 
   useEffect(() => {
     setFilteringOptions([
       {
-        title: "Sort",
+        title: 'Sort',
         options: [
           {
-            title: "All",
+            title: 'All',
             count: collections?.length || 0,
-            onClick: () => console.log("Not implemented yet"),
+            onClick: () => console.log('Not implemented yet'),
           },
         ],
       },
-    ])
-  }, [collections])
+    ]);
+  }, [collections]);
 
   return (
     <TableContainer
@@ -113,7 +111,7 @@ const CollectionsTable: React.FC = () => {
         count: count!,
         offset,
         pageSize: offset + rows.length,
-        title: "Collections",
+        title: 'Collections',
         currentPage: pageIndex + 1,
         pageCount: pageCount,
         nextPage: handleNext,
@@ -126,7 +124,7 @@ const CollectionsTable: React.FC = () => {
         enableSearch
         handleSearch={handleSearch}
         searchValue={query}
-        searchPlaceholder="Search Collections"
+        searchPlaceholder='Search Collections'
         filteringOptions={filteringOptions}
         {...getTableProps()}
       >
@@ -134,11 +132,8 @@ const CollectionsTable: React.FC = () => {
           {headerGroups?.map((headerGroup) => (
             <Table.HeadRow {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((col) => (
-                <Table.HeadCell
-                  className="min-w-[100px]"
-                  {...col.getHeaderProps()}
-                >
-                  {col.render("Header")}
+                <Table.HeadCell className='min-w-[100px]' {...col.getHeaderProps()}>
+                  {col.render('Header')}
                 </Table.HeadCell>
               ))}
             </Table.HeadRow>
@@ -148,8 +143,8 @@ const CollectionsTable: React.FC = () => {
           <Table.Body {...getTableBodyProps()}>
             <Table.Row>
               <Table.Cell colSpan={columns.length}>
-                <div className="w-full pt-2xlarge flex items-center justify-center">
-                  <Spinner size={"large"} variant={"secondary"} />
+                <div className='w-full pt-2xlarge flex items-center justify-center'>
+                  <Spinner size={'large'} variant={'secondary'} />
                 </div>
               </Table.Cell>
             </Table.Row>
@@ -157,35 +152,31 @@ const CollectionsTable: React.FC = () => {
         ) : (
           <Table.Body {...getTableBodyProps()}>
             {rows.map((row) => {
-              prepareRow(row)
-              return <CollectionRow row={row} />
+              prepareRow(row);
+              return <CollectionRow row={row} />;
             })}
           </Table.Body>
         )}
       </Table>
     </TableContainer>
-  )
-}
+  );
+};
 
 const CollectionRow = ({ row }) => {
-  const collection = row.original
-  const { getActions } = useCollectionActions(collection)
+  const collection = row.original;
+  const { getActions } = useCollectionActions(collection);
 
   return (
     <Table.Row
-      color={"inherit"}
+      color={'inherit'}
       linkTo={`/a/collections/${collection.id}`}
       actions={getActions(collection)}
       {...row.getRowProps()}
     >
       {row.cells.map((cell, index) => {
-        return (
-          <Table.Cell {...cell.getCellProps()}>
-            {cell.render("Cell", { index })}
-          </Table.Cell>
-        )
+        return <Table.Cell {...cell.getCellProps()}>{cell.render('Cell', { index })}</Table.Cell>;
       })}
     </Table.Row>
-  )
-}
-export default CollectionsTable
+  );
+};
+export default CollectionsTable;

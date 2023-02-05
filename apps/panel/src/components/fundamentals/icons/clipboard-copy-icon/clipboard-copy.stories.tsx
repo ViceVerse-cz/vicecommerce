@@ -1,26 +1,24 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react"
-import React from "react"
-import ClipboardCopyIcon from "."
+import { ComponentMeta, ComponentStory } from '@storybook/react';
+import React from 'react';
+import ClipboardCopyIcon from '.';
 
 export default {
-  title: "Fundamentals/Icons/ClipboardCopy",
+  title: 'Fundamentals/Icons/ClipboardCopy',
   component: ClipboardCopyIcon,
   argTypes: {
     size: {
       control: {
-        type: "select",
-        options: ["24", "20", "16"],
+        type: 'select',
+        options: ['24', '20', '16'],
       },
     },
   },
-} as ComponentMeta<typeof ClipboardCopyIcon>
+} as ComponentMeta<typeof ClipboardCopyIcon>;
 
-const Template: ComponentStory<typeof ClipboardCopyIcon> = (args) => (
-  <ClipboardCopyIcon {...args} />
-)
+const Template: ComponentStory<typeof ClipboardCopyIcon> = (args) => <ClipboardCopyIcon {...args} />;
 
-export const Icon = Template.bind({})
+export const Icon = Template.bind({});
 Icon.args = {
-  size: "24",
-  color: "currentColor",
-}
+  size: '24',
+  color: 'currentColor',
+};

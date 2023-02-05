@@ -1,18 +1,18 @@
-import React, { PropsWithChildren } from "react"
-import { AnimatePresence, motion } from "framer-motion"
+import React, { PropsWithChildren } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 
-const MODAL_WIDTH = 560
+const MODAL_WIDTH = 560;
 
 type SideModalProps = PropsWithChildren<{
-  close: () => void
-  isVisible: boolean
-}>
+  close: () => void;
+  isVisible: boolean;
+}>;
 
 /**
  * Side modal displayed as right drawer on open.
  */
 function SideModal(props: SideModalProps) {
-  const { isVisible, children, close } = props
+  const { isVisible, children, close } = props;
   return (
     <AnimatePresence>
       {isVisible && (
@@ -22,30 +22,30 @@ function SideModal(props: SideModalProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ ease: "easeInOut" }}
+            transition={{ ease: 'easeInOut' }}
             style={{
-              position: "absolute",
+              position: 'absolute',
               top: 0,
               left: 0,
-              width: "100%",
-              height: "100%",
+              width: '100%',
+              height: '100%',
               zIndex: 99,
-              background: "rgba(0,0,0,.3)",
+              background: 'rgba(0,0,0,.3)',
             }}
           ></motion.div>
           <motion.div
-            transition={{ ease: "easeInOut" }}
+            transition={{ ease: 'easeInOut' }}
             initial={{ right: -MODAL_WIDTH }}
             style={{
-              position: "fixed",
-              height: "100%",
+              position: 'fixed',
+              height: '100%',
               width: MODAL_WIDTH,
-              background: "white",
+              background: 'white',
               right: 0,
               top: 0,
               zIndex: 9999,
             }}
-            className="rounded border overflow-hidden"
+            className='rounded border overflow-hidden'
             animate={{ right: 0 }}
             exit={{ right: -MODAL_WIDTH }}
           >
@@ -54,7 +54,7 @@ function SideModal(props: SideModalProps) {
         </>
       )}
     </AnimatePresence>
-  )
+  );
 }
 
-export default SideModal
+export default SideModal;

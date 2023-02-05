@@ -1,25 +1,17 @@
-import { useAdminProductTags } from "medusa-react"
-import React, { useEffect, useState } from "react"
-import Modal from "../../../../../../../components/molecules/modal"
-import { SelectableTable } from "../../../../../../../components/templates/selectable-table"
-import useQueryFilters from "../../../../../../../hooks/use-query-filters"
-import { defaultQueryProps } from "../../../../../new/discount-form/condition-tables/shared/common"
-import {
-  TagColumns,
-  TagHeader,
-  TagRow,
-} from "../../../../../new/discount-form/condition-tables/shared/tags"
-import { useEditConditionContext } from "../../edit-condition-provider"
-import ExistingConditionTableActions from "../../condition-table-actions"
+import { useAdminProductTags } from 'medusa-react';
+import React, { useEffect, useState } from 'react';
+import Modal from '../../../../../../../components/molecules/modal';
+import { SelectableTable } from '../../../../../../../components/templates/selectable-table';
+import useQueryFilters from '../../../../../../../hooks/use-query-filters';
+import { defaultQueryProps } from '../../../../../new/discount-form/condition-tables/shared/common';
+import { TagColumns, TagHeader, TagRow } from '../../../../../new/discount-form/condition-tables/shared/tags';
+import { useEditConditionContext } from '../../edit-condition-provider';
+import ExistingConditionTableActions from '../../condition-table-actions';
 
 const ProductTagsConditionsTable = () => {
-  const params = useQueryFilters(defaultQueryProps)
+  const params = useQueryFilters(defaultQueryProps);
 
-  const {
-    condition,
-    removeConditionResources,
-    isLoading,
-  } = useEditConditionContext()
+  const { condition, removeConditionResources, isLoading } = useEditConditionContext();
 
   const {
     isLoading: isLoadingTags,
@@ -30,26 +22,26 @@ const ProductTagsConditionsTable = () => {
     { discount_condition_id: condition.id, ...params.queryObject },
     {
       keepPreviousData: true,
-    }
-  )
+    },
+  );
 
-  const [selectedRowIds, setSelectedRowIds] = useState<string[]>([])
+  const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
 
   const onDeselect = () => {
-    setSelectedRowIds([])
-  }
+    setSelectedRowIds([]);
+  };
 
   const onRemove = () => {
-    removeConditionResources(selectedRowIds)
-    onDeselect()
-  }
+    removeConditionResources(selectedRowIds);
+    onDeselect();
+  };
 
   useEffect(() => {
     if (!isLoading) {
-      refetch() // if loading is flipped, we've either added or removed resources -> refetch
-      onDeselect()
+      refetch(); // if loading is flipped, we've either added or removed resources -> refetch
+      onDeselect();
     }
-  }, [isLoading])
+  }, [isLoading]);
 
   return (
     <Modal.Content>
@@ -65,7 +57,7 @@ const ProductTagsConditionsTable = () => {
             />
           ),
         }}
-        resourceName="Tags"
+        resourceName='Tags'
         totalCount={count ?? 0}
         selectedIds={selectedRowIds}
         data={product_tags || []}
@@ -77,7 +69,7 @@ const ProductTagsConditionsTable = () => {
         {...params}
       />
     </Modal.Content>
-  )
-}
+  );
+};
 
-export default ProductTagsConditionsTable
+export default ProductTagsConditionsTable;

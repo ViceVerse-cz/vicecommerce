@@ -1,24 +1,24 @@
-import { ComponentMeta } from "@storybook/react"
-import React from "react"
-import UserIcon from "."
+import { ComponentMeta } from '@storybook/react';
+import React from 'react';
+import UserIcon from '.';
 
 export default {
-  title: "Fundamentals/Icons/UserIcon",
+  title: 'Fundamentals/Icons/UserIcon',
   component: UserIcon,
   argTypes: {
     size: {
       control: {
-        type: "select",
-        options: ["24", "20", "16"],
+        type: 'select',
+        options: ['24', '20', '16'],
       },
     },
   },
-} as ComponentMeta<typeof UserIcon>
+} as ComponentMeta<typeof UserIcon>;
 
-const Template = args => <UserIcon {...args} />
+const Template = (args) => <UserIcon {...args} />;
 
-export const Icon = Template.bind({})
+export const Icon = Template.bind({});
 Icon.args = {
-  size: "24",
-  color: "currentColor",
-}
+  size: '24',
+  color: 'currentColor',
+};

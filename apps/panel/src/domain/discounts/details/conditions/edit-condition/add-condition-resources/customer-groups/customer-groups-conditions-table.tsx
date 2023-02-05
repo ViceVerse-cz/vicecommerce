@@ -1,25 +1,21 @@
-import { useAdminCustomerGroups } from "medusa-react"
-import React, { useEffect, useState } from "react"
-import Modal from "../../../../../../../components/molecules/modal"
-import { SelectableTable } from "../../../../../../../components/templates/selectable-table"
-import useQueryFilters from "../../../../../../../hooks/use-query-filters"
-import { defaultQueryProps } from "../../../../../new/discount-form/condition-tables/shared/common"
+import { useAdminCustomerGroups } from 'medusa-react';
+import React, { useEffect, useState } from 'react';
+import Modal from '../../../../../../../components/molecules/modal';
+import { SelectableTable } from '../../../../../../../components/templates/selectable-table';
+import useQueryFilters from '../../../../../../../hooks/use-query-filters';
+import { defaultQueryProps } from '../../../../../new/discount-form/condition-tables/shared/common';
 import {
   CustomerGroupsHeader,
   CustomerGroupsRow,
   useGroupColumns,
-} from "../../../../../new/discount-form/condition-tables/shared/groups"
-import { useEditConditionContext } from "../../edit-condition-provider"
-import ExistingConditionTableActions from "../../condition-table-actions"
+} from '../../../../../new/discount-form/condition-tables/shared/groups';
+import { useEditConditionContext } from '../../edit-condition-provider';
+import ExistingConditionTableActions from '../../condition-table-actions';
 
 const CustomerGroupsConditionsTable = () => {
-  const params = useQueryFilters(defaultQueryProps)
+  const params = useQueryFilters(defaultQueryProps);
 
-  const {
-    condition,
-    removeConditionResources,
-    isLoading,
-  } = useEditConditionContext()
+  const { condition, removeConditionResources, isLoading } = useEditConditionContext();
 
   const {
     isLoading: isLoadingCustomerGroups,
@@ -30,28 +26,28 @@ const CustomerGroupsConditionsTable = () => {
     { discount_condition_id: condition.id, ...params.queryObject },
     {
       keepPreviousData: true,
-    }
-  )
+    },
+  );
 
-  const columns = useGroupColumns()
+  const columns = useGroupColumns();
 
-  const [selectedRowIds, setSelectedRowIds] = useState<string[]>([])
+  const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
 
   const onDeselect = () => {
-    setSelectedRowIds([])
-  }
+    setSelectedRowIds([]);
+  };
 
   const onRemove = () => {
-    removeConditionResources(selectedRowIds)
-    onDeselect()
-  }
+    removeConditionResources(selectedRowIds);
+    onDeselect();
+  };
 
   useEffect(() => {
     if (!isLoading) {
-      refetch() // if loading is flipped, we've either added or removed resources -> refetch
-      onDeselect()
+      refetch(); // if loading is flipped, we've either added or removed resources -> refetch
+      onDeselect();
     }
-  }, [isLoading])
+  }, [isLoading]);
 
   return (
     <Modal.Content>
@@ -67,7 +63,7 @@ const CustomerGroupsConditionsTable = () => {
             />
           ),
         }}
-        resourceName="Groups"
+        resourceName='Groups'
         totalCount={count ?? 0}
         selectedIds={selectedRowIds}
         data={customer_groups || []}
@@ -79,7 +75,7 @@ const CustomerGroupsConditionsTable = () => {
         {...params}
       />
     </Modal.Content>
-  )
-}
+  );
+};
 
-export default CustomerGroupsConditionsTable
+export default CustomerGroupsConditionsTable;

@@ -1,17 +1,17 @@
-import React, { createContext, ReactNode } from "react"
+import React, { createContext, ReactNode } from 'react';
 
 type SkeletonContextType = {
-  isLoading?: boolean
-}
+  isLoading?: boolean;
+};
 
 const SkeletonContext = createContext<SkeletonContextType>({
   isLoading: false,
-})
+});
 
 type Props = {
-  children?: ReactNode
-  isLoading?: boolean
-}
+  children?: ReactNode;
+  isLoading?: boolean;
+};
 
 const SkeletonProvider = ({ children, isLoading }: Props) => {
   return (
@@ -22,13 +22,13 @@ const SkeletonProvider = ({ children, isLoading }: Props) => {
     >
       {children}
     </SkeletonContext.Provider>
-  )
-}
+  );
+};
 
-export default SkeletonProvider
+export default SkeletonProvider;
 
 export const useSkeleton = () => {
-  const { isLoading } = React.useContext(SkeletonContext)
+  const { isLoading } = React.useContext(SkeletonContext);
 
-  return { isLoading }
-}
+  return { isLoading };
+};

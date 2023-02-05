@@ -1,85 +1,78 @@
-import { useAdminRegions } from "medusa-react"
-import React, { useEffect } from "react"
-import { useNavigate } from "react-router-dom"
-import Fade from "../../../../components/atoms/fade-wrapper"
-import Button from "../../../../components/fundamentals/button"
-import PlusIcon from "../../../../components/fundamentals/icons/plus-icon"
-import RadioGroup from "../../../../components/organisms/radio-group"
-import Section from "../../../../components/organisms/section"
-import { useAnalytics } from "../../../../context/analytics"
-import useToggleState from "../../../../hooks/use-toggle-state"
-import NewRegion from "../new"
-import RegionCard from "./region-card"
+import { useAdminRegions } from 'medusa-react';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Fade from '../../../../components/atoms/fade-wrapper';
+import Button from '../../../../components/fundamentals/button';
+import PlusIcon from '../../../../components/fundamentals/icons/plus-icon';
+import RadioGroup from '../../../../components/organisms/radio-group';
+import Section from '../../../../components/organisms/section';
+import { useAnalytics } from '../../../../context/analytics';
+import useToggleState from '../../../../hooks/use-toggle-state';
+import NewRegion from '../new';
+import RegionCard from './region-card';
 
 type Props = {
-  id?: string
-}
+  id?: string;
+};
 
 const RegionOverview = ({ id }: Props) => {
-  const navigate = useNavigate()
-  const { trackRegions } = useAnalytics()
+  const navigate = useNavigate();
+  const { trackRegions } = useAnalytics();
   const { regions, isLoading } = useAdminRegions(undefined, {
     onSuccess: ({ regions, count }) => {
-      trackRegions({ regions: regions.map((r) => r.name), count })
+      trackRegions({ regions: regions.map((r) => r.name), count });
     },
-  })
-  const [selectedRegion, setSelectedRegion] = React.useState<
-    string | undefined
-  >(id)
+  });
+  const [selectedRegion, setSelectedRegion] = React.useState<string | undefined>(id);
 
   useEffect(() => {
     if (id) {
-      handleChange(id)
+      handleChange(id);
     }
 
     if (!id && regions && regions.length > 0) {
-      handleChange(regions[0].id)
+      handleChange(regions[0].id);
     }
-  }, [id, regions])
+  }, [id, regions]);
 
   useEffect(() => {
     if (isLoading) {
-      return
+      return;
     }
 
     if (!selectedRegion && regions && regions.length > 0) {
       navigate(`/a/settings/regions/${regions[0].id}`, {
         replace: true,
-      })
+      });
     }
-  }, [regions, isLoading, selectedRegion])
+  }, [regions, isLoading, selectedRegion]);
 
   const handleChange = (id: string) => {
     if (id !== selectedRegion) {
-      setSelectedRegion(id)
-      navigate(`/a/settings/regions/${id}`)
+      setSelectedRegion(id);
+      navigate(`/a/settings/regions/${id}`);
     }
-  }
+  };
 
-  const { state, toggle, close } = useToggleState()
+  const { state, toggle, close } = useToggleState();
 
   return (
     <>
       <Section
-        title="Regions"
+        title='Regions'
         customActions={
           <div>
-            <Button
-              variant="ghost"
-              size="small"
-              className="h-xlarge w-xlarge"
-              onClick={toggle}
-            >
+            <Button variant='ghost' size='small' className='h-xlarge w-xlarge' onClick={toggle}>
               <PlusIcon />
             </Button>
           </div>
         }
-        className="h-full"
+        className='h-full'
       >
-        <p className="text-base-regular text-grey-50 mt-2xsmall">
+        <p className='text-base-regular text-grey-50 mt-2xsmall'>
           Manage the markets that you will operate within.
         </p>
-        <div className="mt-large">
+        <div className='mt-large'>
           <RadioGroup.Root value={selectedRegion} onValueChange={handleChange}>
             {regions?.map((region) => (
               <RegionCard key={region.id} region={region} />
@@ -91,7 +84,7 @@ const RegionOverview = ({ id }: Props) => {
         <NewRegion onClose={close} />
       </Fade>
     </>
-  )
-}
+  );
+};
 
-export default RegionOverview
+export default RegionOverview;

@@ -1,103 +1,89 @@
-import React, { useRef, useState } from "react"
-import { useAdminSalesChannels } from "medusa-react"
-import { SalesChannel } from "@medusajs/medusa"
+import React, { useRef, useState } from 'react';
+import { useAdminSalesChannels } from 'medusa-react';
+import { SalesChannel } from '@medusajs/medusa';
 
-import SideModal from "../../../components/molecules/modal/side-modal"
-import Button from "../../../components/fundamentals/button"
-import CrossIcon from "../../../components/fundamentals/icons/cross-icon"
-import InputField from "../../../components/molecules/input"
-import SearchIcon from "../../../components/fundamentals/icons/search-icon"
-import SalesChannelTable from "../tables/sales-channels-table"
+import SideModal from '../../../components/molecules/modal/side-modal';
+import Button from '../../../components/fundamentals/button';
+import CrossIcon from '../../../components/fundamentals/icons/cross-icon';
+import InputField from '../../../components/molecules/input';
+import SearchIcon from '../../../components/fundamentals/icons/search-icon';
+import SalesChannelTable from '../tables/sales-channels-table';
 
-const LIMIT = 12
+const LIMIT = 12;
 
-const containsIdenticalKeys = (
-  a: Record<string, any>,
-  b: Record<string, any>
-) => {
-  a = Object.keys(a)
-  b = Object.keys(b)
-  return a.length === b.length && a.every((value) => b.includes(value))
-}
+const containsIdenticalKeys = (a: Record<string, any>, b: Record<string, any>) => {
+  a = Object.keys(a);
+  b = Object.keys(b);
+  return a.length === b.length && a.every((value) => b.includes(value));
+};
 
 type AddSalesChannelsSideModalProps = {
-  close: () => void
-  isVisible: boolean
-  selectedChannels: Record<string, SalesChannel>
-  setSelectedChannels: (arg: any) => void
-}
+  close: () => void;
+  isVisible: boolean;
+  selectedChannels: Record<string, SalesChannel>;
+  setSelectedChannels: (arg: any) => void;
+};
 
 /**
  * Modal for adding sales channels to a new PK during creation.
  */
 function AddSalesChannelsSideModal(props: AddSalesChannelsSideModalProps) {
-  const tableRef = useRef()
-  const { isVisible, close, selectedChannels, setSelectedChannels } = props
+  const tableRef = useRef();
+  const { isVisible, close, selectedChannels, setSelectedChannels } = props;
 
-  const [_selectedChannels, _setSelectedChannels] = useState<
-    Record<number, SalesChannel>
-  >({})
+  const [_selectedChannels, _setSelectedChannels] = useState<Record<number, SalesChannel>>({});
 
-  const [offset, setOffset] = useState(0)
-  const [search, setSearch] = useState("")
+  const [offset, setOffset] = useState(0);
+  const [search, setSearch] = useState('');
 
   const {
     sales_channels: data = [],
     isLoading,
     count,
-  } = useAdminSalesChannels(
-    { q: search, limit: LIMIT, offset },
-    { keepPreviousData: true }
-  )
+  } = useAdminSalesChannels({ q: search, limit: LIMIT, offset }, { keepPreviousData: true });
 
   const onSave = () => {
-    setSelectedChannels(_selectedChannels)
-    setOffset(0)
-    setSearch("")
-    close()
-  }
+    setSelectedChannels(_selectedChannels);
+    setOffset(0);
+    setSearch('');
+    close();
+  };
 
   const onClose = () => {
-    setOffset(0)
-    setSearch("")
+    setOffset(0);
+    setSearch('');
 
-    _setSelectedChannels(selectedChannels)
+    _setSelectedChannels(selectedChannels);
 
-    Object.values(selectedChannels).map((channel) =>
-      tableRef.current?.toggleRowSelected(channel.id, true)
-    )
+    Object.values(selectedChannels).map((channel) => tableRef.current?.toggleRowSelected(channel.id, true));
 
-    close()
-  }
+    close();
+  };
 
   return (
     <SideModal close={onClose} isVisible={!!isVisible}>
-      <div className="flex flex-col justify-between h-full p-6">
+      <div className='flex flex-col justify-between h-full p-6'>
         {/* === HEADER === */}
 
-        <div className="flex items-center justify-between">
-          <h3 className="inter-large-semibold text-xl text-gray-900 flex items-center gap-2">
+        <div className='flex items-center justify-between'>
+          <h3 className='inter-large-semibold text-xl text-gray-900 flex items-center gap-2'>
             Add sales channels
           </h3>
-          <Button
-            variant="secondary"
-            className="w-8 h-8 p-2"
-            onClick={props.close}
-          >
-            <CrossIcon size={20} className="text-grey-50" />
+          <Button variant='secondary' className='w-8 h-8 p-2' onClick={props.close}>
+            <CrossIcon size={20} className='text-grey-50' />
           </Button>
         </div>
         {/* === DIVIDER === */}
 
-        <div className="flex-grow">
-          <div className="my-6">
+        <div className='flex-grow'>
+          <div className='my-6'>
             <InputField
               small
-              name="name"
-              type="string"
+              name='name'
+              type='string'
               value={search}
-              className="h-[32px]"
-              placeholder="Find channels"
+              className='h-[32px]'
+              placeholder='Find channels'
               prefix={<SearchIcon size={16} />}
               onChange={(ev) => setSearch(ev.target.value)}
             />
@@ -117,31 +103,25 @@ function AddSalesChannelsSideModal(props: AddSalesChannelsSideModalProps) {
         </div>
         {/* === DIVIDER === */}
 
-        <div
-          className="h-[1px] bg-gray-200 block"
-          style={{ margin: "24px -24px" }}
-        />
+        <div className='h-[1px] bg-gray-200 block' style={{ margin: '24px -24px' }} />
         {/* === FOOTER === */}
 
-        <div className="flex justify-end gap-2">
-          <Button size="small" variant="ghost" onClick={onClose}>
+        <div className='flex justify-end gap-2'>
+          <Button size='small' variant='ghost' onClick={onClose}>
             Cancel
           </Button>
           <Button
-            size="small"
-            variant="primary"
+            size='small'
+            variant='primary'
             onClick={onSave}
-            disabled={containsIdenticalKeys(
-              _selectedChannels,
-              selectedChannels
-            )}
+            disabled={containsIdenticalKeys(_selectedChannels, selectedChannels)}
           >
             Save and close
           </Button>
         </div>
       </div>
     </SideModal>
-  )
+  );
 }
 
-export default AddSalesChannelsSideModal
+export default AddSalesChannelsSideModal;

@@ -1,24 +1,24 @@
-import { Currency } from "@medusajs/medusa"
-import { useAdminCurrencies, useAdminUpdateStore } from "medusa-react"
-import React, { useContext, useEffect, useState } from "react"
-import { usePagination, useRowSelect, useSortBy, useTable } from "react-table"
-import Button from "../../../../../components/fundamentals/button"
-import Modal from "../../../../../components/molecules/modal"
-import { LayeredModalContext } from "../../../../../components/molecules/modal/layered-modal"
-import useNotification from "../../../../../hooks/use-notification"
-import { getErrorMessage } from "../../../../../utils/error-messages"
-import { useEditCurrenciesModal } from "./edit-currencies-modal"
-import CurrenciesTable from "./table"
-import { useCurrencyColumns } from "./use-currency-table-columns"
+import { Currency } from '@medusajs/medusa';
+import { useAdminCurrencies, useAdminUpdateStore } from 'medusa-react';
+import React, { useContext, useEffect, useState } from 'react';
+import { usePagination, useRowSelect, useSortBy, useTable } from 'react-table';
+import Button from '../../../../../components/fundamentals/button';
+import Modal from '../../../../../components/molecules/modal';
+import { LayeredModalContext } from '../../../../../components/molecules/modal/layered-modal';
+import useNotification from '../../../../../hooks/use-notification';
+import { getErrorMessage } from '../../../../../utils/error-messages';
+import { useEditCurrenciesModal } from './edit-currencies-modal';
+import CurrenciesTable from './table';
+import { useCurrencyColumns } from './use-currency-table-columns';
 
-const LIMIT = 15
+const LIMIT = 15;
 
 const AddCurrenciesScreen = () => {
-  const [offset, setOffset] = useState(0)
-  const [selectedRowIds, setSelectedRowIds] = useState<string[]>([])
+  const [offset, setOffset] = useState(0);
+  const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
 
-  const { onClose, store } = useEditCurrenciesModal()
-  const { reset, pop } = useContext(LayeredModalContext)
+  const { onClose, store } = useEditCurrenciesModal();
+  const { reset, pop } = useContext(LayeredModalContext);
 
   const { currencies, count, isLoading } = useAdminCurrencies(
     {
@@ -27,37 +27,34 @@ const AddCurrenciesScreen = () => {
     },
     {
       keepPreviousData: true,
-    }
-  )
+    },
+  );
 
-  const { mutate, isLoading: isMutating } = useAdminUpdateStore()
-  const notification = useNotification()
+  const { mutate, isLoading: isMutating } = useAdminUpdateStore();
+  const notification = useNotification();
 
   const onSubmit = (next: () => void) => {
     mutate(
       {
-        currencies: [
-          ...store.currencies.map((curr) => curr.code),
-          ...selectedRowIds,
-        ],
+        currencies: [...store.currencies.map((curr) => curr.code), ...selectedRowIds],
       },
       {
         onSuccess: () => {
-          notification("Success", "Successfully updated currencies", "success")
-          next()
+          notification('Success', 'Successfully updated currencies', 'success');
+          next();
         },
         onError: (err) => {
-          notification("Error", getErrorMessage(err), "error")
+          notification('Error', getErrorMessage(err), 'error');
         },
-      }
-    )
-  }
+      },
+    );
+  };
 
   const data = React.useMemo(() => {
-    return currencies || []
-  }, [currencies])
+    return currencies || [];
+  }, [currencies]);
 
-  const columns = useCurrencyColumns()
+  const columns = useCurrencyColumns();
 
   const tableState = useTable<Currency>(
     {
@@ -73,13 +70,13 @@ const AddCurrenciesScreen = () => {
       getRowId: (row) => row.code,
       pageCount: Math.ceil((count || 0) / LIMIT),
       defaultColumn: {
-        width: "auto",
+        width: 'auto',
       },
     },
     useSortBy,
     usePagination,
-    useRowSelect
-  )
+    useRowSelect,
+  );
 
   return (
     <>
@@ -95,30 +92,30 @@ const AddCurrenciesScreen = () => {
         />
       </Modal.Content>
       <Modal.Footer>
-        <div className="w-full gap-x-xsmall flex items-center justify-end">
-          <Button variant="secondary" size="small" onClick={pop}>
+        <div className='w-full gap-x-xsmall flex items-center justify-end'>
+          <Button variant='secondary' size='small' onClick={pop}>
             Cancel
           </Button>
           <Button
-            variant="primary"
-            size="small"
+            variant='primary'
+            size='small'
             onClick={() =>
               onSubmit(() => {
-                pop()
+                pop();
               })
             }
           >
             Save and go back
           </Button>
           <Button
-            variant="primary"
-            size="small"
+            variant='primary'
+            size='small'
             loading={isMutating}
             disabled={isMutating}
             onClick={() =>
               onSubmit(() => {
-                reset()
-                onClose()
+                reset();
+                onClose();
               })
             }
           >
@@ -127,20 +124,20 @@ const AddCurrenciesScreen = () => {
         </div>
       </Modal.Footer>
     </>
-  )
-}
+  );
+};
 
 export const useAddCurrenciesModalScreen = () => {
-  const { pop, push } = useContext(LayeredModalContext)
+  const { pop, push } = useContext(LayeredModalContext);
 
   return {
     screen: {
-      title: "Add Store Currencies",
+      title: 'Add Store Currencies',
       onBack: pop,
       view: <AddCurrenciesScreen />,
     },
     push,
-  }
-}
+  };
+};
 
-export default AddCurrenciesScreen
+export default AddCurrenciesScreen;
