@@ -1,10 +1,10 @@
-import qs from "query-string"
-import React from "react"
-import Button from "../../components/fundamentals/button"
-import Medusa from "../../services/api"
+import qs from 'qs';
+import React from 'react';
+import Button from '../../components/fundamentals/button';
+import Medusa from '../../services/api';
 
 const Oauth = ({ app_name }) => {
-  const { code, state } = qs.parse(location.search)
+  const { code, state } = qs.parse(location.search);
   return (
     <>
       <div>{app_name}</div>
@@ -20,7 +20,7 @@ const Oauth = ({ app_name }) => {
         Complete Installation
       </Button>
     </>
-  )
-}
+  );
+};
 
-export default Oauth
+export default Oauth;

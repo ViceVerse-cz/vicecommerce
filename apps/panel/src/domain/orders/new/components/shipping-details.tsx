@@ -1,5 +1,5 @@
-import qs from 'query-string';
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import qs from 'qs';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import Spinner from '../../../../components/atoms/spinner';
 import Button from '../../../../components/fundamentals/button';
 import AddressForm, { AddressType } from '../../../../components/templates/address-form';
@@ -53,7 +53,7 @@ const ShippingDetails = () => {
     name: 'customer_id',
   });
 
-  const { customer, isLoading } = useAdminCustomer(customerId?.value!, {
+  const { customer, isLoading } = useAdminCustomer(customerId?.value || '', {
     enabled: !!customerId?.value,
   });
 
@@ -175,9 +175,8 @@ const ShippingDetails = () => {
           placeholder='lebron@james.com'
           disabled={!!customerId}
           required
-          // @ts-ignore
-          prefix={!!customerId ? <LockIcon size={16} className='text-grey-40' /> : undefined}
-          tabIndex={!!customerId ? -1 : 0}
+          prefix={customerId ? <LockIcon size={16} className='text-grey-40' /> : undefined}
+          tabIndex={customerId ? -1 : 0}
         />
       </div>
 

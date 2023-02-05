@@ -1,5 +1,5 @@
 {
-  "name": "@vicecommerce/eslint-config-custom",
+  "name": "eslint-config-viceverse",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
