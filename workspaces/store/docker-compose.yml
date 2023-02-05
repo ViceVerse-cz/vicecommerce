@@ -21,11 +21,23 @@ services:
     ports:
       - "5342:5342"
     environment:
-      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
-      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
       MINIO_PRIVATE_BUCKET: ${MINIO_PRIVATE_BUCKET}
     volumes:
       - minio-data:/bitnami
 
+  meilisearch:
+    image: getmeili/meilisearch:latest
+    ports:
+      - "7700:7700"
+    environment:
+      MEILI_ALLOW_UPTO_MB: ${MEILI_ALLOW_UPTO_MB}
+      MEILI_HEALTH_PASSWORD: ${MEILI_HEALTH_PASSWORD}
+      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY}
+    volumes:
+      - meilisearch-data:/data
+
 volumes:
   minio-data:
+  meilisearch-data:

@@ -1,9 +1,9 @@
 const dotenv = require('dotenv')
 
 try {
-	dotenv.config({ path: process.cwd() + '/' + '.env' });
+  dotenv.config({ path: process.cwd() + '/' + '.env' });
 } catch (e) {
-	console.error(`Failed to load environment variables: ${e}`);
+  console.error(`Failed to load environment variables: ${e}`);
 }
 
 // CORS when consuming Medusa from admin
@@ -22,18 +22,52 @@ const REDIS_URL = process.env.REDIS_URL || "redis://localhost:6379";
 // This is the place to include plugins. See API documentation for a thorough guide on plugins.
 const plugins = [
   {
-	resolve: 'medusa-fulfillment-manual'
+    resolve: 'medusa-fulfillment-manual'
   },
   {
-	resolve: 'medusa-payment-manual'
+    resolve: 'medusa-payment-manual'
   },
+
+  // Docs: https://github.com/medusajs/medusa/tree/master/packages/medusa-file-minio
   {
-	resolve: 'medusa-file-minio',
-	options: {
-		private_bucket: process.env.MINIO_PRIVATE_BUCKET,
-		private_access_key_id: process.env.MINIO_PRIVATE_ACCESS_KEY,
-        private_secret_access_key: process.env.MINIO_PRIVATE_SECRET_KEY
-	}
+    resolve: 'medusa-file-minio',
+    options: {
+      private_bucket: process.env.MINIO_PRIVATE_BUCKET,
+      root_user: process.env.MINIO_ROOT_USER,
+      root_password: process.env.MINIO_ROOT_PASSWORD
+    }
+  },
+
+  // Docs: https://github.com/medusajs/medusa/tree/master/packages/medusa-plugin-meilisearch
+  {
+    resolve: 'medusa-plugin-meilisearch',
+    options: {
+      config: {
+        host: process.env.MEILISEARCH_HOST,
+        apiKey: process.env.MEILISEARCH_API_KEY,
+      },
+      settings: {
+        products: {
+          searchableAttributes: ["title", "description", "variant_sku"],
+          displayedAttributes: [
+            "title", 
+            "description", 
+            "variant_sku", 
+            "thumbnail", 
+            "handle",
+          ],
+        },
+      }
+    }
+  },
+
+  // Docs: https://github.com/medusajs/medusa/tree/master/packages/medusa-plugin-sendgrid
+  {
+    resolve: 'medusa-plugin-sendgrid',
+    options: {
+      api_key: process.env.MAIL_API_KEY,
+      from: process.env.MAIL_FROM
+    }
   }
 ];
 
