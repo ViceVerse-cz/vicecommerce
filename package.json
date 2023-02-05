@@ -1,34 +1,37 @@
 {
-    "name": "vicecommerce",
-    "packageManager": "pnpm@2.26.3",
-    "private": true,
-    "scripts": {
-        "dev": "turbo run dev --parallel",
-        "build": "turbo run build",
-        "start": "turbo run start",
-        "clean": "turbo run clean",
-        "test": "turbo run test",
-        "lint": "turbo run lint -- --fix --cache",
-        "format": "prettier --write \"**/*.{ts,tsx,md}\" --cache",
-        "prepare": "husky install",
-        "docker:build": "cross-env COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose -f docker-compose.yml build --parallel",
-        "docker:up": "docker-compose up -d",
-        "docker:down": "docker-compose down",
-        "docker:artillery": "pnpm artillery run ./e2e/artillery-vite.yml"
-    },
-    "workspaces": [
-        "apps/**",
-        "packages/**"
-    ],
-    "devDependencies": {
-        "@changesets/cli": "^2.26.0",
-        "@commitlint/config-conventional": "^17.4.2",
-        "eslint": "7.32.0",
-        "eslint-config-prettier": "^8.6.0",
-        "husky": "^8.0.3",
-        "postcss": "^8.4.21",
-        "prettier": "^2.8.3",
-        "prettier-plugin-tailwindcss": "^0.1.13",
-        "turbo": "latest"
-    }
+  "name": "vicecommerce",
+  "packageManager": "pnpm@2.26.3",
+  "private": true,
+  "scripts": {
+    "dev": "turbo run dev --parallel",
+    "build": "turbo run build",
+    "start": "turbo run start",
+    "clean": "turbo run clean",
+    "test": "turbo run test",
+    "lint": "turbo run lint -- --fix --cache",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\" --cache",
+    "prepare": "husky install",
+    "pre-commit": "lint-staged",
+    "docker:build": "cross-env COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose -f docker-compose.yml build --parallel",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:artillery": "pnpm artillery run ./e2e/artillery-vite.yml"
+  },
+  "workspaces": [
+    "apps/**",
+    "packages/**"
+  ],
+  "devDependencies": {
+    "@changesets/cli": "^2.26.0",
+    "@commitlint/cli": "^17.4.2",
+    "@commitlint/config-conventional": "^17.4.2",
+    "eslint": "7.32.0",
+    "eslint-config-prettier": "^8.6.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.1.0",
+    "postcss": "^8.4.21",
+    "prettier": "^2.8.3",
+    "prettier-plugin-tailwindcss": "^0.1.13",
+    "turbo": "latest"
+  }
 }
