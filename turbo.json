@@ -33,7 +33,15 @@
         "outputs": []
       },
       "dev": {
-        "cache": false
+        "cache": false,
+        "env": [
+            "MINIO_ENDPOINT",
+            "MINIO_BUCKET",
+            "MINIO_ACCESS_KEY",
+            "MINIO_SECRET_KEY",
+            "MEILISEARCH_HOST",
+            "MEILI_MASTER_KEY"
+        ]
       },
       "start": {
         "dependsOn": [

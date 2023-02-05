@@ -17,27 +17,29 @@ services:
       - 6379
 
   minio:
-    image: bitnami/minio
+    image: minio/minio:latest
     ports:
-      - "5342:5342"
+      - "9001:9001"
+      - "9090:9090"
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
       MINIO_PRIVATE_BUCKET: ${MINIO_PRIVATE_BUCKET}
+    command: server -console-address :9090 --address :9001 /data
     volumes:
-      - minio-data:/bitnami
+      - minio_storage:/data
 
-  # meilisearch:
-  #   image: getmeili/meilisearch:latest
-  #   ports:
-  #     - "7700:7700"
-  #   environment:
-  #     MEILI_ALLOW_UPTO_MB: ${MEILI_ALLOW_UPTO_MB}
-  #     MEILI_HEALTH_PASSWORD: ${MEILI_HEALTH_PASSWORD}
-  #     MEILI_MASTER_KEY: ${MEILI_MASTER_KEY}
-  #   volumes:
-  #     - meilisearch-data:/data
+  meilisearch:
+    image: getmeili/meilisearch:latest
+    ports:
+      - "7700:7700"
+    environment:
+      MEILI_ALLOW_UPTO_MB: ${MEILI_ALLOW_UPTO_MB}
+      MEILI_HEALTH_PASSWORD: ${MEILI_HEALTH_PASSWORD}
+      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY}
+    volumes:
+      - meilisearch-data:/data
 
 volumes:
-  minio-data:
+  minio_storage: {}
   meilisearch-data:

@@ -23,12 +23,6 @@
     "typeorm": "^0.2.36"
   },
   "repository": "https://github.com/medusajs/medusa-starter-default.git",
-  "keywords": [
-    "sqlite",
-    "ecommerce",
-    "headless",
-    "medusa"
-  ],
   "devDependencies": {
     "@babel/cli": "^7.18.10",
     "@babel/core": "^7.18.10",

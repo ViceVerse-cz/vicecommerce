@@ -29,37 +29,32 @@ const plugins = [
   },
 
   // Docs: https://github.com/medusajs/medusa/tree/master/packages/medusa-file-minio
-  // {
-  //   resolve: 'medusa-file-minio',
-  //   options: {
-  //     private_bucket: process.env.MINIO_PRIVATE_BUCKET,
-  //     root_user: process.env.MINIO_ROOT_USER,
-  //     root_password: process.env.MINIO_ROOT_PASSWORD
-  //   }
-  // },
+  {
+    resolve: 'medusa-file-minio',
+    options: {
+      endpoint: process.env.MINIO_ENDPOINT,
+      bucket: process.env.MINIO_BUCKET,
+      access_key_id: process.env.MINIO_ACCESS_KEY,
+      secret_access_key: process.env.MINIO_SECRET_KEY,
+    },
+  },
 
   // // Docs: https://github.com/medusajs/medusa/tree/master/packages/medusa-plugin-meilisearch
-  // {
-  //   resolve: 'medusa-plugin-meilisearch',
-  //   options: {
-  //     config: {
-  //       host: process.env.MEILISEARCH_HOST,
-  //       apiKey: process.env.MEILISEARCH_API_KEY,
-  //     },
-  //     settings: {
-  //       products: {
-  //         searchableAttributes: ["title", "description", "variant_sku"],
-  //         displayedAttributes: [
-  //           "title",
-  //           "description",
-  //           "variant_sku",
-  //           "thumbnail",
-  //           "handle",
-  //         ],
-  //       },
-  //     }
-  //   }
-  // },
+  {
+    resolve: 'medusa-plugin-meilisearch',
+    options: {
+      config: {
+        host: process.env.MEILISEARCH_HOST,
+        apiKey: process.env.MEILI_MASTER_KEY,
+      },
+      settings: {
+        products: {
+          searchableAttributes: ['title', 'description', 'variant_sku'],
+          displayedAttributes: ['title', 'description', 'variant_sku', 'thumbnail', 'handle'],
+        },
+      },
+    },
+  },
 
   // // Docs: https://github.com/medusajs/medusa/tree/master/packages/medusa-plugin-sendgrid
   // {
@@ -71,7 +66,7 @@ const plugins = [
   // }
 ];
 
-export default {
+module.exports = {
   projectConfig: {
     redis_url: REDIS_URL,
     database_url: DATABASE_URL,
