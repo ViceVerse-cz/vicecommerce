@@ -3,7 +3,7 @@
   "packageManager": "pnpm@2.26.3",
   "private": true,
   "scripts": {
-    "dev": "turbo run dev --parallel",
+    "dev": "dotenv -- turbo run dev --parallel",
     "build": "turbo run build",
     "start": "turbo run start",
     "clean": "turbo run clean",

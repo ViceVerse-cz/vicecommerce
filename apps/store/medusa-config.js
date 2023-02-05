@@ -1,11 +1,5 @@
 /* eslint @typescript-eslint/no-var-requires: "off" */
-const dotenv = require('dotenv');
-
-try {
-  dotenv.config({ path: process.cwd() + '/' + '.env' });
-} catch (e) {
-  console.error(`Failed to load environment variables: ${e}`);
-}
+require('dotenv');
 
 // CORS when consuming Medusa from admin
 const ADMIN_CORS = 'http://localhost:7000,http://localhost:7001';
@@ -29,15 +23,15 @@ const plugins = [
   },
 
   // Docs: https://github.com/medusajs/medusa/tree/master/packages/medusa-file-minio
-  {
-    resolve: 'medusa-file-minio',
-    options: {
-      endpoint: process.env.MINIO_ENDPOINT,
-      bucket: process.env.MINIO_BUCKET,
-      access_key_id: process.env.MINIO_ACCESS_KEY,
-      secret_access_key: process.env.MINIO_SECRET_KEY,
-    },
-  },
+  // {
+  //   resolve: 'medusa-file-minio',
+  //   options: {
+  //     endpoint: process.env.MINIO_ENDPOINT,
+  //     bucket: process.env.MINIO_BUCKET,
+  //     access_key_id: process.env.MINIO_ACCESS_KEY,
+  //     secret_access_key: process.env.MINIO_SECRET_KEY,
+  //   },
+  // },
 
   // // Docs: https://github.com/medusajs/medusa/tree/master/packages/medusa-plugin-meilisearch
   {
