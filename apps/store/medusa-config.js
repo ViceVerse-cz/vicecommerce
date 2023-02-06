@@ -1,7 +1,5 @@
 /* eslint @typescript-eslint/no-var-requires: "off" */
-require('dotenv').config({
-  path: '../../.env',
-});
+require('dotenv');
 
 // CORS when consuming Medusa from admin
 const ADMIN_CORS = 'http://localhost:7000,http://localhost:7001';
