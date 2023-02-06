@@ -21,17 +21,17 @@ const ReturnShippingOptions = ({ region }: Props) => {
   return (
     <>
       <Section
-        title='Return Shipping Options'
+        title='Možnosti vrácení zásilky'
         actions={[
           {
-            label: 'Add Option',
+            label: 'Přidat možnost',
             onClick: toggle,
           },
         ]}
       >
         <div className='flex flex-col gap-y-large'>
           <p className='inter-base-regular text-grey-50'>
-            Enter specifics about available regional return shipment methods.
+            Zadejte konkrétní údaje o dostupných regionálních způsobech zpětné přepravy.
           </p>
           <div className='flex flex-col gap-y-small'>
             {returnShippingOptions?.map((option) => {

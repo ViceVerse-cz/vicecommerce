@@ -28,8 +28,8 @@ const GeneralSection = ({ region }: Props) => {
 
   const handleDelete = async () => {
     const shouldDelete = await dialog({
-      heading: 'Delete Region',
-      text: 'Are you sure you want to delete this region?',
+      heading: 'Odstranit region',
+      text: 'Opravdu chcete tento region odstranit?',
       extraConfirmation: true,
       entityName: region.name,
     });
@@ -40,11 +40,11 @@ const GeneralSection = ({ region }: Props) => {
           navigate('/a/settings/regions', {
             replace: true,
           });
-          notification('Success', 'Region has been deleted', 'success');
+          notification('Úspěch', 'Oblast byla odstraněna', 'success');
           navigate(`/a/settings/regions`, { replace: true });
         },
         onError: (error) => {
-          notification('Error', getErrorMessage(error), 'error');
+          notification('Chyba', getErrorMessage(error), 'error');
         },
       });
     }
@@ -56,12 +56,12 @@ const GeneralSection = ({ region }: Props) => {
         title={region.name}
         actions={[
           {
-            label: 'Edit Region Details',
+            label: 'Upravit podrobnosti o oblasti',
             onClick: toggle,
             icon: <EditIcon size={20} className='text-grey-50' />,
           },
           {
-            label: 'Delete Region',
+            label: 'Odstranit oblast',
             onClick: handleDelete,
             icon: <TrashIcon size={20} />,
             variant: 'danger',
@@ -69,7 +69,7 @@ const GeneralSection = ({ region }: Props) => {
         ]}
       >
         <div className='flex flex-col gap-y-xsmall mt-large'>
-          <h2 className='inter-large-semibold'>Details</h2>
+          <h2 className='inter-large-semibold'>Podrobnosti</h2>
           <div className='flex flex-col gap-y-xsmall'>
             <RegionDetail title={'Currency'}>
               <div className='flex items-center gap-x-xsmall'>
@@ -77,7 +77,7 @@ const GeneralSection = ({ region }: Props) => {
                 <span>{currencies[region.currency_code.toUpperCase()].name}</span>
               </div>
             </RegionDetail>
-            <RegionDetail title={'Countries'}>
+            <RegionDetail title={'Země'}>
               <div>
                 {region.countries && region.countries.length ? (
                   <div className='flex items-center gap-x-xsmall'>
@@ -98,16 +98,16 @@ const GeneralSection = ({ region }: Props) => {
                           </ul>
                         }
                       >
-                        <span className='cursor-default'>+ {region.countries.length - 4} more</span>
+                        <span className='cursor-default'>+ {region.countries.length - 4} více</span>
                       </Tooltip>
                     )}
                   </div>
                 ) : (
-                  <p>No countries configured</p>
+                  <p>Žádné nakonfigurované země</p>
                 )}
               </div>
             </RegionDetail>
-            <RegionDetail title={'Payment providers'}>
+            <RegionDetail title={'Poskytovatelé plateb'}>
               <div>
                 {region.payment_providers && region.payment_providers.length ? (
                   <div className='flex items-center gap-x-xsmall'>
@@ -128,16 +128,16 @@ const GeneralSection = ({ region }: Props) => {
                           </ul>
                         }
                       >
-                        <span className='cursor-default'>+ {region.payment_providers.length - 4} more</span>
+                        <span className='cursor-default'>+ {region.payment_providers.length - 4} více</span>
                       </Tooltip>
                     )}
                   </div>
                 ) : (
-                  <p>No payment providers configured</p>
+                  <p>Nejsou nakonfigurováni žádní poskytovatelé plateb</p>
                 )}
               </div>
             </RegionDetail>
-            <RegionDetail title={'Fulfillment providers'}>
+            <RegionDetail title={'Poskytovatelé plnění'}>
               <div>
                 {region.payment_providers && region.payment_providers.length ? (
                   <div className='flex items-center gap-x-xsmall'>
@@ -159,13 +159,13 @@ const GeneralSection = ({ region }: Props) => {
                         }
                       >
                         <span className='cursor-default'>
-                          + {region.fulfillment_providers.length - 4} more
+                          + {region.fulfillment_providers.length - 4} více
                         </span>
                       </Tooltip>
                     )}
                   </div>
                 ) : (
-                  <p>No fulfillment providers configured</p>
+                  <p>Žádní nakonfigurovaní poskytovatelé plnění</p>
                 )}
               </div>
             </RegionDetail>

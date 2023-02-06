@@ -42,18 +42,17 @@ const EditModal = ({ open, onClose, option }: Props) => {
     mutate(
       {
         name: data.name!,
-        // @ts-ignore
         requirements: getRequirementsData(data),
         admin_only: !data.store_option,
         amount: data.amount!,
       },
       {
         onSuccess: () => {
-          notification('Success', 'Shipping option updated', 'success');
+          notification('Úspěch', 'Aktualizace možnosti přepravy', 'success');
           closeAndReset();
         },
         onError: (error) => {
-          notification('Error', getErrorMessage(error), 'error');
+          notification('Chyba', getErrorMessage(error), 'error');
         },
       },
     );
@@ -63,14 +62,14 @@ const EditModal = ({ open, onClose, option }: Props) => {
     <Modal open={open} handleClose={closeAndReset}>
       <Modal.Body>
         <Modal.Header handleClose={closeAndReset}>
-          <h1 className='inter-xlarge-semibold'>Edit Shipping Option</h1>
+          <h1 className='inter-xlarge-semibold'>Upravit možnost přepravy</h1>
         </Modal.Header>
         <form onSubmit={onSubmit}>
           <Modal.Content>
             <div>
-              <p className='inter-base-semibold'>Fulfillment Method</p>
+              <p className='inter-base-semibold'>Způsob plnění</p>
               <p className='inter-base-regular text-grey-50'>
-                {option.data.id} via {option.provider_id}
+                {option.data.id} přes {option.provider_id}
               </p>
             </div>
             <div className='w-full h-px bg-grey-20 my-xlarge' />
@@ -88,7 +87,7 @@ const EditModal = ({ open, onClose, option }: Props) => {
                 loading={isLoading}
                 disabled={isLoading || !isDirty}
               >
-                Save and close
+                Uložit a zavřít
               </Button>
             </div>
           </Modal.Footer>

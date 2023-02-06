@@ -36,11 +36,11 @@ const RegionDetailsForm = ({ form, isCreate = false }: Props) => {
     <div>
       <div className='grid grid-cols-2 gap-large'>
         <InputField
-          label='Title'
-          placeholder='Europe'
+          label='Název'
+          placeholder='Evropa'
           required
           {...register(path('name'), {
-            required: 'Title is required',
+            required: 'Vyžaduje se název',
             minLength: FormValidator.minOneCharRule('Title'),
             pattern: FormValidator.whiteSpaceRule('Title'),
           })}
@@ -50,13 +50,13 @@ const RegionDetailsForm = ({ form, isCreate = false }: Props) => {
           control={control}
           name={path('currency_code')}
           rules={{
-            required: 'Currency code is required',
+            required: 'Je vyžadován kód měny',
           }}
           render={({ field }) => {
             return (
               <NextSelect
-                label='Currency'
-                placeholder='Choose currency'
+                label='Měna'
+                placeholder='Výběr měny'
                 required
                 {...field}
                 options={currencyOptions}
@@ -69,17 +69,17 @@ const RegionDetailsForm = ({ form, isCreate = false }: Props) => {
         {isCreate && (
           <>
             <InputField
-              label='Default Tax Rate'
+              label='Výchozí sazba daně'
               required
               placeholder='25'
               prefix='%'
               step={0.01}
               type={'number'}
               {...register(path('tax_rate'), {
-                required: isCreate ? 'Tax rate is required' : undefined,
+                required: isCreate ? 'Je vyžadována sazba daně' : undefined,
                 max: {
                   value: 100,
-                  message: 'Tax rate must be equal to or less than 100',
+                  message: 'Sazba daně musí být rovna nebo nižší než 100',
                 },
                 min: FormValidator.nonNegativeNumberRule('Tax rate'),
                 valueAsNumber: true,
@@ -87,7 +87,7 @@ const RegionDetailsForm = ({ form, isCreate = false }: Props) => {
               errors={errors}
             />
             <InputField
-              label='Default Tax Code'
+              label='Výchozí daňový kód'
               placeholder='1000'
               {...register(path('tax_code'))}
               errors={errors}
@@ -100,8 +100,8 @@ const RegionDetailsForm = ({ form, isCreate = false }: Props) => {
           render={({ field }) => {
             return (
               <NextSelect
-                label='Countries'
-                placeholder='Choose countries'
+                label='Země'
+                placeholder='Výběr zemí'
                 isMulti
                 selectAll
                 {...field}
@@ -116,9 +116,9 @@ const RegionDetailsForm = ({ form, isCreate = false }: Props) => {
       <FeatureToggle featureFlag='tax_inclusive_pricing'>
         <div className='flex items-start justify-between mt-xlarge'>
           <div className='flex flex-col gap-y-2xsmall'>
-            <h3 className='inter-base-semibold'>Tax inclusive prices</h3>
+            <h3 className='inter-base-semibold'>Ceny včetně daně</h3>
             <p className='inter-base-regular text-grey-50'>
-              When enabled region prices will be tax inclusive.
+              Pokud jsou ceny v regionu povoleny, jsou uvedeny včetně daně.
             </p>
           </div>
           <Controller

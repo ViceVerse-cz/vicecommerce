@@ -19,12 +19,12 @@ import ImportProducts from '../batch-job/import';
 import NewProduct from '../new';
 import { PollingContext } from '../../../context/polling';
 
-const VIEWS = ['products', 'collections'];
+const VIEWS = ['produkty', 'kolekce'];
 
 const Overview = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [view, setView] = useState('products');
+  const [view, setView] = useState('produkty');
   const { state: createProductState, close: closeProductCreate, open: openProductCreate } = useToggleState();
 
   const { resetInterval } = useContext(PollingContext);
@@ -46,7 +46,7 @@ const Overview = () => {
 
   const CurrentView = () => {
     switch (view) {
-      case 'products':
+      case 'produkty':
         return <ProductTable />;
       default:
         return <CollectionsTable />;
@@ -55,20 +55,20 @@ const Overview = () => {
 
   const CurrentAction = () => {
     switch (view) {
-      case 'products':
+      case 'produkty':
         return (
           <div className='flex space-x-2'>
             <Button variant='secondary' size='small' onClick={() => openImportModal()}>
               <UploadIcon size={20} />
-              Import Products
+              Importovat produkty
             </Button>
             <Button variant='secondary' size='small' onClick={() => openExportModal()}>
               <ExportIcon size={20} />
-              Export Products
+              Exportovat produkty
             </Button>
             <Button variant='secondary' size='small' onClick={openProductCreate}>
               <PlusIcon size={20} />
-              New Product
+              Nový produkt
             </Button>
           </div>
         );
@@ -77,7 +77,7 @@ const Overview = () => {
           <div className='flex space-x-2'>
             <Button variant='secondary' size='small' onClick={() => setShowNewCollection(!showNewCollection)}>
               <PlusIcon size={20} />
-              New Collection
+              Nová kolekce
             </Button>
           </div>
         );
@@ -103,11 +103,11 @@ const Overview = () => {
       { ...data, metadata },
       {
         onSuccess: ({ collection }) => {
-          notification('Success', 'Successfully created collection', 'success');
+          notification('Úspěch', 'Úspěšně vytvořená kolekce', 'success');
           navigate(`/a/collections/${collection.id}`);
           setShowNewCollection(false);
         },
-        onError: (err) => notification('Error', getErrorMessage(err), 'error'),
+        onError: (err) => notification('Chyba', getErrorMessage(err), 'error'),
       },
     );
   };
@@ -122,10 +122,10 @@ const Overview = () => {
     createBatchJob.mutate(reqObj, {
       onSuccess: () => {
         resetInterval();
-        notification('Success', 'Successfully initiated export', 'success');
+        notification('Úspěch', 'Úspěšně zahájený export', 'success');
       },
       onError: (err) => {
-        notification('Error', getErrorMessage(err), 'error');
+        notification('Chyba', getErrorMessage(err), 'error');
       },
     });
 
@@ -154,7 +154,7 @@ const Overview = () => {
       )}
       {exportModalOpen && (
         <ExportModal
-          title='Export Products'
+          title='Vývozní produkty'
           handleClose={() => closeExportModal()}
           onSubmit={handleCreateExport}
           loading={createBatchJob.isLoading}

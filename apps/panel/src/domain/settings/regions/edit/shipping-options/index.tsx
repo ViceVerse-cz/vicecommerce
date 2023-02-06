@@ -21,17 +21,17 @@ const ShippingOptions = ({ region }: Props) => {
   return (
     <>
       <Section
-        title='Shipping Options'
+        title='Možnosti přepravy'
         actions={[
           {
-            label: 'Add Option',
+            label: 'Přidat možnost',
             onClick: toggle,
           },
         ]}
       >
         <div className='flex flex-col gap-y-large'>
           <p className='inter-base-regular text-grey-50'>
-            Enter specifics about available regional shipment methods.
+            Zadejte konkrétní údaje o dostupných regionálních způsobech přepravy.
           </p>
           <div className='flex flex-col gap-y-small'>
             {shippingOptions?.map((option) => {

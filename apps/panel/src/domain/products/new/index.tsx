@@ -86,17 +86,17 @@ const NewProduct = ({ onClose }: Props) => {
         try {
           preppedImages = await prepareImages(data.media.images);
         } catch (error) {
-          let errorMessage = 'Something went wrong while trying to upload images.';
+          let errorMessage = 'Při pokusu o nahrání obrázků se něco pokazilo.';
           const response = (error as any).response as Response;
 
           if (response.status === 500) {
             errorMessage =
               errorMessage +
               ' ' +
-              'You might not have a file service configured. Please contact your administrator';
+              'Možná nemáte nakonfigurovanou souborovou službu. Obraťte se na svého správce';
           }
 
-          notification('Error', errorMessage, 'error');
+          notification('Chyby', errorMessage, 'error');
           return;
         }
         const urls = preppedImages.map((image) => image.url);
@@ -110,17 +110,17 @@ const NewProduct = ({ onClose }: Props) => {
         try {
           preppedImages = await prepareImages(data.thumbnail.images);
         } catch (error) {
-          let errorMessage = 'Something went wrong while trying to upload the thumbnail.';
+          let errorMessage = 'Při pokusu o nahrání miniatury se něco pokazilo.';
           const response = (error as any).response as Response;
 
           if (response.status === 500) {
             errorMessage =
               errorMessage +
               ' ' +
-              'You might not have a file service configured. Please contact your administrator';
+              'Možná nemáte nakonfigurovanou souborovou službu. Obraťte se na svého správce';
           }
 
-          notification('Error', errorMessage, 'error');
+          notification('Chyby', errorMessage, 'error');
           return;
         }
         const urls = preppedImages.map((image) => image.url);
@@ -134,7 +134,7 @@ const NewProduct = ({ onClose }: Props) => {
           navigate(`/a/products/${product.id}`);
         },
         onError: (err) => {
-          notification('Error', getErrorMessage(err), 'error');
+          notification('Chyby', getErrorMessage(err), 'error');
         },
       });
     });
@@ -155,7 +155,7 @@ const NewProduct = ({ onClose }: Props) => {
                 disabled={!isDirty}
                 onClick={onSubmit(false)}
               >
-                Save as draft
+                Uložit jako koncept
               </Button>
               <Button
                 size='small'
@@ -164,7 +164,7 @@ const NewProduct = ({ onClose }: Props) => {
                 disabled={!isDirty}
                 onClick={onSubmit(true)}
               >
-                Publish product
+                Zveřejnit produkt
               </Button>
             </div>
           </div>
@@ -174,7 +174,7 @@ const NewProduct = ({ onClose }: Props) => {
             <Accordion defaultValue={['general']} type='multiple'>
               <Accordion.Item value={'general'} title='General information' required>
                 <p className='inter-base-regular text-grey-50'>
-                  To start selling, all you need is a name and a price.
+                  Chcete-li začít prodávat, potřebujete pouze název a cenu.
                 </p>
                 <div className='mt-xlarge flex flex-col gap-y-xlarge'>
                   <GeneralForm form={nestedForm(form, 'general')} requireHandle={false} />
@@ -183,11 +183,11 @@ const NewProduct = ({ onClose }: Props) => {
               </Accordion.Item>
               <Accordion.Item title='Organize' value='organize'>
                 <p className='inter-base-regular text-grey-50'>
-                  To start selling, all you need is a name and a price.
+                  Chcete-li začít prodávat, potřebujete pouze název a cenu.
                 </p>
                 <div className='mt-xlarge flex flex-col gap-y-xlarge pb-xsmall'>
                   <div>
-                    <h3 className='inter-base-semibold mb-base'>Organize Product</h3>
+                    <h3 className='inter-base-semibold mb-base'>Uspořádat produkt</h3>
                     <OrganizeForm form={nestedForm(form, 'organize')} />
                     <FeatureToggle featureFlag='sales_channels'>
                       <div className='mt-xlarge'>
@@ -199,9 +199,9 @@ const NewProduct = ({ onClose }: Props) => {
               </Accordion.Item>
               <Accordion.Item title='Variants' value='variants'>
                 <p className='text-grey-50 inter-base-regular'>
-                  Add variations of this product.
+                  Přidejte varianty tohoto produktu.
                   <br />
-                  Offer your customers different options for color, format, size, shape, etc.
+                  Nabídněte svým zákazníkům různé možnosti barev, formátů, velikostí, tvarů atd.
                 </p>
                 <div className='mt-large'>
                   <AddVariantsForm
@@ -212,24 +212,24 @@ const NewProduct = ({ onClose }: Props) => {
                 </div>
               </Accordion.Item>
               <Accordion.Item title='Attributes' value='attributes'>
-                <p className='inter-base-regular text-grey-50'>Used for shipping and customs purposes.</p>
+                <p className='inter-base-regular text-grey-50'>Používá se pro přepravní a celní účely.</p>
                 <div className='my-xlarge'>
-                  <h3 className='inter-base-semibold mb-base'>Dimensions</h3>
+                  <h3 className='inter-base-semibold mb-base'>Rozměry</h3>
                   <DimensionsForm form={nestedForm(form, 'dimensions')} />
                 </div>
                 <div>
-                  <h3 className='inter-base-semibold mb-base'>Customs</h3>
+                  <h3 className='inter-base-semibold mb-base'>Celní úřad</h3>
                   <CustomsForm form={nestedForm(form, 'customs')} />
                 </div>
               </Accordion.Item>
               <Accordion.Item title='Thumbnail' value='thumbnail'>
                 <p className='inter-base-regular text-grey-50 mb-large'>
-                  Used to represent your product during checkout, social sharing and more.
+                  Slouží k reprezentaci vašeho produktu při placení, sdílení na sociálních sítích a podobně.
                 </p>
                 <ThumbnailForm form={nestedForm(form, 'thumbnail')} />
               </Accordion.Item>
               <Accordion.Item title='Media' value='media'>
-                <p className='inter-base-regular text-grey-50 mb-large'>Add images to your product.</p>
+                <p className='inter-base-regular text-grey-50 mb-large'>Přidejte k produktu obrázky.</p>
                 <MediaForm form={nestedForm(form, 'media')} />
               </Accordion.Item>
             </Accordion>
@@ -284,7 +284,7 @@ const createPayload = (
       sku: v.stock.sku || undefined,
       barcode: v.stock.barcode || undefined,
       options: v.options.map((o) => ({
-        value: o.option?.value!,
+        value: o.option?.value,
       })),
       ean: v.stock.ean || undefined,
       upc: v.stock.upc || undefined,
@@ -297,7 +297,6 @@ const createPayload = (
       origin_country: v.customs.origin_country?.value || undefined,
       manage_inventory: v.stock.manage_inventory,
     })),
-    // @ts-ignore
     status: publish ? ProductStatus.PUBLISHED : ProductStatus.DRAFT,
   };
 

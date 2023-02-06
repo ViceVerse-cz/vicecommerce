@@ -72,12 +72,12 @@ const NewRegion = ({ onClose }: Props) => {
 
       mutate(payload, {
         onSuccess: ({ region }) => {
-          notification('Success', 'Region created', 'success');
+          notification('Úspěch', 'Vytvořená oblast', 'success');
           navigate(`/a/settings/regions/${region.id}`);
           closeAndReset();
         },
         onError: (error) => {
-          notification('Error', getErrorMessage(error), 'error');
+          notification('Chyba', getErrorMessage(error), 'error');
         },
       });
     },
@@ -104,7 +104,7 @@ const NewRegion = ({ onClose }: Props) => {
                 disabled={!isDirty || isLoading}
                 type='submit'
               >
-                Create region
+                Vytvořit oblast
               </Button>
             </div>
           </div>
@@ -113,12 +113,12 @@ const NewRegion = ({ onClose }: Props) => {
           <div className='medium:w-7/12 large:w-6/12 small:w-4/5 max-w-[700px] my-16'>
             <Accordion value={sections} onValueChange={setSections} type='multiple'>
               <Accordion.Item title='Details' value='details' forceMountContent required>
-                <p className='inter-base-regular text-grey-50 mb-xlarge'>Add the region details.</p>
+                <p className='inter-base-regular text-grey-50 mb-xlarge'>Přidejte podrobnosti o regionu.</p>
                 <RegionDetailsForm form={nestedForm(form, 'details')} isCreate />
               </Accordion.Item>
               <Accordion.Item title='Providers' value='providers' forceMountContent required>
                 <p className='inter-base-regular text-grey-50 mb-xlarge'>
-                  Add which fulfillment and payment providers shoulb be available in this region.
+                  Doplňte, kteří poskytovatelé plnění a plateb by měli být v tomto regionu k dispozici.
                 </p>
                 <RegionProvidersForm form={nestedForm(form, 'providers')} />
               </Accordion.Item>

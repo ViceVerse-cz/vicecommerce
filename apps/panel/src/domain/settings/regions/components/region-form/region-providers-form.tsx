@@ -28,17 +28,17 @@ const RegionProvidersForm = ({ form }: Props) => {
         control={control}
         name={path('payment_providers')}
         rules={{
-          required: 'Payment providers are required',
+          required: 'Jsou vyžadováni poskytovatelé plateb',
           minLength: {
             value: 1,
-            message: 'Payment providers are required',
+            message: 'Jsou vyžadováni poskytovatelé plateb',
           },
         }}
         render={({ field: { value, onBlur, onChange } }) => {
           return (
             <NextSelect
-              label='Payment Providers'
-              placeholder='Choose payment providers...'
+              label='Poskytovatel platebs'
+              placeholder='Výběr poskytovatelů platebních služeb...'
               options={paymentProviderOptions}
               isMulti
               isClearable
@@ -57,17 +57,17 @@ const RegionProvidersForm = ({ form }: Props) => {
         control={control}
         name={path('fulfillment_providers')}
         rules={{
-          required: 'Fulfillment providers are required',
+          required: 'Poskytovatelé plnění jsou povinni',
           minLength: {
             value: 1,
-            message: 'Fulfillment providers are required',
+            message: 'Poskytovatelé plnění jsou povinni',
           },
         }}
         render={({ field: { onBlur, onChange, value } }) => {
           return (
             <NextSelect
-              label='Fulfillment Providers'
-              placeholder='Choose fulfillment providers...'
+              label='Poskytovatelé plnění'
+              placeholder='Vyberte si poskytovatele plnění...'
               options={fulfillmentProviderOptions}
               required
               isMulti

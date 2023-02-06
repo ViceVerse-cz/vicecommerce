@@ -34,7 +34,7 @@ const DefaultCurrencySelector = ({ store }: Props) => {
       },
       {
         onSuccess: () => {
-          notification('Success', 'Successfully updated default currency', 'success');
+          notification('Úspěch', 'Úspěšná aktualizace výchozí měny', 'success');
         },
         onError: (error) => {
           notification('Error', getErrorMessage(error), 'error');
@@ -61,7 +61,7 @@ const DefaultCurrencySelector = ({ store }: Props) => {
         render={({ field: { value, onChange, onBlur } }) => {
           return (
             <NextSelect
-              placeholder='Choose default currency'
+              placeholder='Výběr výchozí měny'
               options={currencyOptions}
               value={value}
               onChange={(e) => {

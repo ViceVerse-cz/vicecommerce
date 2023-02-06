@@ -32,7 +32,7 @@ const EditUserInformation = ({ user }: Props) => {
             )}
           </div>
           <div className='flex flex-col'>
-            {!!name ? (
+            {name ? (
               <>
                 <p className='inter-base-semibold'>{name}</p>
                 <p className='inter-base-regular text-grey-50'>{user?.email}</p>
@@ -43,7 +43,7 @@ const EditUserInformation = ({ user }: Props) => {
           </div>
         </div>
         <Button variant='secondary' size='small' disabled={!user} onClick={toggle}>
-          Edit information
+          Upravit informace
         </Button>
       </div>
       {user && <EditUserInformationModal open={state} onClose={close} user={user} />}

@@ -42,11 +42,11 @@ const UsageInsightsModal = ({ config, open, onClose }: Props) => {
   const onSubmit = handleSubmit((data) => {
     mutate(data, {
       onSuccess: () => {
-        notification('Success', 'Your information was successfully updated', 'success');
+        notification('Úspěch', 'Vaše informace byly úspěšně aktualizovány', 'success');
         onClose();
       },
       onError: (err) => {
-        notification('Error', getErrorMessage(err), 'error');
+        notification('Chyba', getErrorMessage(err), 'error');
       },
     });
   });
@@ -54,7 +54,7 @@ const UsageInsightsModal = ({ config, open, onClose }: Props) => {
   return (
     <Modal handleClose={onClose} open={open} isLargeModal={true}>
       <Modal.Header handleClose={onClose}>
-        <h1 className='inter-xlarge-semibold'>Edit preferences</h1>
+        <h1 className='inter-xlarge-semibold'>Upravit předvolby</h1>
       </Modal.Header>
       <Modal.Body>
         <Modal.Content>
@@ -63,7 +63,7 @@ const UsageInsightsModal = ({ config, open, onClose }: Props) => {
         <Modal.Footer className='border-t border-grey-20 pt-base'>
           <div className='flex items-center justify-end gap-x-xsmall w-full'>
             <Button variant='secondary' size='small' onClick={onClose}>
-              Cancel
+              Zrušit
             </Button>
             <Button
               variant='primary'
@@ -72,7 +72,7 @@ const UsageInsightsModal = ({ config, open, onClose }: Props) => {
               disabled={isSubmitting}
               onClick={onSubmit}
             >
-              Submit and close
+              Odeslání a uzavření
             </Button>
           </div>
         </Modal.Footer>

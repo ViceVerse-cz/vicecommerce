@@ -25,7 +25,7 @@ const RegionCard = ({ region }: Props) => {
           <span className='truncate'>
             {region.payment_providers?.length
               ? region.payment_providers.map((pp) => paymentProvidersMapper(pp.id).label).join(', ')
-              : 'Not configured'}
+              : 'Není nakonfigurováno'}
           </span>
         </p>
         <p>
@@ -33,7 +33,7 @@ const RegionCard = ({ region }: Props) => {
           <span className='truncate'>
             {region.fulfillment_providers?.length
               ? region.fulfillment_providers.map((fp) => fulfillmentProvidersMapper(fp.id).label).join(', ')
-              : 'Not configured'}
+              : 'Není nakonfigurováno'}
           </span>
         </p>
       </div>

@@ -30,10 +30,10 @@ const CurrentCurrenciesScreen = () => {
       },
       {
         onSuccess: () => {
-          notification('Success', 'Successfully updated currencies', 'success');
+          notification('Úspěch', 'Úspěšně aktualizované měny', 'success');
         },
         onError: (err) => {
-          notification('Error', getErrorMessage(err), 'error');
+          notification('Chyba', getErrorMessage(err), 'error');
         },
       },
     );
@@ -78,12 +78,14 @@ const CurrentCurrenciesScreen = () => {
   return (
     <>
       <Modal.Header handleClose={onClose}>
-        <h1 className='inter-xlarge-semibold'>Current Store Currencies</h1>
+        <h1 className='inter-xlarge-semibold'>Aktuální měny obchodu</h1>
       </Modal.Header>
       <Modal.Content>
         <CurrenciesTable
           isLoading={false}
-          setQuery={() => {}}
+          setQuery={() => {
+            console.log('ueaf');
+          }}
           setSelectedRowIds={setSelectedRowIds}
           count={store.currencies?.length || 0}
           tableState={tableState}
@@ -101,7 +103,7 @@ const CurrentCurrenciesScreen = () => {
       <Modal.Footer>
         <div className='w-full justify-end flex items-center'>
           <Button variant='primary' size='small' onClick={onClose}>
-            Close
+            Zavřít
           </Button>
         </div>
       </Modal.Footer>
@@ -129,7 +131,7 @@ const TableActions = ({ numberOfSelectedRows, onDeselect, onRemove }: TableActio
     <div className='flex space-x-xsmall h-[34px] overflow-hidden'>
       <div className={clsx('transition-all duration-200', classes)}>
         <div className='divide-x flex items-center h-[34px] mb-2'>
-          <span className='mr-3 inter-small-regular text-grey-50'>{numberOfSelectedRows} selected</span>
+          <span className='mr-3 inter-small-regular text-grey-50'>{numberOfSelectedRows} vybrané</span>
           <div className='flex space-x-xsmall pl-3'>
             <Button onClick={onDeselect} size='small' variant='ghost' className='border border-grey-20'>
               Deselect
@@ -146,7 +148,7 @@ const TableActions = ({ numberOfSelectedRows, onDeselect, onRemove }: TableActio
         </div>
         <div className='flex justify-end h-[34px]'>
           <Button size='small' variant='ghost' className='border border-grey-20' onClick={() => push(screen)}>
-            <PlusIcon size={20} /> Add Currencies
+            <PlusIcon size={20} /> Přidat měny
           </Button>
         </div>
       </div>

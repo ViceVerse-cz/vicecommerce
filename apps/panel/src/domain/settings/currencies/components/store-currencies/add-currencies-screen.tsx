@@ -1,6 +1,6 @@
 import { Currency } from '@medusajs/medusa';
 import { useAdminCurrencies, useAdminUpdateStore } from 'medusa-react';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { usePagination, useRowSelect, useSortBy, useTable } from 'react-table';
 import Button from '../../../../../components/fundamentals/button';
 import Modal from '../../../../../components/molecules/modal';
@@ -40,11 +40,11 @@ const AddCurrenciesScreen = () => {
       },
       {
         onSuccess: () => {
-          notification('Success', 'Successfully updated currencies', 'success');
+          notification('Úspěch', 'Úspěšně aktualizované měny', 'success');
           next();
         },
         onError: (err) => {
-          notification('Error', getErrorMessage(err), 'error');
+          notification('Chyba', getErrorMessage(err), 'error');
         },
       },
     );
@@ -83,7 +83,9 @@ const AddCurrenciesScreen = () => {
       <Modal.Content>
         <CurrenciesTable
           isLoading={isLoading}
-          setQuery={() => {}}
+          setQuery={() => {
+            console.log('ueaf');
+          }}
           setSelectedRowIds={setSelectedRowIds}
           count={count || 0}
           tableState={tableState}
@@ -105,7 +107,7 @@ const AddCurrenciesScreen = () => {
               })
             }
           >
-            Save and go back
+            Uložit a vrátit se zpět
           </Button>
           <Button
             variant='primary'
@@ -119,7 +121,7 @@ const AddCurrenciesScreen = () => {
               })
             }
           >
-            Save and close
+            Uložit a zavřít
           </Button>
         </div>
       </Modal.Footer>
@@ -132,7 +134,7 @@ export const useAddCurrenciesModalScreen = () => {
 
   return {
     screen: {
-      title: 'Add Store Currencies',
+      title: 'Přidání měn obchodu',
       onBack: pop,
       view: <AddCurrenciesScreen />,
     },

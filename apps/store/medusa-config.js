@@ -13,8 +13,6 @@ const DATABASE_URL = 'postgres://user:password@localhost:5432/medusa-docker';
 // Medusa uses Redis, so this needs configuration as well
 const REDIS_URL = 'redis://localhost:6379';
 
-console.log(process.env);
-
 // This is the place to include plugins. See API documentation for a thorough guide on plugins.
 const plugins = [
   {

@@ -15,11 +15,11 @@ const StoreCurrencies = ({ store }: Props) => {
     <>
       <div className='flex items-start justify-between'>
         <div>
-          <h3 className='inter-large-semibold mb-2xsmall'>Store currencies</h3>
-          <p className='inter-base-regular text-grey-50'>All the currencies available in your store.</p>
+          <h3 className='inter-large-semibold mb-2xsmall'>Měny obchodu</h3>
+          <p className='inter-base-regular text-grey-50'>Všechny měny dostupné ve vašem obchodě.</p>
         </div>
         <Button variant='secondary' size='small' onClick={toggle}>
-          Edit currencies
+          Úprava měn
         </Button>
       </div>
       <EditCurrenciesModal store={store} open={state} onClose={close} />

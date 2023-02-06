@@ -109,7 +109,7 @@ const ProductsFilter = ({
             )}
           >
             <div className='flex rounded-rounded items-center bg-grey-5 border border-grey-20 inter-small-semibold px-2 h-6'>
-              Filters
+              Filtry
               <div className='text-grey-40 ml-1 flex items-center rounded'>
                 <span className='text-violet-60 inter-small-semibold'>
                   {numberOfFilters ? numberOfFilters : '0'}
@@ -130,7 +130,7 @@ const ProductsFilter = ({
           setFilter={(v) => setSingleFilter('status', v)}
         />
         <FilterDropdownItem
-          filterTitle='Collection'
+          filterTitle='Kolekce'
           options={collections?.map((c) => ({ value: c.id, label: c.title })) || []}
           isLoading={isLoadingCollections}
           hasPrev={collectionsPagination.offset > 0}
@@ -162,7 +162,7 @@ const ProductsFilter = ({
                 className='hidden'
                 id='Tags'
                 name='Tags'
-                value='Tags'
+                value='Tagy'
                 checked={tempState.tags.open}
               />
             </div>
@@ -181,7 +181,7 @@ const ProductsFilter = ({
               <TagInput
                 className='pt-0 pb-1'
                 showLabel={false}
-                placeholder='Spring, summer...'
+                placeholder='Jaro, léto...'
                 values={(tempState.tags.filter || [])
                   .map((t) => {
                     const found = (product_tags || []).find((pt) => pt.id === t);

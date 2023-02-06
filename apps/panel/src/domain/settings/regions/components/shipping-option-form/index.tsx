@@ -50,7 +50,7 @@ const ShippingOptionForm = ({ form, region, isEdit = false }: Props) => {
       <div>
         <div className='flex flex-col gap-y-2xsmall'>
           <div className='flex items-center justify-between'>
-            <h3 className='inter-base-semibold mb-2xsmall'>Visible in store</h3>
+            <h3 className='inter-base-semibold mb-2xsmall'>Viditelné v obchodě</h3>
             <Controller
               control={control}
               name={'store_option'}
@@ -60,13 +60,13 @@ const ShippingOptionForm = ({ form, region, isEdit = false }: Props) => {
             />
           </div>
           <p className='inter-base-regular text-grey-50'>
-            Enable or disable the shipping option visiblity in store.
+            Povolení nebo zakázání viditelnosti možnosti dopravy v obchodě.
           </p>
         </div>
       </div>
       <div className='h-px w-full bg-grey-20 my-xlarge' />
       <div>
-        <h3 className='inter-base-semibold mb-base'>Details</h3>
+        <h3 className='inter-base-semibold mb-base'>Podrobnosti</h3>
         <div className='grid grid-cols-2 gap-large'>
           <InputField
             label='Title'

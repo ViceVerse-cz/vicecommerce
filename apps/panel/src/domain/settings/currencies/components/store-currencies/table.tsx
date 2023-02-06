@@ -67,7 +67,7 @@ const CurrenciesTable = ({
         count: count,
         offset: offset,
         pageSize: offset + rows.length,
-        title: 'Currencies',
+        title: 'Měny',
         currentPage: pageIndex + 1,
         pageCount: pageCount,
         nextPage: handleNext,

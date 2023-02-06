@@ -70,7 +70,7 @@ const RegionOverview = ({ id }: Props) => {
         className='h-full'
       >
         <p className='text-base-regular text-grey-50 mt-2xsmall'>
-          Manage the markets that you will operate within.
+          Spravujte trhy, na kterých budete působit.
         </p>
         <div className='mt-large'>
           <RadioGroup.Root value={selectedRegion} onValueChange={handleChange}>

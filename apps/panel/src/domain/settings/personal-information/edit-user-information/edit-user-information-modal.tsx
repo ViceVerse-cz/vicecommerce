@@ -38,38 +38,36 @@ const EditUserInformationModal = ({ user, open, onClose }: Props) => {
   const notification = useNotification();
 
   const onSubmit = handleSubmit((data) => {
-    mutate(
-      // @ts-ignore
-      data,
-      {
-        onSuccess: () => {
-          notification('Success', 'Your information was successfully updated', 'success');
-          refetch();
-          onClose();
-        },
-        onError: () => {},
+    mutate(data, {
+      onSuccess: () => {
+        notification('Úspěch', 'Vaše informace byly úspěšně aktualizovány', 'success');
+        refetch();
+        onClose();
       },
-    );
+      onError: () => {
+        notification('Chyba', 'Nepodarilo se aktualizovat informace!', 'error');
+      },
+    });
   });
 
   return (
     <Modal handleClose={onClose} open={open} isLargeModal={false}>
       <Modal.Header handleClose={onClose}>
-        <h1 className='inter-xlarge-semibold'>Edit information</h1>
+        <h1 className='inter-xlarge-semibold'>Upravit informace</h1>
       </Modal.Header>
       <Modal.Body>
         <Modal.Content>
           <div className='flex flex-col gap-y-base'>
             <div className='grid grid-cols-2 gap-x-base'>
-              <InputField {...register('first_name')} errors={errors} label='First name' />
-              <InputField {...register('last_name')} errors={errors} label='Last name' />
+              <InputField {...register('first_name')} errors={errors} label='Křestní jméno' />
+              <InputField {...register('last_name')} errors={errors} label='Příjmení' />
             </div>
           </div>
         </Modal.Content>
         <Modal.Footer className='border-t border-grey-20 pt-base'>
           <div className='flex items-center justify-end gap-x-xsmall w-full'>
             <Button variant='secondary' size='small' onClick={onClose}>
-              Cancel
+              Zrušit
             </Button>
             <Button
               variant='primary'
@@ -78,7 +76,7 @@ const EditUserInformationModal = ({ user, open, onClose }: Props) => {
               disabled={isSubmitting}
               onClick={onSubmit}
             >
-              Submit and close
+              Odeslání a uzavření
             </Button>
           </div>
         </Modal.Footer>

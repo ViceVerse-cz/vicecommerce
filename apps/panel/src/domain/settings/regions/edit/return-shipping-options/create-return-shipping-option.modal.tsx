@@ -49,11 +49,11 @@ const CreateReturnShippingOptionModal = ({ open, onClose, region }: Props) => {
       },
       {
         onSuccess: () => {
-          notifcation('Success', 'Shipping option created', 'success');
+          notifcation('Úspěch', 'Vytvořená možnost přepravy', 'success');
           closeAndReset();
         },
         onError: (error) => {
-          notifcation('Error', getErrorMessage(error), 'error');
+          notifcation('Chyba', getErrorMessage(error), 'error');
         },
       },
     );
@@ -63,7 +63,7 @@ const CreateReturnShippingOptionModal = ({ open, onClose, region }: Props) => {
     <Modal open={open} handleClose={closeAndReset}>
       <Modal.Body>
         <Modal.Header handleClose={closeAndReset}>
-          <h1 className='inter-xlarge-semibold'>Add Return Shipping Option</h1>
+          <h1 className='inter-xlarge-semibold'>Přidat možnost vrácení dopravy</h1>
         </Modal.Header>
         <form onSubmit={onSubmit}>
           <Modal.Content>
@@ -72,7 +72,7 @@ const CreateReturnShippingOptionModal = ({ open, onClose, region }: Props) => {
           <Modal.Footer>
             <div className='w-full flex items-center gap-x-xsmall justify-end'>
               <Button variant='secondary' size='small' type='button' onClick={closeAndReset}>
-                Cancel
+                Zrušit
               </Button>
               <Button
                 variant='primary'
@@ -81,7 +81,7 @@ const CreateReturnShippingOptionModal = ({ open, onClose, region }: Props) => {
                 loading={isLoading}
                 disabled={isLoading || !isDirty}
               >
-                Save and close
+                Uložit a zavřít
               </Button>
             </div>
           </Modal.Footer>

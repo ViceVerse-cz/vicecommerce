@@ -33,20 +33,20 @@ const InviteModal: React.FC<InviteModalProps> = ({ handleClose }) => {
       },
       {
         onSuccess: () => {
-          notification('Success', `Invitation sent to ${data.user}`, 'success');
+          notification('Úspěch', `Pozvánka odeslána uživateli ${data.user}`, 'success');
           handleClose();
         },
         onError: (error) => {
-          notification('Error', getErrorMessage(error), 'error');
+          notification('Chyba', getErrorMessage(error), 'error');
         },
       },
     );
   };
 
   const roleOptions: Role[] = [
-    { value: 'member', label: 'Member' },
+    { value: 'member', label: 'Člen' },
     { value: 'admin', label: 'Admin' },
-    { value: 'developer', label: 'Developer' },
+    { value: 'developer', label: 'Vývojář' },
   ];
 
   return (
@@ -54,7 +54,7 @@ const InviteModal: React.FC<InviteModalProps> = ({ handleClose }) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Modal.Body>
           <Modal.Header handleClose={handleClose}>
-            <span className='inter-xlarge-semibold'>Invite Users</span>
+            <span className='inter-xlarge-semibold'>Pozvat uživatele</span>
           </Modal.Header>
           <Modal.Content>
             <div className='flex flex-col gap-y-base'>
@@ -67,7 +67,7 @@ const InviteModal: React.FC<InviteModalProps> = ({ handleClose }) => {
               <Controller
                 name='role'
                 control={control}
-                defaultValue={{ label: 'Member', value: 'member' }}
+                defaultValue={{ label: 'Člen', value: 'member' }}
                 render={({ field: { value, onChange } }) => {
                   return <Select label='Role' onChange={onChange} options={roleOptions} value={value} />;
                 }}
@@ -83,7 +83,7 @@ const InviteModal: React.FC<InviteModalProps> = ({ handleClose }) => {
                 type='button'
                 onClick={handleClose}
               >
-                Cancel
+                Zrušit
               </Button>
               <Button
                 loading={isLoading}
@@ -92,7 +92,7 @@ const InviteModal: React.FC<InviteModalProps> = ({ handleClose }) => {
                 className='w-32 text-small justify-center'
                 variant='primary'
               >
-                Invite
+                Pozvánka
               </Button>
             </div>
           </Modal.Footer>

@@ -30,10 +30,10 @@ const ShippingOptionCard = ({ option }: Props) => {
   const handleDeleteOption = () => {
     mutate(undefined, {
       onSuccess: () => {
-        notification('Success', 'Shipping option has been deleted', 'success');
+        notification('Úspěch', 'Možnost přepravy byla odstraněna', 'success');
       },
       onError: (error) => {
-        notification('Error', getErrorMessage(error), 'error');
+        notification('Chyba', getErrorMessage(error), 'error');
       },
     });
   };
@@ -49,7 +49,7 @@ const ShippingOptionCard = ({ option }: Props) => {
             <p className='inter-base-semibold'>{option.name}</p>
             <div>
               <p className='inter-small-regular text-grey-50'>
-                {option.price_type === ShippingOptionPriceType.FLAT_RATE ? 'Flat Rate' : 'Calcualted'}:{' '}
+                {option.price_type === ShippingOptionPriceType.FLAT_RATE ? 'Paušální sazba' : 'Kalkulace'}:{' '}
                 {stringDisplayPrice({
                   amount: option.amount,
                   currencyCode: option.region.currency_code,
@@ -75,18 +75,18 @@ const ShippingOptionCard = ({ option }: Props) => {
               'bg-emerald-10 text-emerald-50': !option.admin_only,
             })}
           >
-            <span className='inter-small-semibold'>{option.admin_only ? 'Admin' : 'Store'}</span>
+            <span className='inter-small-semibold'>{option.admin_only ? 'Admin' : 'Obchod'}</span>
           </div>
           <div>
             <Actionables
               actions={[
                 {
-                  label: 'Edit',
+                  label: 'Upravit',
                   onClick: toggle,
                   icon: <EditIcon size={20} />,
                 },
                 {
-                  label: 'Delete',
+                  label: 'Smazat',
                   onClick: handleDeleteOption,
                   icon: <TrashIcon size={20} />,
                   variant: 'danger',

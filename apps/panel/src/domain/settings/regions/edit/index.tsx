@@ -25,9 +25,9 @@ const EditRegion = ({ id }: Props) => {
   if (isError) {
     return (
       <div className='bg-grey-0 rounded-rounded border border-grey-20 flex flex-col gap-y-xsmall items-center justify-center w-full h-full text-center '>
-        <h1 className='inter-large-semibold'>Something went wrong...</h1>
+        <h1 className='inter-large-semibold'>Něco se pokazilo...</h1>
         <p className='inter-base-regular text-grey-50'>
-          We can't find a region with that ID, use the menu to the left to select a region.
+          Nemůžeme najít oblast s tímto ID, použijte nabídku vlevo a vyberte oblast.
         </p>
       </div>
     );
