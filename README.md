@@ -36,7 +36,7 @@ you a filled dotenv file.
 
 2. Migrations
 
-Turn all the docker containers on using `docker-compose up` and the run `medusa migrations run`
+Turn all the docker containers on using `pnpm docker:up` and the run `medusa migrations run`
 to create all tables, indexes and other things in the postgres database.
 
 3. Seeding database
@@ -46,7 +46,7 @@ If you want to modify some data before seeding in, cd into store directory in wo
 seed.json file located in data folder. Now run following command to sync the database with the seed file.
 
 ```bash
-medusa seed --seed-file ./data/seed.json
+pnpm seed
 ```
 
 4. Adding users manually (optional)
