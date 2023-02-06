@@ -32,7 +32,7 @@
     "copy-to-clipboard": "^3.3.1",
     "crypto-browserify": "^3.12.0",
     "emoji-picker-react": "^4.4.3",
-    "framer-motion": "^7.6.12",
+    "framer-motion": "^9.0.1",
     "immutability-helper": "^3.1.1",
     "iso8601-duration": "^2.1.1",
     "lodash": "^4.17.21",
