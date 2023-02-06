@@ -81,12 +81,12 @@ const EditDenominationsModal = ({
     <Modal handleClose={handleClose}>
       <Modal.Body>
         <Modal.Header handleClose={handleClose}>
-          <span className='inter-xlarge-semibold'>Edit Denominations</span>
+          <span className='inter-xlarge-semibold'>Upravit názvy</span>
         </Modal.Header>
         <Modal.Content>
           <div className='pt-1'>
             <div className='flex items-center'>
-              <label className='inter-base-semibold text-grey-90 mr-1.5'>Prices</label>
+              <label className='inter-base-semibold text-grey-90 mr-1.5'>Ceny</label>
               <IconTooltip content={'Helpful denominations'} />
             </div>
             {denominations.map((field, index) => {
@@ -100,7 +100,7 @@ const EditDenominationsModal = ({
                       size='medium'
                     >
                       <CurrencyInput.Amount
-                        label='Amount'
+                        label='Částka'
                         onChange={onAmountChange(index)}
                         amount={field.amount}
                       />
@@ -134,7 +134,7 @@ const EditDenominationsModal = ({
               onClick={handleClose}
               className='mr-2 min-w-[130px] justify-center'
             >
-              Cancel
+              Zrušit
             </Button>
             <Button
               variant='primary'
@@ -142,7 +142,7 @@ const EditDenominationsModal = ({
               className='mr-2 min-w-[130px] justify-center'
               onClick={submitHandler}
             >
-              Save
+              Uložit
             </Button>
           </div>
         </Modal.Footer>

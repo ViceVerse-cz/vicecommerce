@@ -37,11 +37,11 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ handleClose, user, onSucc
   const onSubmit = (data: EditUserModalFormData) => {
     mutate(data, {
       onSuccess: () => {
-        notification('Success', `User was updated`, 'success');
+        notification('Úspěch', 'Uživatel byl aktualizován', 'success');
         onSuccess();
       },
       onError: (error) => {
-        notification('Error', getErrorMessage(error), 'error');
+        notification('Chyba', getErrorMessage(error), 'error');
       },
       onSettled: () => {
         handleClose();
@@ -54,7 +54,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ handleClose, user, onSucc
       <form onSubmit={handleSubmit(onSubmit)}>
         <Modal.Body>
           <Modal.Header handleClose={handleClose}>
-            <span className='inter-xlarge-semibold'>Edit User</span>
+            <span className='inter-xlarge-semibold'>Upravit uživatele</span>
           </Modal.Header>
           <Modal.Content>
             <div className='w-full grid grid-cols-2 gap-large mb-base'>

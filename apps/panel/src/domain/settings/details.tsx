@@ -37,26 +37,26 @@ const AccountDetails = () => {
     const validateInviteLinkTemplate = validateUrl(data.invite_link_template);
 
     if (!validateSwapLinkTemplate) {
-      notification('Error', 'Malformed swap url', 'error');
+      notification('Chyba', 'Špatně formulovaná url adresa swapu', 'error');
       return;
     }
 
     if (!validatePaymentLinkTemplate) {
-      notification('Error', 'Malformed payment url', 'error');
+      notification('Chyba', 'Chybně zadaná url adresa platby', 'error');
       return;
     }
 
     if (!validateInviteLinkTemplate) {
-      notification('Error', 'Malformed invite url', 'error');
+      notification('Chyba', 'Chybná url adresa pozvánky', 'error');
       return;
     }
 
     mutate(data, {
       onSuccess: () => {
-        notification('Success', 'Successfully updated store', 'success');
+        notification('Úspěch', 'Úspěšně aktualizovaný obchod', 'success');
       },
       onError: (error) => {
-        notification('Error', getErrorMessage(error), 'error');
+        notification('Chyba', getErrorMessage(error), 'error');
       },
     });
   };
@@ -68,33 +68,33 @@ const AccountDetails = () => {
         <BodyCard
           events={[
             {
-              label: 'Save',
+              label: 'Uložit',
               type: 'button',
               onClick: handleSubmit(onSubmit),
             },
-            { label: 'Cancel changes', type: 'button', onClick: handleCancel },
+            { label: 'Zrušit změny', type: 'button', onClick: handleCancel },
           ]}
-          title='Store Details'
-          subtitle='Manage your business details'
+          title='Podrobnosti o obchodu'
+          subtitle='Správa obchodních údajů'
         >
-          <h6 className='mt-large inter-base-semibold'>General</h6>
-          <Input className='mt-base' label='Store name' {...register('name')} placeholder='Medusa Store' />
-          <h6 className='mt-2xlarge inter-base-semibold'>Advanced settings</h6>
+          <h6 className='mt-large inter-base-semibold'>Obecné</h6>
+          <Input className='mt-base' label='Store name' {...register('name')} placeholder='Vicecommerce' />
+          <h6 className='mt-2xlarge inter-base-semibold'>Rozšířená nastavení</h6>
           <Input
             className='mt-base'
-            label='Swap link template'
+            label='Výměna šablony odkazu'
             {...register('swap_link_template')}
             placeholder='https://acme.inc/swap={swap_id}'
           />
           <Input
             className='mt-base'
-            label='Draft order link template'
+            label='Šablona odkazu na návrh objednávky'
             {...register('payment_link_template')}
             placeholder='https://acme.inc/payment={payment_id}'
           />
           <Input
             className='mt-base'
-            label='Invite link template'
+            label='Šablona odkazu na pozvánku'
             {...register('invite_link_template')}
             placeholder='https://acme-admin.inc/invite?token={invite_token}'
           />

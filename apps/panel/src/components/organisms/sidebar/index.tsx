@@ -37,7 +37,7 @@ const Sidebar: React.FC = () => {
           </div>
         </div>
         <div className='flex flex-col px-2 my-base'>
-          <span className='font-medium text-grey-50 text-small'>Store</span>
+          <span className='font-medium text-grey-50 text-small'>Obchod</span>
           <span className='font-medium text-grey-90 text-medium'>{store?.name}</span>
         </div>
         <div className='py-3.5'>
@@ -45,43 +45,43 @@ const Sidebar: React.FC = () => {
             pageLink={'/a/orders'}
             icon={<CartIcon size={ICON_SIZE} />}
             triggerHandler={triggerHandler}
-            text={'Orders'}
+            text={'Objednávky'}
           />
           <SidebarMenuItem
             pageLink={'/a/products'}
             icon={<TagIcon size={ICON_SIZE} />}
-            text={'Products'}
+            text={'Produkty'}
             triggerHandler={triggerHandler}
           />
           <SidebarMenuItem
             pageLink={'/a/customers'}
             icon={<UsersIcon size={ICON_SIZE} />}
             triggerHandler={triggerHandler}
-            text={'Customers'}
+            text={'Zákazníci'}
           />
           <SidebarMenuItem
             pageLink={'/a/discounts'}
             icon={<SaleIcon size={ICON_SIZE} />}
             triggerHandler={triggerHandler}
-            text={'Discounts'}
+            text={'Slevy'}
           />
           <SidebarMenuItem
             pageLink={'/a/gift-cards'}
             icon={<GiftIcon size={ICON_SIZE} />}
             triggerHandler={triggerHandler}
-            text={'Gift Cards'}
+            text={'Dárkové karty'}
           />
           <SidebarMenuItem
             pageLink={'/a/pricing'}
             icon={<CashIcon size={ICON_SIZE} />}
             triggerHandler={triggerHandler}
-            text={'Pricing'}
+            text={'Stanovení cen'}
           />
           <SidebarMenuItem
             pageLink={'/a/settings'}
             icon={<GearIcon size={ICON_SIZE} />}
             triggerHandler={triggerHandler}
-            text={'Settings'}
+            text={'Nastavení'}
           />
         </div>
       </div>
