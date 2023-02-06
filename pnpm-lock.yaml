@@ -103,7 +103,7 @@ importers:
       react-highlight-words: ^0.20.0
       react-hook-form: ^7.38.0
       react-hot-toast: ^2.4.0
-      react-hotkeys-hook: ^3.4.7
+      react-hotkeys-hook: ^4.3.4
       react-json-tree: ^0.18.0
       react-jwt: ^1.1.4
       react-router-dom: ^6.4.2
@@ -161,7 +161,7 @@ importers:
       react-highlight-words: 0.20.0_react@18.2.0
       react-hook-form: 7.43.0_react@18.2.0
       react-hot-toast: 2.4.0_biqbaboplfbrettd7655fr4n2y
-      react-hotkeys-hook: 3.4.7_biqbaboplfbrettd7655fr4n2y
+      react-hotkeys-hook: 4.3.4_biqbaboplfbrettd7655fr4n2y
       react-json-tree: 0.18.0_3stiutgnnbnfnf3uowm5cip22i
       react-jwt: 1.1.8_react@18.2.0
       react-router-dom: 6.8.0_biqbaboplfbrettd7655fr4n2y
@@ -11657,10 +11657,6 @@ packages:
     dependencies:
       lru-cache: 6.0.0
 
-  /hotkeys-js/3.9.4:
-    resolution: {integrity: sha512-2zuLt85Ta+gIyvs4N88pCYskNrxf1TFv3LR9t5mdAZIX8BcgQQ48F2opUptvHa6m8zsy5v/a0i9mWzTrlNWU0Q==}
-    dev: false
-
   /html-entities/2.3.3:
     resolution: {integrity: sha512-DV5Ln36z34NNTDgnz0EWGBLZENelNAtkiFA4kyNOG2tDI6Mz1uSWiq1wAKdyjnJwyDiDO7Fa2SO1CTxPXL8VxA==}
     dev: true
@@ -15564,13 +15560,12 @@ packages:
       - csstype
     dev: false
 
-  /react-hotkeys-hook/3.4.7_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-+bbPmhPAl6ns9VkXkNNyxlmCAIyDAcWbB76O4I0ntr3uWCRuIQf/aRLartUahe9chVMPj+OEzzfk3CQSjclUEQ==}
+  /react-hotkeys-hook/4.3.4_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-XV/tMK8n0joWa4tSklfddLUDirbu8T/H1hRPPm+UnfdT2ajp/jZPDh0q3L24nYjsCSwNIA6XFewYPguqrTIXkg==}
     peerDependencies:
       react: '>=16.8.1'
       react-dom: '>=16.8.1'
     dependencies:
-      hotkeys-js: 3.9.4
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
     dev: false
