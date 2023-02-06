@@ -24,7 +24,7 @@ const plugins = [
 
   // Docs: https://github.com/medusajs/medusa/tree/master/packages/medusa-file-minio
   // {
-  //   resolve: 'medusa-file-minio',
+  //   resolve: "medusa-file-minio",
   //   options: {
   //     endpoint: process.env.MINIO_ENDPOINT,
   //     bucket: process.env.MINIO_BUCKET,
