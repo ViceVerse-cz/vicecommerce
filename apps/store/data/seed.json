@@ -1,6 +1,6 @@
 {
   "store": {
-    "currencies": ["eur", "usd"]
+    "currencies": ["czk", "usd"]
   },
   "users": [
     {
