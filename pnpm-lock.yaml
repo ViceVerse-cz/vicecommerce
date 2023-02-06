@@ -81,9 +81,9 @@ importers:
       eslint-plugin-react: ^7.31.10
       eslint-plugin-react-hooks: ^4.6.0
       eslint-plugin-unused-imports: ^2.0.0
-      framer-motion: ^7.6.12
+      framer-motion: ^9.0.1
       immutability-helper: ^3.1.1
-      iso8601-duration: ^1.3.0
+      iso8601-duration: ^2.1.1
       lodash: ^4.17.21
       medusa-react: ^4.0.3
       moment: ^2.27.0
@@ -100,11 +100,11 @@ importers:
       react-dnd-html5-backend: ^16.0.1
       react-dom: ^18.2.0
       react-helmet: ^6.0.0
-      react-highlight-words: ^0.18.0
+      react-highlight-words: ^0.20.0
       react-hook-form: ^7.38.0
       react-hot-toast: ^2.4.0
       react-hotkeys-hook: ^3.4.7
-      react-json-tree: ^0.17.0
+      react-json-tree: ^0.18.0
       react-jwt: ^1.1.4
       react-router-dom: ^6.4.2
       react-select: ^5.5.4
@@ -141,9 +141,9 @@ importers:
       copy-to-clipboard: 3.3.3
       crypto-browserify: 3.12.0
       emoji-picker-react: 4.4.7_react@18.2.0
-      framer-motion: 7.10.3_biqbaboplfbrettd7655fr4n2y
+      framer-motion: 9.0.1_biqbaboplfbrettd7655fr4n2y
       immutability-helper: 3.1.1
-      iso8601-duration: 1.3.0
+      iso8601-duration: 2.1.1
       lodash: 4.17.21
       medusa-react: 4.0.3_poozfql5q7o7oiqq5thpakpgou
       moment: 2.29.4
@@ -158,11 +158,11 @@ importers:
       react-dnd-html5-backend: 16.0.1
       react-dom: 18.2.0_react@18.2.0
       react-helmet: 6.1.0_react@18.2.0
-      react-highlight-words: 0.18.0_react@18.2.0
+      react-highlight-words: 0.20.0_react@18.2.0
       react-hook-form: 7.43.0_react@18.2.0
       react-hot-toast: 2.4.0_biqbaboplfbrettd7655fr4n2y
       react-hotkeys-hook: 3.4.7_biqbaboplfbrettd7655fr4n2y
-      react-json-tree: 0.17.0_3stiutgnnbnfnf3uowm5cip22i
+      react-json-tree: 0.18.0_3stiutgnnbnfnf3uowm5cip22i
       react-jwt: 1.1.8_react@18.2.0
       react-router-dom: 6.8.0_biqbaboplfbrettd7655fr4n2y
       react-select: 5.7.0_57czaiyk6rdr5iy5tfs5pior4u
@@ -11027,8 +11027,8 @@ packages:
       map-cache: 0.2.2
     dev: true
 
-  /framer-motion/7.10.3_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-k2ccYeZNSpPg//HTaqrU+4pRq9f9ZpaaN7rr0+Rx5zA4wZLbk547wtDzge2db1sB+1mnJ6r59P4xb+aEIi/W+w==}
+  /framer-motion/9.0.1_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-0EP7+b/hnsbrFOum9zU+23Fq2cJJrLOqv/yJ26fIzK4CC33ZAjXZGi1/XyblbgnUF0cxZ/SEDj5IYHeQo42qNg==}
     peerDependencies:
       react: ^18.0.0
       react-dom: ^18.0.0
@@ -11037,7 +11037,7 @@ packages:
       hey-listen: 1.0.8
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      tslib: 2.4.0
+      tslib: 2.5.0
     optionalDependencies:
       '@emotion/is-prop-valid': 0.8.8
     dev: false
@@ -12448,6 +12448,10 @@ packages:
 
   /iso8601-duration/1.3.0:
     resolution: {integrity: sha512-K4CiUBzo3YeWk76FuET/dQPH03WE04R94feo5TSKQCXpoXQt9E4yx2CnY737QZnSAI3PI4WlKo/zfqizGx52QQ==}
+    dev: false
+
+  /iso8601-duration/2.1.1:
+    resolution: {integrity: sha512-VGGpW30/R57FpG1J7RqqKBAaK7lIiudlZkQ5tRoO9hNlKYQNnhs60DQpXlPFBmp6I+kJ61PHkI3f/T7cR4wfbw==}
     dev: false
 
   /isobject/2.1.0:
@@ -15506,8 +15510,8 @@ packages:
       react-side-effect: 2.1.2_react@18.2.0
     dev: false
 
-  /react-highlight-words/0.18.0_react@18.2.0:
-    resolution: {integrity: sha512-5z+46eLPjB4JWgOhuQ0E+6iUPTD1U3amiy5KKjzZmeJ5zyvHr91hnzBT3UHya/KlySm5KRTKpYpba9vs67oO2A==}
+  /react-highlight-words/0.20.0_react@18.2.0:
+    resolution: {integrity: sha512-asCxy+jCehDVhusNmCBoxDf2mm1AJ//D+EzDx1m5K7EqsMBIHdZ5G4LdwbSEXqZq1Ros0G0UySWmAtntSph7XA==}
     peerDependencies:
       react: ^0.14.0 || ^15.0.0 || ^16.0.0-0 || ^17.0.0-0 || ^18.0.0-0
     dependencies:
@@ -15569,17 +15573,15 @@ packages:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
     dev: true
 
-  /react-json-tree/0.17.0_3stiutgnnbnfnf3uowm5cip22i:
-    resolution: {integrity: sha512-hcWjibI/fAvsKnfYk+lka5OrE1Lvb1jH5pSnFhIU5T8cCCxB85r6h/NOzDPggSSgErjmx4rl3+2EkeclIKBOhg==}
+  /react-json-tree/0.18.0_3stiutgnnbnfnf3uowm5cip22i:
+    resolution: {integrity: sha512-Qe6HKSXrr++n9Y31nkRJ3XvQMATISpqigH1vEKhLwB56+nk5thTP0ITThpjxY6ZG/ubpVq/aEHIcyLP/OPHxeA==}
     peerDependencies:
-      '@types/react': ^16.3.0 || ^17.0.0 || ^18.0.0
-      react: ^16.3.0 || ^17.0.0 || ^18.0.0
+      '@types/react': ^16.8.0 || ^17.0.0 || ^18.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
       '@babel/runtime': 7.20.13
       '@types/lodash': 4.14.191
-      '@types/prop-types': 15.7.5
       '@types/react': 18.0.27
-      prop-types: 15.8.1
       react: 18.2.0
       react-base16-styling: 0.9.1
     dev: false
@@ -17544,10 +17546,6 @@ packages:
 
   /tslib/1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
-
-  /tslib/2.4.0:
-    resolution: {integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==}
-    dev: false
 
   /tslib/2.5.0:
     resolution: {integrity: sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==}
