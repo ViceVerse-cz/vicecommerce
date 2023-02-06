@@ -33,7 +33,7 @@ const plugins = [
     },
   },
 
-  // // Docs: https://github.com/medusajs/medusa/tree/master/packages/medusa-plugin-meilisearch
+  // Docs: https://github.com/medusajs/medusa/tree/master/packages/medusa-plugin-meilisearch
   {
     resolve: 'medusa-plugin-meilisearch',
     options: {
