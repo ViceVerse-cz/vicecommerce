@@ -1,5 +1,7 @@
 /* eslint @typescript-eslint/no-var-requires: "off" */
-require('dotenv');
+require('dotenv').config({
+  path: '../../.env',
+});
 
 // CORS when consuming Medusa from admin
 const ADMIN_CORS = 'http://localhost:7000,http://localhost:7001';
@@ -8,7 +10,7 @@ const ADMIN_CORS = 'http://localhost:7000,http://localhost:7001';
 const STORE_CORS = 'http://localhost:8000';
 
 // Database URL (here we use a local database called medusa-development)
-const DATABASE_URL = 'postgres://postgres:postgres@localhost:5432/medusa-docker';
+const DATABASE_URL = 'postgres://user:password@localhost:5432/medusa-docker';
 
 // Medusa uses Redis, so this needs configuration as well
 const REDIS_URL = 'redis://localhost:6379';
@@ -23,15 +25,15 @@ const plugins = [
   },
 
   // Docs: https://github.com/medusajs/medusa/tree/master/packages/medusa-file-minio
-  // {
-  //   resolve: "medusa-file-minio",
-  //   options: {
-  //     endpoint: process.env.MINIO_ENDPOINT,
-  //     bucket: process.env.MINIO_BUCKET,
-  //     access_key_id: process.env.MINIO_ACCESS_KEY,
-  //     secret_access_key: process.env.MINIO_SECRET_KEY,
-  //   },
-  // },
+  {
+    resolve: 'medusa-file-minio',
+    options: {
+      endpoint: process.env.MINIO_ENDPOINT,
+      bucket: process.env.MINIO_BUCKET,
+      access_key_id: process.env.MINIO_ACCESS_KEY,
+      secret_access_key: process.env.MINIO_SECRET_KEY,
+    },
+  },
 
   // // Docs: https://github.com/medusajs/medusa/tree/master/packages/medusa-plugin-meilisearch
   {
