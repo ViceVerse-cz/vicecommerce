@@ -1,0 +1,36 @@
+../..                                    | Progress: resolved 0, reused 1, downloaded 0, added 0
+../..                                    | Progress: resolved 65, reused 57, downloaded 0, added 0
+ WARN  deprecated multer@1.4.4: Multer 1.x is affected by CVE-2022-24434. This is fixed in v1.4.4-lts.1 which drops support for versions of Node.js before 6. Please upgrade to at least Node.js 6 and version 1.4.4-lts.1 of Multer. If you need support for older versions of Node.js, we are open to accepting patches that would fix the CVE on the main 1.x release line, whilst maintaining compatibility with Node.js 0.10.
+ WARN  deprecated @babel/polyfill@7.12.1: 🚨 This package has been deprecated in favor of separate inclusion of a polyfill and regenerator-runtime (when needed). See the @babel/polyfill docs (https://babeljs.io/docs/en/babel-polyfill) for more information.
+ WARN  deprecated querystring@0.2.0: The querystring API is considered Legacy. new code should use the URLSearchParams API instead.
+../..                                    | Progress: resolved 527, reused 521, downloaded 0, added 0
+ WARN  deprecated cli-ux@5.6.7: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+ WARN  deprecated @oclif/screen@1.0.4: Deprecated in favor of @oclif/core
+ WARN  deprecated core-js@2.6.12: core-js@<3.23.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Some versions have web compatibility issues. Please, upgrade your dependencies to the actual version of core-js.
+../..                                    | Progress: resolved 1060, reused 1054, downloaded 0, added 0
+ WARN  deprecated @npmcli/move-file@1.1.2: This functionality has been moved to @npmcli/fs
+../.. prepare$ husky install
+../.. prepare: husky - Git hooks installed
+../.. prepare: Done
+
+ WARN  Issues with peer dependencies found
+.
+└─┬ @typescript-eslint/eslint-plugin 5.51.0
+  ├── ✕ missing peer typescript@"*"
+  ├── ✕ missing peer @typescript-eslint/parser@^5.0.0
+  └─┬ @typescript-eslint/type-utils 5.51.0
+    ├── ✕ missing peer typescript@"*"
+    └─┬ @typescript-eslint/typescript-estree 5.51.0
+      ├── ✕ missing peer typescript@"*"
+      └─┬ tsutils 3.21.0
+        └── ✕ missing peer typescript@">=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta"
+Peer dependencies that should be installed:
+  @typescript-eslint/parser@^5.0.0
+  typescript@>=2.8.0
+
+apps/store
+└─┬ @lambdacurry/medusa-file-s3 1.1.7
+  └── ✕ unmet peer medusa-interfaces@1.3.3: found 1.3.4
+
+Done in 4.6s
+../..                                    | Progress: resolved 1110, reused 1104, downloaded 0, added 0, done

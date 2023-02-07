@@ -7,7 +7,7 @@
     "scripts": {
         "seed": "medusa seed -f ./data/seed.json",
         "build": "tsc -p tsconfig.json",
-        "dev": "npm run build && node dist/main.js",
+        "dev": "npm run build && node dist/src/main.js",
         "start": "npm run build && NODE_ENV=development node ./dist/main.js",
         "start:watch": "nodemon --watch './src/**/*.ts' --exec 'npm run build && NODE_ENV=development node ./dist/main.js'",
         "start:prod": "npm run build && NODE_ENV=production node dist/main"
@@ -40,7 +40,7 @@
         "@babel/preset-typescript": "^7.14.5",
         "babel-preset-medusa-package": "^1.1.19",
         "eslint": "^6.0.0 || ^7.0.0 || ^8.0.0",
-        "typescript": "^4.5.5",
-        "nodemon": "^2.0.15"
+        "nodemon": "^2.0.15",
+        "typescript": "^4.9.5"
     }
 }
