@@ -10,6 +10,7 @@
     "test": "turbo run test",
     "lint": "turbo run lint -- --fix --cache",
     "format": "prettier --write \"**/*.{ts,tsx,md}\" --cache",
+    "seed": "dotenv -- turbo run seed",
     "prepare": "husky install",
     "docker:build": "cross-env COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose -f docker-compose.yml build --parallel",
     "docker:up": "docker-compose up -d",
