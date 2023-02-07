@@ -1,0 +1,68 @@
+../..                                    | Progress: resolved 0, reused 1, downloaded 0, added 0
+../..                                    | Progress: resolved 100, reused 92, downloaded 0, added 0
+ WARN  deprecated multer@1.4.4: Multer 1.x is affected by CVE-2022-24434. This is fixed in v1.4.4-lts.1 which drops support for versions of Node.js before 6. Please upgrade to at least Node.js 6 and version 1.4.4-lts.1 of Multer. If you need support for older versions of Node.js, we are open to accepting patches that would fix the CVE on the main 1.x release line, whilst maintaining compatibility with Node.js 0.10.
+../..                                    | Progress: resolved 471, reused 465, downloaded 0, added 0
+ WARN  deprecated sourcemap-codec@1.4.8: Please use @jridgewell/sourcemap-codec instead
+../..                                    | Progress: resolved 913, reused 881, downloaded 0, added 0
+ WARN  deprecated stable@0.1.8: Modern JS already guarantees Array#sort() is a stable sort, so this library is deprecated. See the compatibility table on MDN: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#browser_compatibility
+ WARN  deprecated @babel/polyfill@7.12.1: 🚨 This package has been deprecated in favor of separate inclusion of a polyfill and regenerator-runtime (when needed). See the @babel/polyfill docs (https://babeljs.io/docs/en/babel-polyfill) for more information.
+../..                                    | Progress: resolved 1468, reused 1440, downloaded 0, added 0
+ WARN  deprecated cli-ux@5.6.7: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+ WARN  deprecated querystring@0.2.0: The querystring API is considered Legacy. new code should use the URLSearchParams API instead.
+ WARN  deprecated sane@4.1.0: some dependency vulnerabilities fixed, support for node < 10 dropped, and newer ECMAScript syntax/features added
+ WARN  deprecated @oclif/screen@1.0.4: Deprecated in favor of @oclif/core
+ WARN  deprecated core-js@2.6.12: core-js@<3.23.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Some versions have web compatibility issues. Please, upgrade your dependencies to the actual version of core-js.
+ WARN  deprecated chokidar@2.1.8: Chokidar 2 does not receive security updates since 2019. Upgrade to chokidar 3 with 15x fewer dependencies
+ WARN  deprecated fsevents@1.2.13: fsevents 1 will break on node v14+ and could be using insecure binaries. Upgrade to fsevents 2.
+ WARN  deprecated source-map-resolve@0.5.3: See https://github.com/lydell/source-map-resolve#deprecated
+ WARN  deprecated @npmcli/move-file@1.1.2: This functionality has been moved to @npmcli/fs
+ WARN  deprecated resolve-url@0.2.1: https://github.com/lydell/resolve-url#deprecated
+ WARN  deprecated source-map-url@0.4.1: See https://github.com/lydell/source-map-url#deprecated
+ WARN  deprecated urix@0.1.0: Please see https://github.com/lydell/urix#deprecated
+ WARN  deprecated uuid@3.4.0: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+../..                                    | Progress: resolved 2048, reused 2017, downloaded 0, added 0
+../..                                    |   +2   -3 +-
+../..                                    | Progress: resolved 2130, reused 2102, downloaded 0, added 2, done
+../.. prepare$ husky install
+../.. prepare: husky - Git hooks installed
+../.. prepare: Done
+
+dependencies:
++ @types/node 18.13.0
+
+ WARN  Issues with peer dependencies found
+apps/panel
+├─┬ @storybook/addon-essentials 6.5.16
+│ ├── ✕ missing peer webpack@"*"
+│ ├─┬ @storybook/addon-docs 6.5.16
+│ │ ├─┬ babel-loader 8.3.0
+│ │ │ └── ✕ missing peer webpack@>=2
+│ │ └─┬ @mdx-js/react 1.6.22
+│ │   └── ✕ unmet peer react@"^16.13.1 || ^17.0.0": found 18.2.0
+│ └─┬ @storybook/addon-actions 6.5.16
+│   └─┬ react-inspector 5.1.1
+│     └── ✕ unmet peer react@"^16.8.4 || ^17.0.0": found 18.2.0
+├─┬ babel-loader 9.1.2
+│ └── ✕ missing peer webpack@>=5
+├─┬ @storybook/react 6.5.16
+│ ├── ✕ missing peer require-from-string@^2.0.2
+│ └─┬ react-element-to-jsx-string 14.3.4
+│   ├── ✕ unmet peer react@"^0.14.8 || ^15.0.1 || ^16.0.0 || ^17.0.1": found 18.2.0
+│   └── ✕ unmet peer react-dom@"^0.14.8 || ^15.0.1 || ^16.0.0 || ^17.0.1": found 18.2.0
+├─┬ @medusajs/medusa 1.7.5
+│ ├── ✕ missing peer medusa-interfaces@1.3.4
+│ ├── ✕ missing peer typeorm@0.2.x
+│ └─┬ ioredis-mock 5.9.1
+│   └── ✕ missing peer redis-commands@1.x
+└─┬ react-hot-toast 2.4.0
+  └─┬ goober 2.1.12
+    └── ✕ missing peer csstype@^3.0.10
+Peer dependencies that should be installed:
+  csstype@^3.0.10
+  medusa-interfaces@1.3.4
+  redis-commands@1.x
+  require-from-string@^2.0.2
+  typeorm@0.2.x
+  webpack@>=5.0.0
+
+Done in 8.1s

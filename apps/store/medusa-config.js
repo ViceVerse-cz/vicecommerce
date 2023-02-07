@@ -8,7 +8,7 @@ const ADMIN_CORS = 'http://localhost:7000,http://localhost:7001';
 const STORE_CORS = 'http://localhost:8000';
 
 // Database URL (here we use a local database called medusa-development)
-const DATABASE_URL = 'postgres://postgres:postgres@localhost:5432/medusa-docker';
+const DATABASE_URL = 'postgres://user:password@localhost:5432/medusa-docker';
 
 // Medusa uses Redis, so this needs configuration as well
 const REDIS_URL = 'redis://localhost:6379';
@@ -22,16 +22,17 @@ const plugins = [
     resolve: 'medusa-payment-manual',
   },
 
-  // Docs: https://github.com/medusajs/medusa/tree/master/packages/medusa-file-minio
-  // {
-  //   resolve: "medusa-file-minio",
-  //   options: {
-  //     endpoint: process.env.MINIO_ENDPOINT,
-  //     bucket: process.env.MINIO_BUCKET,
-  //     access_key_id: process.env.MINIO_ACCESS_KEY,
-  //     secret_access_key: process.env.MINIO_SECRET_KEY,
-  //   },
-  // },
+  // Docs: https://docs.medusajs.com/add-plugins/s3
+  {
+    resolve: `@lambdacurry/medusa-file-s3`,
+    options: {
+      s3_url: process.env.S3_URL,
+      bucket: process.env.S3_BUCKET,
+      region: process.env.S3_REGION,
+      access_key_id: process.env.S3_ACCESS_KEY_ID,
+      secret_access_key: process.env.S3_SECRET_ACCESS_KEY,
+    },
+  },
 
   // Docs: https://github.com/medusajs/medusa/tree/master/packages/medusa-plugin-meilisearch
   {
