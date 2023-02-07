@@ -1,5 +1,25 @@
 {
-  "compilerOptions": {
-    "experimentalDecorators": true
-  }
+    "compilerOptions": {
+        "experimentalDecorators": true,
+        "module": "CommonJS",
+        "declaration": true,
+        "emitDecoratorMetadata": true,
+        "allowSyntheticDefaultImports": true,
+        "moduleResolution": "node",
+        "target": "es2017",
+        "sourceMap": true,
+        "skipLibCheck": true,
+        "resolveJsonModule": true,
+        "allowJs": true,
+        "outDir": "dist",
+        "esModuleInterop": true
+    },
+    "include": [
+        "src"
+, "medusa-config.js"    ],
+    "exclude": [
+        "dist",
+        "node_modules",
+        "**/*.spec.ts"
+    ]
 }

@@ -63,6 +63,7 @@ const plugins = [
 
 module.exports = {
   projectConfig: {
+    port: 9000,
     redis_url: REDIS_URL,
     database_url: DATABASE_URL,
     database_type: 'postgres',
