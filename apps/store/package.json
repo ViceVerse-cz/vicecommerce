@@ -27,6 +27,7 @@
         "dotenv-run-script": "^0.2.0",
         "express": "4.17.2",
         "global": "^4.4.0",
+        "js2xmlparser": "^5.0.0",
         "medusa-core-utils": "^1.1.31",
         "medusa-extender": "^1.8.8",
         "medusa-fulfillment-manual": "^1.1.31",
