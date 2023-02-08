@@ -1,31 +1,31 @@
 /* eslint @typescript-eslint/no-var-requires: "off" */
-require('dotenv');
+require("dotenv");
 
 // CORS when consuming Medusa from admin
-const ADMIN_CORS = 'http://localhost:7000,http://localhost:7001';
+const ADMIN_CORS = "http://localhost:7000,http://localhost:7001";
 
 // CORS to avoid issues when consuming Medusa from a client
-const STORE_CORS = 'http://localhost:8000';
+const STORE_CORS = "http://localhost:8000";
 
 // Database URL (here we use a local database called medusa-development)
 const DATABASE_URL = process.env.DATABASE_URL;
 
 // Medusa uses Redis, so this needs configuration as well
-const REDIS_URL = 'redis://localhost:6379';
+const REDIS_URL = "redis://localhost:6379";
 
 // This is the place to include plugins. See API documentation for a thorough guide on plugins.
 const plugins = [
   {
-    resolve: 'medusa-fulfillment-manual',
+    resolve: "medusa-fulfillment-manual",
   },
 
   {
-    resolve: 'medusa-payment-manual',
+    resolve: "medusa-payment-manual",
   },
 
   // Docs: https://docs.medusajs.com/add-plugins/contentful/
   {
-    resolve: `medusa-plugin-contentful`,
+    resolve: "medusa-plugin-contentful",
     options: {
       space_id: process.env.CONTENTFUL_SPACE_ID,
       access_token: process.env.CONTENTFUL_ACCESS_TOKEN,
@@ -35,7 +35,7 @@ const plugins = [
 
   // Docs: https://docs.medusajs.com/add-plugins/s3
   {
-    resolve: `@lambdacurry/medusa-file-s3`,
+    resolve: "@lambdacurry/medusa-file-s3",
     options: {
       s3_url: process.env.S3_URL,
       bucket: process.env.S3_BUCKET,
@@ -47,7 +47,7 @@ const plugins = [
 
   // Docs: https://github.com/medusajs/medusa/tree/master/packages/medusa-plugin-meilisearch
   {
-    resolve: 'medusa-plugin-meilisearch',
+    resolve: "medusa-plugin-meilisearch",
     options: {
       config: {
         host: process.env.MEILISEARCH_HOST,
@@ -55,8 +55,8 @@ const plugins = [
       },
       settings: {
         products: {
-          searchableAttributes: ['title', 'description', 'variant_sku'],
-          displayedAttributes: ['title', 'description', 'variant_sku', 'thumbnail', 'handle'],
+          searchableAttributes: ["title", "description", "variant_sku"],
+          displayedAttributes: ["title", "description", "variant_sku", "thumbnail", "handle"],
         },
       },
     },
@@ -77,7 +77,7 @@ module.exports = {
     port: 9000,
     redis_url: REDIS_URL,
     database_url: DATABASE_URL,
-    database_type: 'postgres',
+    database_type: "postgres",
     store_cors: STORE_CORS,
     admin_cors: ADMIN_CORS,
   },

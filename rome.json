@@ -1,0 +1,21 @@
+{
+    "formatter": {
+        "enabled": true,
+        "indentStyle": "space",
+        "indentSize": 2,
+        "lineWidth": 120
+    },
+    "linter": {
+        "enabled": true,
+        "ignore": [
+            "node_modules/**",
+            "bower_components/**",
+            "vendor/**",
+            "tmp/**",
+            "dist/**",
+            "coverage/**",
+            ".next/**",
+            "public/**"
+        ]
+    }
+}

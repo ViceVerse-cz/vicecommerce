@@ -1,8 +1,0 @@
-node_modules
-out
-dist
-.next
-public
-.husky
-next-env.d.ts
-yarn.lock
