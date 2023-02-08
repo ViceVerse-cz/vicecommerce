@@ -1,26 +1,24 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Order, OrderEdit, ProductVariant } from '@medusajs/medusa';
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { Order, OrderEdit, ProductVariant } from "@medusajs/medusa";
 import {
   useAdminCreateOrderEdit,
   useAdminDeleteOrderEdit,
   useAdminOrderEditAddLineItem,
   useAdminRequestOrderEditConfirmation,
   useAdminUpdateOrderEdit,
-} from 'medusa-react';
-import clsx from 'clsx';
+} from "medusa-react";
+import clsx from "clsx";
 
-import LayeredModal, {
-  LayeredModalContext,
-} from '../../../components/molecules/modal/layered-modal';
-import Modal from '../../../components/molecules/modal';
-import Button from '../../../components/fundamentals/button';
-import OrderEditLine from '../details/order-line/edit';
-import VariantsTable from './variants-table';
-import SearchIcon from '../../../components/fundamentals/icons/search-icon';
-import { formatAmountWithSymbol } from '../../../utils/prices';
-import InputField from '../../../components/molecules/input';
-import useNotification from '../../../hooks/use-notification';
-import { OrderEditContext } from './context';
+import LayeredModal, { LayeredModalContext } from "../../../components/molecules/modal/layered-modal";
+import Modal from "../../../components/molecules/modal";
+import Button from "../../../components/fundamentals/button";
+import OrderEditLine from "../details/order-line/edit";
+import VariantsTable from "./variants-table";
+import SearchIcon from "../../../components/fundamentals/icons/search-icon";
+import { formatAmountWithSymbol } from "../../../utils/prices";
+import InputField from "../../../components/molecules/input";
+import useNotification from "../../../hooks/use-notification";
+import { OrderEditContext } from "./context";
 
 type TotalsSectionProps = {
   amountPaid: number;
@@ -62,9 +60,9 @@ function TotalsSection(props: TotalsSectionProps) {
       <div className='flex justify-between'>
         <span className='text-gray-500'>Difference Due</span>
         <span
-          className={clsx('text-gray-900', {
-            'text-rose-500': differenceDue < 0,
-            'text-emerald-500': differenceDue >= 0,
+          className={clsx("text-gray-900", {
+            "text-rose-500": differenceDue < 0,
+            "text-emerald-500": differenceDue >= 0,
           })}
         >
           {formatAmountWithSymbol({
@@ -149,22 +147,13 @@ type OrderEditModalProps = {
  * Displays layered modal for order editing.
  */
 function OrderEditModal(props: OrderEditModalProps) {
-  const {
-    close,
-    currentSubtotal,
-    orderEdit,
-    currencyCode,
-    regionId,
-    customerId,
-    paidTotal,
-    refundedTotal,
-  } = props;
+  const { close, currentSubtotal, orderEdit, currencyCode, regionId, customerId, paidTotal, refundedTotal } = props;
 
   const filterRef = useRef();
   const notification = useNotification();
   const [note, setNote] = useState<string | undefined>();
   const [showFilter, setShowFilter] = useState(false);
-  const [filterTerm, setFilterTerm] = useState<string>('');
+  const [filterTerm, setFilterTerm] = useState<string>("");
 
   const showTotals = currentSubtotal !== orderEdit.subtotal;
   const showNote = !!orderEdit.changes.length;
@@ -172,9 +161,7 @@ function OrderEditModal(props: OrderEditModalProps) {
   const { mutateAsync: requestConfirmation, isLoading: isRequestingConfirmation } =
     useAdminRequestOrderEditConfirmation(orderEdit.id);
 
-  const { mutateAsync: updateOrderEdit, isLoading: isUpdating } = useAdminUpdateOrderEdit(
-    orderEdit.id,
-  );
+  const { mutateAsync: updateOrderEdit, isLoading: isUpdating } = useAdminUpdateOrderEdit(orderEdit.id);
 
   const { mutateAsync: deleteOrderEdit } = useAdminDeleteOrderEdit(orderEdit.id);
 
@@ -189,9 +176,9 @@ function OrderEditModal(props: OrderEditModalProps) {
         await updateOrderEdit({ internal_note: note });
       }
 
-      notification('Success', 'Order edit set as requested', 'success');
+      notification("Success", "Order edit set as requested", "success");
     } catch (e) {
-      notification('Error', 'Failed to request confirmation', 'error');
+      notification("Error", "Failed to request confirmation", "error");
     }
     close();
   };
@@ -214,15 +201,15 @@ function OrderEditModal(props: OrderEditModalProps) {
 
       await Promise.all(promises);
 
-      notification('Success', 'Added successfully', 'success');
+      notification("Success", "Added successfully", "success");
     } catch (e) {
-      notification('Error', 'Error occurred', 'error');
+      notification("Error", "Error occurred", "error");
     }
   };
 
   const hideFilter = () => {
     if (showFilter) {
-      setFilterTerm('');
+      setFilterTerm("");
     }
     setShowFilter((s) => !s);
   };
@@ -235,14 +222,12 @@ function OrderEditModal(props: OrderEditModalProps) {
 
   if (filterTerm) {
     displayItems = displayItems.filter(
-      (i) =>
-        i.title.toLowerCase().includes(filterTerm) ||
-        i.variant?.sku.toLowerCase().includes(filterTerm),
+      (i) => i.title.toLowerCase().includes(filterTerm) || i.variant?.sku.toLowerCase().includes(filterTerm),
     );
   }
 
   const addProductVariantScreen = {
-    title: 'Add Product Variants',
+    title: "Add Product Variants",
     onBack: layeredModalContext.pop,
     view: (
       <AddProductVariant
@@ -276,8 +261,8 @@ function OrderEditModal(props: OrderEditModalProps) {
                 <Button
                   size='small'
                   variant='secondary'
-                  className={clsx('h–[32px] h-full w-[32px] flex-shrink-0', {
-                    'focus:bg-grey-20': showFilter,
+                  className={clsx("h–[32px] h-full w-[32px] flex-shrink-0", {
+                    "focus:bg-grey-20": showFilter,
                   })}
                   onClick={() => setShowFilter(true)}
                 >
@@ -370,8 +355,7 @@ function OrderEditModalContainer(props: OrderEditModalContainerProps) {
   const { order } = props;
   const notification = useNotification();
 
-  const { hideModal, orderEdits, activeOrderEditId, setActiveOrderEdit } =
-    useContext(OrderEditContext);
+  const { hideModal, orderEdits, activeOrderEditId, setActiveOrderEdit } = useContext(OrderEditContext);
 
   const { mutateAsync: createOrderEdit } = useAdminCreateOrderEdit();
 
@@ -387,7 +371,7 @@ function OrderEditModalContainer(props: OrderEditModalContainerProps) {
     createOrderEdit({ order_id: order.id })
       .then(({ order_edit }) => setActiveOrderEdit(order_edit.id))
       .catch(() => {
-        notification('Error', 'There is already an active order edit on this order', 'error');
+        notification("Error", "There is already an active order edit on this order", "error");
         hideModal();
       })
       .finally(() => (isRequestRunningFlag = false));

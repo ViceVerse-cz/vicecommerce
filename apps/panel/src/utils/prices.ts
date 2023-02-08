@@ -1,6 +1,6 @@
-import { LineItemTaxLine, MoneyAmount, Order, Region } from '@medusajs/medusa';
-import { PricedVariant } from '@medusajs/medusa/dist/types/pricing';
-import { currencies } from './currencies';
+import { LineItemTaxLine, MoneyAmount, Order, Region } from "@medusajs/medusa";
+import { PricedVariant } from "@medusajs/medusa/dist/types/pricing";
+import { currencies } from "./currencies";
 
 export function normalizeAmount(currency: string, amount: number): number {
   const divisor = getDecimalDigits(currency);
@@ -27,9 +27,7 @@ export const extractUnitPrice = (item: PricedVariant, region: Region, withTax = 
 
     itemPrice = regionPrice.amount;
     includesTax = region.includes_tax;
-    taxRate = includesTax
-      ? (itemPrice * region.tax_rate) / (1 + region.tax_rate)
-      : itemPrice * region.tax_rate;
+    taxRate = includesTax ? (itemPrice * region.tax_rate) / (1 + region.tax_rate) : itemPrice * region.tax_rate;
   }
 
   if (itemPrice) {
@@ -101,11 +99,11 @@ type FormatMoneyProps = {
 };
 
 export function formatAmountWithSymbol({ amount, currency, digits, tax = 0 }: FormatMoneyProps) {
-  let locale = 'en-US';
+  let locale = "en-US";
 
   // We need this to display 'Kr' instead of 'DKK'
-  if (currency.toLowerCase() === 'dkk') {
-    locale = 'da-DK';
+  if (currency.toLowerCase() === "dkk") {
+    locale = "da-DK";
   }
 
   digits = digits ?? currencies[currency.toUpperCase()].decimal_digits;
@@ -115,15 +113,15 @@ export function formatAmountWithSymbol({ amount, currency, digits, tax = 0 }: Fo
   const taxRate = tax instanceof Array ? tax.reduce((acc, curr) => acc + curr.rate, 0) : tax;
 
   return new Intl.NumberFormat(locale, {
-    style: 'currency',
+    style: "currency",
     currency,
     minimumFractionDigits: digits,
   }).format(normalizedAmount * (1 + taxRate / 100));
 }
 
 export const extractNormalizedAmount = (
-  amounts: Omit<MoneyAmount, 'beforeInsert'>[],
-  order: Omit<Order, 'beforeInsert'>,
+  amounts: Omit<MoneyAmount, "beforeInsert">[],
+  order: Omit<Order, "beforeInsert">,
 ) => {
   let amount = amounts.find((ma) => ma.region_id === order.region_id);
 

@@ -1,22 +1,10 @@
-import { Product, Region, ShippingOption } from '@medusajs/medusa';
-import {
-  useAdminRegion,
-  useAdminShippingOption,
-  useAdminShippingOptions,
-  useMedusa,
-} from 'medusa-react';
-import { createContext, ReactNode, useContext, useEffect, useMemo } from 'react';
-import {
-  FormProvider,
-  useFieldArray,
-  UseFieldArrayReturn,
-  useForm,
-  useFormContext,
-  useWatch,
-} from 'react-hook-form';
-import { AddressPayload } from '../../../../components/templates/address-form';
-import { Option } from '../../../../types/shared';
-import { extractUnitPrice } from '../../../../utils/prices';
+import { Product, Region, ShippingOption } from "@medusajs/medusa";
+import { useAdminRegion, useAdminShippingOption, useAdminShippingOptions, useMedusa } from "medusa-react";
+import { createContext, ReactNode, useContext, useEffect, useMemo } from "react";
+import { FormProvider, useFieldArray, UseFieldArrayReturn, useForm, useFormContext, useWatch } from "react-hook-form";
+import { AddressPayload } from "../../../../components/templates/address-form";
+import { Option } from "../../../../types/shared";
+import { extractUnitPrice } from "../../../../utils/prices";
 
 export type NewOrderForm = {
   shipping_address: AddressPayload;
@@ -44,7 +32,7 @@ type NewOrderContextValue = {
   validCountries: Option[];
   region: Region | undefined;
   selectedShippingOption: ShippingOption | undefined;
-  items: UseFieldArrayReturn<NewOrderForm, 'items', 'id'>;
+  items: UseFieldArrayReturn<NewOrderForm, "items", "id">;
   shippingOptions: ShippingOption[];
 };
 
@@ -61,17 +49,17 @@ const NewOrderFormProvider = ({ children }: { children?: ReactNode }) => {
 
   const items = useFieldArray({
     control: form.control,
-    name: 'items',
+    name: "items",
   });
 
-  const selectedRegion = useWatch({ control: form.control, name: 'region' });
+  const selectedRegion = useWatch({ control: form.control, name: "region" });
   const { region } = useAdminRegion(selectedRegion?.value, {
     enabled: !!selectedRegion,
   });
 
   const selectedShippingOption = useWatch({
     control: form.control,
-    name: 'shipping_option',
+    name: "shipping_option",
   });
 
   const { shipping_option } = useAdminShippingOption(selectedShippingOption?.value, {
@@ -80,8 +68,8 @@ const NewOrderFormProvider = ({ children }: { children?: ReactNode }) => {
 
   useEffect(() => {
     if (selectedShippingOption) {
-      form.resetField('shipping_option');
-      form.resetField('custom_shipping_price');
+      form.resetField("shipping_option");
+      form.resetField("custom_shipping_price");
     }
   }, [selectedRegion]);
 
@@ -152,13 +140,10 @@ const NewOrderFormProvider = ({ children }: { children?: ReactNode }) => {
 
     return shipping_options.reduce((acc, next) => {
       if (next.requirements) {
-        const minSubtotal = next.requirements.find((req) => req.type === 'min_subtotal');
-        const maxSubtotal = next.requirements.find((req) => req.type === 'max_subtotal');
+        const minSubtotal = next.requirements.find((req) => req.type === "min_subtotal");
+        const maxSubtotal = next.requirements.find((req) => req.type === "max_subtotal");
 
-        if (
-          (minSubtotal && total <= minSubtotal.amount) ||
-          (maxSubtotal && total >= maxSubtotal.amount)
-        ) {
+        if ((minSubtotal && total <= minSubtotal.amount) || (maxSubtotal && total >= maxSubtotal.amount)) {
           return acc;
         }
       }
@@ -187,7 +172,7 @@ export const useNewOrderForm = () => {
   const form = useFormContext<NewOrderForm>();
 
   if (!context) {
-    throw new Error('useNewOrderForm must be used within NewOrderFormProvider');
+    throw new Error("useNewOrderForm must be used within NewOrderFormProvider");
   }
 
   return { context, form };

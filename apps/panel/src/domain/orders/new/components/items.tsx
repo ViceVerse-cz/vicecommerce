@@ -1,27 +1,22 @@
-import { Product, ProductVariant, Region } from '@medusajs/medusa';
-import clsx from 'clsx';
-import React, { useContext, useEffect, useState } from 'react';
-import { Controller } from 'react-hook-form';
-import { useMedusa } from 'medusa-react';
+import { Product, ProductVariant, Region } from "@medusajs/medusa";
+import clsx from "clsx";
+import React, { useContext, useEffect, useState } from "react";
+import { Controller } from "react-hook-form";
+import { useMedusa } from "medusa-react";
 
-import Button from '../../../../components/fundamentals/button';
-import MinusIcon from '../../../../components/fundamentals/icons/minus-icon';
-import PlusIcon from '../../../../components/fundamentals/icons/plus-icon';
-import TrashIcon from '../../../../components/fundamentals/icons/trash-icon';
-import ImagePlaceholder from '../../../../components/fundamentals/image-placeholder';
-import InputField from '../../../../components/molecules/input';
-import { LayeredModalContext } from '../../../../components/molecules/modal/layered-modal';
-import { SteppedContext } from '../../../../components/molecules/modal/stepped-modal';
-import Table from '../../../../components/molecules/table';
-import {
-  displayAmount,
-  extractUnitPrice,
-  getNativeSymbol,
-  persistedPrice,
-} from '../../../../utils/prices';
-import RMASelectProductSubModal from '../../details/rma-sub-modals/products';
-import { useNewOrderForm } from '../form';
-import CustomItemSubModal from './custom-item-sub-modal';
+import Button from "../../../../components/fundamentals/button";
+import MinusIcon from "../../../../components/fundamentals/icons/minus-icon";
+import PlusIcon from "../../../../components/fundamentals/icons/plus-icon";
+import TrashIcon from "../../../../components/fundamentals/icons/trash-icon";
+import ImagePlaceholder from "../../../../components/fundamentals/image-placeholder";
+import InputField from "../../../../components/molecules/input";
+import { LayeredModalContext } from "../../../../components/molecules/modal/layered-modal";
+import { SteppedContext } from "../../../../components/molecules/modal/stepped-modal";
+import Table from "../../../../components/molecules/table";
+import { displayAmount, extractUnitPrice, getNativeSymbol, persistedPrice } from "../../../../utils/prices";
+import RMASelectProductSubModal from "../../details/rma-sub-modals/products";
+import { useNewOrderForm } from "../form";
+import CustomItemSubModal from "./custom-item-sub-modal";
 
 const Items = () => {
   const { enableNextPage, disableNextPage, nextStepEnabled } = React.useContext(SteppedContext);
@@ -125,23 +120,18 @@ const Items = () => {
           <Table.Body>
             {fields.map((item, index) => {
               return (
-                <Table.Row key={item.id} className={clsx('border-b-grey-0 hover:bg-grey-0')}>
+                <Table.Row key={item.id} className={clsx("border-b-grey-0 hover:bg-grey-0")}>
                   <Table.Cell>
                     <div className='min-w-[240px] flex items-center py-2'>
                       <div className='w-[30px] h-[40px] '>
                         {item.thumbnail ? (
-                          <img
-                            className='h-full w-full object-cover rounded'
-                            src={item.thumbnail}
-                          />
+                          <img className='h-full w-full object-cover rounded' src={item.thumbnail} />
                         ) : (
                           <ImagePlaceholder />
                         )}
                       </div>
                       <div className='inter-small-regular text-grey-50 flex flex-col ml-4'>
-                        {item.product_title && (
-                          <span className='text-grey-90'>{item.product_title}</span>
-                        )}
+                        {item.product_title && <span className='text-grey-90'>{item.product_title}</span>}
                         <span>{item.title}</span>
                       </div>
                     </div>
@@ -180,7 +170,7 @@ const Items = () => {
                         <span
                           onClick={() => handleEditQuantity(index, 1)}
                           className={clsx(
-                            'w-5 h-5 flex items-center justify-center rounded cursor-pointer hover:bg-grey-20 ml-2',
+                            "w-5 h-5 flex items-center justify-center rounded cursor-pointer hover:bg-grey-20 ml-2",
                           )}
                         >
                           <PlusIcon size={16} />
@@ -248,9 +238,7 @@ const Items = () => {
           size='small'
           className='border border-grey-20'
           onClick={() => {
-            layeredContext.push(
-              CreateCustomProductScreen(layeredContext.pop, addCustomItem, region),
-            );
+            layeredContext.push(CreateCustomProductScreen(layeredContext.pop, addCustomItem, region));
           }}
         >
           <PlusIcon size={20} />
@@ -280,7 +268,7 @@ const Items = () => {
 
 const SelectProductsScreen = (pop, itemsToAdd, setSelectedItems) => {
   return {
-    title: 'Add Products',
+    title: "Add Products",
     onBack: () => pop(),
     view: <RMASelectProductSubModal selectedItems={itemsToAdd || []} onSubmit={setSelectedItems} />,
   };
@@ -288,7 +276,7 @@ const SelectProductsScreen = (pop, itemsToAdd, setSelectedItems) => {
 
 const CreateCustomProductScreen = (pop, onSubmit, region) => {
   return {
-    title: 'Add Custom Item',
+    title: "Add Custom Item",
     onBack: () => pop(),
     view: <CustomItemSubModal onSubmit={onSubmit} region={region} />,
   };
