@@ -1,10 +1,9 @@
-import React from 'react';
-import useToggleState from '../../../hooks/use-toggle-state';
-import { currencies } from '../../../utils/currencies';
-import Button from '../../fundamentals/button';
-import EyeIcon from '../../fundamentals/icons/eye-icon';
-import EyeOffIcon from '../../fundamentals/icons/eye-off-icon';
-import MedusaPriceInput from '../../organisms/medusa-price-input';
+import useToggleState from "../../../hooks/use-toggle-state";
+import { currencies } from "../../../utils/currencies";
+import Button from "../../fundamentals/button";
+import EyeIcon from "../../fundamentals/icons/eye-icon";
+import EyeOffIcon from "../../fundamentals/icons/eye-off-icon";
+import MedusaPriceInput from "../../organisms/medusa-price-input";
 
 const PriceAmount = ({ value, onChange }) => {
   const { state: showRegions, toggle } = useToggleState();

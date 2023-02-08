@@ -1,8 +1,8 @@
-import React, { createContext, PropsWithChildren } from 'react';
-import { useAdminOrderEdits } from 'medusa-react';
-import { OrderEdit } from '@medusajs/medusa';
+import { createContext, PropsWithChildren, useEffect } from "react";
+import { useAdminOrderEdits } from "medusa-react";
+import { OrderEdit } from "@medusajs/medusa";
 
-import useToggleState from '../../../hooks/use-toggle-state';
+import useToggleState from "../../../hooks/use-toggle-state";
 
 export type IOrderEditContext = {
   showModal: () => void;
@@ -18,6 +18,7 @@ export type IOrderEditContext = {
 
 let activeId = undefined;
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 export const OrderEditContext = createContext<IOrderEditContext>({});
 
@@ -30,8 +31,14 @@ function OrderEditProvider(props: OrderEditProviderProps) {
   // TODO: sort by created_at
   const { order_edits, count } = useAdminOrderEdits({
     order_id: orderId,
-    //limit: count, // TODO
+    // limit: count, TODO
   });
+
+  useEffect(() => {
+    if (!isModalVisible) {
+      activeId = undefined;
+    }
+  }, [isModalVisible]);
 
   const value = {
     isModalVisible,

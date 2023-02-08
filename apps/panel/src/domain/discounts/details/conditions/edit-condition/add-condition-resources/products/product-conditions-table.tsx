@@ -1,16 +1,16 @@
-import { useAdminProducts } from 'medusa-react';
-import React, { useEffect, useState } from 'react';
-import Modal from '../../../../../../../components/molecules/modal';
-import { SelectableTable } from '../../../../../../../components/templates/selectable-table';
-import useQueryFilters from '../../../../../../../hooks/use-query-filters';
-import { defaultQueryProps } from '../../../../../new/discount-form/condition-tables/shared/common';
+import { useAdminProducts } from "medusa-react";
+import { useEffect, useState } from "react";
+import Modal from "../../../../../../../components/molecules/modal";
+import { SelectableTable } from "../../../../../../../components/templates/selectable-table";
+import useQueryFilters from "../../../../../../../hooks/use-query-filters";
+import { defaultQueryProps } from "../../../../../new/discount-form/condition-tables/shared/common";
 import {
   ProductRow,
   ProductsHeader,
   useProductColumns,
-} from '../../../../../new/discount-form/condition-tables/shared/products';
-import { useEditConditionContext } from '../../edit-condition-provider';
-import ExistingConditionTableActions from '../../condition-table-actions';
+} from "../../../../../new/discount-form/condition-tables/shared/products";
+import { useEditConditionContext } from "../../edit-condition-provider";
+import ExistingConditionTableActions from "../../condition-table-actions";
 
 const ProductConditionsTable = () => {
   const params = useQueryFilters(defaultQueryProps);

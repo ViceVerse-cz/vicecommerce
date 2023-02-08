@@ -18,6 +18,7 @@ importers:
       postcss: ^8.4.21
       prettier: ^2.8.3
       prettier-plugin-tailwindcss: ^0.2.2
+      rome: ^11.0.0
       turbo: latest
     devDependencies:
       '@changesets/cli': 2.26.0
@@ -34,6 +35,7 @@ importers:
       postcss: 8.4.21
       prettier: 2.8.4
       prettier-plugin-tailwindcss: 0.2.2_prettier@2.8.4
+      rome: 11.0.0
       turbo: 1.7.4
 
   apps/panel:
@@ -207,6 +209,7 @@ importers:
       eslint: 8.33.0
       eslint-config-google: 0.14.0_eslint@8.33.0
       eslint-config-viceverse: link:../../packages/eslint-config
+      eslint-plugin-prettier: 4.2.1_qa2thblfovmfepmgrc7z2owbo4
       eslint-plugin-react: 7.32.2_eslint@8.33.0
       eslint-plugin-react-hooks: 4.6.0_eslint@8.33.0
       eslint-plugin-unused-imports: 2.0.0_eslint@8.33.0
@@ -13441,6 +13444,7 @@ packages:
       joi: 17.7.0
       joi-objectid: 3.0.1
     dev: false
+    dev: false
 
   /medusa-core-utils/1.1.38:
     resolution: {integrity: sha512-PNsHfDaQkhKVlZbOG8QjxkaU97VfbpzwXhTYll75M/IoxqE1igF5RbIQnD7w8rMy5YDyihBTeiQ0oBDbYiGxoA==}
@@ -13506,6 +13510,7 @@ packages:
     dependencies:
       medusa-core-utils: 1.1.31
       typeorm: 0.2.45
+    dev: false
     dev: false
 
   /medusa-payment-manual/1.0.21_medusa-interfaces@1.3.4:
@@ -15219,6 +15224,7 @@ packages:
     engines: {node: '>= 0.8.0'}
 
   /prettier-plugin-tailwindcss/0.2.2_prettier@2.8.4:
+  /prettier-plugin-tailwindcss/0.2.2_prettier@2.8.4:
     resolution: {integrity: sha512-5RjUbWRe305pUpc48MosoIp6uxZvZxrM6GyOgsbGLTce+ehePKNm7ziW2dLG2air9aXbGuXlHVSQQw4Lbosq3w==}
     engines: {node: '>=12.17.0'}
     peerDependencies:
@@ -16444,6 +16450,20 @@ packages:
     hasBin: true
     optionalDependencies:
       fsevents: 2.3.2
+    dev: true
+
+  /rome/11.0.0:
+    resolution: {integrity: sha512-rRo6JOwpMLc3OkeTDRXkrmrDqnxDvZ75GS4f0jLDBNmRgDXWbu0F8eVnJoRn+VbK2AE7vWvhVOMBjnWowcopkQ==}
+    engines: {node: '>=14.*'}
+    hasBin: true
+    requiresBuild: true
+    optionalDependencies:
+      '@rometools/cli-darwin-arm64': 11.0.0
+      '@rometools/cli-darwin-x64': 11.0.0
+      '@rometools/cli-linux-arm64': 11.0.0
+      '@rometools/cli-linux-x64': 11.0.0
+      '@rometools/cli-win32-arm64': 11.0.0
+      '@rometools/cli-win32-x64': 11.0.0
     dev: true
 
   /rsvp/4.8.5:

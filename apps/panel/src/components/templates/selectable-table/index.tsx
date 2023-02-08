@@ -1,19 +1,19 @@
-import { CustomerGroup, Product, ProductCollection, ProductTag, ProductType } from '@medusajs/medusa';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Column, HeaderGroup, Row, usePagination, useRowSelect, useSortBy, useTable } from 'react-table';
-import { useDebounce } from '../../../hooks/use-debounce';
-import useQueryFilters from '../../../hooks/use-query-filters';
-import IndeterminateCheckbox from '../../molecules/indeterminate-checkbox';
-import Table, { TableProps } from '../../molecules/table';
-import TableContainer from '../../organisms/table-container';
+import { CustomerGroup, Product, ProductCollection, ProductTag, ProductType } from "@medusajs/medusa";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { Column, HeaderGroup, Row, usePagination, useRowSelect, useSortBy, useTable } from "react-table";
+import { useDebounce } from "../../../hooks/use-debounce";
+import useQueryFilters from "../../../hooks/use-query-filters";
+import IndeterminateCheckbox from "../../molecules/indeterminate-checkbox";
+import Table, { TableProps } from "../../molecules/table";
+import TableContainer from "../../organisms/table-container";
 
 type SelectableTableProps<T extends object> = {
   resourceName?: string;
   label?: string;
   isLoading?: boolean;
   totalCount: number;
-  options: Omit<TableProps, 'filteringOptions' | 'searchValue' | 'handleSearch'> & {
-    filters?: Pick<TableProps, 'filteringOptions'>;
+  options: Omit<TableProps, "filteringOptions" | "searchValue" | "handleSearch"> & {
+    filters?: Pick<TableProps, "filteringOptions">;
   };
   data?: T[];
   selectedIds?: string[];
@@ -23,15 +23,9 @@ type SelectableTableProps<T extends object> = {
   renderHeaderGroup?: (props: { headerGroup: HeaderGroup<T> }) => React.ReactElement;
 } & ReturnType<typeof useQueryFilters>;
 
-let a: Omit<TableProps, 'filteringOptions'> & {
-  filters?: Pick<TableProps, 'filteringOptions'>;
-};
-
-export const SelectableTable = <
-  T extends Product | CustomerGroup | ProductCollection | ProductTag | ProductType,
->({
+export const SelectableTable = <T extends Product | CustomerGroup | ProductCollection | ProductTag | ProductType,>({
   label,
-  resourceName = '',
+  resourceName = "",
   selectedIds = [],
   isLoading,
   totalCount = 0,
@@ -106,7 +100,7 @@ export const SelectableTable = <
     [setQuery, table],
   );
 
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   const debouncedSearch = useDebounce(searchQuery, 500);
 
@@ -142,9 +136,7 @@ export const SelectableTable = <
           className='relative'
         >
           {renderHeaderGroup && (
-            <Table.Head>
-              {table.headerGroups?.map((headerGroup) => renderHeaderGroup({ headerGroup }))}
-            </Table.Head>
+            <Table.Head>{table.headerGroups?.map((headerGroup) => renderHeaderGroup({ headerGroup }))}</Table.Head>
           )}
 
           <Table.Body {...table.getTableBodyProps()}>
@@ -162,24 +154,18 @@ export const SelectableTable = <
 const useSelectionColumn = (hooks) => {
   hooks.visibleColumns.push((columns) => [
     {
-      id: 'selection',
+      id: "selection",
       Header: ({ getToggleAllRowsSelectedProps }) => {
         return (
           <div className='flex justify-center'>
-            <IndeterminateCheckbox
-              {...getToggleAllRowsSelectedProps()}
-              onClick={(e) => e.stopPropagation()}
-            />
+            <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} onClick={(e) => e.stopPropagation()} />
           </div>
         );
       },
       Cell: ({ row }) => {
         return (
           <div className='flex justify-center'>
-            <IndeterminateCheckbox
-              {...row.getToggleRowSelectedProps()}
-              onClick={(e) => e.stopPropagation()}
-            />
+            <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} onClick={(e) => e.stopPropagation()} />
           </div>
         );
       },

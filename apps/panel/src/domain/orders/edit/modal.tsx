@@ -1,24 +1,24 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Order, OrderEdit, ProductVariant } from '@medusajs/medusa';
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { Order, OrderEdit, ProductVariant } from "@medusajs/medusa";
 import {
   useAdminCreateOrderEdit,
   useAdminDeleteOrderEdit,
   useAdminOrderEditAddLineItem,
   useAdminRequestOrderEditConfirmation,
   useAdminUpdateOrderEdit,
-} from 'medusa-react';
-import clsx from 'clsx';
+} from "medusa-react";
+import clsx from "clsx";
 
-import LayeredModal, { LayeredModalContext } from '../../../components/molecules/modal/layered-modal';
-import Modal from '../../../components/molecules/modal';
-import Button from '../../../components/fundamentals/button';
-import OrderEditLine from '../details/order-line/edit';
-import VariantsTable from './variants-table';
-import SearchIcon from '../../../components/fundamentals/icons/search-icon';
-import { formatAmountWithSymbol } from '../../../utils/prices';
-import InputField from '../../../components/molecules/input';
-import useNotification from '../../../hooks/use-notification';
-import { OrderEditContext } from './context';
+import LayeredModal, { LayeredModalContext } from "../../../components/molecules/modal/layered-modal";
+import Modal from "../../../components/molecules/modal";
+import Button from "../../../components/fundamentals/button";
+import OrderEditLine from "../details/order-line/edit";
+import VariantsTable from "./variants-table";
+import SearchIcon from "../../../components/fundamentals/icons/search-icon";
+import { formatAmountWithSymbol } from "../../../utils/prices";
+import InputField from "../../../components/molecules/input";
+import useNotification from "../../../hooks/use-notification";
+import { OrderEditContext } from "./context";
 
 type TotalsSectionProps = {
   amountPaid: number;
@@ -35,8 +35,8 @@ function TotalsSection(props: TotalsSectionProps) {
 
   return (
     <>
-      <div className='h-px w-full bg-grey-20 mb-6' />
-      <div className='flex justify-between h-[40px] mb-2'>
+      <div className='bg-grey-20 mb-6 h-px w-full' />
+      <div className='mb-2 flex h-[40px] justify-between'>
         <span className='text-gray-500'>Amount Paid</span>
         <span className='text-gray-900'>
           {formatAmountWithSymbol({
@@ -47,8 +47,8 @@ function TotalsSection(props: TotalsSectionProps) {
         </span>
       </div>
 
-      <div className='flex justify-between h-[40px] mb-2'>
-        <span className='text-gray-900 font-semibold'>New Total</span>
+      <div className='mb-2 flex h-[40px] justify-between'>
+        <span className='font-semibold text-gray-900'>New Total</span>
         <span className='text-2xl font-semibold'>
           {formatAmountWithSymbol({
             amount: newTotal,
@@ -60,9 +60,9 @@ function TotalsSection(props: TotalsSectionProps) {
       <div className='flex justify-between'>
         <span className='text-gray-500'>Difference Due</span>
         <span
-          className={clsx('text-gray-900', {
-            'text-rose-500': differenceDue < 0,
-            'text-emerald-500': differenceDue >= 0,
+          className={clsx("text-gray-900", {
+            "text-rose-500": differenceDue < 0,
+            "text-emerald-500": differenceDue >= 0,
           })}
         >
           {formatAmountWithSymbol({
@@ -73,7 +73,7 @@ function TotalsSection(props: TotalsSectionProps) {
         </span>
       </div>
 
-      <div className='h-px w-full bg-grey-20 mt-8 mb-6' />
+      <div className='bg-grey-20 mt-8 mb-6 h-px w-full' />
     </>
   );
 }
@@ -108,7 +108,7 @@ export function AddProductVariant(props: AddProductVariantProps) {
   return (
     <>
       <Modal.Content>
-        <div className='min-h-[680px] flex flex-col justify-between'>
+        <div className='flex min-h-[680px] flex-col justify-between'>
           <VariantsTable
             regionId={props.regionId}
             customerId={props.customerId}
@@ -119,7 +119,7 @@ export function AddProductVariant(props: AddProductVariantProps) {
         </div>
       </Modal.Content>
       <Modal.Footer>
-        <div className='flex justify-end w-full space-x-xsmall'>
+        <div className='space-x-xsmall flex w-full justify-end'>
           <Button variant='secondary' size='small' onClick={onBack}>
             Back
           </Button>
@@ -147,15 +147,16 @@ type OrderEditModalProps = {
  * Displays layered modal for order editing.
  */
 function OrderEditModal(props: OrderEditModalProps) {
-  const { close, currentSubtotal, orderEdit, currencyCode, regionId, customerId, paidTotal, refundedTotal } =
-    props;
+  const { close, currentSubtotal, orderEdit, currencyCode, regionId, customerId, paidTotal, refundedTotal } = props;
 
+  const filterRef = useRef();
   const notification = useNotification();
   const [note, setNote] = useState<string | undefined>();
   const [showFilter, setShowFilter] = useState(false);
-  const [filterTerm, setFilterTerm] = useState<string>('');
+  const [filterTerm, setFilterTerm] = useState<string>("");
 
   const showTotals = currentSubtotal !== orderEdit.subtotal;
+  const showNote = !!orderEdit.changes.length;
 
   const { mutateAsync: requestConfirmation, isLoading: isRequestingConfirmation } =
     useAdminRequestOrderEditConfirmation(orderEdit.id);
@@ -175,9 +176,9 @@ function OrderEditModal(props: OrderEditModalProps) {
         await updateOrderEdit({ internal_note: note });
       }
 
-      notification('Success', 'Order edit set as requested', 'success');
+      notification("Success", "Order edit set as requested", "success");
     } catch (e) {
-      notification('Error', 'Failed to request confirmation', 'error');
+      notification("Error", "Failed to request confirmation", "error");
     }
     close();
   };
@@ -188,26 +189,33 @@ function OrderEditModal(props: OrderEditModalProps) {
     close();
   };
 
+  useEffect(() => {
+    if (showFilter) {
+      filterRef.current.focus();
+    }
+  }, [showFilter]);
+
   const onAddVariants = async (selectedVariants: ProductVariant[]) => {
     try {
       const promises = selectedVariants.map((v) => addLineItem({ variant_id: v.id, quantity: 1 }));
 
       await Promise.all(promises);
 
-      notification('Success', 'Added successfully', 'success');
+      notification("Success", "Added successfully", "success");
     } catch (e) {
-      notification('Error', 'Error occurred', 'error');
+      notification("Error", "Error occurred", "error");
     }
   };
 
-  const toggleFilter = () => {
+  const hideFilter = () => {
     if (showFilter) {
-      setFilterTerm('');
+      setFilterTerm("");
     }
     setShowFilter((s) => !s);
   };
 
   let displayItems = orderEdit.items.sort(
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     (a, b) => new Date(a.created_at) - new Date(b.created_at),
   );
@@ -219,7 +227,7 @@ function OrderEditModal(props: OrderEditModalProps) {
   }
 
   const addProductVariantScreen = {
-    title: 'Add Product Variants',
+    title: "Add Product Variants",
     onBack: layeredModalContext.pop,
     view: (
       <AddProductVariant
@@ -238,34 +246,41 @@ function OrderEditModal(props: OrderEditModalProps) {
           <h1 className='inter-xlarge-semibold'>Edit Order</h1>
         </Modal.Header>
         <Modal.Content>
-          <div className='flex justify-between mb-6'>
-            <span className='text-gray-900 font-semibold'>Items</span>
-            <div className='flex gap-2 items-center justify-between'>
+          <div className='mb-4 flex items-center justify-between'>
+            <span className='text-large font-semibold text-gray-900'>Items</span>
+            <div className='flex items-center justify-between'>
               <Button
                 size='small'
                 variant='ghost'
-                className='border border-grey-20 text-gray-900 flex-shrink-0'
+                className='border-grey-20 mr-2 h-[32px] flex-shrink-0 border text-gray-900'
                 onClick={() => layeredModalContext.push(addProductVariantScreen)}
               >
                 Add items
               </Button>
+              {!showFilter && (
+                <Button
+                  size='small'
+                  variant='secondary'
+                  className={clsx("h–[32px] h-full w-[32px] flex-shrink-0", {
+                    "focus:bg-grey-20": showFilter,
+                  })}
+                  onClick={() => setShowFilter(true)}
+                >
+                  <SearchIcon size={16} className='text-gray-500' />
+                </Button>
+              )}
               {showFilter && (
                 <InputField
+                  small
+                  deletable
+                  ref={filterRef}
                   value={filterTerm}
+                  onDelete={hideFilter}
                   placeholder='Filter items...'
                   onChange={(e) => setFilterTerm(e.target.value)}
+                  prefix={<SearchIcon size={14} className='text-gray-400' />}
                 />
               )}
-              <Button
-                size='small'
-                variant='secondary'
-                className={clsx('h-full flex-shrink-0', {
-                  'bg-gray-100': showFilter,
-                })}
-                onClick={toggleFilter}
-              >
-                <SearchIcon size={18} className='text-gray-500' />
-              </Button>
             </div>
           </div>
 
@@ -296,19 +311,21 @@ function OrderEditModal(props: OrderEditModalProps) {
           )}
 
           {/* NOTE */}
-          <div className='flex items-center justify-between'>
-            <span className='text-gray-500'>Note</span>
-            <InputField
-              className='max-w-[455px]'
-              placeholder='Add a note...'
-              onChange={(e) => setNote(e.target.value)}
-              value={note}
-            />
-          </div>
+          {showNote && (
+            <div className='flex items-center justify-between'>
+              <span className='text-gray-500'>Note</span>
+              <InputField
+                className='max-w-[455px]'
+                placeholder='Add a note...'
+                onChange={(e) => setNote(e.target.value)}
+                value={note}
+              />
+            </div>
+          )}
         </Modal.Content>
         <Modal.Footer>
-          <div className='flex items-center justify-end w-full'>
-            <Button variant='ghost' size='small' type='button' onClick={onCancel}>
+          <div className='flex w-full items-center justify-end gap-2'>
+            <Button variant='secondary' size='small' type='button' onClick={onCancel}>
               Cancel
             </Button>
             <Button
@@ -354,14 +371,14 @@ function OrderEditModalContainer(props: OrderEditModalContainerProps) {
     createOrderEdit({ order_id: order.id })
       .then(({ order_edit }) => setActiveOrderEdit(order_edit.id))
       .catch(() => {
-        notification('Error', 'There is already an active order edit on this order', 'error');
+        notification("Error", "There is already an active order edit on this order", "error");
         hideModal();
       })
       .finally(() => (isRequestRunningFlag = false));
   }, [activeOrderEditId]);
 
   const onClose = () => {
-    setActiveOrderEdit(undefined);
+    // setActiveOrderEdit(undefined);
     hideModal();
   };
 

@@ -1,18 +1,20 @@
-import { useAdminRegions } from 'medusa-react';
-import React, { useEffect, useMemo } from 'react';
-import { Controller, useWatch } from 'react-hook-form';
-import { SteppedContext } from '../../../../components/molecules/modal/stepped-modal';
-import Select from '../../../../components/molecules/select';
-import { useNewOrderForm } from '../form';
+import { useAdminRegions } from "medusa-react";
+import React, { useEffect, useMemo } from "react";
+import { Controller, useWatch } from "react-hook-form";
+import { SteppedContext } from "../../../../components/molecules/modal/stepped-modal";
+import Select from "../../../../components/molecules/select";
+import { useNewOrderForm } from "../form";
 
 const SelectRegionScreen = () => {
   const { enableNextPage, disableNextPage } = React.useContext(SteppedContext);
 
-  const { control } = useNewOrderForm();
+  const {
+    form: { control },
+  } = useNewOrderForm();
 
   const reg = useWatch({
     control,
-    name: 'region',
+    name: "region",
   });
 
   const { regions } = useAdminRegions();

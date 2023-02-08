@@ -1,29 +1,28 @@
-import { useAdminVariants } from 'medusa-react';
-import React, { useContext, useEffect, useMemo, useState } from 'react';
-import { usePagination, useRowSelect, useTable } from 'react-table';
-import Spinner from '../../../../components/atoms/spinner';
-import Button from '../../../../components/fundamentals/button';
-import ImagePlaceholder from '../../../../components/fundamentals/image-placeholder';
-import StatusIndicator from '../../../../components/fundamentals/status-indicator';
-import IndeterminateCheckbox from '../../../../components/molecules/indeterminate-checkbox';
-import Modal from '../../../../components/molecules/modal';
-import { LayeredModalContext } from '../../../../components/molecules/modal/layered-modal';
-import Table from '../../../../components/molecules/table';
-import TableContainer from '../../../../components/organisms/table-container';
-import { useDebounce } from '../../../../hooks/use-debounce';
-import { useNewOrderForm } from '../../new/form';
+import { useAdminVariants } from "medusa-react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
+import { usePagination, useRowSelect, useTable } from "react-table";
+import Spinner from "../../../../components/atoms/spinner";
+import Button from "../../../../components/fundamentals/button";
+import ImagePlaceholder from "../../../../components/fundamentals/image-placeholder";
+import StatusIndicator from "../../../../components/fundamentals/status-indicator";
+import IndeterminateCheckbox from "../../../../components/molecules/indeterminate-checkbox";
+import Modal from "../../../../components/molecules/modal";
+import { LayeredModalContext } from "../../../../components/molecules/modal/layered-modal";
+import Table from "../../../../components/molecules/table";
+import TableContainer from "../../../../components/organisms/table-container";
+import { useDebounce } from "../../../../hooks/use-debounce";
 
 const getProductStatusVariant = (status) => {
   switch (status) {
-    case 'proposed':
-      return 'warning';
-    case 'published':
-      return 'success';
-    case 'rejected':
-      return 'danger';
-    case 'draft':
+    case "proposed":
+      return "warning";
+    case "published":
+      return "success";
+    case "rejected":
+      return "danger";
+    case "draft":
     default:
-      return 'default';
+      return "default";
   }
 };
 
@@ -33,13 +32,9 @@ type RMASelectProductSubModalProps = {
 };
 
 const RMASelectProductSubModal: React.FC<RMASelectProductSubModalProps> = ({ onSubmit, selectedItems }) => {
-  const {
-    context: { region },
-  } = useNewOrderForm();
-
   const PAGE_SIZE = 12;
   const { pop } = useContext(LayeredModalContext);
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [offset, setOffset] = useState(0);
   const [numPages, setNumPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
@@ -52,11 +47,10 @@ const RMASelectProductSubModal: React.FC<RMASelectProductSubModalProps> = ({ onS
     q: debouncedSearchTerm,
     limit: PAGE_SIZE,
     offset,
-    region_id: region?.id,
   });
 
   useEffect(() => {
-    if (typeof count !== 'undefined') {
+    if (typeof count !== "undefined") {
       setNumPages(Math.ceil(count / PAGE_SIZE));
     }
   }, [count]);
@@ -64,8 +58,8 @@ const RMASelectProductSubModal: React.FC<RMASelectProductSubModalProps> = ({ onS
   const columns = useMemo(() => {
     return [
       {
-        Header: 'Name',
-        accessor: 'title',
+        Header: "Name",
+        accessor: "title",
         Cell: ({ row: { original } }) => {
           return (
             <div className='flex items-center'>
@@ -85,8 +79,8 @@ const RMASelectProductSubModal: React.FC<RMASelectProductSubModalProps> = ({ onS
         },
       },
       {
-        Header: 'Status',
-        accessor: 'status',
+        Header: "Status",
+        accessor: "status",
         Cell: ({ row: { original } }) => (
           <StatusIndicator
             title={`${original.product.status.charAt(0).toUpperCase()}${original.product.status.slice(1)}`}
@@ -96,7 +90,7 @@ const RMASelectProductSubModal: React.FC<RMASelectProductSubModalProps> = ({ onS
       },
       {
         Header: <div className='text-right'>In Stock</div>,
-        accessor: 'inventory_quantity',
+        accessor: "inventory_quantity",
         Cell: ({ row: { original } }) => <div className='text-right'>{original.inventory_quantity}</div>,
       },
     ];
@@ -138,7 +132,7 @@ const RMASelectProductSubModal: React.FC<RMASelectProductSubModalProps> = ({ onS
       hooks.visibleColumns.push((columns) => [
         // Let's make a column for selection
         {
-          id: 'selection',
+          id: "selection",
           // The header can use the table's getToggleAllRowsSelectedProps method
           // to render a checkbox
           Header: ({ getToggleAllRowsSelectedProps }) => {
@@ -212,7 +206,7 @@ const RMASelectProductSubModal: React.FC<RMASelectProductSubModalProps> = ({ onS
             count: count!,
             offset: offset,
             pageSize: offset + rows.length,
-            title: 'Products',
+            title: "Products",
             currentPage: pageIndex + 1,
             pageCount: pageCount,
             nextPage: handleNext,
@@ -242,7 +236,7 @@ const RMASelectProductSubModal: React.FC<RMASelectProductSubModalProps> = ({ onS
                   return (
                     <Table.Row {...row.getRowProps()}>
                       {row.cells.map((cell) => {
-                        return <Table.Cell {...cell.getCellProps()}>{cell.render('Cell')}</Table.Cell>;
+                        return <Table.Cell {...cell.getCellProps()}>{cell.render("Cell")}</Table.Cell>;
                       })}
                     </Table.Row>
                   );
