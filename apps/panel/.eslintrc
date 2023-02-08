@@ -1,5 +1,4 @@
 {
-    "parser": "@typescript-eslint/parser",
     "parserOptions": {
       "ecmaFeatures": {
         "jsx": true
@@ -8,18 +7,15 @@
       "sourceType": "module" // Allows for the use of imports
     },
     "plugins": [
-      "eslint-plugin-prettier",
       "unused-imports",
       "react",
-      "@typescript-eslint",
       "react-hooks"
     ],
-    "extends": ["eslint:recommended", "google", "eslint-config-prettier"],
+    "extends": ["google", "viceverse"],
     "globals": {
       "__MEDUSA_BACKEND_URL__": true
     },
     "rules": {
-      "prettier/prettier": "error",
       "curly": [2, "all"],
       "new-cap": "off",
       "require-jsdoc": "off",

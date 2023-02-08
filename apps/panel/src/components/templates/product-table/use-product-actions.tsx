@@ -50,7 +50,9 @@ const useProductActions = (product: Product) => {
             onSuccess: () => {
               notification(
                 'Success',
-                `Successfully ${product.status === 'published' ? 'unpublished' : 'published'} product`,
+                `Successfully ${
+                  product.status === 'published' ? 'unpublished' : 'published'
+                } product`,
                 'success',
               );
             },
@@ -58,7 +60,8 @@ const useProductActions = (product: Product) => {
           },
         );
       },
-      icon: product.status === 'published' ? <UnpublishIcon size={20} /> : <PublishIcon size={20} />,
+      icon:
+        product.status === 'published' ? <UnpublishIcon size={20} /> : <PublishIcon size={20} />,
     },
     {
       label: 'Duplicate',

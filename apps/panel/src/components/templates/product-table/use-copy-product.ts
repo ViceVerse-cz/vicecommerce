@@ -49,6 +49,7 @@ const useCopyProduct = () => {
       ...rest
     } = omit(product, [
       'id',
+      'sku',
       'created_at',
       'updated_at',
       'deleted_at',
