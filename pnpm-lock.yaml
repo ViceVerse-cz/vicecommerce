@@ -306,7 +306,6 @@ importers:
       eslint: 8.10.0
       eslint-config-next: 12.1.0
       lodash: ^4.17.21
-      medusa-core-utils: ^1.1.31
       medusa-interfaces: 1.3.4
       medusa-react: ^4.0.3
       next: ^12.2.0
@@ -336,8 +335,7 @@ importers:
       algoliasearch: 4.14.3
       clsx: 1.2.1
       lodash: 4.17.21
-      medusa-core-utils: 1.1.37
-      medusa-interfaces: 1.3.4_pdvhyswcbshecfxnwx7eovy6km
+      medusa-interfaces: 1.3.4_typeorm@0.2.45
       medusa-react: 4.0.3_aalqi24dmta3uk36nrdns2yvhu
       next: 12.3.4_jiuppbrrdpqsioctsbaxdlfu4e
       react: 17.0.2
@@ -14516,6 +14514,15 @@ packages:
     dependencies:
       medusa-core-utils: 1.1.37
       typeorm: 0.2.45
+
+  /medusa-interfaces/1.3.4_typeorm@0.2.45:
+    resolution: {integrity: sha512-vK+VTCUvgyZHM7knqBTUewFdVFLd5mwRpJf4CL65Ojs7gY4VTY9vNYGpiVcX8lfW2EqINpBkDTMUekSonqSVYw==}
+    peerDependencies:
+      medusa-core-utils: ^1.1.31
+      typeorm: 0.x
+    dependencies:
+      typeorm: 0.2.45
+    dev: false
 
   /medusa-payment-manual/1.0.20_medusa-interfaces@1.3.4:
     resolution: {integrity: sha512-aSTXcByxnElbkGv//3OvdjumlCnsgBb/a+I+zebbHKVgGcacUn8wj/q9GMLz1fVfZSpx34dMsIbYTQBEh5Xt0A==}
