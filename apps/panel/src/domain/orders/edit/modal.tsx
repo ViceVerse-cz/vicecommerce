@@ -228,6 +228,8 @@ function OrderEditModal(props: OrderEditModalProps) {
   };
 
   let displayItems = orderEdit.items.sort(
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     (a, b) => new Date(a.created_at) - new Date(b.created_at),
   );
 
