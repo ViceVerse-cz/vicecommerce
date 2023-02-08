@@ -1,16 +1,14 @@
 #! /usr/bin/env node
-/*eslint eqeqeq:0*/
 
-require('dotenv');
-import dotenv from 'dotenv';
+require("dotenv");
+import dotenv from "dotenv";
 
 dotenv.config({
-  path: '../../.env',
+  path: "../../.env",
 });
 
-// eslint-ignore
-require('contentful-migration');
-import { runMigration } from 'contentful-migration';
+require("contentful-migration");
+import { runMigration } from "contentful-migration";
 
 const options = {
   spaceId: process.env.CONTENTFUL_SPACE_ID,

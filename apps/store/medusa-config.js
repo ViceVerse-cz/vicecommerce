@@ -1,4 +1,3 @@
-/* eslint @typescript-eslint/no-var-requires: "off" */
 require("dotenv");
 
 // CORS when consuming Medusa from admin
