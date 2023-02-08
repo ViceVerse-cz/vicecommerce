@@ -46,7 +46,10 @@
             "NEXT_PUBLIC_VERCEL_URL",
             "NEXT_PUBLIC_MEDUSA_BACKEND_URL",
             "FEATURE_SEARCH_ENABLED",
-            "DATABASE_URL"
+            "DATABASE_URL",
+            "CONTENTFUL_SPACE_ID",
+            "CONTENTFUL_ACCESS_TOKEN",
+            "CONTENTFUL_ENV"
         ]
       },
       "seed": {
@@ -63,7 +66,10 @@
             "NEXT_PUBLIC_VERCEL_URL",
             "NEXT_PUBLIC_MEDUSA_BACKEND_URL",
             "FEATURE_SEARCH_ENABLED",
-            "DATABASE_URL"
+            "DATABASE_URL",
+            "CONTENTFUL_SPACE_ID",
+            "CONTENTFUL_ACCESS_TOKEN",
+            "CONTENTFUL_ENV"
         ]
       },
       "start": {

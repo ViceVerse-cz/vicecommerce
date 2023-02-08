@@ -18,8 +18,19 @@ const plugins = [
   {
     resolve: 'medusa-fulfillment-manual',
   },
+
   {
     resolve: 'medusa-payment-manual',
+  },
+
+  // Docs: https://docs.medusajs.com/add-plugins/contentful/
+  {
+    resolve: `medusa-plugin-contentful`,
+    options: {
+      space_id: process.env.CONTENTFUL_SPACE_ID,
+      access_token: process.env.CONTENTFUL_ACCESS_TOKEN,
+      environment: process.env.CONTENTFUL_ENV,
+    },
   },
 
   // Docs: https://docs.medusajs.com/add-plugins/s3

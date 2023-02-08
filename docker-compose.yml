@@ -16,7 +16,7 @@ services:
     expose:
       - 6379
     environment:
-      - vm:overcommmit_memory: 1
+      - "vm:overcommmit_memory=1"
 
   meilisearch:
     image: getmeili/meilisearch:latest
