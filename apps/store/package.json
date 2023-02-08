@@ -10,14 +10,14 @@
         "seed:contentful": "dotenv-run-script ../../.env -- import:contentful",
         "migrate": "medusa migrations run",
         "seed": "medusa seed -f ./data/seed.json",
-        "start": "medusa develop",
+        "start": "medusa start",
         "build": "tsc -p tsconfig.json",
-        "dev": "npm run build && node dist/src/main.js",
+        "dev": "medusa develop",
         "start:watch": "nodemon --watch './src/**/*.ts' --exec 'npm run build && NODE_ENV=development node ./dist/main.js'",
         "start:prod": "npm run build && NODE_ENV=production node dist/main"
     },
     "dependencies": {
-        "@lambdacurry/medusa-file-s3": "^1.1.7",
+        "medusa-file-s3": "^1.1.10",
         "@medusajs/medusa-cli": "^1.3.7",
         "awilix": "8.0.0",
         "contentful-migration": "^4.12.7",
@@ -37,7 +37,7 @@
         "medusa-plugin-sendgrid": "^1.3.6",
         "redis-commands": "~1.7.0",
         "reflect-metadata": "0.1.13",
-        "typeorm": "^0.3.12"
+        "typeorm": "0.2"
     },
     "repository": "https://github.com/medusajs/medusa-starter-default.git",
     "devDependencies": {

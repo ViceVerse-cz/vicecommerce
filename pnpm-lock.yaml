@@ -198,7 +198,6 @@ importers:
       '@babel/cli': ^7.20.7
       '@babel/core': ^7.20.12
       '@babel/preset-typescript': ^7.18.6
-      '@lambdacurry/medusa-file-s3': ^1.1.7
       '@medusajs/medusa': 1.7.6
       '@medusajs/medusa-cli': ^1.3.7
       awilix: 8.0.0
@@ -211,6 +210,7 @@ importers:
       js2xmlparser: ^5.0.0
       medusa-core-utils: ^1.1.38
       medusa-extender: 1.8.8
+      medusa-file-s3: ^1.1.10
       medusa-fulfillment-manual: ^1.1.35
       medusa-interfaces: ^1.3.5
       medusa-payment-manual: ^1.0.21
@@ -220,11 +220,10 @@ importers:
       nodemon: ^2.0.15
       redis-commands: ~1.7.0
       reflect-metadata: 0.1.13
-      typeorm: ^0.3.12
+      typeorm: '0.2'
       typescript: ^4.5.5
     dependencies:
-      '@lambdacurry/medusa-file-s3': 1.1.7_mnhg237xnac6dtha5jqgvir5i4
-      '@medusajs/medusa': 1.7.6_lkrsnuezdk6stppsu7sxhvuf6a
+      '@medusajs/medusa': 1.7.6_k64htzgyg7gelu2z5sut72o47y
       '@medusajs/medusa-cli': 1.3.7
       awilix: 8.0.0
       contentful-migration: 4.12.7
@@ -234,16 +233,17 @@ importers:
       global: 4.4.0
       js2xmlparser: 5.0.0
       medusa-core-utils: 1.1.38
-      medusa-extender: 1.8.8_tk6pzws43ajydi2l3n3tzflpse
+      medusa-extender: 1.8.8_hsrplmyzlertnnivjcubiijfje
+      medusa-file-s3: 1.1.10_mnhg237xnac6dtha5jqgvir5i4
       medusa-fulfillment-manual: 1.1.35_mnhg237xnac6dtha5jqgvir5i4
-      medusa-interfaces: 1.3.5_mvzsp6dxx5njpqbn6tmvzgeqpa
+      medusa-interfaces: 1.3.5_l3smpwhtxzyco3pcbfbhjy3smu
       medusa-payment-manual: 1.0.21_medusa-interfaces@1.3.5
       medusa-plugin-contentful: 1.2.6_mnhg237xnac6dtha5jqgvir5i4
       medusa-plugin-meilisearch: 1.0.3_medusa-interfaces@1.3.5
       medusa-plugin-sendgrid: 1.3.6_mnhg237xnac6dtha5jqgvir5i4
       redis-commands: 1.7.0
       reflect-metadata: 0.1.13
-      typeorm: 0.3.12
+      typeorm: 0.2.45
     devDependencies:
       '@babel/cli': 7.20.7_@babel+core@7.20.12
       '@babel/core': 7.20.12
@@ -2468,23 +2468,6 @@ packages:
       '@jridgewell/resolve-uri': 3.1.0
       '@jridgewell/sourcemap-codec': 1.4.14
 
-  /@lambdacurry/medusa-file-s3/1.1.7_mnhg237xnac6dtha5jqgvir5i4:
-    resolution: {integrity: sha512-tgWltFN65e9QVt7HT2vTxnc2XDexivBsv5INxPfoch/kf4FYagAKu9NFMgElmDsBmx0hnnf6McCyyKdBi62Vxw==}
-    peerDependencies:
-      medusa-interfaces: 1.3.3
-    dependencies:
-      '@babel/plugin-transform-classes': 7.20.7_@babel+core@7.20.12
-      aws-sdk: 2.1311.0
-      body-parser: 1.20.1
-      express: 4.18.2
-      medusa-core-utils: 1.1.38
-      medusa-interfaces: 1.3.5_mvzsp6dxx5njpqbn6tmvzgeqpa
-      medusa-test-utils: 1.1.37_@babel+core@7.20.12
-    transitivePeerDependencies:
-      - '@babel/core'
-      - supports-color
-    dev: false
-
   /@lukeed/csprng/1.0.1:
     resolution: {integrity: sha512-uSvJdwQU5nK+Vdf6zxcWAY2A8r7uqe+gePwLWzJ+fsQehq18pc0I2hJKwypZ2aLM90+Er9u1xn4iLJPZ+xlL4g==}
     engines: {node: '>=8'}
@@ -2626,7 +2609,7 @@ packages:
       - debug
     dev: false
 
-  /@medusajs/medusa/1.7.6_lkrsnuezdk6stppsu7sxhvuf6a:
+  /@medusajs/medusa/1.7.6_k64htzgyg7gelu2z5sut72o47y:
     resolution: {integrity: sha512-93/Nxqbq16d1VB7SZTkwhuSYpxle8hwaqm1X+ihTZKx4lDNa4oGF4u//vGlNdUnTcc/ntEeWNtuLYpRO/xu8RA==}
     hasBin: true
     peerDependencies:
@@ -2656,7 +2639,7 @@ packages:
       iso8601-duration: 1.3.0
       jsonwebtoken: 8.5.1
       medusa-core-utils: 1.1.38
-      medusa-interfaces: 1.3.5_mvzsp6dxx5njpqbn6tmvzgeqpa
+      medusa-interfaces: 1.3.5_l3smpwhtxzyco3pcbfbhjy3smu
       medusa-telemetry: 0.0.16
       medusa-test-utils: 1.1.38_@babel+core@7.20.12
       morgan: 1.10.0
@@ -2675,7 +2658,7 @@ packages:
       resolve-cwd: 3.0.0
       scrypt-kdf: 2.0.1
       sqlite3: 5.1.4
-      typeorm: 0.3.12
+      typeorm: 0.2.45
       ulid: 2.3.0
       uuid: 8.3.2
       winston: 3.8.2
@@ -7808,12 +7791,6 @@ packages:
       balanced-match: 1.0.2
       concat-map: 0.0.1
 
-  /brace-expansion/2.0.1:
-    resolution: {integrity: sha512-XnAIvQ8eM+kC6aULx6wuQiwVsnzsi9d3WxzV3FpWTGA19F621kwdbsAcFKXgKUHZWsy+mY6iL1sHTxWEFCytDA==}
-    dependencies:
-      balanced-match: 1.0.2
-    dev: false
-
   /braces/2.3.2:
     resolution: {integrity: sha512-aNdbnj9P8PjdXU4ybaWLK2IF3jc/EoDYbC7AazW6to3TRsfXxscC9UXOB5iDiEQrkyIbWp2SLQda4+QAa7nc3w==}
     engines: {node: '>=0.10.0'}
@@ -7932,7 +7909,7 @@ packages:
     resolution: {integrity: sha512-xq+q3SRMOxGivLhBNaUdC64hDTQwejJ+H0T/NB1XMtTVEwNTrfFF3gAxiyW0Bu/xWEGhjVKgUcMhCrUy2+uCWg==}
     dependencies:
       base64-js: 1.5.1
-      ieee754: 1.1.13
+      ieee754: 1.2.1
       isarray: 1.0.0
 
   /buffer/5.7.1:
@@ -11015,17 +10992,6 @@ packages:
       once: 1.4.0
       path-is-absolute: 1.0.1
 
-  /glob/8.1.0:
-    resolution: {integrity: sha512-r8hpEjiQEYlF2QU0df3dS+nxxSIreXQS1qRhMJM0Q5NDdR386C7jb7Hwwod8Fgiuex+k0GFjgft18yvxm5XoCQ==}
-    engines: {node: '>=12'}
-    dependencies:
-      fs.realpath: 1.0.0
-      inflight: 1.0.6
-      inherits: 2.0.4
-      minimatch: 5.1.6
-      once: 1.4.0
-    dev: false
-
   /global-dirs/0.1.1:
     resolution: {integrity: sha512-NknMLn7F2J7aflwFOlGdNIuCDpN3VGoSoB+aap3KABFWbHVn1TCgFC+np23J8W2BiZbjfEw3BFBycSMv1AFblg==}
     engines: {node: '>=4'}
@@ -11499,6 +11465,7 @@ packages:
 
   /ieee754/1.1.13:
     resolution: {integrity: sha512-4vf7I2LYV/HaWerSo3XmlMkp5eZ83i+/CDluXi/IGTs/O1sejBNhTtnxzmRZfvOUqj7lZjqHkeTvpgSFDlWZTg==}
+    dev: false
 
   /ieee754/1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
@@ -13044,7 +13011,7 @@ packages:
       joi-objectid: 3.0.1
     dev: false
 
-  /medusa-extender/1.8.8_tk6pzws43ajydi2l3n3tzflpse:
+  /medusa-extender/1.8.8_hsrplmyzlertnnivjcubiijfje:
     resolution: {integrity: sha512-NJqXM0IdPYPsoTYs3MAvo7hQ8mDuNl/wI+LGW6uUbP1MeZ+EJpdRDTXPy/kc007ohnHCH1uxrMizJuu1MoFfhA==}
     hasBin: true
     peerDependencies:
@@ -13056,7 +13023,7 @@ packages:
       reflect-metadata: ^0.1.13
       typeorm: ^0.2.41
     dependencies:
-      '@medusajs/medusa': 1.7.6_lkrsnuezdk6stppsu7sxhvuf6a
+      '@medusajs/medusa': 1.7.6_k64htzgyg7gelu2z5sut72o47y
       awilix: 8.0.0
       chalk: 4.1.2
       commander: 9.5.0
@@ -13065,16 +13032,33 @@ packages:
       express: 4.18.2
       express-list-endpoints: 6.0.0
       medusa-core-utils: 1.1.38
-      medusa-interfaces: 1.3.5_mvzsp6dxx5njpqbn6tmvzgeqpa
+      medusa-interfaces: 1.3.5_l3smpwhtxzyco3pcbfbhjy3smu
       openapi-types: 10.0.0
       reflect-metadata: 0.1.13
-      typeorm: 0.3.12
+      typeorm: 0.2.45
       webpack: 5.75.0
     transitivePeerDependencies:
       - '@swc/core'
       - esbuild
       - uglify-js
       - webpack-cli
+    dev: false
+
+  /medusa-file-s3/1.1.10_mnhg237xnac6dtha5jqgvir5i4:
+    resolution: {integrity: sha512-Rxbp6n33uGIUe8QytZqzHv/VnWMAu8Ms1pTZ4noKkyyeE3CGybqnNBbV6jV3t5NYzSmGKYkGnbeKEcMpyH/Z0g==}
+    peerDependencies:
+      medusa-interfaces: 1.3.5
+    dependencies:
+      '@babel/plugin-transform-classes': 7.20.7_@babel+core@7.20.12
+      aws-sdk: 2.1311.0
+      body-parser: 1.20.1
+      express: 4.18.2
+      medusa-core-utils: 1.1.38
+      medusa-interfaces: 1.3.5_l3smpwhtxzyco3pcbfbhjy3smu
+      medusa-test-utils: 1.1.37_@babel+core@7.20.12
+    transitivePeerDependencies:
+      - '@babel/core'
+      - supports-color
     dev: false
 
   /medusa-fulfillment-manual/1.1.35_mnhg237xnac6dtha5jqgvir5i4:
@@ -13087,7 +13071,7 @@ packages:
       '@babel/runtime': 7.20.13
       express: 4.18.2
       medusa-core-utils: 1.1.38
-      medusa-interfaces: 1.3.5_mvzsp6dxx5njpqbn6tmvzgeqpa
+      medusa-interfaces: 1.3.5_l3smpwhtxzyco3pcbfbhjy3smu
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
@@ -13103,14 +13087,14 @@ packages:
       typeorm: 0.2.45
     dev: false
 
-  /medusa-interfaces/1.3.5_mvzsp6dxx5njpqbn6tmvzgeqpa:
+  /medusa-interfaces/1.3.5_l3smpwhtxzyco3pcbfbhjy3smu:
     resolution: {integrity: sha512-14arK325GuE4T7Rq+97MCTc2y+TkxKjM+MS79BMh7cVm0dnOQDUYxwLTCMpRGYBQYEh61bMt2mqrIV4KSDNaKQ==}
     peerDependencies:
       medusa-core-utils: ^1.1.38
       typeorm: 0.x
     dependencies:
       medusa-core-utils: 1.1.38
-      typeorm: 0.3.12
+      typeorm: 0.2.45
     dev: false
 
   /medusa-payment-manual/1.0.21_medusa-interfaces@1.3.5:
@@ -13118,7 +13102,7 @@ packages:
     peerDependencies:
       medusa-interfaces: 1.3.5
     dependencies:
-      medusa-interfaces: 1.3.5_mvzsp6dxx5njpqbn6tmvzgeqpa
+      medusa-interfaces: 1.3.5_l3smpwhtxzyco3pcbfbhjy3smu
     dev: false
 
   /medusa-plugin-contentful/1.2.6_mnhg237xnac6dtha5jqgvir5i4:
@@ -13131,7 +13115,7 @@ packages:
       contentful-management: 5.28.0
       express: 4.18.2
       medusa-core-utils: 1.1.38
-      medusa-interfaces: 1.3.5_mvzsp6dxx5njpqbn6tmvzgeqpa
+      medusa-interfaces: 1.3.5_l3smpwhtxzyco3pcbfbhjy3smu
       medusa-test-utils: 1.1.37_@babel+core@7.20.12
       redis: 3.1.2
     transitivePeerDependencies:
@@ -13147,7 +13131,7 @@ packages:
       body-parser: 1.20.1
       lodash: 4.17.21
       medusa-core-utils: 1.1.38
-      medusa-interfaces: 1.3.5_mvzsp6dxx5njpqbn6tmvzgeqpa
+      medusa-interfaces: 1.3.5_l3smpwhtxzyco3pcbfbhjy3smu
       meilisearch: 0.27.0
     transitivePeerDependencies:
       - encoding
@@ -13164,7 +13148,7 @@ packages:
       body-parser: 1.20.1
       express: 4.18.2
       medusa-core-utils: 1.1.38
-      medusa-interfaces: 1.3.5_mvzsp6dxx5njpqbn6tmvzgeqpa
+      medusa-interfaces: 1.3.5_l3smpwhtxzyco3pcbfbhjy3smu
       medusa-test-utils: 1.1.37_@babel+core@7.20.12
     transitivePeerDependencies:
       - '@babel/core'
@@ -13443,13 +13427,6 @@ packages:
     dependencies:
       brace-expansion: 1.1.11
 
-  /minimatch/5.1.6:
-    resolution: {integrity: sha512-lKwV/1brpG6mBUFHtb7NUmtABCb2WZZmm2wNiOA5hAb8VdCS4B3dtMWyvcoViccwAW/COERjXLt0zP1zXUN26g==}
-    engines: {node: '>=10'}
-    dependencies:
-      brace-expansion: 2.0.1
-    dev: false
-
   /minimist-options/4.1.0:
     resolution: {integrity: sha512-Q4r8ghd80yhO/0j1O3B2BjweX3fiHg9cdOwjJd2J76Q135c+NDxGCqdYKQ1SKBuFfgWbAUzBfvYjPUEeNgqN1A==}
     engines: {node: '>= 6'}
@@ -13556,12 +13533,6 @@ packages:
     resolution: {integrity: sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==}
     engines: {node: '>=10'}
     hasBin: true
-
-  /mkdirp/2.1.3:
-    resolution: {integrity: sha512-sjAkg21peAG9HS+Dkx7hlG9Ztx7HLeKnvB3NQRcu/mltCVmvkF0pisbiTSfDVYTT86XEfZrTUosLdZLStquZUw==}
-    engines: {node: '>=10'}
-    hasBin: true
-    dev: false
 
   /moment-timezone/0.5.40:
     resolution: {integrity: sha512-tWfmNkRYmBkPJz5mr9GVDn9vRlVZOTe6yqY92rFxiOdWXbjaR0+9LwQnZGGuNR63X456NqmEkbskte8tWL5ePg==}
@@ -17518,85 +17489,6 @@ packages:
       - supports-color
     dev: false
 
-  /typeorm/0.3.12:
-    resolution: {integrity: sha512-sYSxBmCf1nJLLTcYtwqZ+lQIRtLPyUoO93rHTOKk9vJCyT4UfRtU7oRsJvfvKP3nnZTD1hzz2SEy2zwPEN6OyA==}
-    engines: {node: '>= 12.9.0'}
-    hasBin: true
-    peerDependencies:
-      '@google-cloud/spanner': ^5.18.0
-      '@sap/hana-client': ^2.12.25
-      better-sqlite3: ^7.1.2 || ^8.0.0
-      hdb-pool: ^0.1.6
-      ioredis: ^5.0.4
-      mongodb: ^3.6.0
-      mssql: ^7.3.0
-      mysql2: ^2.2.5 || ^3.0.1
-      oracledb: ^5.1.0
-      pg: ^8.5.1
-      pg-native: ^3.0.0
-      pg-query-stream: ^4.0.0
-      redis: ^3.1.1 || ^4.0.0
-      sql.js: ^1.4.0
-      sqlite3: ^5.0.3
-      ts-node: ^10.7.0
-      typeorm-aurora-data-api-driver: ^2.0.0
-    peerDependenciesMeta:
-      '@google-cloud/spanner':
-        optional: true
-      '@sap/hana-client':
-        optional: true
-      better-sqlite3:
-        optional: true
-      hdb-pool:
-        optional: true
-      ioredis:
-        optional: true
-      mongodb:
-        optional: true
-      mssql:
-        optional: true
-      mysql2:
-        optional: true
-      oracledb:
-        optional: true
-      pg:
-        optional: true
-      pg-native:
-        optional: true
-      pg-query-stream:
-        optional: true
-      redis:
-        optional: true
-      sql.js:
-        optional: true
-      sqlite3:
-        optional: true
-      ts-node:
-        optional: true
-      typeorm-aurora-data-api-driver:
-        optional: true
-    dependencies:
-      '@sqltools/formatter': 1.2.5
-      app-root-path: 3.1.0
-      buffer: 6.0.3
-      chalk: 4.1.2
-      cli-highlight: 2.1.11
-      date-fns: 2.29.3
-      debug: 4.3.4
-      dotenv: 16.0.3
-      glob: 8.1.0
-      js-yaml: 4.1.0
-      mkdirp: 2.1.3
-      reflect-metadata: 0.1.13
-      sha.js: 2.4.11
-      tslib: 2.5.0
-      uuid: 9.0.0
-      xml2js: 0.4.23
-      yargs: 17.6.2
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
   /typescript/4.9.5:
     resolution: {integrity: sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==}
     engines: {node: '>=4.2.0'}
@@ -18416,7 +18308,7 @@ packages:
   /xml2js/0.4.19:
     resolution: {integrity: sha512-esZnJZJOiJR9wWKMyuvSE1y6Dq5LCuJanqhxslH2bxM6duahNZ+HMpCLhBQGZkbX6xRf8x1Y2eJlgt2q3qo49Q==}
     dependencies:
-      sax: 1.2.1
+      sax: 1.2.4
       xmlbuilder: 9.0.7
     dev: false
 
