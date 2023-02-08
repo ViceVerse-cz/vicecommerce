@@ -26,8 +26,8 @@
     "@commitlint/cli": "^17.4.2",
     "@commitlint/config-conventional": "^17.4.2",
     "dotenv-cli": "^7.0.0",
-    "husky": "^8.0.0",
-    "lint-staged": "^13.1.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.1.1",
     "postcss": "^8.4.21",
     "rome": "^11.0.0",
     "turbo": "latest"
