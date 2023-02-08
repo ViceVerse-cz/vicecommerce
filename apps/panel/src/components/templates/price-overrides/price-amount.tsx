@@ -1,4 +1,3 @@
-import React from 'react';
 import useToggleState from '../../../hooks/use-toggle-state';
 import { currencies } from '../../../utils/currencies';
 import Button from '../../fundamentals/button';
@@ -19,7 +18,12 @@ const PriceAmount = ({ value, onChange }) => {
             <span className='inter-base-regular text-grey-50 capitalize'>{currencyName}</span>
           </div>
           {value.region?.countries ? (
-            <Button variant='secondary' size='small' className='rounded-rounded h-[32px]' onClick={toggle}>
+            <Button
+              variant='secondary'
+              size='small'
+              className='rounded-rounded h-[32px]'
+              onClick={toggle}
+            >
               <div className='flex items-center gap-2'>
                 {showRegions ? <EyeOffIcon size={20} /> : <EyeIcon size={20} />}
                 <span>Show regions</span>
