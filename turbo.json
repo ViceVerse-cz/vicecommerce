@@ -45,7 +45,8 @@
             "NEXT_PUBLIC_INDEX_NAME",
             "NEXT_PUBLIC_VERCEL_URL",
             "NEXT_PUBLIC_MEDUSA_BACKEND_URL",
-            "FEATURE_SEARCH_ENABLED"
+            "FEATURE_SEARCH_ENABLED",
+            "DATABASE_URL"
         ]
       },
       "seed": {
@@ -61,7 +62,8 @@
             "NEXT_PUBLIC_INDEX_NAME",
             "NEXT_PUBLIC_VERCEL_URL",
             "NEXT_PUBLIC_MEDUSA_BACKEND_URL",
-            "FEATURE_SEARCH_ENABLED"
+            "FEATURE_SEARCH_ENABLED",
+            "DATABASE_URL"
         ]
       },
       "start": {

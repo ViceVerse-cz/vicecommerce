@@ -8,7 +8,7 @@ const ADMIN_CORS = 'http://localhost:7000,http://localhost:7001';
 const STORE_CORS = 'http://localhost:8000';
 
 // Database URL (here we use a local database called medusa-development)
-const DATABASE_URL = 'postgres://user:password@localhost:5432/medusa-docker';
+const DATABASE_URL = process.env.DATABASE_URL;
 
 // Medusa uses Redis, so this needs configuration as well
 const REDIS_URL = 'redis://localhost:6379';
