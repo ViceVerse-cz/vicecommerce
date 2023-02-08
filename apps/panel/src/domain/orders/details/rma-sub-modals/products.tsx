@@ -11,7 +11,6 @@ import { LayeredModalContext } from '../../../../components/molecules/modal/laye
 import Table from '../../../../components/molecules/table';
 import TableContainer from '../../../../components/organisms/table-container';
 import { useDebounce } from '../../../../hooks/use-debounce';
-import { useNewOrderForm } from '../../new/form';
 
 const getProductStatusVariant = (status) => {
   switch (status) {
@@ -32,11 +31,10 @@ type RMASelectProductSubModalProps = {
   selectedItems?: any;
 };
 
-const RMASelectProductSubModal: React.FC<RMASelectProductSubModalProps> = ({ onSubmit, selectedItems }) => {
-  const {
-    context: { region },
-  } = useNewOrderForm();
-
+const RMASelectProductSubModal: React.FC<RMASelectProductSubModalProps> = ({
+  onSubmit,
+  selectedItems,
+}) => {
   const PAGE_SIZE = 12;
   const { pop } = useContext(LayeredModalContext);
   const [query, setQuery] = useState('');
@@ -52,7 +50,6 @@ const RMASelectProductSubModal: React.FC<RMASelectProductSubModalProps> = ({ onS
     q: debouncedSearchTerm,
     limit: PAGE_SIZE,
     offset,
-    region_id: region?.id,
   });
 
   useEffect(() => {
@@ -71,7 +68,10 @@ const RMASelectProductSubModal: React.FC<RMASelectProductSubModalProps> = ({ onS
             <div className='flex items-center'>
               <div className='h-[40px] w-[30px] my-1.5 flex items-center mr-4'>
                 {original.product.thumbnail ? (
-                  <img src={original.product.thumbnail} className='h-full object-cover rounded-soft' />
+                  <img
+                    src={original.product.thumbnail}
+                    className='h-full object-cover rounded-soft'
+                  />
                 ) : (
                   <ImagePlaceholder />
                 )}
@@ -89,7 +89,9 @@ const RMASelectProductSubModal: React.FC<RMASelectProductSubModalProps> = ({ onS
         accessor: 'status',
         Cell: ({ row: { original } }) => (
           <StatusIndicator
-            title={`${original.product.status.charAt(0).toUpperCase()}${original.product.status.slice(1)}`}
+            title={`${original.product.status
+              .charAt(0)
+              .toUpperCase()}${original.product.status.slice(1)}`}
             variant={getProductStatusVariant(original.product.status)}
           />
         ),
@@ -97,7 +99,9 @@ const RMASelectProductSubModal: React.FC<RMASelectProductSubModalProps> = ({ onS
       {
         Header: <div className='text-right'>In Stock</div>,
         accessor: 'inventory_quantity',
-        Cell: ({ row: { original } }) => <div className='text-right'>{original.inventory_quantity}</div>,
+        Cell: ({ row: { original } }) => (
+          <div className='text-right'>{original.inventory_quantity}</div>
+        ),
       },
     ];
   }, []);
@@ -165,7 +169,9 @@ const RMASelectProductSubModal: React.FC<RMASelectProductSubModalProps> = ({ onS
 
   useEffect(() => {
     setSelectedVariants((selectedVariants) => [
-      ...selectedVariants.filter((sv) => Object.keys(selectedRowIds).findIndex((id) => id === sv.id) > -1),
+      ...selectedVariants.filter(
+        (sv) => Object.keys(selectedRowIds).findIndex((id) => id === sv.id) > -1,
+      ),
       ...(variants?.filter(
         (v) =>
           selectedVariants.findIndex((sv) => sv.id === v.id) < 0 &&
@@ -242,7 +248,9 @@ const RMASelectProductSubModal: React.FC<RMASelectProductSubModalProps> = ({ onS
                   return (
                     <Table.Row {...row.getRowProps()}>
                       {row.cells.map((cell) => {
-                        return <Table.Cell {...cell.getCellProps()}>{cell.render('Cell')}</Table.Cell>;
+                        return (
+                          <Table.Cell {...cell.getCellProps()}>{cell.render('Cell')}</Table.Cell>
+                        );
                       })}
                     </Table.Row>
                   );

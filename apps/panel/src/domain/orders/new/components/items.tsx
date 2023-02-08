@@ -1,8 +1,8 @@
 import { Product, ProductVariant, Region } from '@medusajs/medusa';
-import { PricedVariant } from '@medusajs/medusa/dist/types/pricing';
 import clsx from 'clsx';
 import React, { useContext, useEffect, useState } from 'react';
 import { Controller } from 'react-hook-form';
+import { useMedusa } from 'medusa-react';
 
 import Button from '../../../../components/fundamentals/button';
 import MinusIcon from '../../../../components/fundamentals/icons/minus-icon';
@@ -13,7 +13,12 @@ import InputField from '../../../../components/molecules/input';
 import { LayeredModalContext } from '../../../../components/molecules/modal/layered-modal';
 import { SteppedContext } from '../../../../components/molecules/modal/stepped-modal';
 import Table from '../../../../components/molecules/table';
-import { displayAmount, extractUnitPrice, getNativeSymbol, persistedPrice } from '../../../../utils/prices';
+import {
+  displayAmount,
+  extractUnitPrice,
+  getNativeSymbol,
+  persistedPrice,
+} from '../../../../utils/prices';
 import RMASelectProductSubModal from '../../details/rma-sub-modals/products';
 import { useNewOrderForm } from '../form';
 import CustomItemSubModal from './custom-item-sub-modal';
@@ -23,22 +28,31 @@ const Items = () => {
 
   const {
     context: { region, items },
-    form: { control, register, setValue, getValues },
+    form: { control, register, setValue },
   } = useNewOrderForm();
 
-  const { fields, append, remove } = items;
+  const { client } = useMedusa();
+
+  const { fields, append, remove, update } = items;
 
   const [editQuantity, setEditQuantity] = useState(-1);
   const [editPrice, setEditPrice] = useState(-1);
 
   const layeredContext = useContext(LayeredModalContext);
 
-  const addItem = (variants: PricedVariant[]) => {
+  const addItem = async (variants: ProductVariant[]) => {
     const ids = fields.map((field) => field.variant_id);
     const itemsToAdd = variants.filter((v) => !ids.includes(v.id));
 
+    const variantIds = itemsToAdd.map((v) => v.id);
+
+    const { variants: newVariants } = await client.admin.variants.list({
+      id: variantIds,
+      region_id: region?.id,
+    });
+
     append(
-      itemsToAdd.map((item) => ({
+      newVariants.map((item) => ({
         quantity: 1,
         variant_id: item.id,
         title: item.title as string,
@@ -54,11 +68,11 @@ const Items = () => {
   };
 
   const handleEditQuantity = (index: number, value: number) => {
-    const oldQuantity = getValues(`items.${index}.quantity`);
-    const newQuantity = +oldQuantity + value;
+    const field = fields[index];
+    field.quantity = field.quantity + value;
 
-    if (newQuantity > 0) {
-      setValue(`items.${index}.quantity`, newQuantity);
+    if (field.quantity > 0) {
+      update(index, field);
     }
   };
 
@@ -116,13 +130,18 @@ const Items = () => {
                     <div className='min-w-[240px] flex items-center py-2'>
                       <div className='w-[30px] h-[40px] '>
                         {item.thumbnail ? (
-                          <img className='h-full w-full object-cover rounded' src={item.thumbnail} />
+                          <img
+                            className='h-full w-full object-cover rounded'
+                            src={item.thumbnail}
+                          />
                         ) : (
                           <ImagePlaceholder />
                         )}
                       </div>
                       <div className='inter-small-regular text-grey-50 flex flex-col ml-4'>
-                        {item.product_title && <span className='text-grey-90'>{item.product_title}</span>}
+                        {item.product_title && (
+                          <span className='text-grey-90'>{item.product_title}</span>
+                        )}
                         <span>{item.title}</span>
                       </div>
                     </div>
@@ -229,7 +248,9 @@ const Items = () => {
           size='small'
           className='border border-grey-20'
           onClick={() => {
-            layeredContext.push(CreateCustomProductScreen(layeredContext.pop, addCustomItem, region));
+            layeredContext.push(
+              CreateCustomProductScreen(layeredContext.pop, addCustomItem, region),
+            );
           }}
         >
           <PlusIcon size={20} />

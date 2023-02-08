@@ -1,6 +1,20 @@
-import { CustomerGroup, Product, ProductCollection, ProductTag, ProductType } from '@medusajs/medusa';
+import {
+  CustomerGroup,
+  Product,
+  ProductCollection,
+  ProductTag,
+  ProductType,
+} from '@medusajs/medusa';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Column, HeaderGroup, Row, usePagination, useRowSelect, useSortBy, useTable } from 'react-table';
+import {
+  Column,
+  HeaderGroup,
+  Row,
+  usePagination,
+  useRowSelect,
+  useSortBy,
+  useTable,
+} from 'react-table';
 import { useDebounce } from '../../../hooks/use-debounce';
 import useQueryFilters from '../../../hooks/use-query-filters';
 import IndeterminateCheckbox from '../../molecules/indeterminate-checkbox';
@@ -22,10 +36,6 @@ type SelectableTableProps<T extends object> = {
   renderRow: (props: { row: Row<T> }) => React.ReactElement;
   renderHeaderGroup?: (props: { headerGroup: HeaderGroup<T> }) => React.ReactElement;
 } & ReturnType<typeof useQueryFilters>;
-
-let a: Omit<TableProps, 'filteringOptions'> & {
-  filters?: Pick<TableProps, 'filteringOptions'>;
-};
 
 export const SelectableTable = <
   T extends Product | CustomerGroup | ProductCollection | ProductTag | ProductType,

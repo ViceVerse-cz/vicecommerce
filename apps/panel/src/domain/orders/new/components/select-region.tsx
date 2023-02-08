@@ -8,7 +8,9 @@ import { useNewOrderForm } from '../form';
 const SelectRegionScreen = () => {
   const { enableNextPage, disableNextPage } = React.useContext(SteppedContext);
 
-  const { control } = useNewOrderForm();
+  const {
+    form: { control },
+  } = useNewOrderForm();
 
   const reg = useWatch({
     control,
@@ -43,7 +45,9 @@ const SelectRegionScreen = () => {
         control={control}
         name='region'
         render={({ field: { onChange, value } }) => {
-          return <Select label='Region' onChange={onChange} value={value} options={regionOptions} />;
+          return (
+            <Select label='Region' onChange={onChange} value={value} options={regionOptions} />
+          );
         }}
       />
     </div>
