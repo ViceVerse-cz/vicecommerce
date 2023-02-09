@@ -1,7 +1,7 @@
 {
   "name": "medusa-fulfillment-zasilkovna",
   "version": "0.0.1",
-  "description": "Zasilkovna fulfillment implementation for Medusa CMS",
+  "description": "Zasilkovna fulfillment implementation for Medusa",
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__ --extensions \".ts,.js\"",
     "watch": "babel -w src --out-dir . --ignore **/__tests__ --extensions \".ts,.js\""
