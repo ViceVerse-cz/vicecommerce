@@ -29,6 +29,28 @@
     }
   ],
   "shipping_options": [
+    {
+      "name": "Zasilkovna - Box",
+      "region_id": "test-region-eu",
+      "provider_id": "zasilkovna-fulfillment",
+      "data": {
+        "id": "zasilkovna-box"
+      },
+      "price_type": "flat_rate",
+      "is_return": false,
+      "amount": 1000
+    },
+    {
+      "name": "Zasilkovna - Delivery",
+      "region_id": "test-region-eu",
+      "provider_id": "zasilkovna-fulfillment",
+      "data": {
+        "id": "zasilkovna-delivery"
+      },
+      "price_type": "flat_rate",
+      "is_return": false,
+      "amount": 1000
+    }
   ],
   "products": [
     {
