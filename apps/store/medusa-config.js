@@ -22,6 +22,14 @@ const plugins = [
     resolve: "medusa-payment-manual",
   },
 
+  // Docs: WIP
+  {
+    resolve: "medusa-fulfillment-zasilkovna",
+    options: {
+      apiKey: "sdfsdfdsfdsf",
+    },
+  },
+
   // Docs: https://docs.medusajs.com/add-plugins/contentful/
   {
     resolve: "medusa-plugin-contentful",

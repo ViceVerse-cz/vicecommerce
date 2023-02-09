@@ -15,12 +15,11 @@ function App({ Component, pageProps }: AppPropsWithLayout<{ dehydratedState?: un
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
-    <QueryClientProvider client={queryClient} contextSharing={true}>
+    <QueryClientProvider client={queryClient}>
       <MedusaProvider
         baseUrl={MEDUSA_BACKEND_URL}
         queryClientProviderProps={{
           client: queryClient,
-          contextSharing: true,
         }}
       >
         <Hydrate state={pageProps.dehydratedState}>
