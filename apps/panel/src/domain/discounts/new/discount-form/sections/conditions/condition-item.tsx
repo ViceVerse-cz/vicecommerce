@@ -1,12 +1,12 @@
-import { useAdminGetDiscountCondition } from 'medusa-react';
-import React, { useEffect, useMemo, useState } from 'react';
-import Badge from '../../../../../../components/fundamentals/badge';
-import EditIcon from '../../../../../../components/fundamentals/icons/edit-icon';
-import TrashIcon from '../../../../../../components/fundamentals/icons/trash-icon';
-import Actionables from '../../../../../../components/molecules/actionables';
-import { ConditionMap, DiscountConditionOperator, DiscountConditionType } from '../../../../types';
-import EditConditionsModal from '../../edit-conditions-modal';
-import { useDiscountForm } from '../../form/discount-form-context';
+import { useAdminGetDiscountCondition } from "medusa-react";
+import React, { useEffect, useMemo, useState } from "react";
+import Badge from "../../../../../../components/fundamentals/badge";
+import EditIcon from "../../../../../../components/fundamentals/icons/edit-icon";
+import TrashIcon from "../../../../../../components/fundamentals/icons/trash-icon";
+import Actionables from "../../../../../../components/molecules/actionables";
+import { ConditionMap, DiscountConditionOperator, DiscountConditionType } from "../../../../types";
+import EditConditionsModal from "../../edit-conditions-modal";
+import { useDiscountForm } from "../../form/discount-form-context";
 
 type ConditionItemProps<Type extends DiscountConditionType> = {
   index: number;
@@ -28,15 +28,15 @@ const ConditionItem = <Type extends DiscountConditionType>({
   const queryParams = useMemo(() => {
     switch (type) {
       case DiscountConditionType.PRODUCTS:
-        return { expand: 'products' };
+        return { expand: "products" };
       case DiscountConditionType.PRODUCT_COLLECTIONS:
-        return { expand: 'product_collections' };
+        return { expand: "product_collections" };
       case DiscountConditionType.PRODUCT_TAGS:
-        return { expand: 'product_tags' };
+        return { expand: "product_tags" };
       case DiscountConditionType.CUSTOMER_GROUPS:
-        return { expand: 'customer_groups' };
+        return { expand: "customer_groups" };
       case DiscountConditionType.PRODUCT_TYPES:
-        return { expand: 'product_types' };
+        return { expand: "product_types" };
     }
   }, [type]);
 
@@ -156,10 +156,7 @@ const ConditionItem = <Type extends DiscountConditionType>({
       <div className='p-base border rounded-rounded flex gap-base justify-between items-center'>
         <div className='flex overflow-hidden gap-base w-full'>
           <div>
-            <Badge
-              className='inter-base-semibold flex justify-center items-center w-[40px] h-[40px]'
-              variant='default'
-            >
+            <Badge className='inter-base-semibold flex justify-center items-center w-[40px] h-[40px]' variant='default'>
               §{index + 1}
             </Badge>
           </div>
@@ -170,9 +167,9 @@ const ConditionItem = <Type extends DiscountConditionType>({
                 {visibleItems.map((item, i) => {
                   return (
                     <span key={i}>
-                      {type === DiscountConditionType.PRODUCT_TAGS && '#'}
+                      {type === DiscountConditionType.PRODUCT_TAGS && "#"}
                       {item.label}
-                      {i !== visibleItems.length - 1 && ', '}
+                      {i !== visibleItems.length - 1 && ", "}
                     </span>
                   );
                 })}
@@ -186,12 +183,12 @@ const ConditionItem = <Type extends DiscountConditionType>({
             forceDropdown
             actions={[
               {
-                label: 'Edit',
+                label: "Upravit",
                 onClick: () => setShowEdit(true),
                 icon: <EditIcon size={16} />,
               },
               {
-                label: 'Delete condition',
+                label: "Delete condition",
                 onClick: () =>
                   updateCondition({
                     type,
@@ -199,7 +196,7 @@ const ConditionItem = <Type extends DiscountConditionType>({
                     operator: DiscountConditionOperator.IN,
                   }),
                 icon: <TrashIcon size={16} />,
-                variant: 'danger',
+                variant: "danger",
               },
             ]}
           />
@@ -213,15 +210,15 @@ const ConditionItem = <Type extends DiscountConditionType>({
 const getTitle = (type: DiscountConditionType) => {
   switch (type) {
     case DiscountConditionType.PRODUCTS:
-      return 'Product';
+      return "Product";
     case DiscountConditionType.PRODUCT_COLLECTIONS:
-      return 'Collection';
+      return "Collection";
     case DiscountConditionType.PRODUCT_TAGS:
-      return 'Tag';
+      return "Tag";
     case DiscountConditionType.CUSTOMER_GROUPS:
-      return 'Customer group';
+      return "Customer group";
     case DiscountConditionType.PRODUCT_TYPES:
-      return 'Type';
+      return "Type";
   }
 };
 

@@ -1,18 +1,15 @@
-import React from 'react';
+import React from "react";
 
-import Actionables from '../../../components/molecules/actionables';
-import EditIcon from '../../../components/fundamentals/icons/edit-icon';
-import TrashIcon from '../../../components/fundamentals/icons/trash-icon';
-import Badge from '../../../components/fundamentals/badge';
+import Actionables from "../../../components/molecules/actionables";
+import EditIcon from "../../../components/fundamentals/icons/edit-icon";
+import TrashIcon from "../../../components/fundamentals/icons/trash-icon";
+import Badge from "../../../components/fundamentals/badge";
 
 export const TaxRuleItem = ({ onEdit, onDelete, index, name, description }) => {
   return (
     <div className='p-base border rounded-rounded flex gap-base items-center'>
       <div>
-        <Badge
-          className='inter-base-semibold flex justify-center items-center w-[40px] h-[40px]'
-          variant='default'
-        >
+        <Badge className='inter-base-semibold flex justify-center items-center w-[40px] h-[40px]' variant='default'>
           §{index}
         </Badge>
       </div>
@@ -25,13 +22,13 @@ export const TaxRuleItem = ({ onEdit, onDelete, index, name, description }) => {
           forceDropdown
           actions={[
             {
-              label: 'Edit',
+              label: "Upravit",
               onClick: () => onEdit(),
               icon: <EditIcon size={20} />,
             },
             {
-              label: 'Delete rule',
-              variant: 'danger',
+              label: "Delete rule",
+              variant: "danger",
               onClick: () => onDelete(),
               icon: <TrashIcon size={20} />,
             },

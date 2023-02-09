@@ -1,20 +1,20 @@
-import { isEmpty } from 'lodash';
-import { useAdminCustomers } from 'medusa-react';
-import qs from 'qs';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { usePagination, useTable } from 'react-table';
-import DetailsIcon from '../../fundamentals/details-icon';
-import EditIcon from '../../fundamentals/icons/edit-icon';
-import Table from '../../molecules/table';
-import TableContainer from '../../organisms/table-container';
-import { useCustomerColumns } from './use-customer-columns';
-import { useCustomerFilters } from './use-customer-filters';
+import { isEmpty } from "lodash";
+import { useAdminCustomers } from "medusa-react";
+import qs from "qs";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { usePagination, useTable } from "react-table";
+import DetailsIcon from "../../fundamentals/details-icon";
+import EditIcon from "../../fundamentals/icons/edit-icon";
+import Table from "../../molecules/table";
+import TableContainer from "../../organisms/table-container";
+import { useCustomerColumns } from "./use-customer-columns";
+import { useCustomerFilters } from "./use-customer-filters";
 
 const DEFAULT_PAGE_SIZE = 15;
 
 const defaultQueryProps = {
-  expand: 'orders',
+  expand: "orders",
 };
 
 const CustomerTable = () => {
@@ -44,7 +44,7 @@ const CustomerTable = () => {
   const [numPages, setNumPages] = useState(0);
 
   useEffect(() => {
-    if (typeof count !== 'undefined') {
+    if (typeof count !== "undefined") {
       const controlledPageCount = Math.ceil(count / lim);
       setNumPages(controlledPageCount);
     }
@@ -88,7 +88,7 @@ const CustomerTable = () => {
         setFreeText(query);
         gotoPage(0);
       } else {
-        if (typeof query !== 'undefined') {
+        if (typeof query !== "undefined") {
           // if we delete query string, we reset the table view
           reset();
         }
@@ -114,7 +114,7 @@ const CustomerTable = () => {
 
   const updateUrlFromFilter = (obj = {}) => {
     const stringified = qs.stringify(obj);
-    window.history.replaceState(`/a/discounts`, '', `${`?${stringified}`}`);
+    window.history.replaceState("/a/discounts", "", `${`?${stringified}`}`);
   };
 
   const refreshWithFilters = () => {
@@ -139,7 +139,7 @@ const CustomerTable = () => {
         count: count!,
         offset: queryObject.offset,
         pageSize: queryObject.offset + rows.length,
-        title: 'Customers',
+        title: "Customers",
         currentPage: pageIndex + 1,
         pageCount: pageCount,
         nextPage: handleNext,
@@ -155,7 +155,7 @@ const CustomerTable = () => {
             <Table.HeadRow {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((col) => (
                 <Table.HeadCell className='w-[100px]' {...col.getHeaderProps()}>
-                  {col.render('Header')}
+                  {col.render("Header")}
                 </Table.HeadCell>
               ))}
             </Table.HeadRow>
@@ -166,15 +166,15 @@ const CustomerTable = () => {
             prepareRow(row);
             return (
               <Table.Row
-                color={'inherit'}
+                color={"inherit"}
                 actions={[
                   {
-                    label: 'Edit',
+                    label: "Upravit",
                     onClick: () => navigate(row.original.id),
                     icon: <EditIcon size={20} />,
                   },
                   {
-                    label: 'Details',
+                    label: "Details",
                     onClick: () => navigate(row.original.id),
                     icon: <DetailsIcon size={20} />,
                   },
@@ -183,7 +183,7 @@ const CustomerTable = () => {
                 {...row.getRowProps()}
               >
                 {row.cells.map((cell, index) => {
-                  return <Table.Cell {...cell.getCellProps()}>{cell.render('Cell', { index })}</Table.Cell>;
+                  return <Table.Cell {...cell.getCellProps()}>{cell.render("Cell", { index })}</Table.Cell>;
                 })}
               </Table.Row>
             );

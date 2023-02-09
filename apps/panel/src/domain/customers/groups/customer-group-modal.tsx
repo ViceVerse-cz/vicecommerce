@@ -1,11 +1,11 @@
-import { AdminPostCustomerGroupsGroupReq, AdminPostCustomerGroupsReq, CustomerGroup } from '@medusajs/medusa';
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { AdminPostCustomerGroupsGroupReq, AdminPostCustomerGroupsReq, CustomerGroup } from "@medusajs/medusa";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 
-import Button from '../../../components/fundamentals/button';
-import Input from '../../../components/molecules/input';
-import Modal from '../../../components/molecules/modal';
-import Metadata, { MetadataField } from '../../../components/organisms/metadata';
+import Button from "../../../components/fundamentals/button";
+import Input from "../../../components/molecules/input";
+import Modal from "../../../components/molecules/modal";
+import Metadata, { MetadataField } from "../../../components/organisms/metadata";
 
 type CustomerGroupModalProps = {
   handleClose: () => void;
@@ -57,16 +57,14 @@ function CustomerGroupModal(props: CustomerGroupModalProps) {
     <Modal handleClose={handleClose}>
       <Modal.Body>
         <Modal.Header handleClose={handleClose}>
-          <span className='inter-xlarge-semibold'>
-            {props.initialData ? 'Edit' : 'Create a New'} Customer Group
-          </span>
+          <span className='inter-xlarge-semibold'>{props.initialData ? "Upravit" : "Create a New"} Customer Group</span>
         </Modal.Header>
 
         <Modal.Content>
           <div className='space-y-4'>
             <span className='inter-base-semibold'>Details</span>
             <div className='flex space-x-4'>
-              <Input label='Title' {...register('name')} placeholder='Customer group name' required />
+              <Input label='Title' {...register("name")} placeholder='Customer group name' required />
             </div>
           </div>
 
@@ -77,12 +75,7 @@ function CustomerGroupModal(props: CustomerGroupModalProps) {
 
         <Modal.Footer>
           <div className='flex w-full h-8 justify-end'>
-            <Button
-              variant='ghost'
-              className='mr-2 w-32 text-small justify-center'
-              size='large'
-              onClick={handleClose}
-            >
+            <Button variant='ghost' className='mr-2 w-32 text-small justify-center' size='large' onClick={handleClose}>
               Cancel
             </Button>
             <Button
@@ -91,7 +84,7 @@ function CustomerGroupModal(props: CustomerGroupModalProps) {
               variant='primary'
               onClick={handleFromSubmit(onSubmit)}
             >
-              <span>{props.initialData ? 'Edit' : 'Publish'} Group</span>
+              <span>{props.initialData ? "Upravit" : "Publish"} Group</span>
             </Button>
           </div>
         </Modal.Footer>

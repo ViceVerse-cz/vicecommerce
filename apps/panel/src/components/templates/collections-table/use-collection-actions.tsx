@@ -1,10 +1,10 @@
-import { useAdminDeleteCollection } from 'medusa-react';
-import * as React from 'react';
-import { useNavigate } from 'react-router-dom';
-import useImperativeDialog from '../../../hooks/use-imperative-dialog';
-import EditIcon from '../../fundamentals/icons/edit-icon';
-import TrashIcon from '../../fundamentals/icons/trash-icon';
-import { ActionType } from '../../molecules/actionables';
+import { useAdminDeleteCollection } from "medusa-react";
+import * as React from "react";
+import { useNavigate } from "react-router-dom";
+import useImperativeDialog from "../../../hooks/use-imperative-dialog";
+import EditIcon from "../../fundamentals/icons/edit-icon";
+import TrashIcon from "../../fundamentals/icons/trash-icon";
+import { ActionType } from "../../molecules/actionables";
 
 const useCollectionActions = (collection) => {
   const navigate = useNavigate();
@@ -13,8 +13,8 @@ const useCollectionActions = (collection) => {
 
   const handleDelete = async () => {
     const shouldDelete = await dialog({
-      heading: 'Delete Collection',
-      text: 'Are you sure you want to delete this collection?',
+      heading: "Delete Collection",
+      text: "Are you sure you want to delete this collection?",
     });
 
     if (shouldDelete) {
@@ -24,13 +24,13 @@ const useCollectionActions = (collection) => {
 
   const getActions = (coll): ActionType[] => [
     {
-      label: 'Edit',
+      label: "Upravit",
       onClick: () => navigate(`/a/collections/${coll.id}`),
       icon: <EditIcon size={20} />,
     },
     {
-      label: 'Delete',
-      variant: 'danger',
+      label: "Delete",
+      variant: "danger",
       onClick: handleDelete,
       icon: <TrashIcon size={20} />,
     },

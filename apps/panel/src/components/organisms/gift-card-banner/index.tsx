@@ -1,13 +1,13 @@
-import React, { useMemo } from 'react';
-import { currencies } from '../../../utils/currencies';
-import { normalizeAmount } from '../../../utils/prices';
-import EditIcon from '../../fundamentals/icons/edit-icon';
-import TrashIcon from '../../fundamentals/icons/trash-icon';
-import UnpublishIcon from '../../fundamentals/icons/unpublish-icon';
-import StatusIndicator from '../../fundamentals/status-indicator';
-import { ActionType } from '../../molecules/actionables';
-import BannerCard from '../../molecules/banner-card';
-import TagGrid from '../../molecules/tag-grid.tsx';
+import React, { useMemo } from "react";
+import { currencies } from "../../../utils/currencies";
+import { normalizeAmount } from "../../../utils/prices";
+import EditIcon from "../../fundamentals/icons/edit-icon";
+import TrashIcon from "../../fundamentals/icons/trash-icon";
+import UnpublishIcon from "../../fundamentals/icons/unpublish-icon";
+import StatusIndicator from "../../fundamentals/status-indicator";
+import { ActionType } from "../../molecules/actionables";
+import BannerCard from "../../molecules/banner-card";
+import TagGrid from "../../molecules/tag-grid.tsx";
 
 type GiftCardVariant = {
   prices: {
@@ -41,20 +41,20 @@ const GiftCardBanner: React.FC<GiftCardBannerProps> = ({
 }) => {
   const actions: ActionType[] = [
     {
-      label: 'Edit',
+      label: "Upravit",
       onClick: onEdit,
       icon: <EditIcon size={16} />,
     },
     {
-      label: status === 'published' ? 'Unpublish' : 'Publish',
+      label: status === "published" ? "Unpublish" : "Publish",
       onClick: onUnpublish,
       icon: <UnpublishIcon size={16} />,
     },
     {
-      label: 'Delete',
+      label: "Delete",
       onClick: onDelete,
       icon: <TrashIcon size={16} />,
-      variant: 'danger',
+      variant: "danger",
     },
   ];
 
@@ -64,7 +64,7 @@ const GiftCardBanner: React.FC<GiftCardBannerProps> = ({
         const price = variant.prices.find((price) => price.currency_code === defaultCurrency);
 
         if (!price) {
-          return '';
+          return "";
         }
 
         return `${normalizeAmount(defaultCurrency, price.amount)} ${defaultCurrency.toUpperCase()}`;
@@ -79,8 +79,8 @@ const GiftCardBanner: React.FC<GiftCardBannerProps> = ({
         <div className='flex items-center justify-between'>
           <TagGrid tags={denominations} badgeVariant='default' />
           <StatusIndicator
-            variant={status === 'published' ? 'success' : 'danger'}
-            title={status === 'published' ? 'Published' : 'Unpublished'}
+            variant={status === "published" ? "success" : "danger"}
+            title={status === "published" ? "Published" : "Unpublished"}
           />
         </div>
       </BannerCard.Footer>

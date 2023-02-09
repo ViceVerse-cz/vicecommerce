@@ -1,32 +1,24 @@
-import { CustomerGroup } from '@medusajs/medusa';
-import { useAdminCustomerGroups } from 'medusa-react';
-import React, { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import {
-  HeaderGroup,
-  Row,
-  TableInstance,
-  TableOptions,
-  usePagination,
-  useSortBy,
-  useTable,
-} from 'react-table';
+import { CustomerGroup } from "@medusajs/medusa";
+import { useAdminCustomerGroups } from "medusa-react";
+import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { HeaderGroup, Row, TableInstance, TableOptions, usePagination, useSortBy, useTable } from "react-table";
 import CustomerGroupContext, {
   CustomerGroupContextContainer,
-} from '../../../domain/customers/groups/context/customer-group-context';
-import useQueryFilters from '../../../hooks/use-query-filters';
-import useSetSearchParams from '../../../hooks/use-set-search-params';
-import DetailsIcon from '../../fundamentals/details-icon';
-import EditIcon from '../../fundamentals/icons/edit-icon';
-import Table from '../../molecules/table';
-import TableContainer from '../../organisms/table-container';
-import { CUSTOMER_GROUPS_TABLE_COLUMNS } from './config';
+} from "../../../domain/customers/groups/context/customer-group-context";
+import useQueryFilters from "../../../hooks/use-query-filters";
+import useSetSearchParams from "../../../hooks/use-set-search-params";
+import DetailsIcon from "../../fundamentals/details-icon";
+import EditIcon from "../../fundamentals/icons/edit-icon";
+import Table from "../../molecules/table";
+import TableContainer from "../../organisms/table-container";
+import { CUSTOMER_GROUPS_TABLE_COLUMNS } from "./config";
 
 /**
  * Default filtering config for querying customer groups endpoint.
  */
 const defaultQueryProps = {
-  additionalFilters: { expand: 'customers' },
+  additionalFilters: { expand: "customers" },
   limit: 15,
   offset: 0,
 };
@@ -56,7 +48,7 @@ type HeaderCellProps = {
 function CustomerGroupsTableHeaderCell(props: HeaderCellProps) {
   return (
     <Table.HeadCell className='w-[100px]' {...props.col.getHeaderProps(props.col.getSortByToggleProps())}>
-      {props.col.render('Header')}
+      {props.col.render("Header")}
     </Table.HeadCell>
   );
 }
@@ -93,26 +85,21 @@ function CustomerGroupsTableRow(props: CustomerGroupsTableRowProps) {
 
   const actions = [
     {
-      label: 'Edit',
+      label: "Upravit",
       onClick: showModal,
       icon: <EditIcon size={20} />,
     },
     {
-      label: 'Details',
+      label: "Details",
       onClick: () => navigate(row.original.id),
       icon: <DetailsIcon size={20} />,
     },
   ];
 
   return (
-    <Table.Row
-      color={'inherit'}
-      actions={actions}
-      linkTo={props.row.original.id}
-      {...props.row.getRowProps()}
-    >
+    <Table.Row color={"inherit"} actions={actions} linkTo={props.row.original.id} {...props.row.getRowProps()}>
       {props.row.cells.map((cell, index) => (
-        <Table.Cell {...cell.getCellProps()}>{cell.render('Cell', { index })}</Table.Cell>
+        <Table.Cell {...cell.getCellProps()}>{cell.render("Cell", { index })}</Table.Cell>
       ))}
     </Table.Row>
   );
@@ -187,7 +174,7 @@ function CustomerGroupsTable(props: CustomerGroupsTableProps) {
         count: count,
         offset: queryObject.offset,
         pageSize: queryObject.offset + table.rows.length,
-        title: 'Customer groups',
+        title: "Customer groups",
         currentPage: table.state.pageIndex + 1,
         pageCount: table.pageCount,
         nextPage: handleNext,
@@ -231,7 +218,7 @@ function CustomerGroupsTableContainer() {
 
   useSetSearchParams(params.representationObject);
 
-  const showPlaceholder = !customer_groups?.length && !params.queryObject.q;
+  const showPlaceholder = !(customer_groups?.length || params.queryObject.q);
 
   if (showPlaceholder) {
     if (!isLoading) {
@@ -241,14 +228,7 @@ function CustomerGroupsTableContainer() {
     }
   }
 
-  return (
-    <CustomerGroupsTable
-      count={count}
-      customerGroups={customer_groups || []}
-      isLoading={isLoading}
-      {...params}
-    />
-  );
+  return <CustomerGroupsTable count={count} customerGroups={customer_groups || []} isLoading={isLoading} {...params} />;
 }
 
 export default CustomerGroupsTableContainer;
