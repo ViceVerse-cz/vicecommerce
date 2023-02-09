@@ -27,25 +27,25 @@ importers:
   apps/panel:
     specifiers:
       '@babel/core': ^7.10.2
-      '@hookform/error-message': ^2.0.0
-      '@medusajs/medusa': ^1.7.5
-      '@radix-ui/react-accordion': ^1.0.1
+      '@hookform/error-message': ^2.0.1
+      '@medusajs/medusa': ^1.7.6
+      '@radix-ui/react-accordion': ^1.1.0
       '@radix-ui/react-avatar': ^1.0.1
       '@radix-ui/react-collapsible': ^1.0.1
       '@radix-ui/react-dialog': ^1.0.2
-      '@radix-ui/react-dropdown-menu': ^2.0.1
+      '@radix-ui/react-dropdown-menu': ^2.0.2
       '@radix-ui/react-popover': ^1.0.3
       '@radix-ui/react-portal': ^1.0.1
-      '@radix-ui/react-radio-group': ^1.1.0
+      '@radix-ui/react-radio-group': ^1.1.1
       '@radix-ui/react-select': ^1.2.0
       '@radix-ui/react-switch': ^1.0.1
-      '@radix-ui/react-tooltip': ^1.0.2
-      '@segment/analytics-next': ^1.43.0
+      '@radix-ui/react-tooltip': ^1.0.3
+      '@segment/analytics-next': ^1.49.0
       '@storybook/addon-essentials': ^6.5.5
       '@storybook/builder-vite': ^0.2.4
       '@storybook/react': ^6.5.5
       '@tailwindcss/forms': ^0.5.3
-      '@tailwindcss/line-clamp': ^0.3.1
+      '@tailwindcss/line-clamp': ^0.4.2
       '@tanstack/react-query': ^4.22.4
       '@types/node': ^18.13.0
       '@types/randomatic': ^3.1.3
@@ -64,16 +64,16 @@ importers:
       confetti-js: ^0.0.18
       copy-to-clipboard: ^3.3.1
       crypto-browserify: ^3.12.0
-      csstype: 3.0.10
-      emoji-picker-react: ^4.4.3
-      framer-motion: ^9.0.1
+      csstype: 3.1.1
+      emoji-picker-react: ^4.4.7
+      framer-motion: ^9.0.2
       immutability-helper: ^3.1.1
       iso8601-duration: ^2.1.1
       lodash: ^4.17.21
-      medusa-core-utils: 1.1.31
-      medusa-interfaces: 1.3.4
-      medusa-react: ^4.0.3
-      moment: ^2.27.0
+      medusa-core-utils: 1.1.38
+      medusa-interfaces: 1.3.5
+      medusa-react: ^4.0.4
+      moment: ^2.29.4
       postcss: ^8.4.18
       qs: ^6.11.0
       randomatic: ^3.1.1
@@ -110,7 +110,7 @@ importers:
       webpack: ^5.75.0
     dependencies:
       '@hookform/error-message': 2.0.1_zf7ga3u4zrffjlingb6kh5ipva
-      '@medusajs/medusa': 1.7.6_qx7svprpgdza5rd6thfjt7whre
+      '@medusajs/medusa': 1.7.6_k64htzgyg7gelu2z5sut72o47y
       '@radix-ui/react-accordion': 1.1.0_biqbaboplfbrettd7655fr4n2y
       '@radix-ui/react-avatar': 1.0.1_biqbaboplfbrettd7655fr4n2y
       '@radix-ui/react-collapsible': 1.0.1_biqbaboplfbrettd7655fr4n2y
@@ -123,7 +123,7 @@ importers:
       '@radix-ui/react-switch': 1.0.1_biqbaboplfbrettd7655fr4n2y
       '@radix-ui/react-tooltip': 1.0.3_5ndqzdd6t4rivxsukjv3i3ak2q
       '@segment/analytics-next': 1.49.2
-      '@tailwindcss/line-clamp': 0.3.1_tailwindcss@3.2.6
+      '@tailwindcss/line-clamp': 0.4.2_tailwindcss@3.2.6
       '@tanstack/react-query': 4.24.4_biqbaboplfbrettd7655fr4n2y
       '@types/node': 18.13.0
       axios: 1.3.2
@@ -131,14 +131,14 @@ importers:
       confetti-js: 0.0.18
       copy-to-clipboard: 3.3.3
       crypto-browserify: 3.12.0
-      csstype: 3.0.10
+      csstype: 3.1.1
       emoji-picker-react: 4.4.7_react@18.2.0
       framer-motion: 9.0.2_biqbaboplfbrettd7655fr4n2y
       immutability-helper: 3.1.1
       iso8601-duration: 2.1.1
       lodash: 4.17.21
-      medusa-core-utils: 1.1.31
-      medusa-interfaces: 1.3.4_ihd5yjpl3wc4yd6bznzyxf56tm
+      medusa-core-utils: 1.1.38
+      medusa-interfaces: 1.3.5_l3smpwhtxzyco3pcbfbhjy3smu
       medusa-react: 4.0.4_yrimgvdn7bw457wdqaqq7gvvme
       moment: 2.29.4
       qs: 6.11.0
@@ -154,7 +154,7 @@ importers:
       react-helmet: 6.1.0_react@18.2.0
       react-highlight-words: 0.20.0_react@18.2.0
       react-hook-form: 7.43.1_react@18.2.0
-      react-hot-toast: 2.4.0_zunkpj6dptrfkocboupxe72lvq
+      react-hot-toast: 2.4.0_owo25xnefcwdq3zjgtohz6dbju
       react-hotkeys-hook: 4.3.5_biqbaboplfbrettd7655fr4n2y
       react-json-tree: 0.18.0_3stiutgnnbnfnf3uowm5cip22i
       react-jwt: 1.1.8_react@18.2.0
@@ -2217,7 +2217,7 @@ packages:
       '@emotion/memoize': 0.8.0
       '@emotion/unitless': 0.8.0
       '@emotion/utils': 1.2.0
-      csstype: 3.0.10
+      csstype: 3.1.1
     dev: false
 
   /@emotion/sheet/1.2.1:
@@ -2598,7 +2598,7 @@ packages:
     peerDependencies:
       '@medusajs/medusa': ^1.7.6
     dependencies:
-      '@medusajs/medusa': 1.7.6_qx7svprpgdza5rd6thfjt7whre
+      '@medusajs/medusa': 1.7.6_k64htzgyg7gelu2z5sut72o47y
       axios: 0.24.0
       qs: 6.11.0
       retry-axios: 2.6.0_axios@0.24.0
@@ -2638,69 +2638,6 @@ packages:
       jsonwebtoken: 8.5.1
       medusa-core-utils: 1.1.38
       medusa-interfaces: 1.3.5_l3smpwhtxzyco3pcbfbhjy3smu
-      medusa-telemetry: 0.0.16
-      medusa-test-utils: 1.1.38_@babel+core@7.20.12
-      morgan: 1.10.0
-      multer: 1.4.4
-      node-schedule: 2.1.1
-      papaparse: 5.3.2
-      passport: 0.4.1
-      passport-http-bearer: 1.0.1
-      passport-jwt: 4.0.1
-      passport-local: 1.0.0
-      pg: 8.9.0
-      randomatic: 3.1.1
-      redis: 3.1.2
-      reflect-metadata: 0.1.13
-      request-ip: 2.2.0
-      resolve-cwd: 3.0.0
-      scrypt-kdf: 2.0.1
-      sqlite3: 5.1.4
-      typeorm: 0.2.45
-      ulid: 2.3.0
-      uuid: 8.3.2
-      winston: 3.8.2
-    transitivePeerDependencies:
-      - '@babel/core'
-      - bluebird
-      - debug
-      - encoding
-      - pg-native
-      - redis-commands
-      - supports-color
-    dev: false
-
-  /@medusajs/medusa/1.7.6_qx7svprpgdza5rd6thfjt7whre:
-    resolution: {integrity: sha512-93/Nxqbq16d1VB7SZTkwhuSYpxle8hwaqm1X+ihTZKx4lDNa4oGF4u//vGlNdUnTcc/ntEeWNtuLYpRO/xu8RA==}
-    hasBin: true
-    peerDependencies:
-      medusa-interfaces: 1.3.5
-      typeorm: 0.2.x
-    dependencies:
-      '@medusajs/medusa-cli': 1.3.7
-      '@types/ioredis': 4.28.10
-      '@types/lodash': 4.14.191
-      awilix: 8.0.0
-      body-parser: 1.20.1
-      bull: 3.29.3
-      chokidar: 3.5.3
-      class-transformer: 0.5.1
-      class-validator: 0.13.2
-      connect-redis: 5.2.0
-      cookie-parser: 1.4.6
-      core-js: 3.27.2
-      cors: 2.8.5
-      cross-spawn: 7.0.3
-      express: 4.18.2
-      express-session: 1.17.3
-      fs-exists-cached: 1.0.0
-      glob: 7.2.3
-      ioredis: 4.28.5
-      ioredis-mock: 5.9.1_xkfitxqxwg5y2qgyc47q2uhrpe
-      iso8601-duration: 1.3.0
-      jsonwebtoken: 8.5.1
-      medusa-core-utils: 1.1.38
-      medusa-interfaces: 1.3.4_ihd5yjpl3wc4yd6bznzyxf56tm
       medusa-telemetry: 0.0.16
       medusa-test-utils: 1.1.38_@babel+core@7.20.12
       morgan: 1.10.0
@@ -6170,8 +6107,8 @@ packages:
       tailwindcss: 3.2.6_aesdjsunmf4wiehhujt67my7tu
     dev: true
 
-  /@tailwindcss/line-clamp/0.3.1_tailwindcss@3.2.6:
-    resolution: {integrity: sha512-pNr0T8LAc3TUx/gxCfQZRe9NB2dPEo/cedPHzUGIPxqDMhgjwNm6jYxww4W5l0zAsAddxr+XfZcqttGiFDgrGg==}
+  /@tailwindcss/line-clamp/0.4.2_tailwindcss@3.2.6:
+    resolution: {integrity: sha512-HFzAQuqYCjyy/SX9sLGB1lroPzmcnWv1FHkIpmypte10hptf4oPUfucryMKovZh2u0uiS9U5Ty3GghWfEJGwVw==}
     peerDependencies:
       tailwindcss: '>=2.0.0 || >=3.0.0 || >=3.0.0-alpha.1'
     dependencies:
@@ -6439,7 +6376,7 @@ packages:
     dependencies:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.2
-      csstype: 3.0.10
+      csstype: 3.1.1
 
   /@types/responselike/1.0.0:
     resolution: {integrity: sha512-85Y2BjiufFzaMIlvJDvTTB8Fxl2xfLo4HgmHzVBz08w4wDePCTjYw66PdrolO0kzli3yam/YCgRufyo1DdQVTA==}
@@ -9017,8 +8954,8 @@ packages:
     engines: {node: '>=4'}
     hasBin: true
 
-  /csstype/3.0.10:
-    resolution: {integrity: sha512-2u44ZG2OcNUO9HDp/Jl8C07x6pU/eTR3ncV91SiK3dhG9TWvRVsCoJw14Ckx5DgWkzGA3waZWO3d7pgqpUI/XA==}
+  /csstype/3.1.1:
+    resolution: {integrity: sha512-DJR/VvkAvSZW9bTouZue2sSxDwdTN92uHjqeKVm+0dAqdfNykRzQ95tay8aXMBAAPpUiq4Qcug2L7neoRh2Egw==}
 
   /csv-generate/3.4.3:
     resolution: {integrity: sha512-w/T+rqR0vwvHqWs/1ZyMDWtHHSJaN06klRqJXBEpDJaM/+dZkso0OKh1VcuuYvK3XM53KysVNq8Ko/epCK8wOw==}
@@ -9378,7 +9315,7 @@ packages:
     resolution: {integrity: sha512-nRCa7CK3VTrM2NmGkIy4cbK7IZlgBE/PYMn55rrXefr5xXDP0LdtfPnblFDoVdcAfslJ7or6iqAUnx0CCGIWQA==}
     dependencies:
       '@babel/runtime': 7.20.13
-      csstype: 3.0.10
+      csstype: 3.1.1
     dev: false
 
   /dom-serializer/1.4.1:
@@ -11047,12 +10984,12 @@ packages:
       - supports-color
     dev: true
 
-  /goober/2.1.12_csstype@3.0.10:
+  /goober/2.1.12_csstype@3.1.1:
     resolution: {integrity: sha512-yXHAvO08FU1JgTXX6Zn6sYCUFfB/OJSX8HHjDSgerZHZmFKAb08cykp5LBw5QnmyMcZyPRMqkdyHUSSzge788Q==}
     peerDependencies:
       csstype: ^3.0.10
     dependencies:
-      csstype: 3.0.10
+      csstype: 3.1.1
     dev: false
 
   /gopd/1.0.1:
@@ -12994,13 +12931,6 @@ packages:
     resolution: {integrity: sha512-dq+qelQ9akHpcOl/gUVRTxVIOkAJ1wR3QAvb4RsVjS8oVoFjDGTc679wJYmUmknUF5HwMLOgb5O+a3KxfWapPQ==}
     engines: {node: '>= 0.6'}
 
-  /medusa-core-utils/1.1.31:
-    resolution: {integrity: sha512-nMAmdjm2HoizOskSOyK/KK7dJ3ccC86+dPbT5Q4AeJ9bTJVCTOFnkUMEScuSM5pXx1y8k+yxXRBvrv/Thh2OTw==}
-    dependencies:
-      joi: 17.7.0
-      joi-objectid: 3.0.1
-    dev: false
-
   /medusa-core-utils/1.1.38:
     resolution: {integrity: sha512-PNsHfDaQkhKVlZbOG8QjxkaU97VfbpzwXhTYll75M/IoxqE1igF5RbIQnD7w8rMy5YDyihBTeiQ0oBDbYiGxoA==}
     dependencies:
@@ -13039,16 +12969,6 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
-    dev: false
-
-  /medusa-interfaces/1.3.4_ihd5yjpl3wc4yd6bznzyxf56tm:
-    resolution: {integrity: sha512-vK+VTCUvgyZHM7knqBTUewFdVFLd5mwRpJf4CL65Ojs7gY4VTY9vNYGpiVcX8lfW2EqINpBkDTMUekSonqSVYw==}
-    peerDependencies:
-      medusa-core-utils: ^1.1.31
-      typeorm: 0.x
-    dependencies:
-      medusa-core-utils: 1.1.31
-      typeorm: 0.2.45
     dev: false
 
   /medusa-interfaces/1.3.5_l3smpwhtxzyco3pcbfbhjy3smu:
@@ -13129,7 +13049,7 @@ packages:
       react: '>=16'
       react-dom: '>=16'
     dependencies:
-      '@medusajs/medusa': 1.7.6_qx7svprpgdza5rd6thfjt7whre
+      '@medusajs/medusa': 1.7.6_k64htzgyg7gelu2z5sut72o47y
       '@medusajs/medusa-js': 1.3.8_@medusajs+medusa@1.7.6
       '@tanstack/react-query': 4.24.4_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
@@ -15038,7 +14958,7 @@ packages:
       '@types/lodash': 4.14.191
       base16: 1.0.0
       color: 3.2.1
-      csstype: 3.0.10
+      csstype: 3.1.1
       lodash.curry: 4.1.1
     dev: false
 
@@ -15219,14 +15139,14 @@ packages:
       react: 18.2.0
     dev: false
 
-  /react-hot-toast/2.4.0_zunkpj6dptrfkocboupxe72lvq:
+  /react-hot-toast/2.4.0_owo25xnefcwdq3zjgtohz6dbju:
     resolution: {integrity: sha512-qnnVbXropKuwUpriVVosgo8QrB+IaPJCpL8oBI6Ov84uvHZ5QQcTp2qg6ku2wNfgJl6rlQXJIQU5q+5lmPOutA==}
     engines: {node: '>=10'}
     peerDependencies:
       react: '>=16'
       react-dom: '>=16'
     dependencies:
-      goober: 2.1.12_csstype@3.0.10
+      goober: 2.1.12_csstype@3.1.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
     transitivePeerDependencies:
