@@ -1,7 +1,6 @@
-import qs from 'qs';
-import React from 'react';
-import Button from '../../components/fundamentals/button';
-import Medusa from '../../services/api';
+import qs from "qs";
+import Button from "../../components/fundamentals/button";
+import Medusa from "../../services/api";
 
 const Oauth = ({ app_name }) => {
   const { code, state } = qs.parse(location.search);
