@@ -1,14 +1,10 @@
 #! /usr/bin/env node
 
-require("dotenv");
-import dotenv from "dotenv";
-
-dotenv.config({
+const dotenv = require("dotenv").config({
   path: "../../.env",
 });
 
-require("contentful-migration");
-import { runMigration } from "contentful-migration";
+const { runMigration } = require("contentful-migration");
 
 const options = {
   spaceId: process.env.CONTENTFUL_SPACE_ID,
