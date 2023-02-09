@@ -1,30 +1,32 @@
-import { useAdminCreateBatchJob, useAdminCreateCollection } from 'medusa-react';
-import React, { useContext, useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import Fade from '../../../components/atoms/fade-wrapper';
-import Button from '../../../components/fundamentals/button';
-import ExportIcon from '../../../components/fundamentals/icons/export-icon';
-import PlusIcon from '../../../components/fundamentals/icons/plus-icon';
-import UploadIcon from '../../../components/fundamentals/icons/upload-icon';
-import BodyCard from '../../../components/organisms/body-card';
-import TableViewHeader from '../../../components/organisms/custom-table-header';
-import ExportModal from '../../../components/organisms/export-modal';
-import AddCollectionModal from '../../../components/templates/collection-modal';
-import CollectionsTable from '../../../components/templates/collections-table';
-import ProductTable from '../../../components/templates/product-table';
-import useNotification from '../../../hooks/use-notification';
-import useToggleState from '../../../hooks/use-toggle-state';
-import { getErrorMessage } from '../../../utils/error-messages';
-import ImportProducts from '../batch-job/import';
-import NewProduct from '../new';
-import { PollingContext } from '../../../context/polling';
+import { useAdminCreateBatchJob, useAdminCreateCollection } from "medusa-react";
+import { useContext, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import Fade from "../../../components/atoms/fade-wrapper";
+import Button from "../../../components/fundamentals/button";
+import ExportIcon from "../../../components/fundamentals/icons/export-icon";
+import PlusIcon from "../../../components/fundamentals/icons/plus-icon";
+import UploadIcon from "../../../components/fundamentals/icons/upload-icon";
+import BodyCard from "../../../components/organisms/body-card";
+import TableViewHeader from "../../../components/organisms/custom-table-header";
+import ExportModal from "../../../components/organisms/export-modal";
+import AddCollectionModal from "../../../components/templates/collection-modal";
+import CollectionsTable from "../../../components/templates/collections-table";
+import ProductTable from "../../../components/templates/product-table";
+import useNotification from "../../../hooks/use-notification";
+import useToggleState from "../../../hooks/use-toggle-state";
+import { getErrorMessage } from "../../../utils/error-messages";
+import ImportProducts from "../batch-job/import";
+import NewProduct from "../new";
+import { PollingContext } from "../../../context/polling";
 
-const VIEWS = ['produkty', 'kolekce'];
+const VIEWS = ["produkty", "kolekce"];
 
 const Overview = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [view, setView] = useState('produkty');
+  const searchParams = new URLSearchParams(location.search);
+  const [view, setView] = useState(searchParams.get("view") === "kolekce" ? "kolekce" : "produkty");
+
   const { state: createProductState, close: closeProductCreate, open: openProductCreate } = useToggleState();
 
   const { resetInterval } = useContext(PollingContext);
@@ -34,19 +36,9 @@ const Overview = () => {
 
   const createCollection = useAdminCreateCollection();
 
-  useEffect(() => {
-    if (location.search.includes('?view=collections')) {
-      setView('collections');
-    }
-  }, [location]);
-
-  useEffect(() => {
-    location.search = '';
-  }, [view]);
-
   const CurrentView = () => {
     switch (view) {
-      case 'produkty':
+      case "produkty":
         return <ProductTable />;
       default:
         return <CollectionsTable />;
@@ -55,7 +47,7 @@ const Overview = () => {
 
   const CurrentAction = () => {
     switch (view) {
-      case 'produkty':
+      case "produkty":
         return (
           <div className='flex space-x-2'>
             <Button variant='secondary' size='small' onClick={() => openImportModal()}>
@@ -103,18 +95,18 @@ const Overview = () => {
       { ...data, metadata },
       {
         onSuccess: ({ collection }) => {
-          notification('Úspěch', 'Úspěšně vytvořená kolekce', 'success');
+          notification("Úspěch", "Úspěšně vytvořená kolekce", "success");
           navigate(`/a/collections/${collection.id}`);
           setShowNewCollection(false);
         },
-        onError: (err) => notification('Chyba', getErrorMessage(err), 'error'),
+        onError: (err) => notification("Chyba", getErrorMessage(err), "error"),
       },
     );
   };
 
   const handleCreateExport = () => {
     const reqObj = {
-      type: 'product-export',
+      type: "product-export",
       context: {},
       dry_run: false,
     };
@@ -122,10 +114,10 @@ const Overview = () => {
     createBatchJob.mutate(reqObj, {
       onSuccess: () => {
         resetInterval();
-        notification('Úspěch', 'Úspěšně zahájený export', 'success');
+        notification("Úspěch", "Úspěšně zahájený export", "success");
       },
       onError: (err) => {
-        notification('Chyba', getErrorMessage(err), 'error');
+        notification("Chyba", getErrorMessage(err), "error");
       },
     });
 
