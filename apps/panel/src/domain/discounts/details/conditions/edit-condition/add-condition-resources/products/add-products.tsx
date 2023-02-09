@@ -1,18 +1,18 @@
-import { useAdminProducts } from 'medusa-react';
-import React, { useContext, useEffect, useState } from 'react';
-import Button from '../../../../../../../components/fundamentals/button';
-import Modal from '../../../../../../../components/molecules/modal';
-import { LayeredModalContext } from '../../../../../../../components/molecules/modal/layered-modal';
-import { SelectableTable } from '../../../../../../../components/templates/selectable-table';
-import { useDebounce } from '../../../../../../../hooks/use-debounce';
-import useQueryFilters from '../../../../../../../hooks/use-query-filters';
-import { defaultQueryProps } from '../../../../..//new/discount-form/condition-tables/shared/common';
+import { useAdminProducts } from "medusa-react";
+import React, { useContext, useEffect, useState } from "react";
+import Button from "../../../../../../../components/fundamentals/button";
+import Modal from "../../../../../../../components/molecules/modal";
+import { LayeredModalContext } from "../../../../../../../components/molecules/modal/layered-modal";
+import { SelectableTable } from "../../../../../../../components/templates/selectable-table";
+import { useDebounce } from "../../../../../../../hooks/use-debounce";
+import useQueryFilters from "../../../../../../../hooks/use-query-filters";
+import { defaultQueryProps } from "../../../../..//new/discount-form/condition-tables/shared/common";
 import {
   ProductRow,
   ProductsHeader,
   useProductColumns,
-} from '../../../../../new/discount-form/condition-tables/shared/products';
-import { useEditConditionContext } from '../../edit-condition-provider';
+} from "../../../../../new/discount-form/condition-tables/shared/products";
+import { useEditConditionContext } from "../../edit-condition-provider";
 
 const AddProductConditionsScreen = () => {
   const params = useQueryFilters(defaultQueryProps);
@@ -36,7 +36,7 @@ const AddProductConditionsScreen = () => {
           options={{
             enableSearch: true,
             immediateSearchFocus: true,
-            searchPlaceholder: 'Search...',
+            searchPlaceholder: "Search...",
           }}
           resourceName='Products'
           totalCount={count ?? 0}
@@ -56,10 +56,10 @@ const AddProductConditionsScreen = () => {
             Cancel
           </Button>
           <Button variant='primary' size='small' onClick={() => saveAndGoBack(selectedResources)}>
-            Save and go back
+            Uložit a vrátit se zpět
           </Button>
           <Button variant='primary' size='small' onClick={() => saveAndClose(selectedResources)}>
-            Save and close
+            Uložit a zavřít
           </Button>
         </div>
       </Modal.Footer>

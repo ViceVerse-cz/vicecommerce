@@ -1,15 +1,15 @@
-import { MoneyAmount, ProductVariant } from '@medusajs/medusa';
-import React from 'react';
-import { Control, Controller, useForm, useWatch } from 'react-hook-form';
-import Checkbox, { CheckboxProps } from '../../atoms/checkbox';
-import Button from '../../fundamentals/button';
-import Modal from '../../molecules/modal';
-import RadioGroup from '../../organisms/radio-group';
-import PriceAmount from './price-amount';
+import { MoneyAmount, ProductVariant } from "@medusajs/medusa";
+import React from "react";
+import { Control, Controller, useForm, useWatch } from "react-hook-form";
+import Checkbox, { CheckboxProps } from "../../atoms/checkbox";
+import Button from "../../fundamentals/button";
+import Modal from "../../molecules/modal";
+import RadioGroup from "../../organisms/radio-group";
+import PriceAmount from "./price-amount";
 
 const MODES = {
-  APPLY_ALL: 'all',
-  SELECTED_ONLY: 'selected',
+  APPLY_ALL: "all",
+  SELECTED_ONLY: "selected",
 };
 
 export type PriceOverridesFormValues = {
@@ -81,11 +81,7 @@ const PriceOverrides = ({
     <>
       <Modal.Content>
         {!isEdit && (
-          <RadioGroup.Root
-            value={mode}
-            onValueChange={(value) => setMode(value)}
-            className='pt-2 flex items-center'
-          >
+          <RadioGroup.Root value={mode} onValueChange={(value) => setMode(value)} className='pt-2 flex items-center'>
             <RadioGroup.SimpleItem value={MODES.SELECTED_ONLY} label='Apply overrides on selected variants' />
             <RadioGroup.SimpleItem value={MODES.APPLY_ALL} label='Apply on all variants' />
           </RadioGroup.Root>
@@ -150,7 +146,7 @@ const PriceOverrides = ({
             onClick={onClick}
             loading={isSubmitting}
           >
-            Save and close
+            Uložit a zavřít
           </Button>
         </div>
       </Modal.Footer>

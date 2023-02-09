@@ -1,14 +1,14 @@
-import { Product } from '@medusajs/medusa';
-import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import Button from '../../../../../components/fundamentals/button';
-import Modal from '../../../../../components/molecules/modal';
-import useNotification from '../../../../../hooks/use-notification';
-import { FormImage } from '../../../../../types/shared';
-import { prepareImages } from '../../../../../utils/images';
-import { nestedForm } from '../../../../../utils/nested-form';
-import ThumbnailForm, { ThumbnailFormType } from '../../../components/thumbnail-form';
-import useEditProductActions from '../../hooks/use-edit-product-actions';
+import { Product } from "@medusajs/medusa";
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import Button from "../../../../../components/fundamentals/button";
+import Modal from "../../../../../components/molecules/modal";
+import useNotification from "../../../../../hooks/use-notification";
+import { FormImage } from "../../../../../types/shared";
+import { prepareImages } from "../../../../../utils/images";
+import { nestedForm } from "../../../../../utils/nested-form";
+import ThumbnailForm, { ThumbnailFormType } from "../../../components/thumbnail-form";
+import useEditProductActions from "../../hooks/use-edit-product-actions";
 
 type Props = {
   product: Product;
@@ -49,17 +49,15 @@ const ThumbnailModal = ({ product, open, onClose }: Props) => {
     try {
       preppedImages = await prepareImages(data.thumbnail.images);
     } catch (error) {
-      let errorMessage = 'Something went wrong while trying to upload the thumbnail.';
+      let errorMessage = "Something went wrong while trying to upload the thumbnail.";
       const response = (error as any).response as Response;
 
       if (response.status === 500) {
         errorMessage =
-          errorMessage +
-          ' ' +
-          'You might not have a file service configured. Please contact your administrator';
+          `${errorMessage} You might not have a file service configured. Please contact your administrator`;
       }
 
-      notification('Error', errorMessage, 'error');
+      notification("Error", errorMessage, "error");
       return;
     }
     const url = preppedImages?.[0]?.url;
@@ -85,7 +83,7 @@ const ThumbnailModal = ({ product, open, onClose }: Props) => {
             <p className='inter-base-regular text-grey-50 mb-large'>
               Used to represent your product during checkout, social sharing and more.
             </p>
-            <ThumbnailForm form={nestedForm(form, 'thumbnail')} />
+            <ThumbnailForm form={nestedForm(form, "thumbnail")} />
           </Modal.Content>
           <Modal.Footer>
             <div className='flex gap-x-2 justify-end w-full'>
@@ -93,7 +91,7 @@ const ThumbnailModal = ({ product, open, onClose }: Props) => {
                 Cancel
               </Button>
               <Button size='small' variant='primary' type='submit' disabled={!isDirty} loading={updating}>
-                Save and close
+                Uložit a zavřít
               </Button>
             </div>
           </Modal.Footer>

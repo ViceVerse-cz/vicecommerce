@@ -1,13 +1,13 @@
-import { useAdminProductTags } from 'medusa-react';
-import React, { useContext, useState } from 'react';
-import Button from '../../../../../../../components/fundamentals/button';
-import Modal from '../../../../../../../components/molecules/modal';
-import { LayeredModalContext } from '../../../../../../../components/molecules/modal/layered-modal';
-import { SelectableTable } from '../../../../../../../components/templates/selectable-table';
-import useQueryFilters from '../../../../../../../hooks/use-query-filters';
-import { defaultQueryProps } from '../../../../../new/discount-form/condition-tables/shared/common';
-import { TagColumns, TagHeader, TagRow } from '../../../../../new/discount-form/condition-tables/shared/tags';
-import { useEditConditionContext } from '../../edit-condition-provider';
+import { useAdminProductTags } from "medusa-react";
+import React, { useContext, useState } from "react";
+import Button from "../../../../../../../components/fundamentals/button";
+import Modal from "../../../../../../../components/molecules/modal";
+import { LayeredModalContext } from "../../../../../../../components/molecules/modal/layered-modal";
+import { SelectableTable } from "../../../../../../../components/templates/selectable-table";
+import useQueryFilters from "../../../../../../../hooks/use-query-filters";
+import { defaultQueryProps } from "../../../../../new/discount-form/condition-tables/shared/common";
+import { TagColumns, TagHeader, TagRow } from "../../../../../new/discount-form/condition-tables/shared/tags";
+import { useEditConditionContext } from "../../edit-condition-provider";
 
 const AddTagsConditionsScreen = () => {
   const params = useQueryFilters(defaultQueryProps);
@@ -29,7 +29,7 @@ const AddTagsConditionsScreen = () => {
           options={{
             enableSearch: true,
             immediateSearchFocus: true,
-            searchPlaceholder: 'Search...',
+            searchPlaceholder: "Search...",
           }}
           resourceName='Tags'
           totalCount={count ?? 0}
@@ -49,10 +49,10 @@ const AddTagsConditionsScreen = () => {
             Cancel
           </Button>
           <Button variant='primary' size='small' onClick={() => saveAndGoBack(selectedResources)}>
-            Save and go back
+            Uložit a vrátit se zpět
           </Button>
           <Button variant='primary' size='small' onClick={() => saveAndClose(selectedResources)}>
-            Save and close
+            Uložit a zavřít
           </Button>
         </div>
       </Modal.Footer>

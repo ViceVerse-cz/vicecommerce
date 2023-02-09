@@ -1,12 +1,12 @@
-import { useAdminSalesChannels } from 'medusa-react';
-import React, { useContext, useMemo, useState } from 'react';
-import { usePagination, useRowSelect, useTable } from 'react-table';
-import Button from '../../../../components/fundamentals/button';
-import Modal from '../../../../components/molecules/modal';
-import { LayeredModalContext } from '../../../../components/molecules/modal/layered-modal';
-import { useDebounce } from '../../../../hooks/use-debounce';
-import SalesChannelTable, { useSalesChannelsTableColumns } from './table';
-import { useSalesChannelsModal } from './use-sales-channels-modal';
+import { useAdminSalesChannels } from "medusa-react";
+import React, { useContext, useMemo, useState } from "react";
+import { usePagination, useRowSelect, useTable } from "react-table";
+import Button from "../../../../components/fundamentals/button";
+import Modal from "../../../../components/molecules/modal";
+import { LayeredModalContext } from "../../../../components/molecules/modal/layered-modal";
+import { useDebounce } from "../../../../hooks/use-debounce";
+import SalesChannelTable, { useSalesChannelsTableColumns } from "./table";
+import { useSalesChannelsModal } from "./use-sales-channels-modal";
 
 const LIMIT = 15;
 
@@ -92,10 +92,10 @@ const AddScreen = () => {
             Cancel
           </Button>
           <Button variant='primary' size='small' onClick={saveAndGoBack} disabled={disableSave}>
-            Save and go back
+            Uložit a vrátit se zpět
           </Button>
           <Button variant='primary' size='small' onClick={saveAndClose} disabled={disableSave}>
-            Save and close
+            Uložit a zavřít
           </Button>
         </div>
       </Modal.Footer>
@@ -107,7 +107,7 @@ export const useAddChannelsModalScreen = () => {
   const { pop } = React.useContext(LayeredModalContext);
 
   return {
-    title: 'Add Sales Channels',
+    title: "Add Sales Channels",
     onBack: pop,
     view: <AddScreen />,
   };

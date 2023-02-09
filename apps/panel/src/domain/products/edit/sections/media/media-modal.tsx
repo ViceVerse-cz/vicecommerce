@@ -1,14 +1,14 @@
-import { Product } from '@medusajs/medusa';
-import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import Button from '../../../../../components/fundamentals/button';
-import Modal from '../../../../../components/molecules/modal';
-import useNotification from '../../../../../hooks/use-notification';
-import { FormImage } from '../../../../../types/shared';
-import { prepareImages } from '../../../../../utils/images';
-import { nestedForm } from '../../../../../utils/nested-form';
-import MediaForm, { MediaFormType } from '../../../components/media-form';
-import useEditProductActions from '../../hooks/use-edit-product-actions';
+import { Product } from "@medusajs/medusa";
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import Button from "../../../../../components/fundamentals/button";
+import Modal from "../../../../../components/molecules/modal";
+import useNotification from "../../../../../hooks/use-notification";
+import { FormImage } from "../../../../../types/shared";
+import { prepareImages } from "../../../../../utils/images";
+import { nestedForm } from "../../../../../utils/nested-form";
+import MediaForm, { MediaFormType } from "../../../components/media-form";
+import useEditProductActions from "../../hooks/use-edit-product-actions";
 
 type Props = {
   product: Product;
@@ -49,17 +49,15 @@ const MediaModal = ({ product, open, onClose }: Props) => {
     try {
       preppedImages = await prepareImages(data.media.images);
     } catch (error) {
-      let errorMessage = 'Something went wrong while trying to upload images.';
+      let errorMessage = "Something went wrong while trying to upload images.";
       const response = (error as any).response as Response;
 
       if (response.status === 500) {
         errorMessage =
-          errorMessage +
-          ' ' +
-          'You might not have a file service configured. Please contact your administrator';
+          `${errorMessage} You might not have a file service configured. Please contact your administrator`;
       }
 
-      notification('Error', errorMessage, 'error');
+      notification("Error", errorMessage, "error");
       return;
     }
     const urls = preppedImages.map((image) => image.url);
@@ -84,7 +82,7 @@ const MediaModal = ({ product, open, onClose }: Props) => {
               <h2 className='inter-large-semibold mb-2xsmall'>Media</h2>
               <p className='inter-base-regular text-grey-50 mb-large'>Add images to your product.</p>
               <div>
-                <MediaForm form={nestedForm(form, 'media')} />
+                <MediaForm form={nestedForm(form, "media")} />
               </div>
             </div>
           </Modal.Content>
@@ -94,7 +92,7 @@ const MediaModal = ({ product, open, onClose }: Props) => {
                 Cancel
               </Button>
               <Button size='small' variant='primary' type='submit' disabled={!isDirty} loading={updating}>
-                Save and close
+                Uložit a zavřít
               </Button>
             </div>
           </Modal.Footer>

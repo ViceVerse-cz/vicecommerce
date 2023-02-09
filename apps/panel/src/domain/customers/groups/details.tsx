@@ -1,31 +1,31 @@
-import { useContext, useEffect, useState } from 'react';
-import { difference } from 'lodash';
-import { CustomerGroup } from '@medusajs/medusa';
+import { useContext, useEffect, useState } from "react";
+import { difference } from "lodash";
+import { CustomerGroup } from "@medusajs/medusa";
 import {
   useAdminAddCustomersToCustomerGroup,
   useAdminCustomerGroup,
   useAdminCustomerGroupCustomers,
   useAdminDeleteCustomerGroup,
   useAdminRemoveCustomersFromCustomerGroup,
-} from 'medusa-react';
+} from "medusa-react";
 
-import BodyCard from '../../../components/organisms/body-card';
-import EditIcon from '../../../components/fundamentals/icons/edit-icon';
-import TrashIcon from '../../../components/fundamentals/icons/trash-icon';
-import PlusIcon from '../../../components/fundamentals/icons/plus-icon';
-import EditCustomersTable from '../../../components/templates/customer-group-table/edit-customers-table';
-import CustomersListTable from '../../../components/templates/customer-group-table/customers-list-table';
-import CustomerGroupContext, { CustomerGroupContextContainer } from './context/customer-group-context';
-import useQueryFilters from '../../../hooks/use-query-filters';
-import DeletePrompt from '../../../components/organisms/delete-prompt';
-import { useNavigate, useParams } from 'react-router-dom';
-import BackButton from '../../../components/atoms/back-button';
+import BodyCard from "../../../components/organisms/body-card";
+import EditIcon from "../../../components/fundamentals/icons/edit-icon";
+import TrashIcon from "../../../components/fundamentals/icons/trash-icon";
+import PlusIcon from "../../../components/fundamentals/icons/plus-icon";
+import EditCustomersTable from "../../../components/templates/customer-group-table/edit-customers-table";
+import CustomersListTable from "../../../components/templates/customer-group-table/customers-list-table";
+import CustomerGroupContext, { CustomerGroupContextContainer } from "./context/customer-group-context";
+import useQueryFilters from "../../../hooks/use-query-filters";
+import DeletePrompt from "../../../components/organisms/delete-prompt";
+import { useNavigate, useParams } from "react-router-dom";
+import BackButton from "../../../components/atoms/back-button";
 
 /**
  * Default filtering config for querying customer group customers list endpoint.
  */
 const defaultQueryProps = {
-  additionalFilters: { expand: 'groups' },
+  additionalFilters: { expand: "groups" },
   limit: 15,
   offset: 0,
 };
@@ -74,11 +74,11 @@ function CustomerGroupCustomersList(props: CustomerGroupCustomersListProps) {
     }
   }, [isLoading, customers]);
 
-  const showPlaceholder = !isLoading && !customers.length && !q;
+  const showPlaceholder = !((isLoading || customers.length ) || q);
 
   const actions = [
     {
-      label: 'Edit customers',
+      label: "Edit customers",
       onClick: () => setShowCustomersModal(true),
       icon: (
         <span className='text-grey-90'>
@@ -161,35 +161,30 @@ function CustomerGroupDetailsHeader(props: CustomerGroupDetailsHeaderProps) {
 
   const actions = [
     {
-      label: 'Edit',
+      label: "Edit",
       onClick: showModal,
       icon: <EditIcon size={20} />,
     },
     {
-      label: 'Delete',
+      label: "Delete",
       onClick: () => {
         setShowDeleteConfirmation(true);
       },
-      variant: 'danger',
+      variant: "danger",
       icon: <TrashIcon size={20} />,
     },
   ];
 
   const onDeleteConfirmed = async () => {
     deleteGroup();
-    navigate('/a/customers/groups');
+    navigate("/a/customers/groups");
   };
 
   const handleConfirmDialogClose = () => setShowDeleteConfirmation(false);
 
   return (
     <>
-      <BodyCard
-        title={props.customerGroup.name}
-        actionables={actions}
-        className='min-h-0 w-full'
-        subtitle={' '}
-      />
+      <BodyCard title={props.customerGroup.name} actionables={actions} className='min-h-0 w-full' subtitle={" "} />
       {showDeleteConfirmation && (
         <DeletePrompt
           onDelete={onDeleteConfirmed}
@@ -219,7 +214,7 @@ function CustomerGroupDetails() {
   return (
     <CustomerGroupContextContainer group={customer_group}>
       <div className='-mt-4 pb-4'>
-        <BackButton path='/a/customers/groups' label='Back to customer groups' className='mb-4' />
+        <BackButton path='/a/customers/groups' label='Zpět na zákaznické skupiny' className='mb-4' />
         <CustomerGroupDetailsHeader customerGroup={customer_group} />
         <CustomerGroupCustomersList group={customer_group} />
       </div>

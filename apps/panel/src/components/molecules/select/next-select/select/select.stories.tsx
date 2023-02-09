@@ -1,11 +1,11 @@
-import { storiesOf } from '@storybook/react';
-import React from 'react';
-import { Controller, useForm, useWatch } from 'react-hook-form';
-import ExperimentalSelect from '.';
-import useToggleState from '../../../../../hooks/use-toggle-state';
-import { countries } from '../../../../../utils/countries';
-import Button from '../../../../fundamentals/button';
-import Modal from '../../../modal';
+import { storiesOf } from "@storybook/react";
+import React from "react";
+import { Controller, useForm, useWatch } from "react-hook-form";
+import ExperimentalSelect from ".";
+import useToggleState from "../../../../../hooks/use-toggle-state";
+import { countries } from "../../../../../utils/countries";
+import Button from "../../../../fundamentals/button";
+import Modal from "../../../modal";
 
 type SelectOption = {
   value: string;
@@ -16,50 +16,50 @@ type SelectOption = {
 
 const options: SelectOption[] = [
   {
-    value: '1',
-    label: 'Americas',
+    value: "1",
+    label: "Americas",
     isDisabled: true,
   },
   {
-    value: '2',
-    label: 'Europe',
+    value: "2",
+    label: "Europe",
     isFixed: true,
   },
   {
-    value: '3',
-    label: 'Asia',
+    value: "3",
+    label: "Asia",
   },
   {
-    value: '4',
-    label: 'Africa',
+    value: "4",
+    label: "Africa",
   },
   {
-    value: '5',
-    label: 'Oceania',
+    value: "5",
+    label: "Oceania",
   },
   {
-    value: '6',
-    label: 'Antarctica',
+    value: "6",
+    label: "Antarctica",
   },
   {
-    value: '7',
-    label: 'North America',
+    value: "7",
+    label: "North America",
   },
   {
-    value: '8',
-    label: 'South America',
+    value: "8",
+    label: "South America",
   },
   {
-    value: '9',
-    label: 'Central America',
+    value: "9",
+    label: "Central America",
   },
   {
-    value: '10',
-    label: 'Caribbean',
+    value: "10",
+    label: "Caribbean",
   },
   {
-    value: '11',
-    label: 'Middle East',
+    value: "11",
+    label: "Middle East",
   },
 ];
 
@@ -68,14 +68,14 @@ const countryOptions = countries.map((c) => ({
   value: c.alpha2,
 }));
 
-storiesOf('Molecules/Select/Next/Select', module).add('Controlled Single Select', () => {
+storiesOf("Molecules/Select/Next/Select", module).add("Controlled Single Select", () => {
   const form = useForm<{
     options: SelectOption[];
   }>({ defaultValues: { options: [] } });
 
   const liveData = useWatch({
     control: form.control,
-    name: 'options',
+    name: "options",
   });
 
   return (
@@ -84,9 +84,7 @@ storiesOf('Molecules/Select/Next/Select', module).add('Controlled Single Select'
         control={form.control}
         name='options'
         render={({ field: { value, onChange } }) => {
-          return (
-            <ExperimentalSelect label='Region' required options={options} value={value} onChange={onChange} />
-          );
+          return <ExperimentalSelect label='Region' required options={options} value={value} onChange={onChange} />;
         }}
       />
 
@@ -98,14 +96,14 @@ storiesOf('Molecules/Select/Next/Select', module).add('Controlled Single Select'
   );
 });
 
-storiesOf('Molecules/Select/Next/Select', module).add('Controlled Multi Select', () => {
+storiesOf("Molecules/Select/Next/Select", module).add("Controlled Multi Select", () => {
   const form = useForm<{
     options: SelectOption[];
   }>({ defaultValues: { options: [] } });
 
   const liveData = useWatch({
     control: form.control,
-    name: 'options',
+    name: "options",
   });
 
   return (
@@ -136,7 +134,7 @@ storiesOf('Molecules/Select/Next/Select', module).add('Controlled Multi Select',
   );
 });
 
-storiesOf('Molecules/Select/Next/Select', module).add('Small Select', () => {
+storiesOf("Molecules/Select/Next/Select", module).add("Small Select", () => {
   const form = useForm<{
     options: SelectOption[];
   }>({ defaultValues: { options: [] } });
@@ -148,14 +146,7 @@ storiesOf('Molecules/Select/Next/Select', module).add('Small Select', () => {
         name='options'
         render={({ field: { value, onChange } }) => {
           return (
-            <ExperimentalSelect
-              label='Region'
-              required
-              options={options}
-              value={value}
-              onChange={onChange}
-              size='sm'
-            />
+            <ExperimentalSelect label='Region' required options={options} value={value} onChange={onChange} size='sm' />
           );
         }}
       />
@@ -163,7 +154,7 @@ storiesOf('Molecules/Select/Next/Select', module).add('Small Select', () => {
   );
 });
 
-storiesOf('Molecules/Select/Next/Select', module).add('Loading Select', () => {
+storiesOf("Molecules/Select/Next/Select", module).add("Loading Select", () => {
   const form = useForm<{
     options: SelectOption[];
   }>({ defaultValues: { options: [] } });
@@ -174,23 +165,21 @@ storiesOf('Molecules/Select/Next/Select', module).add('Loading Select', () => {
         control={form.control}
         name='options'
         render={({ field: { value, onChange } }) => {
-          return (
-            <ExperimentalSelect label='Region' required value={value} onChange={onChange} isLoading={true} />
-          );
+          return <ExperimentalSelect label='Region' required value={value} onChange={onChange} isLoading={true} />;
         }}
       />
     </div>
   );
 });
 
-storiesOf('Molecules/Select/Next/Select', module).add('In Modal', () => {
+storiesOf("Molecules/Select/Next/Select", module).add("In Modal", () => {
   const form = useForm<{
     options: SelectOption[];
   }>({ defaultValues: { options: [] } });
 
   const liveData = useWatch({
     control: form.control,
-    name: 'options',
+    name: "options",
   });
 
   const { toggle, state } = useToggleState();
@@ -237,7 +226,7 @@ storiesOf('Molecules/Select/Next/Select', module).add('In Modal', () => {
                 Cancel
               </Button>
               <Button variant='primary' size='small' onClick={toggle}>
-                Save and close
+                Uložit a zavřít
               </Button>
             </div>
           </Modal.Footer>

@@ -1,21 +1,21 @@
-import { useAdminCollection, useAdminDeleteCollection, useAdminUpdateCollection } from 'medusa-react';
-import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import BackButton from '../../../components/atoms/back-button';
-import Spinner from '../../../components/atoms/spinner';
-import EditIcon from '../../../components/fundamentals/icons/edit-icon';
-import TrashIcon from '../../../components/fundamentals/icons/trash-icon';
-import Actionables from '../../../components/molecules/actionables';
-import JSONView from '../../../components/molecules/json-view';
-import DeletePrompt from '../../../components/organisms/delete-prompt';
-import { MetadataField } from '../../../components/organisms/metadata';
-import Section from '../../../components/organisms/section';
-import CollectionModal from '../../../components/templates/collection-modal';
-import AddProductsTable from '../../../components/templates/collection-product-table/add-product-table';
-import ViewProductsTable from '../../../components/templates/collection-product-table/view-products-table';
-import useNotification from '../../../hooks/use-notification';
-import Medusa from '../../../services/api';
-import { getErrorMessage } from '../../../utils/error-messages';
+import { useAdminCollection, useAdminDeleteCollection, useAdminUpdateCollection } from "medusa-react";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import BackButton from "../../../components/atoms/back-button";
+import Spinner from "../../../components/atoms/spinner";
+import EditIcon from "../../../components/fundamentals/icons/edit-icon";
+import TrashIcon from "../../../components/fundamentals/icons/trash-icon";
+import Actionables from "../../../components/molecules/actionables";
+import JSONView from "../../../components/molecules/json-view";
+import DeletePrompt from "../../../components/organisms/delete-prompt";
+import { MetadataField } from "../../../components/organisms/metadata";
+import Section from "../../../components/organisms/section";
+import CollectionModal from "../../../components/templates/collection-modal";
+import AddProductsTable from "../../../components/templates/collection-product-table/add-product-table";
+import ViewProductsTable from "../../../components/templates/collection-product-table/view-products-table";
+import useNotification from "../../../hooks/use-notification";
+import Medusa from "../../../services/api";
+import { getErrorMessage } from "../../../utils/error-messages";
 
 const CollectionDetails = () => {
   const { id } = useParams();
@@ -32,7 +32,7 @@ const CollectionDetails = () => {
 
   const handleDelete = () => {
     deleteCollection.mutate(undefined, {
-      onSuccess: () => navigate(`/a/collections`),
+      onSuccess: () => navigate("/a/collections"),
     });
   };
 
@@ -47,10 +47,7 @@ const CollectionDetails = () => {
     };
 
     if (metadata) {
-      const base = Object.keys(collection?.metadata ?? {}).reduce(
-        (acc, next) => ({ ...acc, [next]: null }),
-        {},
-      );
+      const base = Object.keys(collection?.metadata ?? {}).reduce((acc, next) => ({ ...acc, [next]: null }), {});
 
       const payloadMetadata = metadata.reduce((acc, next) => {
         return {
@@ -85,10 +82,10 @@ const CollectionDetails = () => {
       }
 
       setShowAddProducts(false);
-      notification('Success', 'Updated products in collection', 'success');
+      notification("Success", "Updated products in collection", "success");
       refetch();
     } catch (error) {
-      notification('Error', getErrorMessage(error), 'error');
+      notification("Error", getErrorMessage(error), "error");
     }
   };
 
@@ -101,7 +98,7 @@ const CollectionDetails = () => {
   return (
     <>
       <div className='flex flex-col !pb-xlarge'>
-        <BackButton className='mb-xsmall' path='/a/products?view=collections' label='Back to Collections' />
+        <BackButton className='mb-xsmall' path='/a/products?view=collections' label='Zpět do kolekcí' />
         <div className='rounded-rounded py-large px-xlarge border border-grey-20 bg-grey-0 mb-large'>
           {isLoading || !collection ? (
             <div className='flex items-center w-full h-12'>
@@ -116,14 +113,14 @@ const CollectionDetails = () => {
                     forceDropdown
                     actions={[
                       {
-                        label: 'Edit Collection',
+                        label: "Upravit kolekci",
                         onClick: () => setShowEdit(true),
                         icon: <EditIcon size='20' />,
                       },
                       {
-                        label: 'Delete',
+                        label: "Smazat",
                         onClick: () => setShowDelete(!showDelete),
-                        variant: 'danger',
+                        variant: "danger",
                         icon: <TrashIcon size='20' />,
                       },
                     ]}
@@ -146,7 +143,7 @@ const CollectionDetails = () => {
           title='Products'
           actions={[
             {
-              label: 'Edit Products',
+              label: "Edit Products",
               icon: <EditIcon size='20' />,
               onClick: () => setShowAddProducts(!showAddProducts),
             },

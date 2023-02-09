@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
-import Button from '../../../../../../components/fundamentals/button';
-import { LayeredModalContext } from '../../../../../../components/molecules/modal/layered-modal';
-import { useConditions } from '../../../../details/conditions/add-condition/conditions-provider';
-import { DiscountConditionOperator } from '../../../../types';
+import React, { useContext } from "react";
+import Button from "../../../../../../components/fundamentals/button";
+import { LayeredModalContext } from "../../../../../../components/molecules/modal/layered-modal";
+import { useConditions } from "../../../../details/conditions/add-condition/conditions-provider";
+import { DiscountConditionOperator } from "../../../../types";
 
 type AddConditionFooterProps = {
-  type: 'products' | 'product_collections' | 'product_types' | 'product_tags' | 'customer_groups';
+  type: "products" | "product_collections" | "product_types" | "product_tags" | "customer_groups";
   items: { id: string; label: string }[];
   operator: DiscountConditionOperator;
   onClose: () => void;
@@ -43,7 +43,7 @@ const DetailsConditionFooter: React.FC<AddConditionFooterProps> = ({ type, items
           reset();
         }}
       >
-        Save and close
+        Uložit a zavřít
       </Button>
     </div>
   );

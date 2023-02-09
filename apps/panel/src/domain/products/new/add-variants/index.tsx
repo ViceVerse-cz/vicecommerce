@@ -1,25 +1,25 @@
-import clsx from 'clsx';
-import React, { useCallback, useEffect, useMemo } from 'react';
-import { Controller, useFieldArray, useForm, useWatch } from 'react-hook-form';
-import { v4 as uuidv4 } from 'uuid';
-import Button from '../../../../components/fundamentals/button';
-import PlusIcon from '../../../../components/fundamentals/icons/plus-icon';
-import TrashIcon from '../../../../components/fundamentals/icons/trash-icon';
-import IconTooltip from '../../../../components/molecules/icon-tooltip';
-import InputField from '../../../../components/molecules/input';
-import Modal from '../../../../components/molecules/modal';
-import TagInput from '../../../../components/molecules/tag-input';
-import { useDebounce } from '../../../../hooks/use-debounce';
-import useToggleState from '../../../../hooks/use-toggle-state';
-import { NestedForm } from '../../../../utils/nested-form';
-import { CustomsFormType } from '../../components/customs-form';
-import { DimensionsFormType } from '../../components/dimensions-form';
+import clsx from "clsx";
+import React, { useCallback, useEffect, useMemo } from "react";
+import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
+import { v4 as uuidv4 } from "uuid";
+import Button from "../../../../components/fundamentals/button";
+import PlusIcon from "../../../../components/fundamentals/icons/plus-icon";
+import TrashIcon from "../../../../components/fundamentals/icons/trash-icon";
+import IconTooltip from "../../../../components/molecules/icon-tooltip";
+import InputField from "../../../../components/molecules/input";
+import Modal from "../../../../components/molecules/modal";
+import TagInput from "../../../../components/molecules/tag-input";
+import { useDebounce } from "../../../../hooks/use-debounce";
+import useToggleState from "../../../../hooks/use-toggle-state";
+import { NestedForm } from "../../../../utils/nested-form";
+import { CustomsFormType } from "../../components/customs-form";
+import { DimensionsFormType } from "../../components/dimensions-form";
 import CreateFlowVariantForm, {
   CreateFlowVariantFormType,
-} from '../../components/variant-form/create-flow-variant-form';
-import { VariantOptionType } from '../../components/variant-form/variant-select-options-form';
-import useCheckOptions from '../../components/variant-form/variant-select-options-form/hooks';
-import NewVariant from './new-variant';
+} from "../../components/variant-form/create-flow-variant-form";
+import { VariantOptionType } from "../../components/variant-form/variant-select-options-form";
+import useCheckOptions from "../../components/variant-form/variant-select-options-form/hooks";
+import NewVariant from "./new-variant";
 
 type ProductOptionType = {
   id: string;
@@ -50,8 +50,8 @@ const AddVariantsForm = ({ form, productCustoms, productDimensions }: Props) => 
     update: updateOption,
   } = useFieldArray({
     control,
-    name: path('options'),
-    keyName: 'fieldId',
+    name: path("options"),
+    keyName: "fieldId",
     shouldUnregister: true,
   });
 
@@ -63,18 +63,18 @@ const AddVariantsForm = ({ form, productCustoms, productDimensions }: Props) => 
     move: moveVariant,
   } = useFieldArray({
     control,
-    name: path('entries'),
+    name: path("entries"),
     shouldUnregister: true,
   });
 
   const watchedOptions = useWatch({
     control,
-    name: path('options'),
+    name: path("options"),
   });
 
   const watchedEntries = useWatch({
     control,
-    name: path('entries'),
+    name: path("entries"),
   });
 
   const debouncedOptions = useDebounce(watchedOptions, 500);
@@ -105,7 +105,7 @@ const AddVariantsForm = ({ form, productCustoms, productDimensions }: Props) => 
             if (optionData) {
               option.title = optionData.title;
 
-              if (!option.option?.value || !optionData.values.includes(option.option.value)) {
+              if (!(option.option?.value && optionData.values.includes(option.option.value))) {
                 option.option = null;
               }
 
@@ -185,7 +185,7 @@ const AddVariantsForm = ({ form, productCustoms, productDimensions }: Props) => 
   const appendNewOption = () => {
     appendOption({
       id: uuidv4(),
-      title: '',
+      title: "",
       values: [],
     });
   };
@@ -207,9 +207,9 @@ const AddVariantsForm = ({ form, productCustoms, productDimensions }: Props) => 
     const exists = checkForDuplicate(toCheck);
 
     if (exists) {
-      newVariantForm.setError('options', {
-        type: 'deps',
-        message: 'A variant with these options already exists.',
+      newVariantForm.setError("options", {
+        type: "deps",
+        message: "A variant with these options already exists.",
       });
       return;
     }
@@ -219,9 +219,7 @@ const AddVariantsForm = ({ form, productCustoms, productDimensions }: Props) => 
       options: data.options,
       general: {
         ...data.general,
-        title: data.general.title
-          ? data.general.title
-          : data.options.map((vo) => vo.option?.value).join(' / '),
+        title: data.general.title ? data.general.title : data.options.map((vo) => vo.option?.value).join(" / "),
       },
     });
     onToggleForm();
@@ -248,10 +246,7 @@ const AddVariantsForm = ({ form, productCustoms, productDimensions }: Props) => 
       <div>
         <div className='flex items-center gap-x-2xsmall'>
           <h3 className='inter-base-semibold'>Product options</h3>
-          <IconTooltip
-            type='info'
-            content='Options are used to define the color, size, etc. of the product.'
-          />
+          <IconTooltip type='info' content='Options are used to define the color, size, etc. of the product.' />
         </div>
         <div>
           {options.length > 0 && (
@@ -315,12 +310,11 @@ const AddVariantsForm = ({ form, productCustoms, productDimensions }: Props) => 
           <div className='mt-xlarge'>
             <div className='flex items-center gap-x-2xsmall'>
               <h3
-                className={clsx('inter-base-semibold', {
-                  'opacity-50': !options.length,
+                className={clsx("inter-base-semibold", {
+                  "opacity-50": !options.length,
                 })}
               >
-                Product variants{' '}
-                <span className='inter-base-regular text-grey-50'>({variants?.length || 0})</span>
+                Product variants <span className='inter-base-regular text-grey-50'>({variants?.length || 0})</span>
               </h3>
               {!enableVariants && (
                 <IconTooltip
@@ -391,7 +385,7 @@ const AddVariantsForm = ({ form, productCustoms, productDimensions }: Props) => 
                 Cancel
               </Button>
               <Button variant='primary' size='small' type='button' onClick={onAppendVariant}>
-                Save and close
+                Uložit a zavřít
               </Button>
             </div>
           </Modal.Footer>

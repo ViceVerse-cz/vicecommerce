@@ -1,19 +1,19 @@
-import { Product, SalesChannel } from '@medusajs/medusa';
-import React from 'react';
-import Badge from '../../../../../components/fundamentals/badge';
-import FeatureToggle from '../../../../../components/fundamentals/feature-toggle';
-import ChannelsIcon from '../../../../../components/fundamentals/icons/channels-icon';
-import EditIcon from '../../../../../components/fundamentals/icons/edit-icon';
-import TrashIcon from '../../../../../components/fundamentals/icons/trash-icon';
-import { ActionType } from '../../../../../components/molecules/actionables';
-import SalesChannelsDisplay from '../../../../../components/molecules/sales-channels-display';
-import StatusSelector from '../../../../../components/molecules/status-selector';
-import Section from '../../../../../components/organisms/section';
-import { useFeatureFlag } from '../../../../../context/feature-flag';
-import useToggleState from '../../../../../hooks/use-toggle-state';
-import useEditProductActions from '../../hooks/use-edit-product-actions';
-import ChannelsModal from './channels-modal';
-import GeneralModal from './general-modal';
+import { Product, SalesChannel } from "@medusajs/medusa";
+import React from "react";
+import Badge from "../../../../../components/fundamentals/badge";
+import FeatureToggle from "../../../../../components/fundamentals/feature-toggle";
+import ChannelsIcon from "../../../../../components/fundamentals/icons/channels-icon";
+import EditIcon from "../../../../../components/fundamentals/icons/edit-icon";
+import TrashIcon from "../../../../../components/fundamentals/icons/trash-icon";
+import { ActionType } from "../../../../../components/molecules/actionables";
+import SalesChannelsDisplay from "../../../../../components/molecules/sales-channels-display";
+import StatusSelector from "../../../../../components/molecules/status-selector";
+import Section from "../../../../../components/organisms/section";
+import { useFeatureFlag } from "../../../../../context/feature-flag";
+import useToggleState from "../../../../../hooks/use-toggle-state";
+import useEditProductActions from "../../hooks/use-edit-product-actions";
+import ChannelsModal from "./channels-modal";
+import GeneralModal from "./general-modal";
 
 type Props = {
   product: Product;
@@ -29,21 +29,21 @@ const GeneralSection = ({ product }: Props) => {
 
   const actions: ActionType[] = [
     {
-      label: 'Edit General Information',
+      label: "Edit General Information",
       onClick: toggleInfo,
       icon: <EditIcon size={20} />,
     },
     {
-      label: 'Delete',
+      label: "Delete",
       onClick: onDelete,
-      variant: 'danger',
+      variant: "danger",
       icon: <TrashIcon size={20} />,
     },
   ];
 
-  if (isFeatureEnabled('sales_channels')) {
+  if (isFeatureEnabled("sales_channels")) {
     actions.splice(1, 0, {
-      label: 'Edit Sales Channels',
+      label: "Edit Sales Channels",
       onClick: toggleChannels,
       icon: <ChannelsIcon size={20} />,
     });
@@ -57,7 +57,7 @@ const GeneralSection = ({ product }: Props) => {
         forceDropdown
         status={
           <StatusSelector
-            isDraft={product?.status === 'draft'}
+            isDraft={product?.status === "draft"}
             activeState='Published'
             draftState='Draft'
             onChange={() => onStatusChange(product.status)}
@@ -88,7 +88,7 @@ const Detail = ({ title, value }: DetailProps) => {
   return (
     <div className='flex items-center justify-between inter-base-regular text-grey-50'>
       <p>{title}</p>
-      <p>{value ? value : '–'}</p>
+      <p>{value ? value : "–"}</p>
     </div>
   );
 };
@@ -101,7 +101,7 @@ const ProductDetails = ({ product }: Props) => {
       <Detail title='Handle' value={product.handle} />
       <Detail title='Type' value={product.type?.value} />
       <Detail title='Collection' value={product.collection?.title} />
-      <Detail title='Discountable' value={product.discountable ? 'True' : 'False'} />
+      <Detail title='Discountable' value={product.discountable ? "True" : "False"} />
     </div>
   );
 };
@@ -115,9 +115,7 @@ const ProductTags = ({ product }: Props) => {
     <ul className='flex flex-wrap items-center gap-1 mt-4'>
       {product.tags.map((t) => (
         <li key={t.id}>
-          <div className='text-grey-50 bg-grey-10 inter-small-semibold px-3 py-[6px] rounded-rounded'>
-            {t.value}
-          </div>
+          <div className='text-grey-50 bg-grey-10 inter-small-semibold px-3 py-[6px] rounded-rounded'>{t.value}</div>
         </li>
       ))}
     </ul>

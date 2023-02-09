@@ -124,7 +124,7 @@ export function AddProductVariant(props: AddProductVariantProps) {
             Back
           </Button>
           <Button variant='primary' size='small' onClick={onSubmit}>
-            Save and go back
+            Uložit a vrátit se zpět
           </Button>
         </div>
       </Modal.Footer>
@@ -336,7 +336,7 @@ function OrderEditModal(props: OrderEditModalProps) {
               loading={isUpdating || isRequestingConfirmation}
               onClick={onSave}
             >
-              Save and close
+              Uložit a zavřít
             </Button>
           </div>
         </Modal.Footer>

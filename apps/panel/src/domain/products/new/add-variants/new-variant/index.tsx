@@ -1,30 +1,30 @@
-import clsx from 'clsx';
-import type { Identifier, XYCoord } from 'dnd-core';
-import React, { useEffect, useRef } from 'react';
-import { useDrag, useDrop } from 'react-dnd';
-import { useForm } from 'react-hook-form';
-import Tooltip from '../../../../../components/atoms/tooltip';
-import Button from '../../../../../components/fundamentals/button';
-import CheckCircleFillIcon from '../../../../../components/fundamentals/icons/check-circle-fill-icon';
-import EditIcon from '../../../../../components/fundamentals/icons/edit-icon';
-import GripIcon from '../../../../../components/fundamentals/icons/grip-icon';
-import MoreHorizontalIcon from '../../../../../components/fundamentals/icons/more-horizontal-icon';
-import TrashIcon from '../../../../../components/fundamentals/icons/trash-icon';
-import Actionables from '../../../../../components/molecules/actionables';
-import IconTooltip from '../../../../../components/molecules/icon-tooltip';
-import Modal from '../../../../../components/molecules/modal';
-import useImperativeDialog from '../../../../../hooks/use-imperative-dialog';
-import useToggleState from '../../../../../hooks/use-toggle-state';
-import { DragItem } from '../../../../../types/shared';
-import { CustomsFormType } from '../../../components/customs-form';
-import { DimensionsFormType } from '../../../components/dimensions-form';
+import clsx from "clsx";
+import type { Identifier, XYCoord } from "dnd-core";
+import React, { useEffect, useRef } from "react";
+import { useDrag, useDrop } from "react-dnd";
+import { useForm } from "react-hook-form";
+import Tooltip from "../../../../../components/atoms/tooltip";
+import Button from "../../../../../components/fundamentals/button";
+import CheckCircleFillIcon from "../../../../../components/fundamentals/icons/check-circle-fill-icon";
+import EditIcon from "../../../../../components/fundamentals/icons/edit-icon";
+import GripIcon from "../../../../../components/fundamentals/icons/grip-icon";
+import MoreHorizontalIcon from "../../../../../components/fundamentals/icons/more-horizontal-icon";
+import TrashIcon from "../../../../../components/fundamentals/icons/trash-icon";
+import Actionables from "../../../../../components/molecules/actionables";
+import IconTooltip from "../../../../../components/molecules/icon-tooltip";
+import Modal from "../../../../../components/molecules/modal";
+import useImperativeDialog from "../../../../../hooks/use-imperative-dialog";
+import useToggleState from "../../../../../hooks/use-toggle-state";
+import { DragItem } from "../../../../../types/shared";
+import { CustomsFormType } from "../../../components/customs-form";
+import { DimensionsFormType } from "../../../components/dimensions-form";
 import CreateFlowVariantForm, {
   CreateFlowVariantFormType,
-} from '../../../components/variant-form/create-flow-variant-form';
-import { VariantOptionValueType } from '../../../components/variant-form/variant-select-options-form';
+} from "../../../components/variant-form/create-flow-variant-form";
+import { VariantOptionValueType } from "../../../components/variant-form/variant-select-options-form";
 
 const ItemTypes = {
-  CARD: 'card',
+  CARD: "card",
 };
 
 type Props = {
@@ -71,15 +71,15 @@ const NewVariant = ({
   const onUpdate = handleSubmit((data) => {
     const payload = {
       ...data,
-      title: data.general.title ? data.general.title : data.options.map((vo) => vo.option?.value).join(' / '),
+      title: data.general.title ? data.general.title : data.options.map((vo) => vo.option?.value).join(" / "),
     };
 
     const saved = save(index, payload);
 
     if (!saved) {
-      localForm.setError('options', {
-        type: 'deps',
-        message: 'A variant with these options already exists.',
+      localForm.setError("options", {
+        type: "deps",
+        message: "A variant with these options already exists.",
       });
       return;
     }
@@ -91,8 +91,8 @@ const NewVariant = ({
 
   const onDelete = async () => {
     const confirmed = await warning({
-      text: 'Are you sure you want to delete this variant?',
-      heading: 'Delete Variant',
+      text: "Are you sure you want to delete this variant?",
+      heading: "Delete Variant",
     });
 
     if (confirmed) {
@@ -156,9 +156,9 @@ const NewVariant = ({
         ref={preview}
         data-handler-id={handlerId}
         className={clsx(
-          'grid grid-cols-[32px_1fr_90px_100px_48px] transition-all rounded-rounded hover:bg-grey-5 focus-within:bg-grey-5 h-16 py-xsmall pl-xsmall pr-base translate-y-0 translate-x-0',
+          "grid grid-cols-[32px_1fr_90px_100px_48px] transition-all rounded-rounded hover:bg-grey-5 focus-within:bg-grey-5 h-16 py-xsmall pl-xsmall pr-base translate-y-0 translate-x-0",
           {
-            'opacity-50': isDragging,
+            "opacity-50": isDragging,
           },
         )}
       >
@@ -175,36 +175,29 @@ const NewVariant = ({
           {source.stock.ean && <span className='inter-base-regular text-grey-50'>{source.stock.ean}</span>}
         </div>
         <div className='flex items-center justify-end mr-xlarge'>
-          <p>{source.stock.inventory_quantity || '-'}</p>
+          <p>{source.stock.inventory_quantity || "-"}</p>
         </div>
         <div className='flex items-center justify-center'>
-          <VariantValidity
-            source={source}
-            productCustoms={productCustoms}
-            productDimensions={productDimensions}
-          />
+          <VariantValidity source={source} productCustoms={productCustoms} productDimensions={productDimensions} />
         </div>
         <div className='ml-xlarge flex items-center justify-center pr-base'>
           <Actionables
             forceDropdown
             actions={[
               {
-                label: 'Edit',
+                label: "Edit",
                 icon: <EditIcon size={20} />,
                 onClick: toggle,
               },
               {
-                label: 'Delete',
+                label: "Delete",
                 icon: <TrashIcon size={20} />,
                 onClick: onDelete,
-                variant: 'danger',
+                variant: "danger",
               },
             ]}
             customTrigger={
-              <Button
-                variant='ghost'
-                className='w-xlarge h-xlarge p-0 flex items-center justify-center text-grey-50'
-              >
+              <Button variant='ghost' className='w-xlarge h-xlarge p-0 flex items-center justify-center text-grey-50'>
                 <MoreHorizontalIcon size={20} />
               </Button>
             }
@@ -231,7 +224,7 @@ const NewVariant = ({
                 Cancel
               </Button>
               <Button variant='primary' size='small' type='button' onClick={onUpdate}>
-                Save and close
+                Uložit a zavřít
               </Button>
             </div>
           </Modal.Footer>
@@ -245,7 +238,7 @@ const VariantValidity = ({
   source,
   productCustoms,
   productDimensions,
-}: Pick<Props, 'source' | 'productCustoms' | 'productDimensions'>) => {
+}: Pick<Props, "source" | "productCustoms" | "productDimensions">) => {
   const {
     prices,
     options,
@@ -255,7 +248,7 @@ const VariantValidity = ({
     general: { title },
   } = source;
 
-  if (!options || !options.length) {
+  if (!(options?.length)) {
     return (
       <IconTooltip
         type='error'
@@ -291,15 +284,13 @@ const VariantValidity = ({
   const validPrices = prices?.prices.some((p) => p.amount !== null);
 
   const validDimensions =
-    Object.values(productDimensions).every((value) => !!value) ||
-    Object.values(dimensions).every((value) => !!value);
+    Object.values(productDimensions).every((value) => !!value) || Object.values(dimensions).every((value) => !!value);
   const validCustoms =
-    Object.values(productCustoms).every((value) => !!value) ||
-    Object.values(customs).every((value) => !!value);
+    Object.values(productCustoms).every((value) => !!value) || Object.values(customs).every((value) => !!value);
 
   const barcodeValidity = !!barcode || !!upc || !!ean;
 
-  if (!sku || !validCustoms || !validDimensions || !barcodeValidity || !validPrices) {
+  if (!((((sku && validCustoms ) && validDimensions ) && barcodeValidity ) && validPrices)) {
     return (
       <IconTooltip
         type='warning'
@@ -322,7 +313,7 @@ const VariantValidity = ({
   }
 
   return (
-    <Tooltip content={title ? `${title} is valid` : 'Variant is valid'} side='top'>
+    <Tooltip content={title ? `${title} is valid` : "Variant is valid"} side='top'>
       <CheckCircleFillIcon size={20} className='text-emerald-40' />
     </Tooltip>
   );

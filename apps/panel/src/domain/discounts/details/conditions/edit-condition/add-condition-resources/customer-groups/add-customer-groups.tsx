@@ -1,17 +1,17 @@
-import { useAdminCustomerGroups } from 'medusa-react';
-import React, { useContext, useState } from 'react';
-import Modal from '../../../../../../../components/molecules/modal';
-import { SelectableTable } from '../../../../../../../components/templates/selectable-table';
-import useQueryFilters from '../../../../../../../hooks/use-query-filters';
-import { defaultQueryProps } from '../../../../../new/discount-form/condition-tables/shared/common';
+import { useAdminCustomerGroups } from "medusa-react";
+import React, { useContext, useState } from "react";
+import Modal from "../../../../../../../components/molecules/modal";
+import { SelectableTable } from "../../../../../../../components/templates/selectable-table";
+import useQueryFilters from "../../../../../../../hooks/use-query-filters";
+import { defaultQueryProps } from "../../../../../new/discount-form/condition-tables/shared/common";
 import {
   CustomerGroupsHeader,
   CustomerGroupsRow,
   useGroupColumns,
-} from '../../../../../new/discount-form/condition-tables/shared/groups';
-import { useEditConditionContext } from '../../edit-condition-provider';
-import Button from '../../../../../../../components/fundamentals/button';
-import { LayeredModalContext } from '../../../../../../../components/molecules/modal/layered-modal';
+} from "../../../../../new/discount-form/condition-tables/shared/groups";
+import { useEditConditionContext } from "../../edit-condition-provider";
+import Button from "../../../../../../../components/fundamentals/button";
+import { LayeredModalContext } from "../../../../../../../components/molecules/modal/layered-modal";
 
 const AddCustomerGroupsConditionsScreen = () => {
   const params = useQueryFilters(defaultQueryProps);
@@ -35,7 +35,7 @@ const AddCustomerGroupsConditionsScreen = () => {
           options={{
             enableSearch: true,
             immediateSearchFocus: true,
-            searchPlaceholder: 'Search...',
+            searchPlaceholder: "Search...",
           }}
           resourceName='Groups'
           totalCount={count ?? 0}
@@ -54,15 +54,11 @@ const AddCustomerGroupsConditionsScreen = () => {
           <Button variant='secondary' size='small' onClick={pop}>
             Cancel
           </Button>
-          <Button
-            variant='primary'
-            size='small'
-            onClick={() => saveAndGoBack(selectedResources, () => refetch())}
-          >
-            Save and go back
+          <Button variant='primary' size='small' onClick={() => saveAndGoBack(selectedResources, () => refetch())}>
+            Uložit a vrátit se zpět
           </Button>
           <Button variant='primary' size='small' onClick={() => saveAndClose(selectedResources)}>
-            Save and close
+            Uložit a zavřít
           </Button>
         </div>
       </Modal.Footer>

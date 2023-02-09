@@ -1,15 +1,15 @@
-import { AdminPostProductsProductVariantsVariantReq, Product, ProductVariant } from '@medusajs/medusa';
-import React, { useContext, useEffect, useMemo } from 'react';
-import { useForm } from 'react-hook-form';
-import Button from '../../../../../../components/fundamentals/button';
-import Modal from '../../../../../../components/molecules/modal';
-import { LayeredModalContext } from '../../../../../../components/molecules/modal/layered-modal';
+import { AdminPostProductsProductVariantsVariantReq, Product, ProductVariant } from "@medusajs/medusa";
+import React, { useContext, useEffect, useMemo } from "react";
+import { useForm } from "react-hook-form";
+import Button from "../../../../../../components/fundamentals/button";
+import Modal from "../../../../../../components/molecules/modal";
+import { LayeredModalContext } from "../../../../../../components/molecules/modal/layered-modal";
 import EditFlowVariantForm, {
   EditFlowVariantFormType,
-} from '../../../../components/variant-form/edit-flow-variant-form';
-import useEditProductActions from '../../../hooks/use-edit-product-actions';
-import { getEditVariantDefaultValues } from '../edit-variant-modal';
-import { useEditVariantsModal } from './use-edit-variants-modal';
+} from "../../../../components/variant-form/edit-flow-variant-form";
+import useEditProductActions from "../../../hooks/use-edit-product-actions";
+import { getEditVariantDefaultValues } from "../edit-variant-modal";
+import { useEditVariantsModal } from "./use-edit-variants-modal";
 
 type Props = {
   variant: ProductVariant;
@@ -69,7 +69,7 @@ const EditVariantScreen = ({ variant, product }: Props) => {
               loading={updatingVariant}
               onClick={onSubmitAndBack}
             >
-              Save and go back
+              Uložit a vrátit se zpět
             </Button>
             <Button
               variant='primary'
@@ -79,7 +79,7 @@ const EditVariantScreen = ({ variant, product }: Props) => {
               loading={updatingVariant}
               onClick={onSubmitAndClose}
             >
-              Save and close
+              Uložit a zavřít
             </Button>
           </div>
         </Modal.Footer>
@@ -88,13 +88,11 @@ const EditVariantScreen = ({ variant, product }: Props) => {
   );
 };
 
-export const createUpdatePayload = (
-  data: EditFlowVariantFormType,
-): AdminPostProductsProductVariantsVariantReq => {
+export const createUpdatePayload = (data: EditFlowVariantFormType): AdminPostProductsProductVariantsVariantReq => {
   const { customs, dimensions, prices, options, general, stock } = data;
 
   const priceArray = prices.prices
-    .filter((price) => typeof price.amount === 'number')
+    .filter((price) => typeof price.amount === "number")
     .map((price) => {
       return {
         amount: price.amount,
@@ -127,7 +125,7 @@ export const useEditVariantScreen = (props: Props) => {
 
   const screen = useMemo(() => {
     return {
-      title: 'Edit Variant',
+      title: "Edit Variant",
       subtitle: props.variant.title,
       onBack: pop,
       view: <EditVariantScreen {...props} />,

@@ -1,12 +1,10 @@
-import { AdminPostProductsProductVariantsReq, Product } from '@medusajs/medusa';
-import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import Button from '../../../../../components/fundamentals/button';
-import Modal from '../../../../../components/molecules/modal';
-import EditFlowVariantForm, {
-  EditFlowVariantFormType,
-} from '../../../components/variant-form/edit-flow-variant-form';
-import useEditProductActions from '../../hooks/use-edit-product-actions';
+import { AdminPostProductsProductVariantsReq, Product } from "@medusajs/medusa";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import Button from "../../../../../components/fundamentals/button";
+import Modal from "../../../../../components/molecules/modal";
+import EditFlowVariantForm, { EditFlowVariantFormType } from "../../../components/variant-form/edit-flow-variant-form";
+import useEditProductActions from "../../hooks/use-edit-product-actions";
 
 type Props = {
   onClose: () => void;
@@ -52,7 +50,7 @@ const AddVariantModal = ({ open, onClose, product }: Props) => {
                 Cancel
               </Button>
               <Button variant='primary' size='small' type='submit' loading={addingVariant}>
-                Save and close
+                Uložit a zavřít
               </Button>
             </div>
           </Modal.Footer>
@@ -66,7 +64,7 @@ const getDefaultValues = (product: Product): EditFlowVariantFormType => {
   const options = product.options.map((option) => ({
     title: option.title,
     id: option.id,
-    value: '',
+    value: "",
   }));
 
   return {
@@ -105,7 +103,7 @@ export const createAddPayload = (data: EditFlowVariantFormType): AdminPostProduc
   const { general, stock, options, prices, dimensions, customs } = data;
 
   const priceArray = prices.prices
-    .filter((price) => typeof price.amount === 'number')
+    .filter((price) => typeof price.amount === "number")
     .map((price) => {
       return {
         amount: price.amount,
@@ -126,7 +124,7 @@ export const createAddPayload = (data: EditFlowVariantFormType): AdminPostProduc
     origin_country: customs.origin_country ? customs.origin_country.value : null,
     // @ts-ignore
     prices: priceArray,
-    title: data.general.title || `${options?.map((o) => o.value).join(' / ')}`,
+    title: data.general.title || `${options?.map((o) => o.value).join(" / ")}`,
     options: options.map((option) => ({
       option_id: option.id,
       value: option.value,

@@ -1,14 +1,12 @@
-import { Product, ProductVariant } from '@medusajs/medusa';
-import { useForm } from 'react-hook-form';
-import Button from '../../../../../components/fundamentals/button';
-import Modal from '../../../../../components/molecules/modal';
-import { countries } from '../../../../../utils/countries';
-import EditFlowVariantForm, {
-  EditFlowVariantFormType,
-} from '../../../components/variant-form/edit-flow-variant-form';
-import useEditProductActions from '../../hooks/use-edit-product-actions';
-import { createAddPayload } from './add-variant-modal';
-import { createUpdatePayload } from './edit-variants-modal/edit-variant-screen';
+import { Product, ProductVariant } from "@medusajs/medusa";
+import { useForm } from "react-hook-form";
+import Button from "../../../../../components/fundamentals/button";
+import Modal from "../../../../../components/molecules/modal";
+import { countries } from "../../../../../utils/countries";
+import EditFlowVariantForm, { EditFlowVariantFormType } from "../../../components/variant-form/edit-flow-variant-form";
+import useEditProductActions from "../../hooks/use-edit-product-actions";
+import { createAddPayload } from "./add-variant-modal";
+import { createUpdatePayload } from "./edit-variants-modal/edit-variant-screen";
 
 type Props = {
   onClose: () => void;
@@ -65,10 +63,10 @@ const EditVariantModal = ({ onClose, product, variant, isDuplicate = false }: Pr
               variant='primary'
               size='small'
               type='submit'
-              disabled={!isDirty && !isDuplicate}
+              disabled={!(isDirty || isDuplicate)}
               loading={addingVariant || updatingVariant}
             >
-              Save and close
+              Uložit a zavřít
             </Button>
           </div>
         </Modal.Footer>
@@ -77,19 +75,14 @@ const EditVariantModal = ({ onClose, product, variant, isDuplicate = false }: Pr
   );
 };
 
-export const getEditVariantDefaultValues = (
-  variant: ProductVariant,
-  product: Product,
-): EditFlowVariantFormType => {
+export const getEditVariantDefaultValues = (variant: ProductVariant, product: Product): EditFlowVariantFormType => {
   const options = product.options.map((option) => ({
     title: option.title,
     id: option.id,
-    value: variant.options.find((optionValue) => optionValue.option_id === option.id)?.value || '',
+    value: variant.options.find((optionValue) => optionValue.option_id === option.id)?.value || "",
   }));
 
-  const country = countries.find(
-    (country) => country.name.toLowerCase() === variant.origin_country?.toLowerCase(),
-  );
+  const country = countries.find((country) => country.name.toLowerCase() === variant.origin_country?.toLowerCase());
 
   const countryOption = country ? { label: country.name, value: country.alpha2 } : null;
 

@@ -1,16 +1,16 @@
-import { useAdminStore } from 'medusa-react';
-import { useNavigate } from 'react-router-dom';
-import BackButton from '../../../components/atoms/back-button';
-import Spinner from '../../../components/atoms/spinner';
-import Tooltip from '../../../components/atoms/tooltip';
-import FeatureToggle from '../../../components/fundamentals/feature-toggle';
-import JSONView from '../../../components/molecules/json-view';
-import Section from '../../../components/organisms/section';
-import { useAnalytics } from '../../../context/analytics';
-import { getErrorStatus } from '../../../utils/get-error-status';
-import CurrencyTaxSetting from './components/currency-tax-setting';
-import DefaultStoreCurrency from './components/default-store-currency';
-import StoreCurrencies from './components/store-currencies';
+import { useAdminStore } from "medusa-react";
+import { useNavigate } from "react-router-dom";
+import BackButton from "../../../components/atoms/back-button";
+import Spinner from "../../../components/atoms/spinner";
+import Tooltip from "../../../components/atoms/tooltip";
+import FeatureToggle from "../../../components/fundamentals/feature-toggle";
+import JSONView from "../../../components/molecules/json-view";
+import Section from "../../../components/organisms/section";
+import { useAnalytics } from "../../../context/analytics";
+import { getErrorStatus } from "../../../utils/get-error-status";
+import CurrencyTaxSetting from "./components/currency-tax-setting";
+import DefaultStoreCurrency from "./components/default-store-currency";
+import StoreCurrencies from "./components/store-currencies";
 
 const CurrencySettings = () => {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ const CurrencySettings = () => {
   });
 
   if (error) {
-    let message = 'An unknown error occurred';
+    let message = "An unknown error occurred";
 
     const errorStatus = getErrorStatus(error);
 
@@ -32,7 +32,7 @@ const CurrencySettings = () => {
       message = errorStatus.message;
 
       if (errorStatus.status === 404) {
-        navigate('/404');
+        navigate("/404");
         return null;
       }
     }
@@ -49,7 +49,7 @@ const CurrencySettings = () => {
     );
   }
 
-  if (status === 'loading' || !store) {
+  if (status === "loading" || !store) {
     // temp, perhaps use skeletons?
     return (
       <div className='w-full h-[calc(100vh-64px)] flex items-center justify-center'>
@@ -60,10 +60,10 @@ const CurrencySettings = () => {
 
   return (
     <div className='pb-xlarge'>
-      <BackButton label='Back to Settings' path='/a/settings' className='mb-xsmall' />
+      <BackButton label='Zpět do nastavení' path='/a/settings' className='mb-xsmall' />
       <div className='grid grid-cols-3 gap-base'>
         <div className='col-span-2 flex flex-col gap-y-xsmall '>
-          <Section title='Currencies'>
+          <Section title='Měny'>
             <p className='text-grey-50 inter-base-regular mt-2xsmall'>
               Manage the markets that you will operate within.
             </p>
@@ -80,7 +80,7 @@ const CurrencySettings = () => {
                   <Tooltip
                     side='top'
                     content={
-                      'Decide if you want to include or exclude taxes whenever you define a price in this currency'
+                      "Decide if you want to include or exclude taxes whenever you define a price in this currency"
                     }
                   >
                     <p>Tax Incl. Prices</p>

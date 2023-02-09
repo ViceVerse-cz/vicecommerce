@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
-import Button from '../../../../../../components/fundamentals/button';
-import { LayeredModalContext } from '../../../../../../components/molecules/modal/layered-modal';
-import { DiscountConditionOperator } from '../../../../types';
-import { useDiscountForm } from '../../form/discount-form-context';
+import React, { useContext } from "react";
+import Button from "../../../../../../components/fundamentals/button";
+import { LayeredModalContext } from "../../../../../../components/molecules/modal/layered-modal";
+import { DiscountConditionOperator } from "../../../../types";
+import { useDiscountForm } from "../../form/discount-form-context";
 
 type AddConditionFooterProps = {
-  type: 'products' | 'product_collections' | 'product_types' | 'product_tags' | 'customer_groups';
+  type: "products" | "product_collections" | "product_types" | "product_tags" | "customer_groups";
   items: { id: string; label: string }[];
   operator: DiscountConditionOperator;
   onClose: () => void;
@@ -50,7 +50,7 @@ const AddConditionFooter: React.FC<AddConditionFooterProps> = ({ type, items, op
           reset();
         }}
       >
-        Save and close
+        Uložit a zavřít
       </Button>
     </div>
   );

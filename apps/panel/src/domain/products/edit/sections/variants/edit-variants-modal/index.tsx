@@ -1,14 +1,12 @@
-import { Product } from '@medusajs/medusa';
-import React, { useCallback, useContext, useEffect } from 'react';
-import { FieldArrayWithId, FormProvider, useFieldArray, useForm } from 'react-hook-form';
-import Button from '../../../../../../components/fundamentals/button';
-import Modal from '../../../../../../components/molecules/modal';
-import LayeredModal, {
-  LayeredModalContext,
-} from '../../../../../../components/molecules/modal/layered-modal';
-import useEditProductActions from '../../../hooks/use-edit-product-actions';
-import { EditVariantsModalContext } from './use-edit-variants-modal';
-import { VariantCard } from './variant-card';
+import { Product } from "@medusajs/medusa";
+import React, { useCallback, useContext, useEffect } from "react";
+import { FieldArrayWithId, FormProvider, useFieldArray, useForm } from "react-hook-form";
+import Button from "../../../../../../components/fundamentals/button";
+import Modal from "../../../../../../components/molecules/modal";
+import LayeredModal, { LayeredModalContext } from "../../../../../../components/molecules/modal/layered-modal";
+import useEditProductActions from "../../../hooks/use-edit-product-actions";
+import { EditVariantsModalContext } from "./use-edit-variants-modal";
+import { VariantCard } from "./variant-card";
 
 type Props = {
   open: boolean;
@@ -45,8 +43,8 @@ const EditVariantsModal = ({ open, onClose, product }: Props) => {
 
   const { fields, move } = useFieldArray({
     control,
-    name: 'variants',
-    keyName: 'fieldId',
+    name: "variants",
+    keyName: "fieldId",
   });
 
   const moveCard = useCallback((dragIndex: number, hoverIndex: number) => {
@@ -54,7 +52,7 @@ const EditVariantsModal = ({ open, onClose, product }: Props) => {
   }, []);
 
   const renderCard = useCallback(
-    (card: FieldArrayWithId<EditVariantsForm, 'variants', 'fieldId'>, index: number) => {
+    (card: FieldArrayWithId<EditVariantsForm, "variants", "fieldId">, index: number) => {
       return (
         <VariantCard
           key={card.fieldId}
@@ -100,7 +98,7 @@ const EditVariantsModal = ({ open, onClose, product }: Props) => {
       () => {
         resetAndClose();
       },
-      'Variants were successfully updated',
+      "Variants were successfully updated",
     );
   });
 
@@ -119,8 +117,7 @@ const EditVariantsModal = ({ open, onClose, product }: Props) => {
             <form onSubmit={onSubmit}>
               <Modal.Content>
                 <h2 className='inter-base-semibold mb-small'>
-                  Product variants{' '}
-                  <span className='inter-base-regular text-grey-50'>({product.variants.length})</span>
+                  Product variants <span className='inter-base-regular text-grey-50'>({product.variants.length})</span>
                 </h2>
                 <div className='grid grid-cols-[1fr_1fr_48px] pr-base inter-small-semibold text-grey-50 mb-small'>
                   <p className='col-start-1 col-end-1 text-left'>Variant</p>
@@ -140,7 +137,7 @@ const EditVariantsModal = ({ open, onClose, product }: Props) => {
                     loading={updating}
                     disabled={updating || !isDirty}
                   >
-                    Save and close
+                    Uložit a zavřít
                   </Button>
                 </div>
               </Modal.Footer>

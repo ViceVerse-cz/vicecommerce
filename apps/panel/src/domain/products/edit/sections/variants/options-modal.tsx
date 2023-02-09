@@ -1,19 +1,15 @@
-import { Product } from '@medusajs/medusa';
-import {
-  useAdminCreateProductOption,
-  useAdminDeleteProductOption,
-  useAdminUpdateProductOption,
-} from 'medusa-react';
-import React, { useEffect, useMemo } from 'react';
-import { useFieldArray, useForm } from 'react-hook-form';
-import Button from '../../../../../components/fundamentals/button';
-import PlusIcon from '../../../../../components/fundamentals/icons/plus-icon';
-import TrashIcon from '../../../../../components/fundamentals/icons/trash-icon';
-import InputField from '../../../../../components/molecules/input';
-import Modal from '../../../../../components/molecules/modal';
-import useNotification from '../../../../../hooks/use-notification';
-import FormValidator from '../../../../../utils/form-validator';
-import { useOptionsContext } from './options-provider';
+import { Product } from "@medusajs/medusa";
+import { useAdminCreateProductOption, useAdminDeleteProductOption, useAdminUpdateProductOption } from "medusa-react";
+import React, { useEffect, useMemo } from "react";
+import { useFieldArray, useForm } from "react-hook-form";
+import Button from "../../../../../components/fundamentals/button";
+import PlusIcon from "../../../../../components/fundamentals/icons/plus-icon";
+import TrashIcon from "../../../../../components/fundamentals/icons/trash-icon";
+import InputField from "../../../../../components/molecules/input";
+import Modal from "../../../../../components/molecules/modal";
+import useNotification from "../../../../../hooks/use-notification";
+import FormValidator from "../../../../../utils/form-validator";
+import { useOptionsContext } from "./options-provider";
 
 type Props = {
   product: Product;
@@ -48,7 +44,7 @@ const OptionsModal = ({ product, open, onClose }: Props) => {
   });
 
   const { fields, remove, append } = useFieldArray({
-    name: 'options',
+    name: "options",
     control,
     shouldUnregister: true,
   });
@@ -65,7 +61,7 @@ const OptionsModal = ({ product, open, onClose }: Props) => {
   };
 
   const handleAddAnOption = () => {
-    append({ title: '', id: null });
+    append({ title: "", id: null });
   };
 
   const isSubmitting = useMemo(() => {
@@ -77,9 +73,7 @@ const OptionsModal = ({ product, open, onClose }: Props) => {
 
     const toCreate: Option[] = [];
     const toUpdate: Option[] = [];
-    const toDelete: Option[] = product.options.filter(
-      (o) => data.options.find((d) => d.id === o.id) === undefined,
-    );
+    const toDelete: Option[] = product.options.filter((o) => data.options.find((d) => d.id === o.id) === undefined);
 
     data.options.forEach((option) => {
       if (option.id) {
@@ -134,16 +128,16 @@ const OptionsModal = ({ product, open, onClose }: Props) => {
     });
 
     if (errors.length === toCreate.length + toUpdate.length + toDelete.length) {
-      notification('Error', 'Failed to update product options', 'error');
+      notification("Error", "Failed to update product options", "error");
       return;
     }
 
     if (errors.length > 0) {
-      notification('Warning', 'Failed to; ' + errors.join(', ') + '.', 'warning');
+      notification("Warning", `Failed to; ${errors.join(", ")}.`, "warning");
     }
 
     refetch();
-    notification('Success', 'Successfully updated product options', 'success');
+    notification("Success", "Successfully updated product options", "success");
     handleClose();
   });
 
@@ -166,9 +160,9 @@ const OptionsModal = ({ product, open, onClose }: Props) => {
                         key={field.id}
                         placeholder='Color'
                         {...register(`options.${index}.title`, {
-                          required: 'Option title is required',
-                          minLength: FormValidator.minOneCharRule('Option title'),
-                          pattern: FormValidator.whiteSpaceRule('Option title'),
+                          required: "Option title is required",
+                          minLength: FormValidator.minOneCharRule("Option title"),
+                          pattern: FormValidator.whiteSpaceRule("Option title"),
                         })}
                         errors={errors}
                       />
@@ -185,12 +179,7 @@ const OptionsModal = ({ product, open, onClose }: Props) => {
                 })}
               </div>
             </div>
-            <Button
-              variant='secondary'
-              className='w-full h-10 mt-base'
-              type='button'
-              onClick={handleAddAnOption}
-            >
+            <Button variant='secondary' className='w-full h-10 mt-base' type='button' onClick={handleAddAnOption}>
               <PlusIcon size='20' /> Add an option
             </Button>
           </Modal.Content>
@@ -200,7 +189,7 @@ const OptionsModal = ({ product, open, onClose }: Props) => {
                 Cancel
               </Button>
               <Button variant='primary' size='small' type='submit' disabled={!isDirty} loading={isSubmitting}>
-                Save and close
+                Uložit a zavřít
               </Button>
             </div>
           </Modal.Footer>

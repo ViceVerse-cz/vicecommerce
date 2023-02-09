@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import { PublishableApiKey } from '@medusajs/medusa';
+import { PublishableApiKey } from "@medusajs/medusa";
 
-import Button from '../../../components/fundamentals/button';
-import InputField from '../../../components/molecules/input';
-import SideModal from '../../../components/molecules/modal/side-modal';
-import CrossIcon from '../../../components/fundamentals/icons/cross-icon';
-import { useAdminUpdatePublishableApiKey } from 'medusa-react';
-import useNotification from '../../../hooks/use-notification';
+import Button from "../../../components/fundamentals/button";
+import InputField from "../../../components/molecules/input";
+import SideModal from "../../../components/molecules/modal/side-modal";
+import CrossIcon from "../../../components/fundamentals/icons/cross-icon";
+import { useAdminUpdatePublishableApiKey } from "medusa-react";
+import useNotification from "../../../hooks/use-notification";
 
 type DetailsModalProps = {
   close: () => void;
@@ -35,9 +35,9 @@ function DetailsModal(props: DetailsModalProps) {
     try {
       await updateKey({ title: name });
       close();
-      notification('Success', 'Updated the API key', 'success');
+      notification("Success", "Updated the API key", "success");
     } catch (e) {
-      notification('Error', 'Failed to update the API key', 'error');
+      notification("Error", "Failed to update the API key", "error");
     }
   };
 
@@ -54,7 +54,7 @@ function DetailsModal(props: DetailsModalProps) {
         </div>
         {/* === DIVIDER === */}
 
-        <div className='h-[1px] bg-gray-200 block' style={{ margin: '24px -24px' }} />
+        <div className='h-[1px] bg-gray-200 block' style={{ margin: "24px -24px" }} />
         {/* === BODY === */}
 
         <div className='flex-grow'>
@@ -69,20 +69,15 @@ function DetailsModal(props: DetailsModalProps) {
         </div>
         {/* === DIVIDER === */}
 
-        <div className='h-[1px] bg-gray-200 block' style={{ margin: '24px -24px' }} />
+        <div className='h-[1px] bg-gray-200 block' style={{ margin: "24px -24px" }} />
         {/* === FOOTER === */}
 
         <div className='flex justify-end gap-2'>
           <Button size='small' variant='ghost' onClick={close}>
             Cancel
           </Button>
-          <Button
-            size='small'
-            variant='primary'
-            onClick={onSave}
-            disabled={name === props.selectedKey?.title}
-          >
-            Save and close
+          <Button size='small' variant='primary' onClick={onSave} disabled={name === props.selectedKey?.title}>
+            Uložit a zavřít
           </Button>
         </div>
       </div>
