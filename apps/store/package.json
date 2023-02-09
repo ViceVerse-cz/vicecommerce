@@ -8,7 +8,7 @@
         "migrate:contentful": "node ./contentful-migrations/index.js",
         "seed:contentful": "contentful space import --space-id $CONTENTFUL_SPACE_ID --mt $CONTENTFUL_ACCESS_TOKEN --content-file  ./data/contentful-seed.json",
         "migrate": "medusa migrations run",
-        "seed": "medusa seed -f ./data/seed.json",
+        "seed": "medusa seed --verbose -f ./data/seed.json",
         "start": "medusa start",
         "build": "tsc -p tsconfig.json",
         "dev": "medusa develop",

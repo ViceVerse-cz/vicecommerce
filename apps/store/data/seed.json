@@ -15,7 +15,7 @@
       "currency_code": "eur",
       "tax_rate": 0,
       "payment_providers": ["manual"],
-      "fulfillment_providers": ["zasilkovna-fulfillment"],
+      "fulfillment_providers": ["zasilkovna"],
       "countries": ["gb", "de", "dk", "se", "fr", "es", "it"]
     },
     {
@@ -24,7 +24,7 @@
       "currency_code": "usd",
       "tax_rate": 0,
       "payment_providers": ["manual"],
-      "fulfillment_providers": ["zasilkovna-fulfillment"],
+      "fulfillment_providers": ["zasilkovna"],
       "countries": ["us", "ca"]
     }
   ],
@@ -32,7 +32,7 @@
     {
       "name": "Zasilkovna - Box",
       "region_id": "test-region-eu",
-      "provider_id": "zasilkovna-fulfillment",
+      "provider_id": "zasilkovna",
       "data": {
         "id": "zasilkovna-box"
       },
@@ -41,9 +41,9 @@
       "amount": 1000
     },
     {
-      "name": "Zasilkovna - Delivery",
+      "name": "Zasilkovna - Doručení na adresu",
       "region_id": "test-region-eu",
-      "provider_id": "zasilkovna-fulfillment",
+      "provider_id": "zasilkovna",
       "data": {
         "id": "zasilkovna-delivery"
       },

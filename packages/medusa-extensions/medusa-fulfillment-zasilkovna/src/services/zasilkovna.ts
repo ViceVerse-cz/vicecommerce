@@ -1,14 +1,10 @@
-import type { Cart, Data, Fulfillment, FulfillmentItem, Order, Product } from "@medusajs/medusa";
 import { FulfillmentService } from "medusa-interfaces";
 
-class ZasilkovnaProvider extends FulfillmentService {
-  static reference = "zasilkovna";
-  apiKey: string;
+class ZasilkovnaService extends FulfillmentService {
+  static identifier = "zasilkovna";
 
-  constructor({ logger, totalsService, claimService, swapService, ordersService }, options: { apiKey: string }) {
+  constructor() {
     super();
-
-    this.apiKey = options.apiKey;
   }
 
   async getFulfillmentOptions() {
@@ -26,28 +22,40 @@ class ZasilkovnaProvider extends FulfillmentService {
     ];
   }
 
-  async validateFulfillmentData(optionData: object, data: Data, cart: Cart): Promise<object> {
-    // TODO: Overeni dat od uzivatele, napriklad ze drop box existuje
-
-    return {
-      ...optionData,
-      ...data,
-    };
+  validateFulfillmentData(_, data, cart) {
+    return data;
   }
 
-  calculatePrice(): boolean {
-    return false;
-  }
-
-  async createFulfillment(data: Data, items: Product[], order: Order, fulfillment: Fulfillment): Promise<boolean> {
-    // TODO: Vytvorit objednavku pres zasilkovnu
-
+  validateOption(data) {
     return true;
   }
 
-  async retrieveDocuments(fulfillmentData: FulfillmentItem[], documentType: unknown): Promise<void> {
-    // TODO: Neni zatim potreba momentalne / ziskat dokumenty
+  canCalculate() {
+    return false;
+  }
+
+  calculatePrice() {
+    throw Error("Manual Fulfillment service cannot calculatePrice");
+  }
+
+  createOrder() {
+    // No data is being sent anywhere
+    return Promise.resolve({});
+  }
+
+  createReturn() {
+    // No data is being sent anywhere
+    return Promise.resolve({});
+  }
+
+  createFulfillment() {
+    // No data is being sent anywhere
+    return Promise.resolve({});
+  }
+
+  cancelFulfillment() {
+    return Promise.resolve({});
   }
 }
 
-export default ZasilkovnaProvider;
+export default ZasilkovnaService;
