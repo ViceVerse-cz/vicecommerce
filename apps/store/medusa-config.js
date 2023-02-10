@@ -36,6 +36,7 @@ const plugins = [
     options: {
       apiKey: "b79b16c2-2f77-450f-91a5-868c3c698a82",
       secretKey: "dOJWwjp+BWqUcof3K+3OW6XGTnEpmWerx64TCNk0+0pZnonHdN99NFRIGaJSX0/HTtiu6AGYpKp0mjguzqp+wg==",
+      url: "https://b2b-test.postaonline.cz:444/restservices/ZSKService/v1",
     },
   },
 
