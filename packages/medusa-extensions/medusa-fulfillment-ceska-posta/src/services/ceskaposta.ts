@@ -8,9 +8,8 @@ class ZasilkovnaService extends FulfillmentService {
   apikey: string;
   secretKey: string;
   url: string;
-
-  // rome-ignore lint/correctness/noEmptyPattern: <Extends base medusa project>
   constructor(
+    // rome-ignore lint/correctness/noEmptyPattern: <Extends base medusa project>
     {},
     options: {
       apiKey: string;
