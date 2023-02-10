@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+      "forceConsistentCasingInFileNames": true,
+      "esModuleInterop": true,
+      "moduleResolution": "node",
+      "target": "ES2019",
+      "baseUrl": ".",
+      "resolveJsonModule": true,
+      "allowJs": false
+  }
+}

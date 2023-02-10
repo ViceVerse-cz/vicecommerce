@@ -210,6 +210,7 @@ importers:
       js2xmlparser: ^5.0.0
       medusa-core-utils: ^1.1.38
       medusa-file-s3: ^1.1.10
+      medusa-fulfillment-ceskaposta: '*'
       medusa-fulfillment-manual: ^1.1.35
       medusa-fulfillment-zasilkovna: '*'
       medusa-interfaces: ^1.3.5
@@ -234,8 +235,9 @@ importers:
       js2xmlparser: 5.0.0
       medusa-core-utils: 1.1.38
       medusa-file-s3: 1.1.10_mnhg237xnac6dtha5jqgvir5i4
+      medusa-fulfillment-ceskaposta: link:../../packages/medusa-extensions/medusa-fulfillment-ceska-posta
       medusa-fulfillment-manual: 1.1.35_mnhg237xnac6dtha5jqgvir5i4
-      medusa-fulfillment-zasilkovna: link:../../packages/cms-extensions/medusa-fulfillment-zasilkovna
+      medusa-fulfillment-zasilkovna: link:../../packages/medusa-extensions/medusa-fulfillment-zasilkovna
       medusa-interfaces: 1.3.5_l3smpwhtxzyco3pcbfbhjy3smu
       medusa-payment-manual: 1.0.21_medusa-interfaces@1.3.5
       medusa-plugin-contentful: 1.2.6_mnhg237xnac6dtha5jqgvir5i4
@@ -331,7 +333,7 @@ importers:
       tailwindcss: 3.2.6_postcss@8.4.21
       typescript: 4.6.2
 
-  packages/cms-extensions/medusa-fulfillment-zasilkovna:
+  packages/medusa-extensions/medusa-fulfillment-ceska-posta:
     specifiers:
       '@babel/cli': ^7.18.10
       '@babel/core': ^7.18.10
@@ -345,6 +347,7 @@ importers:
       '@medusajs/medusa': ^1.6.0
       '@medusajs/medusa-cli': ^1.3.3
       babel-preset-medusa-package: ^1.1.19
+      js2xmlparser: ^5.0.0
       medusa-core-utils: 1.1.38
       medusa-fulfillment-manual: ^1.1.31
       medusa-interfaces: ^1.3.3
@@ -359,6 +362,48 @@ importers:
       '@babel/preset-typescript': 7.18.6_@babel+core@7.20.12
       '@medusajs/medusa': 1.7.6_k64htzgyg7gelu2z5sut72o47y
       '@medusajs/medusa-cli': 1.3.7
+      js2xmlparser: 5.0.0
+      medusa-core-utils: 1.1.38
+      medusa-fulfillment-manual: 1.1.35_mnhg237xnac6dtha5jqgvir5i4
+      medusa-interfaces: 1.3.5_l3smpwhtxzyco3pcbfbhjy3smu
+      redis-commands: 1.7.0
+      typeorm: 0.2.45
+    devDependencies:
+      '@babel/cli': 7.20.7_@babel+core@7.20.12
+      '@babel/core': 7.20.12
+      '@babel/plugin-transform-typescript': 7.20.13_@babel+core@7.20.12
+      babel-preset-medusa-package: 1.1.19_@babel+core@7.20.12
+
+  packages/medusa-extensions/medusa-fulfillment-zasilkovna:
+    specifiers:
+      '@babel/cli': ^7.18.10
+      '@babel/core': ^7.18.10
+      '@babel/plugin-proposal-class-properties': ^7.18.6
+      '@babel/plugin-transform-classes': ^7.20.7
+      '@babel/plugin-transform-instanceof': ^7.18.9
+      '@babel/plugin-transform-runtime': ^7.19.6
+      '@babel/plugin-transform-typescript': ^7.20.13
+      '@babel/preset-env': ^7.20.2
+      '@babel/preset-typescript': ^7.18.6
+      '@medusajs/medusa': ^1.6.0
+      '@medusajs/medusa-cli': ^1.3.3
+      babel-preset-medusa-package: ^1.1.19
+      js2xmlparser: ^5.0.0
+      medusa-core-utils: 1.1.38
+      medusa-fulfillment-manual: ^1.1.31
+      medusa-interfaces: ^1.3.3
+      redis-commands: 1.x
+      typeorm: ^0.2.36
+    dependencies:
+      '@babel/plugin-proposal-class-properties': 7.18.6_@babel+core@7.20.12
+      '@babel/plugin-transform-classes': 7.20.7_@babel+core@7.20.12
+      '@babel/plugin-transform-instanceof': 7.18.9_@babel+core@7.20.12
+      '@babel/plugin-transform-runtime': 7.19.6_@babel+core@7.20.12
+      '@babel/preset-env': 7.20.2_@babel+core@7.20.12
+      '@babel/preset-typescript': 7.18.6_@babel+core@7.20.12
+      '@medusajs/medusa': 1.7.6_k64htzgyg7gelu2z5sut72o47y
+      '@medusajs/medusa-cli': 1.3.7
+      js2xmlparser: 5.0.0
       medusa-core-utils: 1.1.38
       medusa-fulfillment-manual: 1.1.35_mnhg237xnac6dtha5jqgvir5i4
       medusa-interfaces: 1.3.5_l3smpwhtxzyco3pcbfbhjy3smu

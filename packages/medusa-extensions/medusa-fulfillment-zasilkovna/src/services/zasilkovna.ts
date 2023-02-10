@@ -6,6 +6,7 @@ class ZasilkovnaService extends FulfillmentService {
   static identifier = "zasilkovna";
   apikey: string;
 
+  // rome-ignore lint/correctness/noEmptyPattern: <Extends base medusa project>
   constructor({}, options: { apiKey: string }) {
     super();
     this.apikey = options.apiKey;
