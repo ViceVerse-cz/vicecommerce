@@ -50,7 +50,7 @@
         "id": "manual"
       },
       "price_type": "flat_rate",
-      "is_return": true,
+      "is_return": false,
       "amount": 1000
     },
     {
@@ -61,7 +61,7 @@
       },
       "provider_id": "manual",
       "price_type": "flat_rate",
-      "is_return": true,
+      "is_return": false,
       "amount": 1000
     },
     {
@@ -72,7 +72,7 @@
       },
       "provider_id": "manual",
       "price_type": "flat_rate",
-      "is_return": true,
+      "is_return": false,
       "amount": 1000
     },
     {
@@ -83,7 +83,7 @@
       },
       "provider_id": "manual",
       "price_type": "flat_rate",
-      "is_return": true,
+      "is_return": false,
       "amount": 1000
     },
     {
@@ -94,7 +94,7 @@
       },
       "provider_id": "manual",
       "price_type": "flat_rate",
-      "is_return": true,
+      "is_return": false,
       "amount": 1000
     },
     {
@@ -105,7 +105,7 @@
         "id": "ceskaposta-balik-do-ruky"
       },
       "price_type": "flat_rate",
-      "is_return": true,
+      "is_return": false,
       "amount": 1000
     },
     {
@@ -116,7 +116,7 @@
         "id": "ceskaposta-balik-na-postu"
       },
       "price_type": "flat_rate",
-      "is_return": true,
+      "is_return": false,
       "amount": 1000
     },
     {
@@ -127,7 +127,7 @@
         "id": "ceskaposta-balikovna"
       },
       "price_type": "flat_rate",
-      "is_return": true,
+      "is_return": false,
       "amount": 1000
     }
   ],

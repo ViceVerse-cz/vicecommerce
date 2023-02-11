@@ -17,11 +17,13 @@ class ZasilkovnaService extends FulfillmentService {
       {
         id: "zasilkovna-delivery",
         name: "Zásilkovna - Doručení na adresu",
+        require_drop_point: false,
         is_return: false,
       },
       {
         id: "zasilkovna-box",
         name: "Zásilkovna - Box",
+        require_drop_point: true,
         is_return: false,
       },
     ];

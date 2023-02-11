@@ -1,16 +1,45 @@
-import { Cart, Data, Fulfillment, LineItem, Order } from "@medusajs/medusa";
+import {
+  Cart,
+  ClaimService,
+  Data,
+  Fulfillment,
+  LineItem,
+  Logger,
+  Order,
+  OrderService,
+  SwapService,
+  TotalsService,
+} from "@medusajs/medusa";
 import { FulfillmentService } from "medusa-interfaces";
-import crypto from "node:crypto";
+import * as CryptoJS from "crypto-js";
+import * as uuid from "uuid";
 
 class ZasilkovnaService extends FulfillmentService {
   static identifier = "ceskaposta";
 
-  apikey: string;
-  secretKey: string;
-  url: string;
+  apikey_: string;
+  secretKey_: string;
+  url_: string;
+  logger_: Logger;
+  totalsService_: TotalsService;
+  claimService_: ClaimService;
+  swapService_: SwapService;
+  orderService_: OrderService;
+
   constructor(
-    // rome-ignore lint/correctness/noEmptyPattern: <Extends base medusa project>
-    {},
+    {
+      logger,
+      totalsService,
+      claimService,
+      swapService,
+      orderService,
+    }: {
+      logger: Logger;
+      totalsService: TotalsService;
+      claimService: ClaimService;
+      swapService: SwapService;
+      orderService: OrderService;
+    },
     options: {
       apiKey: string;
       secretKey: string;
@@ -19,9 +48,15 @@ class ZasilkovnaService extends FulfillmentService {
   ) {
     super();
 
-    this.apikey = options.apiKey;
-    this.secretKey = options.secretKey;
-    this.url = options.url;
+    this.apikey_ = options.apiKey;
+    this.secretKey_ = options.secretKey;
+    this.url_ = options.url;
+
+    this.logger_ = logger;
+    this.totalsService_ = totalsService;
+    this.claimService_ = claimService;
+    this.swapService_ = swapService;
+    this.orderService_ = orderService;
   }
 
   async getFulfillmentOptions() {
@@ -29,16 +64,19 @@ class ZasilkovnaService extends FulfillmentService {
       {
         id: "ceskaposta-balik-do-ruky",
         name: "Česká Pošta - Balík do ruky",
+        require_drop_point: false,
         is_return: false,
       },
       {
         id: "ceskaposta-balik-na-postu",
         name: "Česká Pošta - Balík do ruky",
+        require_drop_point: false,
         is_return: false,
       },
       {
         id: "ceskaposta-balikovna",
         name: "Česká Pošta - Balíkovna",
+        require_drop_point: true,
         is_return: false,
       },
     ];
@@ -65,31 +103,86 @@ class ZasilkovnaService extends FulfillmentService {
   }
 
   createReturn() {
-    // No data is being sent anywhere
-
     console.log("create return");
     return Promise.resolve({});
   }
 
   async createFulfillment(data: Data, items: LineItem[], order: Order, fulfillment: Fulfillment): Promise<void> {
-    const body = {};
+    const itemsVarians = items.map((el) => el.variant);
 
-    const headers = {
-      "Authorization-content-SHA256": crypto.createHash("sha256").update(JSON.stringify(body)).digest("base64"),
-      "Authorization-Timestamp": Math.floor(Date.now() / 1000).toString(),
-      "Api-Token": this.apikey,
-      Authorization:
-        'CP-HMAC-SHA256 nonce="74b03ffb-34e1-419e-8c6f-f8275bad9a41" signature="QGBaYeY8loQZXbJRmj91JV2yTwsuBTME6wQhUrEm7mI="',
+    const body = {
+      parcelServiceHeader: {},
+      parcelServiceData: {
+        parcelParams: {
+          recordID: order.id,
+          currency: "CZK",
+          weight: this.sum(itemsVarians, "weight").toString(),
+          length: this.sum(itemsVarians, "length"),
+          height: this.sum(itemsVarians, "height"),
+          prefixParcelCode: "CP",
+        },
+        parcelAddress: {
+          firstName: order.shipping_address.first_name,
+          surname: order.shipping_address.last_name,
+          company: order.shipping_address.company,
+          subject: "F",
+          address: {
+            street: order.shipping_address.address_1,
+            cityPart: order.shipping_address.province,
+            city: order.shipping_address.city,
+            zipCode: order.shipping_address.postal_code,
+          },
+          mobilNumber: order.shipping_address.phone,
+          phoneNumber: order.shipping_address.phone,
+          emailAddress: order.email,
+        },
+      },
     };
 
-    const request = await fetch(`${this.url}/parcelService`, {
-      headers: headers,
+    const request = await fetch(`${this.url_}/parcelService`, {
+      method: "POST",
+      headers: this.produceHeaders(body),
       body: JSON.stringify(body),
     });
 
+    console.log(request.status);
     console.log(await request.json());
 
-    return Promise.resolve();
+    if (request.status === 200) {
+      return Promise.resolve();
+    } else {
+      return Promise.reject();
+    }
+  }
+
+  sum<T>(array: T[], property?: keyof T): number {
+    if (!property) {
+      return array.reduce((total, current) => total + Number(current), 0);
+    }
+
+    return array.reduce((total, current) => total + Number(current[property]), 0);
+  }
+
+  produceHeaders(body: object): HeadersInit {
+    process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = "0";
+
+    const unixTimestamp = Math.floor(Date.now() / 1000).toString();
+    const hashPayload = CryptoJS.SHA256(JSON.stringify(body));
+    const nonce = uuid.v4();
+
+    const hash = CryptoJS.HmacSHA256(`${hashPayload};${unixTimestamp};${nonce}`, this.secretKey_);
+    const hashBase64 = hash.toString(CryptoJS.enc.Base64);
+    const authorization = `CP-HMAC-SHA256 nonce="${nonce}" signature="${hashBase64}"`;
+
+    const headers = {
+      "Authorization-content-SHA256": hashPayload.toString(),
+      "Authorization-Timestamp": unixTimestamp,
+      "Content-Type": "application/json",
+      "Api-Token": this.apikey_,
+      Authorization: authorization,
+    };
+
+    return headers;
   }
 
   cancelFulfillment() {
