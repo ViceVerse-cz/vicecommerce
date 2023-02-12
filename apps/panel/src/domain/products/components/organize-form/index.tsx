@@ -1,10 +1,10 @@
-import React from 'react';
-import { Controller } from 'react-hook-form';
-import { NextCreateableSelect, NextSelect } from '../../../../components/molecules/select/next-select';
-import TagInput from '../../../../components/molecules/tag-input';
-import { Option } from '../../../../types/shared';
-import { NestedForm } from '../../../../utils/nested-form';
-import useOrganizeData from './use-organize-data';
+import React from "react";
+import { Controller } from "react-hook-form";
+import { NextCreateableSelect, NextSelect } from "../../../../components/molecules/select/next-select";
+import TagInput from "../../../../components/molecules/tag-input";
+import { Option } from "../../../../types/shared";
+import { NestedForm } from "../../../../utils/nested-form";
+import useOrganizeData from "./use-organize-data";
 
 export type OrganizeFormType = {
   type: Option | null;
@@ -25,7 +25,7 @@ const OrganizeForm = ({ form }: Props) => {
   const onCreateOption = (value: string) => {
     typeOptions.push({ label: value, value });
     setValue(
-      path('type'),
+      path("type"),
       { label: value, value },
       {
         shouldDirty: true,
@@ -37,16 +37,16 @@ const OrganizeForm = ({ form }: Props) => {
     <div>
       <div className='grid grid-cols-2 gap-x-large mb-large'>
         <Controller
-          name={path('type')}
+          name={path("type")}
           control={control}
           render={({ field: { value, onChange } }) => {
             return (
               <NextCreateableSelect
-                label='Type'
+                label='Typ'
                 onChange={onChange}
                 options={productTypeOptions}
                 value={value || null}
-                placeholder='Choose a type'
+                placeholder='Vyberte si typ'
                 onCreateOption={onCreateOption}
                 isClearable
               />
@@ -54,16 +54,16 @@ const OrganizeForm = ({ form }: Props) => {
           }}
         />
         <Controller
-          name={path('collection')}
+          name={path("collection")}
           control={control}
           render={({ field: { value, onChange } }) => {
             return (
               <NextSelect
-                label='Collection'
+                label='Sbírka'
                 onChange={onChange}
                 options={collectionOptions}
                 value={value}
-                placeholder='Choose a collection'
+                placeholder='Výběr sbírky'
                 isClearable
               />
             );
@@ -72,7 +72,7 @@ const OrganizeForm = ({ form }: Props) => {
       </div>
       <Controller
         control={control}
-        name={path('tags')}
+        name={path("tags")}
         render={({ field: { value, onChange } }) => {
           return <TagInput onChange={onChange} values={value || []} />;
         }}

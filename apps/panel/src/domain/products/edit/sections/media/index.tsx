@@ -1,9 +1,9 @@
-import { Product } from '@medusajs/medusa';
-import React from 'react';
-import { ActionType } from '../../../../../components/molecules/actionables';
-import Section from '../../../../../components/organisms/section';
-import useToggleState from '../../../../../hooks/use-toggle-state';
-import MediaModal from './media-modal';
+import { Product } from "@medusajs/medusa";
+import React from "react";
+import { ActionType } from "../../../../../components/molecules/actionables";
+import Section from "../../../../../components/organisms/section";
+import useToggleState from "../../../../../hooks/use-toggle-state";
+import MediaModal from "./media-modal";
 
 type Props = {
   product: Product;
@@ -14,14 +14,14 @@ const MediaSection = ({ product }: Props) => {
 
   const actions: ActionType[] = [
     {
-      label: 'Edit Media',
+      label: "Upravit média",
       onClick: toggle,
     },
   ];
 
   return (
     <>
-      <Section title='Media' actions={actions}>
+      <Section title='Média' actions={actions}>
         {product.images && product.images.length > 0 && (
           <div className='grid grid-cols-3 gap-xsmall mt-base'>
             {product.images.map((image, index) => {
@@ -29,7 +29,7 @@ const MediaSection = ({ product }: Props) => {
                 <div key={image.id} className='aspect-square flex items-center justify-center'>
                   <img
                     src={image.url}
-                    alt={`Image ${index + 1}`}
+                    alt={`Obrázek ${index + 1}`}
                     className='object-contain rounded-rounded max-w-full max-h-full'
                   />
                 </div>

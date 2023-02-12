@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from "react";
 
-import { BatchJob } from '@medusajs/medusa';
+import { BatchJob } from "@medusajs/medusa";
 import {
   useAdminBatchJob,
   useAdminCancelBatchJob,
@@ -8,11 +8,11 @@ import {
   useAdminCreateBatchJob,
   useAdminDeleteFile,
   useAdminUploadProtectedFile,
-} from 'medusa-react';
+} from "medusa-react";
 
-import UploadModal from '../../../components/organisms/upload-modal';
-import useNotification from '../../../hooks/use-notification';
-import { PollingContext } from '../../../context/polling';
+import UploadModal from "../../../components/organisms/upload-modal";
+import useNotification from "../../../hooks/use-notification";
+import { PollingContext } from "../../../context/polling";
 
 /**
  * Hook returns a batch job. The endpoint is polled every 2s while the job is processing.
@@ -20,7 +20,7 @@ import { PollingContext } from '../../../context/polling';
 function useImportBatchJob(batchJobId?: string) {
   const [batchJob, setBatchJob] = useState<BatchJob>();
 
-  const isBatchJobProcessing = batchJob?.status === 'created' || batchJob?.status === 'confirmed';
+  const isBatchJobProcessing = batchJob?.status === "created" || batchJob?.status === "confirmed";
 
   const { batch_job } = useAdminBatchJob(batchJobId!, {
     enabled: !!batchJobId,
@@ -63,17 +63,17 @@ function ImportProducts(props: ImportProductsProps) {
 
   const isUploaded = !!fileKey;
   const isPreprocessed = !!batchJob?.result;
-  const hasError = batchJob?.status === 'failed';
+  const hasError = batchJob?.status === "failed";
 
   const progress = isPreprocessed ? batchJob!.result.advancement_count / batchJob!.result.count : undefined;
 
   const status = hasError
-    ? 'Error occurred while processing'
+    ? "Při zpracování došlo k chybě"
     : isPreprocessed
     ? undefined
     : isUploaded
-    ? 'Preprocessing...'
-    : 'Uploading...';
+    ? "Předběžné zpracování..."
+    : "Nahrávání...";
 
   /**
    * Confirm job on submit.
@@ -81,9 +81,9 @@ function ImportProducts(props: ImportProductsProps) {
   const onSubmit = async () => {
     await confirmBatchJob();
     notification(
-      'Success',
-      'Import confirmed for processing. Progress info is available in the activity drawer.',
-      'success',
+      "Úspěch",
+      "Import potvrzen ke zpracování. Informace o průběhu jsou k dispozici v zásuvce aktivity.",
+      "success",
     );
     props.handleClose();
   };
@@ -100,14 +100,14 @@ function ImportProducts(props: ImportProductsProps) {
       const batchJob = await createBatchJob({
         dry_run: true,
         context: { fileKey: _fileKey },
-        type: 'product-import',
+        type: "product-import",
       });
 
       resetInterval();
 
       setBatchJobId(batchJob.batch_job.id);
     } catch (e) {
-      notification('Error', 'Import failed.', 'error');
+      notification("Chyba", "Import se nezdařil.", "error");
       if (fileKey) {
         await deleteFile({ file_key: fileKey });
       }
@@ -142,14 +142,14 @@ function ImportProducts(props: ImportProductsProps) {
       try {
         deleteFile({ file_key: fileKey });
       } catch (e) {
-        notification('Error', 'Failed to delete the CSV file', 'error');
+        notification("Chyba", "Soubor CSV se nepodařilo odstranit", "error");
       }
     }
 
     try {
       cancelBathJob();
     } catch (e) {
-      notification('Error', 'Failed to cancel the batch job', 'error');
+      notification("Chyba", "Nepodařilo se zrušit dávkovou úlohu", "error");
     }
 
     setBatchJobId(undefined);
@@ -160,7 +160,7 @@ function ImportProducts(props: ImportProductsProps) {
    */
   const onClose = () => {
     props.handleClose();
-    if (!['confirmed', 'completed', 'canceled', 'failed'].includes(batchJob?.status)) {
+    if (!["confirmed", "completed", "canceled", "failed"].includes(batchJob?.status)) {
       if (fileKey) {
         deleteFile({ file_key: fileKey });
       }
@@ -181,11 +181,11 @@ function ImportProducts(props: ImportProductsProps) {
       summary={getSummary()}
       onFileRemove={onFileRemove}
       processUpload={processUpload}
-      fileTitle={'products list'}
+      fileTitle={"seznam produktů"}
       templateLink='/temp/product-import-template.csv'
-      description2Title='Unsure about how to arrange your list?'
-      description2Text='Download the template below to ensure you are following the correct format.'
-      description1Text='Through imports you can add or update products. To update existing products/variants you must set an existing id in the Product/Variant id columns. If the value is unset a new record will be created. You will be asked for confirmation before we import products.'
+      description2Title='Nejste si jisti, jak seznam uspořádat?'
+      description2Text='Stáhněte si níže uvedenou šablonu, abyste se ujistili, že dodržujete správný formát.'
+      description1Text='Prostřednictvím importů můžete přidávat nebo aktualizovat produkty. Chcete-li aktualizovat existující produkty/varianty, musíte nastavit existující id ve sloupcích Product/Variant id. Pokud hodnota není nastavena, vytvoří se nový záznam. Před importem produktů budete požádáni o potvrzení.'
     />
   );
 }

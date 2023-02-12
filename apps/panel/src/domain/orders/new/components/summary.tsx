@@ -1,18 +1,18 @@
-import clsx from 'clsx';
-import { useAdminGetDiscountByCode, useAdminShippingOptions } from 'medusa-react';
-import React, { useContext, useEffect, useMemo, useState } from 'react';
-import { useWatch } from 'react-hook-form';
-import Avatar from '../../../../components/atoms/avatar';
-import Button from '../../../../components/fundamentals/button';
-import CrossIcon from '../../../../components/fundamentals/icons/cross-icon';
-import PlusIcon from '../../../../components/fundamentals/icons/plus-icon';
-import ImagePlaceholder from '../../../../components/fundamentals/image-placeholder';
-import Input from '../../../../components/molecules/input';
-import { SteppedContext } from '../../../../components/molecules/modal/stepped-modal';
-import Table from '../../../../components/molecules/table';
-import isNullishObject from '../../../../utils/is-nullish-object';
-import { displayAmount, extractOptionPrice } from '../../../../utils/prices';
-import { useNewOrderForm } from '../form';
+import clsx from "clsx";
+import { useAdminGetDiscountByCode, useAdminShippingOptions } from "medusa-react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
+import { useWatch } from "react-hook-form";
+import Avatar from "../../../../components/atoms/avatar";
+import Button from "../../../../components/fundamentals/button";
+import CrossIcon from "../../../../components/fundamentals/icons/cross-icon";
+import PlusIcon from "../../../../components/fundamentals/icons/plus-icon";
+import ImagePlaceholder from "../../../../components/fundamentals/image-placeholder";
+import Input from "../../../../components/molecules/input";
+import { SteppedContext } from "../../../../components/molecules/modal/stepped-modal";
+import Table from "../../../../components/molecules/table";
+import isNullishObject from "../../../../utils/is-nullish-object";
+import { displayAmount, extractOptionPrice } from "../../../../utils/prices";
+import { useNewOrderForm } from "../form";
 
 const Summary = () => {
   const [showAddDiscount, setShowAddDiscount] = useState(false);
@@ -27,38 +27,38 @@ const Summary = () => {
   const shipping = useWatch({
     defaultValue: undefined,
     control: form.control,
-    name: 'shipping_address',
+    name: "shipping_address",
   });
 
   const billing = useWatch({
     defaultValue: undefined,
     control: form.control,
-    name: 'billing_address',
+    name: "billing_address",
   });
 
   const email = useWatch({
     control: form.control,
-    name: 'email',
+    name: "email",
   });
 
   const region = useWatch({
     control: form.control,
-    name: 'region',
+    name: "region",
   });
 
   const discountCode = useWatch({
     control: form.control,
-    name: 'discount_code',
+    name: "discount_code",
   });
 
   const shippingOption = useWatch({
     control: form.control,
-    name: 'shipping_option',
+    name: "shipping_option",
   });
 
   const customShippingPrice = useWatch({
     control: form.control,
-    name: 'custom_shipping_price',
+    name: "custom_shipping_price",
   });
 
   const { discount, status } = useAdminGetDiscountByCode(discountCode!, {
@@ -73,7 +73,7 @@ const Summary = () => {
   );
 
   const shippingOptionPrice = useMemo(() => {
-    if (!shippingOption || !shipping_options) {
+    if (!(shippingOption && shipping_options)) {
       return 0;
     }
 
@@ -87,47 +87,46 @@ const Summary = () => {
   }, [shipping_options, shippingOption]);
 
   const handleAddDiscount = async () => {
-    form.setValue('discount_code', code);
+    form.setValue("discount_code", code);
   };
 
   useEffect(() => {
-    if (!discount || !regionObj) {
+    if (!(discount && regionObj)) {
       return;
     }
 
     if (!discount.regions.find((d) => d.id === regionObj.id)) {
-      setDiscError('The discount is not applicable to the selected region');
+      setDiscError("Sleva se nevztahuje na vybraný region");
       setCode(undefined);
-      form.setValue('discount_code', undefined);
+      form.setValue("discount_code", undefined);
       setShowAddDiscount(true);
     }
   }, [discount]);
 
   useEffect(() => {
-    if (status === 'error') {
-      setDiscError('The discount code is invalid');
+    if (status === "error") {
+      setDiscError("Slevový kód je neplatný");
       setCode(undefined);
-      form.setValue('discount_code', undefined);
+      form.setValue("discount_code", undefined);
       setShowAddDiscount(true);
     }
   }, [status]);
 
   const onDiscountRemove = () => {
-    form.setValue('discount_code', undefined);
+    form.setValue("discount_code", undefined);
     setShowAddDiscount(false);
-    setCode('');
+    setCode("");
   };
 
   return (
     <div className='min-h-[705px]'>
-      <SummarySection title={'Items'} editIndex={1}>
+      <SummarySection title={"Items"} editIndex={1}>
         <Table>
           <Table.Head>
             <Table.HeadRow className='text-grey-50 border-t inter-small-semibold'>
               <Table.HeadCell>Details</Table.HeadCell>
-              <Table.HeadCell className='text-right'>Quantity</Table.HeadCell>
-              <Table.HeadCell className='text-right'>Price (excl. Taxes)</Table.HeadCell>
-              <Table.HeadCell></Table.HeadCell>
+              <Table.HeadCell className='text-right'>Množství</Table.HeadCell>
+              <Table.HeadCell className='text-right'>Cena (bez daně))</Table.HeadCell>
             </Table.HeadRow>
           </Table.Head>
           <Table.Body>
@@ -135,12 +134,12 @@ const Summary = () => {
               items &&
               items.fields.map((item) => {
                 return (
-                  <Table.Row key={item.id} className={clsx('border-b-grey-0 hover:bg-grey-0')}>
+                  <Table.Row key={item.id} className={clsx("border-b-grey-0 hover:bg-grey-0")}>
                     <Table.Cell>
                       <div className='min-w-[240px] flex py-2'>
                         <div className='w-[30px] h-[40px] '>
                           {item.thumbnail ? (
-                            <img className='h-full w-full object-cover rounded' src={item.thumbnail} />
+                            <img className='h-full w-full object-cover rounded' src={item.thumbnail} alt={item.title} />
                           ) : (
                             <ImagePlaceholder />
                           )}
@@ -162,7 +161,7 @@ const Summary = () => {
               })}
           </Table.Body>
         </Table>
-        {!showAddDiscount && !discount?.rule && (
+        {!(showAddDiscount || discount?.rule ) && (
           <div className='w-full flex justify-end'>
             <Button
               variant='ghost'
@@ -171,7 +170,7 @@ const Summary = () => {
               onClick={() => setShowAddDiscount(true)}
             >
               <PlusIcon size={20} />
-              Add Discount
+              Přidat slevu
             </Button>
           </div>
         )}
@@ -207,11 +206,11 @@ const Summary = () => {
                 className='border h-full border-grey-20'
                 variant='ghost'
                 size='small'
-                loading={status === 'loading'}
+                loading={status === "loading"}
                 onClick={() => handleAddDiscount()}
               >
                 <PlusIcon size={20} />
-                Add Discount
+                Přidat slevu
               </Button>
             </div>
           </>
@@ -220,34 +219,31 @@ const Summary = () => {
           <div className='flex flex-col w-full border-b border-t border-grey-20 pt-4 mt-4 last:border-b-0 inter-small-regular '>
             <div className='flex w-full justify-between inter-base-semibold mb-4'>
               <span>
-                Discount
-                <span className='inter-base-regular text-grey-50 ml-0.5'>(Code: {discount.code})</span>
+                Sleva
+                <span className='inter-base-regular text-grey-50 ml-0.5'>(Kód: {discount.code})</span>
               </span>
-              <span
-                onClick={() => onDiscountRemove()}
-                className='inter-small-semibold text-violet-60 cursor-pointer'
-              >
+              <span onClick={() => onDiscountRemove()} className='inter-small-semibold text-violet-60 cursor-pointer'>
                 <CrossIcon size={20} />
               </span>
             </div>
             <div className='flex w-full'>
               <div
-                className={clsx('flex flex-col border-grey-20 pr-6', {
-                  'border-r': discount.rule.type !== 'free_shipping',
+                className={clsx("flex flex-col border-grey-20 pr-6", {
+                  "border-r": discount.rule.type !== "free_shipping",
                 })}
               >
-                <span className='text-grey-50'>Type</span>
+                <span className='text-grey-50'>Typ</span>
                 <span>
-                  {discount.rule.type !== 'free_shipping'
+                  {discount.rule.type !== "free_shipping"
                     ? `${discount.rule.type.charAt(0).toUpperCase()}${discount.rule.type.slice(1)}`
-                    : 'Free Shipping'}
+                    : "Doprava zdarma"}
                 </span>
               </div>
-              {discount.rule.type !== 'free_shipping' && (
+              {discount.rule.type !== "free_shipping" && (
                 <div className='pl-6 flex flex-col'>
-                  <span className='text-grey-50'>Value</span>
+                  <span className='text-grey-50'>Hodnota</span>
                   <span>
-                    {discount.rule.type === 'fixed'
+                    {discount.rule.type === "fixed"
                       ? `${displayAmount(
                           regionObj.currency_code,
                           discount.rule.value,
@@ -260,7 +256,7 @@ const Summary = () => {
           </div>
         )}
       </SummarySection>
-      <SummarySection title={'Customer'} editIndex={3}>
+      <SummarySection title={"Customer"} editIndex={3}>
         <div className='flex items-center'>
           <div className='w-5 h-5 mr-3'>
             <Avatar
@@ -278,11 +274,11 @@ const Summary = () => {
       </SummarySection>
 
       {selectedShippingOption && (
-        <SummarySection title={'Shipping details'} editIndex={2}>
+        <SummarySection title={"Shipping details"} editIndex={2}>
           <div className='grid grid-cols-2 gap-x-6 w-full'>
             {!isNullishObject(shipping) && shipping && (
               <div className='border-r flex flex-col border-grey-20 pr-6'>
-                <span className='text-grey-50'>Address</span>
+                <span className='text-grey-50'>Adresa</span>
                 <span>
                   {shipping.address_1}, {shipping.address_2}
                 </span>
@@ -294,9 +290,9 @@ const Summary = () => {
             )}
             {regionObj && (
               <div className='flex flex-col'>
-                <span className='text-grey-50'>Shipping method</span>
+                <span className='text-grey-50'>Způsob přepravy</span>
                 <span>
-                  {selectedShippingOption.name} -{' '}
+                  {selectedShippingOption.name} -{" "}
                   {customShippingPrice && regionObj ? (
                     <p>
                       <span className='line-through mr-2 text-grey-40'>
@@ -316,8 +312,8 @@ const Summary = () => {
       )}
 
       {!isNullishObject(billing) && billing && (
-        <SummarySection title={'Billing details'} editIndex={3}>
-          <span className='text-grey-50'>Address</span>
+        <SummarySection title={"Billing details"} editIndex={3}>
+          <span className='text-grey-50'>Adresa</span>
           <span>
             {billing.address_1}, {billing.address_2}
           </span>
@@ -337,11 +333,8 @@ const SummarySection = ({ title, editIndex, children }) => {
     <div className='flex flex-col w-full border-b border-grey-20 mt-4 pb-8 last:border-b-0 inter-small-regular '>
       <div className='flex w-full justify-between inter-base-semibold mb-4'>
         {title}
-        <span
-          onClick={() => setPage(editIndex)}
-          className='inter-small-semibold text-violet-60 cursor-pointer'
-        >
-          Edit
+        <span onClick={() => setPage(editIndex)} className='inter-small-semibold text-violet-60 cursor-pointer'>
+          Upravit
         </span>
       </div>
       {children}

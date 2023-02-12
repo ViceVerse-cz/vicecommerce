@@ -1,24 +1,24 @@
-import { useAdminCreateBatchJob } from 'medusa-react';
-import React, { useContext, useMemo, useState } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { useAdminCreateBatchJob } from "medusa-react";
+import React, { useContext, useMemo, useState } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
 
-import Button from '../../components/fundamentals/button';
-import ExportIcon from '../../components/fundamentals/icons/export-icon';
-import BodyCard from '../../components/organisms/body-card';
-import TableViewHeader from '../../components/organisms/custom-table-header';
-import ExportModal from '../../components/organisms/export-modal';
-import OrderTable from '../../components/templates/order-table';
-import useNotification from '../../hooks/use-notification';
-import useToggleState from '../../hooks/use-toggle-state';
-import { getErrorMessage } from '../../utils/error-messages';
-import { PollingContext } from '../../context/polling';
-import Details from './details';
-import { transformFiltersAsExportContext } from './utils';
+import Button from "../../components/fundamentals/button";
+import ExportIcon from "../../components/fundamentals/icons/export-icon";
+import BodyCard from "../../components/organisms/body-card";
+import TableViewHeader from "../../components/organisms/custom-table-header";
+import ExportModal from "../../components/organisms/export-modal";
+import OrderTable from "../../components/templates/order-table";
+import useNotification from "../../hooks/use-notification";
+import useToggleState from "../../hooks/use-toggle-state";
+import { getErrorMessage } from "../../utils/error-messages";
+import { PollingContext } from "../../context/polling";
+import Details from "./details";
+import { transformFiltersAsExportContext } from "./utils";
 
-const VIEWS = ['orders', 'drafts'];
+const VIEWS = ["objednávky", "návrhy"];
 
 const OrderIndex = () => {
-  const view = 'orders';
+  const view = "objednávky";
 
   const { resetInterval } = useContext(PollingContext);
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ const OrderIndex = () => {
     return [
       <Button variant='secondary' size='small' onClick={() => openExportModal()}>
         <ExportIcon size={20} />
-        Export Orders
+        Exportovat objednávky
       </Button>,
     ];
   }, [view]);
@@ -41,17 +41,17 @@ const OrderIndex = () => {
   const handleCreateExport = () => {
     const reqObj = {
       dry_run: false,
-      type: 'order-export',
+      type: "order-export",
       context: contextFilters ? transformFiltersAsExportContext(contextFilters) : {},
     };
 
     createBatchJob.mutate(reqObj, {
       onSuccess: () => {
         resetInterval();
-        notification('Success', 'Successfully initiated export', 'success');
+        notification("Úspěch", "Úspěšně zahájený export", "success");
       },
       onError: (err) => {
-        notification('Error', getErrorMessage(err), 'error');
+        notification("Chyba", getErrorMessage(err), "error");
       },
     });
 
@@ -67,8 +67,8 @@ const OrderIndex = () => {
               <TableViewHeader
                 views={VIEWS}
                 setActiveView={(v) => {
-                  if (v === 'drafts') {
-                    navigate(`/a/draft-orders`);
+                  if (v === "návrhy") {
+                    navigate("/a/draft-orders");
                   }
                 }}
                 activeView={view}
@@ -83,7 +83,7 @@ const OrderIndex = () => {
       </div>
       {exportModalOpen && (
         <ExportModal
-          title='Export Orders'
+          title='Exportovat objednávky'
           handleClose={() => closeExportModal()}
           onSubmit={handleCreateExport}
           loading={createBatchJob.isLoading}

@@ -1,7 +1,7 @@
-import React from 'react';
-import { Controller, useFieldArray } from 'react-hook-form';
-import { NextCreateableSelect } from '../../../../../components/molecules/select/next-select';
-import { NestedForm } from '../../../../../utils/nested-form';
+import React from "react";
+import { Controller, useFieldArray } from "react-hook-form";
+import { NextCreateableSelect } from "../../../../../components/molecules/select/next-select";
+import { NestedForm } from "../../../../../utils/nested-form";
 
 export type VariantOptionValueType = {
   option_id: string;
@@ -30,7 +30,7 @@ const VariantSelectOptionsForm = ({ form, options, onCreateOption }: Props) => {
   const { fields } = useFieldArray({
     control: form.control,
     name: path(),
-    keyName: 'fieldId',
+    keyName: "fieldId",
   });
 
   return (
@@ -49,7 +49,7 @@ const VariantSelectOptionsForm = ({ form, options, onCreateOption }: Props) => {
                   onChange={onChange}
                   onBlur={onBlur}
                   label={field.title}
-                  placeholder='Choose an option'
+                  placeholder='Vyberte si možnost'
                   required
                   options={options.filter((o) => o.option_id === field.option_id) || []}
                   onCreateOption={(value) => {

@@ -1,14 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Controller, useWatch } from 'react-hook-form';
-import Spinner from '../../../../components/atoms/spinner';
-import Button from '../../../../components/fundamentals/button';
-import AlertIcon from '../../../../components/fundamentals/icons/alert-icon';
-import TrashIcon from '../../../../components/fundamentals/icons/trash-icon';
-import { SteppedContext } from '../../../../components/molecules/modal/stepped-modal';
-import Select from '../../../../components/molecules/select';
-import CurrencyInput from '../../../../components/organisms/currency-input';
-import { extractOptionPrice } from '../../../../utils/prices';
-import { useNewOrderForm } from '../form';
+import React, { useContext, useEffect, useState } from "react";
+import { Controller, useWatch } from "react-hook-form";
+import Spinner from "../../../../components/atoms/spinner";
+import Button from "../../../../components/fundamentals/button";
+import AlertIcon from "../../../../components/fundamentals/icons/alert-icon";
+import TrashIcon from "../../../../components/fundamentals/icons/trash-icon";
+import { SteppedContext } from "../../../../components/molecules/modal/stepped-modal";
+import Select from "../../../../components/molecules/select";
+import CurrencyInput from "../../../../components/organisms/currency-input";
+import { extractOptionPrice } from "../../../../utils/prices";
+import { useNewOrderForm } from "../form";
 
 const SelectShippingMethod = () => {
   const { disableNextPage, enableNextPage } = useContext(SteppedContext);
@@ -21,7 +21,7 @@ const SelectShippingMethod = () => {
 
   const currentCustomPrice = useWatch({
     control,
-    name: 'custom_shipping_price',
+    name: "custom_shipping_price",
   });
 
   useEffect(() => {
@@ -32,12 +32,12 @@ const SelectShippingMethod = () => {
 
   const selectedShippingOption = useWatch({
     control,
-    name: 'shipping_option',
+    name: "shipping_option",
   });
 
   const removeCustomPrice = () => {
     setShowCustomPrice(false);
-    setValue('custom_shipping_price', undefined);
+    setValue("custom_shipping_price", undefined);
   };
 
   useEffect(() => {
@@ -53,7 +53,7 @@ const SelectShippingMethod = () => {
   return (
     <div className='min-h-[705px]'>
       <span className='inter-base-semibold'>
-        Shipping method <span className='inter-base-regular text-grey-50'>(To {region!.name})</span>
+        Způsob přepravy <span className='inter-base-regular text-grey-50'>(Do {region!.name})</span>
       </span>
 
       {region ? (
@@ -63,9 +63,9 @@ const SelectShippingMethod = () => {
               <AlertIcon size={20} />
             </div>
             <div className='flex flex-col'>
-              <span className='inter-small-semibold'>Attention!</span>
-              You don't have any options for orders without shipping. Please add one (e.g. "In-store
-              fulfillment") with "Show on website" unchecked in region settings and continue.
+              <span className='inter-small-semibold'>Pozor!</span>
+              U objednávek bez dopravy nemáte žádné možnosti. Přidejte prosím jednu z nich (např. "Plnění v obchodě") s
+              odškrtnutou možností "Zobrazit na webových stránkách" v nastavení regionu a pokračujte.
             </div>
           </div>
         ) : (
@@ -76,7 +76,7 @@ const SelectShippingMethod = () => {
               render={({ field: { value, onChange } }) => {
                 return (
                   <Select
-                    label='Choose a shipping method'
+                    label='Výběr způsobu přepravy'
                     onChange={onChange}
                     value={value}
                     options={
@@ -112,7 +112,7 @@ const SelectShippingMethod = () => {
                       render={({ field: { value, onChange } }) => {
                         return (
                           <CurrencyInput.Root readOnly size='small' currentCurrency={region.currency_code}>
-                            <CurrencyInput.Amount label='Custom Price' amount={value} onChange={onChange} />
+                            <CurrencyInput.Amount label='Vlastní cena' amount={value} onChange={onChange} />
                           </CurrencyInput.Root>
                         );
                       }}

@@ -98,7 +98,7 @@ const EditVariantsModal = ({ open, onClose, product }: Props) => {
       () => {
         resetAndClose();
       },
-      "Variants were successfully updated",
+      "Varianty byly úspěšně aktualizovány",
     );
   });
 
@@ -111,7 +111,7 @@ const EditVariantsModal = ({ open, onClose, product }: Props) => {
       <LayeredModal handleClose={resetAndClose} open={open} context={context}>
         <Modal.Body>
           <Modal.Header handleClose={resetAndClose}>
-            <h1 className='inter-xlarge-semibold'>Edit Variants</h1>
+            <h1 className='inter-xlarge-semibold'>Upravit varianty</h1>
           </Modal.Header>
           <FormProvider {...form}>
             <form onSubmit={onSubmit}>
@@ -120,8 +120,8 @@ const EditVariantsModal = ({ open, onClose, product }: Props) => {
                   Product variants <span className='inter-base-regular text-grey-50'>({product.variants.length})</span>
                 </h2>
                 <div className='grid grid-cols-[1fr_1fr_48px] pr-base inter-small-semibold text-grey-50 mb-small'>
-                  <p className='col-start-1 col-end-1 text-left'>Variant</p>
-                  <p className='col-start-2 col-end-2 text-right'>Inventory</p>
+                  <p className='col-start-1 col-end-1 text-left'>Varianta</p>
+                  <p className='col-start-2 col-end-2 text-right'>Inventura</p>
                 </div>
                 <div>{fields.map((card, i) => renderCard(card, i))}</div>
               </Modal.Content>

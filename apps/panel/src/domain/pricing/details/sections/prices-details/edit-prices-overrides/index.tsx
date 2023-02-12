@@ -1,15 +1,15 @@
-import { MoneyAmount, Product } from '@medusajs/medusa';
-import { useAdminStore, useAdminUpdatePriceList } from 'medusa-react';
-import { useParams } from 'react-router-dom';
-import Button from '../../../../../../components/fundamentals/button';
-import { CollapsibleTree } from '../../../../../../components/molecules/collapsible-tree';
-import Modal from '../../../../../../components/molecules/modal';
-import LayeredModal, { useLayeredModal } from '../../../../../../components/molecules/modal/layered-modal';
-import PriceOverrides from '../../../../../../components/templates/price-overrides';
-import useNotification from '../../../../../../hooks/use-notification';
-import { mergeExistingWithDefault } from '../../../utils';
-import { mapToPriceList } from './mappers';
-import ProductVariantLeaf from './product-variant-leaf';
+import { MoneyAmount, Product } from "@medusajs/medusa";
+import { useAdminStore, useAdminUpdatePriceList } from "medusa-react";
+import { useParams } from "react-router-dom";
+import Button from "../../../../../../components/fundamentals/button";
+import { CollapsibleTree } from "../../../../../../components/molecules/collapsible-tree";
+import Modal from "../../../../../../components/molecules/modal";
+import LayeredModal, { useLayeredModal } from "../../../../../../components/molecules/modal/layered-modal";
+import PriceOverrides from "../../../../../../components/templates/price-overrides";
+import useNotification from "../../../../../../hooks/use-notification";
+import { mergeExistingWithDefault } from "../../../utils";
+import { mapToPriceList } from "./mappers";
+import ProductVariantLeaf from "./product-variant-leaf";
 
 type EditPricesOverridesModalProps = {
   product: Product;
@@ -19,7 +19,7 @@ type EditPricesOverridesModalProps = {
 const EditPricesOverridesModal = ({ close, product }: EditPricesOverridesModalProps) => {
   const context = useLayeredModal();
   const { id: priceListId } = useParams();
-  const updatePriceList = useAdminUpdatePriceList(priceListId || '');
+  const updatePriceList = useAdminUpdatePriceList(priceListId || "");
   const { store } = useAdminStore();
 
   const defaultPrices = store?.currencies.map((curr) => ({
@@ -31,7 +31,7 @@ const EditPricesOverridesModal = ({ close, product }: EditPricesOverridesModalPr
 
   const getOnClick = (variant) => () =>
     context.push({
-      title: `Edit price overrides`,
+      title: "Úprava přepisů cen",
       onBack: () => context.pop(),
       view: (
         <PriceOverrides
@@ -54,7 +54,7 @@ const EditPricesOverridesModal = ({ close, product }: EditPricesOverridesModalPr
                 onSuccess: () => {
                   context.pop();
                   close();
-                  notification('Success', 'Price overrides updated', 'success');
+                  notification("Úspěch", "Aktualizace přepisů cen", "success");
                 },
               },
             );
@@ -68,8 +68,7 @@ const EditPricesOverridesModal = ({ close, product }: EditPricesOverridesModalPr
       <Modal.Body className='h-[calc(100vh-134px)] flex flex-col'>
         <Modal.Header handleClose={close}>
           <h1 className='inter-xlarge-semibold'>
-            Price overrides{' '}
-            <span className='text-grey-50 inter-xlarge-regular truncate'>({product.title})</span>
+            Price overrides <span className='text-grey-50 inter-xlarge-regular truncate'>({product.title})</span>
           </h1>
         </Modal.Header>
 
@@ -104,15 +103,10 @@ const EditPricesOverridesModal = ({ close, product }: EditPricesOverridesModalPr
               size='large'
               onClick={close}
             >
-              Cancel
+              Zrušit
             </Button>
-            <Button
-              disabled
-              size='large'
-              className='w-32 text-small justify-center rounded-rounded'
-              variant='primary'
-            >
-              Save
+            <Button disabled size='large' className='w-32 text-small justify-center rounded-rounded' variant='primary'>
+              Uložit
             </Button>
           </div>
         </Modal.Footer>

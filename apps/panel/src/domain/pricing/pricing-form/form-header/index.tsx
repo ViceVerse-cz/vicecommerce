@@ -1,17 +1,17 @@
-import { useAdminCreatePriceList, useAdminUpdatePriceList } from 'medusa-react';
-import React, { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Button from '../../../../components/fundamentals/button';
-import CrossIcon from '../../../../components/fundamentals/icons/cross-icon';
-import { FeatureFlagContext } from '../../../../context/feature-flag';
-import useNotification from '../../../../hooks/use-notification';
-import { getErrorMessage } from '../../../../utils/error-messages';
+import { useAdminCreatePriceList, useAdminUpdatePriceList } from "medusa-react";
+import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import Button from "../../../../components/fundamentals/button";
+import CrossIcon from "../../../../components/fundamentals/icons/cross-icon";
+import { FeatureFlagContext } from "../../../../context/feature-flag";
+import useNotification from "../../../../hooks/use-notification";
+import { getErrorMessage } from "../../../../utils/error-messages";
 import {
   mapFormValuesToCreatePriceList,
   mapFormValuesToUpdatePriceListDetails,
   mapFormValuesToUpdatePriceListPrices,
-} from '../form/mappers';
-import { usePriceListForm } from '../form/pricing-form-context';
+} from "../form/mappers";
+import { usePriceListForm } from "../form/pricing-form-context";
 import {
   CreatePriceListFormValues,
   HeaderAction,
@@ -19,7 +19,7 @@ import {
   PriceListFormValues,
   PriceListStatus,
   ViewType,
-} from '../types';
+} from "../types";
 
 const FormHeader = (props: PriceListFormProps & { onClose?: () => void }) => {
   const { handleSubmit } = usePriceListForm();
@@ -41,7 +41,7 @@ const FormHeader = (props: PriceListFormProps & { onClose?: () => void }) => {
 
   const onPublish = (values: CreatePriceListFormValues) => {
     const data = mapFormValuesToCreatePriceList(values, PriceListStatus.ACTIVE);
-    if (isFeatureEnabled('tax_inclusive_pricing')) {
+    if (isFeatureEnabled("tax_inclusive_pricing")) {
       data.includes_tax = values.includes_tax;
     }
     createPriceList.mutate(data, {
@@ -49,14 +49,14 @@ const FormHeader = (props: PriceListFormProps & { onClose?: () => void }) => {
         navigate(`/a/pricing/${price_list.id}`);
       },
       onError: (error) => {
-        notification('Error', getErrorMessage(error), 'error');
+        notification("Chyba", getErrorMessage(error), "error");
       },
     });
   };
 
   const onSaveAsDraft = (values: CreatePriceListFormValues) => {
     const data = mapFormValuesToCreatePriceList(values, PriceListStatus.DRAFT);
-    if (isFeatureEnabled('tax_inclusive_pricing')) {
+    if (isFeatureEnabled("tax_inclusive_pricing")) {
       data.includes_tax = values.includes_tax;
     }
     createPriceList.mutate(data, {
@@ -64,23 +64,23 @@ const FormHeader = (props: PriceListFormProps & { onClose?: () => void }) => {
         navigate(`/a/pricing/${price_list.id}`);
       },
       onError: (error) => {
-        notification('Error', getErrorMessage(error), 'error');
+        notification("Chyba", getErrorMessage(error), "error");
       },
     });
   };
 
   const onUpdateDetails = (values: PriceListFormValues) => {
     const data = mapFormValuesToUpdatePriceListDetails(values);
-    if (isFeatureEnabled('tax_inclusive_pricing')) {
+    if (isFeatureEnabled("tax_inclusive_pricing")) {
       data.includes_tax = values.includes_tax;
     }
     updatePriceList.mutate(data, {
       onSuccess: ({ price_list }) => {
-        notification('Success', 'Successfully updated price list', 'success');
+        notification("Úspěch", "Úspěšně aktualizovaný ceník", "success");
         closeForm();
       },
       onError: (error) => {
-        notification('Error', getErrorMessage(error), 'error');
+        notification("Chyba", getErrorMessage(error), "error");
       },
     });
   };
@@ -88,10 +88,10 @@ const FormHeader = (props: PriceListFormProps & { onClose?: () => void }) => {
   const onUpdatePrices = (values: PriceListFormValues) => {
     updatePriceList.mutate(mapFormValuesToUpdatePriceListPrices(values), {
       onSuccess: ({ price_list }) => {
-        props.onClose && props.onClose();
+        props.onClose?.();
       },
       onError: (error) => {
-        notification('Error', getErrorMessage(error), 'error');
+        notification("Chyba", getErrorMessage(error), "error");
       },
     });
   };
@@ -102,31 +102,31 @@ const FormHeader = (props: PriceListFormProps & { onClose?: () => void }) => {
   switch (props.viewType) {
     case ViewType.CREATE:
       mainAction = {
-        label: 'Publish price list',
+        label: "Zveřejnění ceníku",
         onClick: handleSubmit(onPublish),
       };
       secondaryAction = {
-        label: 'Save as draft',
+        label: "Uložit jako návrh",
         onClick: handleSubmit(onSaveAsDraft),
       };
       break;
     case ViewType.EDIT_DETAILS:
       mainAction = {
-        label: 'Save changes',
+        label: "Uložení změn",
         onClick: handleSubmit(onUpdateDetails),
       };
       secondaryAction = {
-        label: 'Cancel',
+        label: "Zrušit",
         onClick: closeForm,
       };
       break;
     case ViewType.EDIT_PRICES:
       mainAction = {
-        label: 'Save changes',
+        label: "Uložení změn",
         onClick: handleSubmit(onUpdatePrices),
       };
       secondaryAction = {
-        label: 'Cancel',
+        label: "Zrušit",
         onClick: closeForm,
       };
       break;
@@ -138,12 +138,7 @@ const FormHeader = (props: PriceListFormProps & { onClose?: () => void }) => {
         <CrossIcon size={20} />
       </Button>
       <div className='gap-x-small flex'>
-        <Button
-          onClick={secondaryAction.onClick}
-          size='small'
-          variant='ghost'
-          className='border rounded-rounded'
-        >
+        <Button onClick={secondaryAction.onClick} size='small' variant='ghost' className='border rounded-rounded'>
           {secondaryAction.label}
         </Button>
         <Button size='small' variant='primary' onClick={mainAction.onClick} className='rounded-rounded'>

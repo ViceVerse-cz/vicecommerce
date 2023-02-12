@@ -128,16 +128,16 @@ const OptionsModal = ({ product, open, onClose }: Props) => {
     });
 
     if (errors.length === toCreate.length + toUpdate.length + toDelete.length) {
-      notification("Error", "Failed to update product options", "error");
+      notification("Chyba", "Nepodařilo se aktualizovat možnosti produktu", "error");
       return;
     }
 
     if (errors.length > 0) {
-      notification("Warning", `Failed to; ${errors.join(", ")}.`, "warning");
+      notification("Varování", `Nepodařilo se; ${errors.join(", ")}.`, "warning");
     }
 
     refetch();
-    notification("Success", "Successfully updated product options", "success");
+    notification("Úspěch", "Úspěšně aktualizované možnosti produktů", "success");
     handleClose();
   });
 
@@ -145,22 +145,22 @@ const OptionsModal = ({ product, open, onClose }: Props) => {
     <Modal open={open} handleClose={handleClose}>
       <Modal.Body>
         <Modal.Header handleClose={handleClose}>
-          <h1 className='inter-xlarge-semibold'>Edit Options</h1>
+          <h1 className='inter-xlarge-semibold'>Možnosti úprav</h1>
         </Modal.Header>
         <form onSubmit={onSubmit}>
           <Modal.Content>
-            <h2 className='inter-large-semibold mb-base'>Product options</h2>
+            <h2 className='inter-large-semibold mb-base'>Možnosti produktu</h2>
             <div className='flex flex-col gap-y-small'>
-              <p className='inter-small-semibold text-grey-50'>Option title</p>
+              <p className='inter-small-semibold text-grey-50'>Název možnosti</p>
               <div className='flex flex-col gap-y-xsmall'>
                 {fields.map((field, index) => {
                   return (
                     <div className='grid grid-cols-[1fr,40px] gap-x-xsmall' key={field.id}>
                       <InputField
                         key={field.id}
-                        placeholder='Color'
+                        placeholder='Barva'
                         {...register(`options.${index}.title`, {
-                          required: "Option title is required",
+                          required: "Vyžaduje se název možnosti",
                           minLength: FormValidator.minOneCharRule("Option title"),
                           pattern: FormValidator.whiteSpaceRule("Option title"),
                         })}
@@ -180,13 +180,13 @@ const OptionsModal = ({ product, open, onClose }: Props) => {
               </div>
             </div>
             <Button variant='secondary' className='w-full h-10 mt-base' type='button' onClick={handleAddAnOption}>
-              <PlusIcon size='20' /> Add an option
+              <PlusIcon size='20' /> Přidání možnosti
             </Button>
           </Modal.Content>
           <Modal.Footer>
             <div className='flex items-center justify-end gap-xsmall w-full'>
               <Button variant='secondary' size='small' type='button'>
-                Cancel
+                Zrušit
               </Button>
               <Button variant='primary' size='small' type='submit' disabled={!isDirty} loading={isSubmitting}>
                 Uložit a zavřít

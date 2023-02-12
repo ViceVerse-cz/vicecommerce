@@ -1,11 +1,11 @@
-import React from 'react';
-import { Controller } from 'react-hook-form';
-import InputField from '../../../../components/molecules/input';
-import { NextSelect } from '../../../../components/molecules/select/next-select';
-import { Option } from '../../../../types/shared';
-import { countries } from '../../../../utils/countries';
-import FormValidator from '../../../../utils/form-validator';
-import { NestedForm } from '../../../../utils/nested-form';
+import React from "react";
+import { Controller } from "react-hook-form";
+import InputField from "../../../../components/molecules/input";
+import { NextSelect } from "../../../../components/molecules/select/next-select";
+import { Option } from "../../../../types/shared";
+import { countries } from "../../../../utils/countries";
+import FormValidator from "../../../../utils/form-validator";
+import { NestedForm } from "../../../../utils/nested-form";
 
 export type CustomsFormType = {
   mid_code: string | null;
@@ -38,29 +38,29 @@ const CustomsForm = ({ form }: CustomsFormProps) => {
   return (
     <div className='grid grid-cols-2 gap-large pb-2xsmall'>
       <InputField
-        label='MID Code'
+        label='Kód MID'
         placeholder='XDSKLAD9999...'
-        {...register(path('mid_code'), {
-          pattern: FormValidator.whiteSpaceRule('MID Code'),
+        {...register(path("mid_code"), {
+          pattern: FormValidator.whiteSpaceRule("MID Code"),
         })}
         errors={errors}
       />
       <InputField
-        label='HS Code'
+        label='Kód HS'
         placeholder='BDJSK39277W...'
-        {...register(path('hs_code'), {
-          pattern: FormValidator.whiteSpaceRule('HS Code'),
+        {...register(path("hs_code"), {
+          pattern: FormValidator.whiteSpaceRule("HS Code"),
         })}
         errors={errors}
       />
       <Controller
-        name={path('origin_country')}
+        name={path("origin_country")}
         control={control}
         render={({ field }) => {
           return (
             <NextSelect
-              label='Country of origin'
-              placeholder='Choose a country'
+              label='Země původu'
+              placeholder='Vyberte si zemi'
               options={countryOptions}
               isSearchable
               isClearable

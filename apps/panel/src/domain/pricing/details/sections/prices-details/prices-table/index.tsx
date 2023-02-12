@@ -1,15 +1,15 @@
-import { Product } from '@medusajs/medusa';
-import { useAdminDeletePriceListProductPrices, useAdminPriceListProducts } from 'medusa-react';
-import * as React from 'react';
-import { HeaderGroup, Row } from 'react-table';
-import CancelIcon from '../../../../../../components/fundamentals/icons/cancel-icon';
-import EditIcon from '../../../../../../components/fundamentals/icons/edit-icon';
-import Table from '../../../../../../components/molecules/table';
-import { SelectableTable } from '../../../../../../components/templates/selectable-table';
-import useNotification from '../../../../../../hooks/use-notification';
-import useQueryFilters from '../../../../../../hooks/use-query-filters';
-import { getErrorMessage } from '../../../../../../utils/error-messages';
-import usePricesColumns from './use-columns';
+import { Product } from "@medusajs/medusa";
+import { useAdminDeletePriceListProductPrices, useAdminPriceListProducts } from "medusa-react";
+import * as React from "react";
+import { HeaderGroup, Row } from "react-table";
+import CancelIcon from "../../../../../../components/fundamentals/icons/cancel-icon";
+import EditIcon from "../../../../../../components/fundamentals/icons/edit-icon";
+import Table from "../../../../../../components/molecules/table";
+import { SelectableTable } from "../../../../../../components/templates/selectable-table";
+import useNotification from "../../../../../../hooks/use-notification";
+import useQueryFilters from "../../../../../../hooks/use-query-filters";
+import { getErrorMessage } from "../../../../../../utils/error-messages";
+import usePricesColumns from "./use-columns";
 
 const DEFAULT_PAGE_SIZE = 9;
 const defaultQueryProps = {
@@ -46,7 +46,7 @@ const PricesTable = ({ id, selectProduct }: PricesTableProps) => {
               className='hover:bg-grey-5 hover:cursor-pointer'
             >
               {row.cells.map((cell) => {
-                return <Table.Cell {...cell.getCellProps()}>{cell.render('Cell')}</Table.Cell>;
+                return <Table.Cell {...cell.getCellProps()}>{cell.render("Cell")}</Table.Cell>;
               })}
             </PricesTableRow>
           );
@@ -56,7 +56,7 @@ const PricesTable = ({ id, selectProduct }: PricesTableProps) => {
         totalCount={count}
         options={{
           enableSearch: false,
-          searchPlaceholder: 'Search by name or SKU...',
+          searchPlaceholder: "Vyhledávání podle názvu nebo SKU...",
         }}
         {...params}
       />
@@ -68,9 +68,7 @@ const ProductHeader = ({ headerGroup }: { headerGroup: HeaderGroup<Product> }) =
   return (
     <Table.HeadRow {...headerGroup.getHeaderGroupProps()}>
       {headerGroup.headers.map((col) => (
-        <Table.HeadCell {...col.getHeaderProps(col.getSortByToggleProps())}>
-          {col.render('Header')}
-        </Table.HeadCell>
+        <Table.HeadCell {...col.getHeaderProps(col.getSortByToggleProps())}>{col.render("Header")}</Table.HeadCell>
       ))}
     </Table.HeadRow>
   );
@@ -82,20 +80,20 @@ const PricesTableRow = ({ children, priceListId, product, onClick, ...props }) =
 
   const actions = [
     {
-      label: 'Edit prices',
+      label: "Upravit ceny",
       icon: <EditIcon size={20} />,
       onClick: onClick,
     },
     {
-      label: 'Remove product',
+      label: "Odstranění produktu",
       icon: <CancelIcon size={20} />,
-      variant: 'danger' as const,
+      variant: "danger" as const,
       onClick: () => {
         deleteProductPrices.mutate(undefined, {
           onSuccess: () => {
-            notification('Success', `Deleted prices of product: ${product.title}`, 'success');
+            notification("Úspěch", `Vymazané ceny produktu: ${product.title}`, "success");
           },
-          onError: (err) => notification('Error', getErrorMessage(err), 'error'),
+          onError: (err) => notification("Chyba", getErrorMessage(err), "error"),
         });
       },
     },

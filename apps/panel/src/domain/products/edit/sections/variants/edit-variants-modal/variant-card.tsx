@@ -1,23 +1,23 @@
-import { Product } from '@medusajs/medusa';
-import clsx from 'clsx';
-import type { Identifier, XYCoord } from 'dnd-core';
-import React, { useContext, useMemo, useRef } from 'react';
-import { useDrag, useDrop } from 'react-dnd';
-import { useFormContext } from 'react-hook-form';
-import { VariantItem } from '.';
-import Button from '../../../../../../components/fundamentals/button';
-import EditIcon from '../../../../../../components/fundamentals/icons/edit-icon';
-import GripIcon from '../../../../../../components/fundamentals/icons/grip-icon';
-import MoreHorizontalIcon from '../../../../../../components/fundamentals/icons/more-horizontal-icon';
-import Actionables, { ActionType } from '../../../../../../components/molecules/actionables';
-import InputField from '../../../../../../components/molecules/input';
-import { LayeredModalContext } from '../../../../../../components/molecules/modal/layered-modal';
-import { DragItem } from '../../../../../../types/shared';
-import FormValidator from '../../../../../../utils/form-validator';
-import { useEditVariantScreen } from './edit-variant-screen';
+import { Product } from "@medusajs/medusa";
+import clsx from "clsx";
+import type { Identifier, XYCoord } from "dnd-core";
+import React, { useContext, useMemo, useRef } from "react";
+import { useDrag, useDrop } from "react-dnd";
+import { useFormContext } from "react-hook-form";
+import { VariantItem } from ".";
+import Button from "../../../../../../components/fundamentals/button";
+import EditIcon from "../../../../../../components/fundamentals/icons/edit-icon";
+import GripIcon from "../../../../../../components/fundamentals/icons/grip-icon";
+import MoreHorizontalIcon from "../../../../../../components/fundamentals/icons/more-horizontal-icon";
+import Actionables, { ActionType } from "../../../../../../components/molecules/actionables";
+import InputField from "../../../../../../components/molecules/input";
+import { LayeredModalContext } from "../../../../../../components/molecules/modal/layered-modal";
+import { DragItem } from "../../../../../../types/shared";
+import FormValidator from "../../../../../../utils/form-validator";
+import { useEditVariantScreen } from "./edit-variant-screen";
 
 const ItemTypes = {
-  CARD: 'card',
+  CARD: "card",
 };
 
 export type VariantCardProps = {
@@ -41,7 +41,7 @@ export const VariantCard = ({ id, index, ean, sku, title, moveCard, product }: V
   const actions: ActionType[] = useMemo(() => {
     return [
       {
-        label: 'Edit Variant',
+        label: "Upravit variantu",
         icon: <EditIcon size={20} className='text-grey-50' />,
         onClick: () => push(editVariantScreen),
       },
@@ -103,9 +103,9 @@ export const VariantCard = ({ id, index, ean, sku, title, moveCard, product }: V
       ref={preview}
       data-handler-id={handlerId}
       className={clsx(
-        'grid grid-cols-[32px_1fr_1fr_48px] transition-all rounded-rounded hover:bg-grey-5 focus-within:bg-grey-5 h-16 py-xsmall pl-xsmall pr-base translate-y-0 translate-x-0',
+        "grid grid-cols-[32px_1fr_1fr_48px] transition-all rounded-rounded hover:bg-grey-5 focus-within:bg-grey-5 h-16 py-xsmall pl-xsmall pr-base translate-y-0 translate-x-0",
         {
-          'bg-grey-5 opacity-50': isDragging,
+          "bg-grey-5 opacity-50": isDragging,
         },
       )}
     >
@@ -122,7 +122,7 @@ export const VariantCard = ({ id, index, ean, sku, title, moveCard, product }: V
       <div className='text-right flex items-center justify-end'>
         <InputField
           {...register(`variants.${index}.inventory_quantity`, {
-            min: FormValidator.nonNegativeNumberRule('Inventory'),
+            min: FormValidator.nonNegativeNumberRule("Inventory"),
             valueAsNumber: true,
           })}
           type='number'
@@ -136,10 +136,7 @@ export const VariantCard = ({ id, index, ean, sku, title, moveCard, product }: V
           forceDropdown
           actions={actions}
           customTrigger={
-            <Button
-              variant='ghost'
-              className='w-xlarge h-xlarge p-0 flex items-center justify-center text-grey-50'
-            >
+            <Button variant='ghost' className='w-xlarge h-xlarge p-0 flex items-center justify-center text-grey-50'>
               <MoreHorizontalIcon size={20} />
             </Button>
           }

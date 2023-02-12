@@ -92,14 +92,14 @@ const NewOrder = ({ onDismiss }: NewOrderProps) => {
       },
       {
         onSuccess: ({ draft_order }) => {
-          notification("Success", "Order created", "success");
+          notification("Úspěch", "Vytvořená objednávka", "success");
           reset();
           onDismiss();
           steppedContext.reset();
           navigate(`/a/draft-orders/${draft_order.id}`);
         },
         onError: (error) => {
-          notification("Error", error.message, "error");
+          notification("Chyba", error.message, "error");
         },
       },
     );

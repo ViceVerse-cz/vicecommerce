@@ -1,13 +1,13 @@
-import { Product } from '@medusajs/medusa';
-import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import Button from '../../../../../components/fundamentals/button';
-import Modal from '../../../../../components/molecules/modal';
-import { nestedForm } from '../../../../../utils/nested-form';
-import DiscountableForm, { DiscountableFormType } from '../../../components/discountable-form';
-import GeneralForm, { GeneralFormType } from '../../../components/general-form';
-import OrganizeForm, { OrganizeFormType } from '../../../components/organize-form';
-import useEditProductActions from '../../hooks/use-edit-product-actions';
+import { Product } from "@medusajs/medusa";
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import Button from "../../../../../components/fundamentals/button";
+import Modal from "../../../../../components/molecules/modal";
+import { nestedForm } from "../../../../../utils/nested-form";
+import DiscountableForm, { DiscountableFormType } from "../../../components/discountable-form";
+import GeneralForm, { GeneralFormType } from "../../../components/general-form";
+import OrganizeForm, { OrganizeFormType } from "../../../components/organize-form";
+import useEditProductActions from "../../hooks/use-edit-product-actions";
 
 type Props = {
   product: Product;
@@ -74,24 +74,24 @@ const GeneralModal = ({ product, open, onClose }: Props) => {
     <Modal open={open} handleClose={onReset} isLargeModal>
       <Modal.Body>
         <Modal.Header handleClose={onReset}>
-          <h1 className='inter-xlarge-semibold m-0'>Edit General Information</h1>
+          <h1 className='inter-xlarge-semibold m-0'>Upravit obecné informace</h1>
         </Modal.Header>
         <form onSubmit={onSubmit}>
           <Modal.Content>
-            <GeneralForm form={nestedForm(form, 'general')} />
+            <GeneralForm form={nestedForm(form, "general")} />
             <div className='my-xlarge'>
-              <h2 className='inter-base-semibold mb-base'>Organize Product</h2>
-              <OrganizeForm form={nestedForm(form, 'organize')} />
+              <h2 className='inter-base-semibold mb-base'>Uspořádat produkt</h2>
+              <OrganizeForm form={nestedForm(form, "organize")} />
             </div>
-            <DiscountableForm form={nestedForm(form, 'discountable')} />
+            <DiscountableForm form={nestedForm(form, "discountable")} />
           </Modal.Content>
           <Modal.Footer>
             <div className='flex gap-x-2 justify-end w-full'>
               <Button size='small' variant='secondary' type='button' onClick={onReset}>
-                Cancel
+                Zrušit
               </Button>
               <Button size='small' variant='primary' type='submit' disabled={!isDirty} loading={updating}>
-                Save
+                Uložit
               </Button>
             </div>
           </Modal.Footer>
@@ -111,9 +111,7 @@ const getDefaultValues = (product: Product): GeneralFormWrapper => {
       description: product.description || null,
     },
     organize: {
-      collection: product.collection
-        ? { label: product.collection.title, value: product.collection.id }
-        : null,
+      collection: product.collection ? { label: product.collection.title, value: product.collection.id } : null,
       type: product.type ? { label: product.type.value, value: product.type.id } : null,
       tags: product.tags ? product.tags.map((t) => t.value) : null,
     },

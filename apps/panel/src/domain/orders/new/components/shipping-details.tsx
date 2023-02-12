@@ -1,22 +1,22 @@
-import qs from 'qs';
-import { useContext, useEffect, useMemo, useState } from 'react';
-import Spinner from '../../../../components/atoms/spinner';
-import Button from '../../../../components/fundamentals/button';
-import AddressForm, { AddressType } from '../../../../components/templates/address-form';
-import Medusa from '../../../../services/api';
+import qs from "qs";
+import { useContext, useEffect, useMemo, useState } from "react";
+import Spinner from "../../../../components/atoms/spinner";
+import Button from "../../../../components/fundamentals/button";
+import AddressForm, { AddressType } from "../../../../components/templates/address-form";
+import Medusa from "../../../../services/api";
 
-import { useAdminCustomer } from 'medusa-react';
-import { Controller, useWatch } from 'react-hook-form';
-import LockIcon from '../../../../components/fundamentals/icons/lock-icon';
-import InputField from '../../../../components/molecules/input';
-import { SteppedContext } from '../../../../components/molecules/modal/stepped-modal';
-import Select from '../../../../components/molecules/select';
-import RadioGroup from '../../../../components/organisms/radio-group';
-import { Option } from '../../../../types/shared';
-import isNullishObject from '../../../../utils/is-nullish-object';
-import mapAddressToForm from '../../../../utils/map-address-to-form';
-import { nestedForm } from '../../../../utils/nested-form';
-import { useNewOrderForm } from '../form';
+import { useAdminCustomer } from "medusa-react";
+import { Controller, useWatch } from "react-hook-form";
+import LockIcon from "../../../../components/fundamentals/icons/lock-icon";
+import InputField from "../../../../components/molecules/input";
+import { SteppedContext } from "../../../../components/molecules/modal/stepped-modal";
+import Select from "../../../../components/molecules/select";
+import RadioGroup from "../../../../components/organisms/radio-group";
+import { Option } from "../../../../types/shared";
+import isNullishObject from "../../../../utils/is-nullish-object";
+import mapAddressToForm from "../../../../utils/map-address-to-form";
+import { nestedForm } from "../../../../utils/nested-form";
+import { useNewOrderForm } from "../form";
 
 const ShippingDetails = () => {
   const [addNew, setAddNew] = useState(false);
@@ -41,7 +41,7 @@ const ShippingDetails = () => {
       .list(`?${prepared}`)
       .then(({ data }) =>
         data.customers.map(({ id, first_name, last_name, email }) => ({
-          label: `${first_name || ''} ${last_name || ''} (${email})`,
+          label: `${first_name || ""} ${last_name || ""} (${email})`,
           value: id,
         })),
       )
@@ -50,10 +50,10 @@ const ShippingDetails = () => {
 
   const customerId = useWatch({
     control: form.control,
-    name: 'customer_id',
+    name: "customer_id",
   });
 
-  const { customer, isLoading } = useAdminCustomer(customerId?.value || '', {
+  const { customer, isLoading } = useAdminCustomer(customerId?.value || "", {
     enabled: !!customerId?.value,
   });
 
@@ -73,12 +73,12 @@ const ShippingDetails = () => {
     const email = /\(([^()]*)\)$/.exec(val?.label);
 
     if (email) {
-      form.setValue('email', email[1]);
+      form.setValue("email", email[1]);
     }
   };
 
   const onCreateNew = () => {
-    form.setValue('shipping_address_id', undefined);
+    form.setValue("shipping_address_id", undefined);
     setAddNew(true);
   };
 
@@ -90,13 +90,13 @@ const ShippingDetails = () => {
     const address = customer.shipping_addresses?.find((a) => a.id === id);
 
     if (address) {
-      form.setValue('shipping_address', mapAddressToForm(address));
+      form.setValue("shipping_address", mapAddressToForm(address));
     }
   };
 
   const email = useWatch({
     control: form.control,
-    name: 'email',
+    name: "email",
   });
 
   useEffect(() => {
@@ -109,7 +109,7 @@ const ShippingDetails = () => {
 
   const shippingAddress = useWatch({
     control: form.control,
-    name: 'shipping_address',
+    name: "shipping_address",
   });
 
   const [requiredFields, setRequiredFields] = useState(false);
@@ -122,12 +122,7 @@ const ShippingDetails = () => {
 
     if (shippingAddress && !isNullishObject(shippingAddress)) {
       if (
-        !shippingAddress.first_name ||
-        !shippingAddress.last_name ||
-        !shippingAddress.address_1 ||
-        !shippingAddress.city ||
-        !shippingAddress.country_code ||
-        !shippingAddress.postal_code
+        !(((((shippingAddress.first_name &&shippingAddress.last_name ) &&shippingAddress.address_1 ) &&shippingAddress.city ) &&shippingAddress.country_code ) &&shippingAddress.postal_code)
       ) {
         disableNextPage();
         setRequiredFields(true);
@@ -143,7 +138,7 @@ const ShippingDetails = () => {
   return (
     <div className='min-h-[705px] flex flex-col gap-y-8'>
       <div>
-        <span className='inter-base-semibold'>Customer and shipping details</span>
+        <span className='inter-base-semibold'>Údaje o zákazníkovi a přepravě</span>
         <Controller
           control={form.control}
           name='customer_id'
@@ -151,7 +146,7 @@ const ShippingDetails = () => {
             return (
               <Select
                 className='mt-4'
-                label='Find existing customer'
+                label='Vyhledání stávajícího zákazníka'
                 options={[]}
                 enableSearch
                 value={value || null}
@@ -170,7 +165,7 @@ const ShippingDetails = () => {
       <div className='flex flex-col gap-y-4'>
         <span className='inter-base-semibold'>Email</span>
         <InputField
-          {...form.register('email')}
+          {...form.register("email")}
           label='Email'
           placeholder='lebron@james.com'
           disabled={!!customerId}
@@ -209,19 +204,14 @@ const ShippingDetails = () => {
                       } ${sa.country_code?.toUpperCase()}`}
                       value={sa.id}
                       key={i}
-                    ></RadioGroup.Item>
+                    />
                   ))}
                 </RadioGroup.Root>
               );
             }}
           />
           <div className='mt-4 flex w-full justify-end'>
-            <Button
-              variant='ghost'
-              size='small'
-              className='border border-grey-20 w-[112px]'
-              onClick={onCreateNew}
-            >
+            <Button variant='ghost' size='small' className='border border-grey-20 w-[112px]' onClick={onCreateNew}>
               Create new
             </Button>
           </div>
@@ -229,7 +219,7 @@ const ShippingDetails = () => {
       ) : (
         <div>
           <AddressForm
-            form={nestedForm(form, 'shipping_address')}
+            form={nestedForm(form, "shipping_address")}
             countryOptions={validCountries}
             type={AddressType.SHIPPING}
             required={requiredFields}

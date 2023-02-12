@@ -1,7 +1,7 @@
-import React from 'react';
-import { Controller } from 'react-hook-form';
-import Switch from '../../../../components/atoms/switch';
-import { NestedForm } from '../../../../utils/nested-form';
+import React from "react";
+import { Controller } from "react-hook-form";
+import Switch from "../../../../components/atoms/switch";
+import { NestedForm } from "../../../../utils/nested-form";
 
 export type DiscountableFormType = {
   value: boolean;
@@ -16,18 +16,16 @@ const DiscountableForm = ({ form }: Props) => {
   return (
     <div>
       <div className='flex items-center justify-between mb-2xsmall'>
-        <h2 className='inter-base-semibold'>Discountable</h2>
+        <h2 className='inter-base-semibold'>Zvýhodněné</h2>
         <Controller
           control={control}
-          name={path('value')}
+          name={path("value")}
           render={({ field: { value, onChange } }) => {
             return <Switch checked={value} onCheckedChange={onChange} />;
           }}
         />
       </div>
-      <p className='inter-base-regular text-grey-50'>
-        When unchecked discounts will not be applied to this product.
-      </p>
+      <p className='inter-base-regular text-grey-50'>Pokud není zaškrtnuto, slevy se na tento produkt neuplatní.</p>
     </div>
   );
 };

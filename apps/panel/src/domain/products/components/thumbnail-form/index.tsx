@@ -1,10 +1,10 @@
-import React from 'react';
-import { FieldArrayWithId, useFieldArray } from 'react-hook-form';
-import FileUploadField from '../../../../components/atoms/file-upload-field';
-import TrashIcon from '../../../../components/fundamentals/icons/trash-icon';
-import Actionables, { ActionType } from '../../../../components/molecules/actionables';
-import { FormImage } from '../../../../types/shared';
-import { NestedForm } from '../../../../utils/nested-form';
+import React from "react";
+import { FieldArrayWithId, useFieldArray } from "react-hook-form";
+import FileUploadField from "../../../../components/atoms/file-upload-field";
+import TrashIcon from "../../../../components/fundamentals/icons/trash-icon";
+import Actionables, { ActionType } from "../../../../components/molecules/actionables";
+import { FormImage } from "../../../../types/shared";
+import { NestedForm } from "../../../../utils/nested-form";
 
 export type ThumbnailFormType = {
   images: FormImage[];
@@ -19,7 +19,7 @@ const ThumbnailForm = ({ form }: Props) => {
 
   const { fields, remove, replace, append } = useFieldArray({
     control: control,
-    name: path('images'),
+    name: path("images"),
   });
 
   const handleFilesChosen = (files: File[]) => {
@@ -44,15 +44,15 @@ const ThumbnailForm = ({ form }: Props) => {
         <div className='mt-large'>
           <FileUploadField
             onFileChosen={handleFilesChosen}
-            placeholder='1200 x 1600 (3:4) recommended, up to 10MB each'
-            filetypes={['image/gif', 'image/jpeg', 'image/png', 'image/webp']}
+            placeholder='Doporučené rozměry 1200 x 1600 (3:4), každý až 10 MB'
+            filetypes={["image/gif", "image/jpeg", "image/png", "image/webp"]}
             className='py-large'
           />
         </div>
       </div>
       {fields.length > 0 && (
         <div className='mt-large'>
-          <h2 className='inter-large-semibold mb-small'>Upload</h2>
+          <h2 className='inter-large-semibold mb-small'>Nahrát</h2>
 
           <div className='flex flex-col gap-y-2xsmall'>
             {fields.map((field, index) => {
@@ -66,7 +66,7 @@ const ThumbnailForm = ({ form }: Props) => {
 };
 
 type ThumbnailProps = {
-  image: FieldArrayWithId<ThumbnailFormType, 'images', 'id'>;
+  image: FieldArrayWithId<ThumbnailFormType, "images", "id">;
   index: number;
   remove: (index: number) => void;
 };
@@ -74,10 +74,10 @@ type ThumbnailProps = {
 const Image = ({ image, index, remove }: ThumbnailProps) => {
   const actions: ActionType[] = [
     {
-      label: 'Delete',
+      label: "Odstranit",
       onClick: () => remove(index),
       icon: <TrashIcon size={20} />,
-      variant: 'danger',
+      variant: "danger",
     },
   ];
 
@@ -87,13 +87,13 @@ const Image = ({ image, index, remove }: ThumbnailProps) => {
         <div className='w-16 h-16 flex items-center justify-center'>
           <img
             src={image.url}
-            alt={image.name || 'Uploaded image'}
+            alt={image.name || "Uploaded image"}
             className='max-w-[64px] max-h-[64px] rounded-rounded'
           />
         </div>
         <div className='flex flex-col inter-small-regular text-left'>
           <p>{image.name}</p>
-          <p className='text-grey-50'>{image.size ? `${(image.size / 1024).toFixed(2)} KB` : ''}</p>
+          <p className='text-grey-50'>{image.size ? `${(image.size / 1024).toFixed(2)} KB` : ""}</p>
         </div>
       </div>
 

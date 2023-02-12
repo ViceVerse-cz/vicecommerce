@@ -29,12 +29,12 @@ const GeneralSection = ({ product }: Props) => {
 
   const actions: ActionType[] = [
     {
-      label: "Edit General Information",
+      label: "Upravit obecné informace",
       onClick: toggleInfo,
       icon: <EditIcon size={20} />,
     },
     {
-      label: "Delete",
+      label: "Odstranit",
       onClick: onDelete,
       variant: "danger",
       icon: <TrashIcon size={20} />,
@@ -43,7 +43,7 @@ const GeneralSection = ({ product }: Props) => {
 
   if (isFeatureEnabled("sales_channels")) {
     actions.splice(1, 0, {
-      label: "Edit Sales Channels",
+      label: "Úprava prodejních kanálů",
       onClick: toggleChannels,
       icon: <ChannelsIcon size={20} />,
     });
@@ -58,8 +58,8 @@ const GeneralSection = ({ product }: Props) => {
         status={
           <StatusSelector
             isDraft={product?.status === "draft"}
-            activeState='Published'
-            draftState='Draft'
+            activeState='Zveřejněno'
+            draftState='Návrh'
             onChange={() => onStatusChange(product.status)}
           />
         }
@@ -96,12 +96,12 @@ const Detail = ({ title, value }: DetailProps) => {
 const ProductDetails = ({ product }: Props) => {
   return (
     <div className='flex flex-col mt-8 gap-y-3'>
-      <h2 className='inter-base-semibold'>Details</h2>
-      <Detail title='Subtitle' value={product.subtitle} />
-      <Detail title='Handle' value={product.handle} />
-      <Detail title='Type' value={product.type?.value} />
-      <Detail title='Collection' value={product.collection?.title} />
-      <Detail title='Discountable' value={product.discountable ? "True" : "False"} />
+      <h2 className='inter-base-semibold'>Podrobnosti</h2>
+      <Detail title='Podtitul' value={product.subtitle} />
+      <Detail title='Manipulace' value={product.handle} />
+      <Detail title='Typ' value={product.type?.value} />
+      <Detail title='Sbírka' value={product.collection?.title} />
+      <Detail title='Zvýhodněné' value={product.discountable ? "Ano" : "Ne"} />
     </div>
   );
 };

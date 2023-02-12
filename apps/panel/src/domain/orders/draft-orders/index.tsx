@@ -1,26 +1,26 @@
-import { useMemo, useState } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { useMemo, useState } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
 
-import PlusIcon from '../../../components/fundamentals/icons/plus-icon';
-import BodyCard from '../../../components/organisms/body-card';
-import TableViewHeader from '../../../components/organisms/custom-table-header';
-import DraftOrderTable from '../../../components/templates/draft-order-table';
-import NewOrderFormProvider from '../new/form';
-import NewOrder from '../new/new-order';
-import DraftOrderDetails from './details';
+import PlusIcon from "../../../components/fundamentals/icons/plus-icon";
+import BodyCard from "../../../components/organisms/body-card";
+import TableViewHeader from "../../../components/organisms/custom-table-header";
+import DraftOrderTable from "../../../components/templates/draft-order-table";
+import NewOrderFormProvider from "../new/form";
+import NewOrder from "../new/new-order";
+import DraftOrderDetails from "./details";
 
-const VIEWS = ['orders', 'drafts'];
+const VIEWS = ["objednávky", "návrhy"];
 
 const DraftOrderIndex = () => {
   const navigate = useNavigate();
 
-  const view = 'drafts';
+  const view = "návrhy";
   const [showNewOrder, setShowNewOrder] = useState(false);
 
   const actions = useMemo(() => {
     return [
       {
-        label: 'Create draft order',
+        label: "Vytvoření návrhu objednávky",
         onClick: () => setShowNewOrder(true),
         icon: <PlusIcon size={20} />,
       },
@@ -35,8 +35,8 @@ const DraftOrderIndex = () => {
             <TableViewHeader
               views={VIEWS}
               setActiveView={(v) => {
-                if (v === 'orders') {
-                  navigate(`/a/orders`);
+                if (v === "objednávky") {
+                  navigate("/a/orders");
                 }
               }}
               activeView={view}

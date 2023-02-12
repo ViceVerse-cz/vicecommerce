@@ -1,37 +1,37 @@
-import { Address } from '@medusajs/medusa';
+import { Address } from "@medusajs/medusa";
 import {
   useAdminDeleteDraftOrder,
   useAdminDraftOrder,
   useAdminDraftOrderRegisterPayment,
   useAdminStore,
   useAdminUpdateDraftOrder,
-} from 'medusa-react';
-import moment from 'moment';
-import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import Avatar from '../../../components/atoms/avatar';
-import CopyToClipboard from '../../../components/atoms/copy-to-clipboard';
-import Spinner from '../../../components/atoms/spinner';
-import Badge from '../../../components/fundamentals/badge';
-import Button from '../../../components/fundamentals/button';
-import DetailsIcon from '../../../components/fundamentals/details-icon';
-import DollarSignIcon from '../../../components/fundamentals/icons/dollar-sign-icon';
-import TruckIcon from '../../../components/fundamentals/icons/truck-icon';
-import ImagePlaceholder from '../../../components/fundamentals/image-placeholder';
-import StatusDot from '../../../components/fundamentals/status-indicator';
-import Breadcrumb from '../../../components/molecules/breadcrumb';
-import JSONView from '../../../components/molecules/json-view';
-import BodyCard from '../../../components/organisms/body-card';
-import ConfirmationPrompt from '../../../components/organisms/confirmation-prompt';
-import DeletePrompt from '../../../components/organisms/delete-prompt';
-import { AddressType } from '../../../components/templates/address-form';
-import useNotification from '../../../hooks/use-notification';
-import { isoAlpha2Countries } from '../../../utils/countries';
-import { getErrorMessage } from '../../../utils/error-messages';
-import extractCustomerName from '../../../utils/extract-customer-name';
-import { formatAmountWithSymbol } from '../../../utils/prices';
-import AddressModal from '../details/address-modal';
-import { DisplayTotal, FormattedAddress } from '../details/templates';
+} from "medusa-react";
+import moment from "moment";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import Avatar from "../../../components/atoms/avatar";
+import CopyToClipboard from "../../../components/atoms/copy-to-clipboard";
+import Spinner from "../../../components/atoms/spinner";
+import Badge from "../../../components/fundamentals/badge";
+import Button from "../../../components/fundamentals/button";
+import DetailsIcon from "../../../components/fundamentals/details-icon";
+import DollarSignIcon from "../../../components/fundamentals/icons/dollar-sign-icon";
+import TruckIcon from "../../../components/fundamentals/icons/truck-icon";
+import ImagePlaceholder from "../../../components/fundamentals/image-placeholder";
+import StatusDot from "../../../components/fundamentals/status-indicator";
+import Breadcrumb from "../../../components/molecules/breadcrumb";
+import JSONView from "../../../components/molecules/json-view";
+import BodyCard from "../../../components/organisms/body-card";
+import ConfirmationPrompt from "../../../components/organisms/confirmation-prompt";
+import DeletePrompt from "../../../components/organisms/delete-prompt";
+import { AddressType } from "../../../components/templates/address-form";
+import useNotification from "../../../hooks/use-notification";
+import { isoAlpha2Countries } from "../../../utils/countries";
+import { getErrorMessage } from "../../../utils/error-messages";
+import extractCustomerName from "../../../utils/extract-customer-name";
+import { formatAmountWithSymbol } from "../../../utils/prices";
+import AddressModal from "../details/address-modal";
+import { DisplayTotal, FormattedAddress } from "../details/templates";
 
 type DeletePromptData = {
   resource: string;
@@ -43,8 +43,8 @@ const DraftOrderDetails = () => {
   const { id } = useParams();
 
   const initDeleteState: DeletePromptData = {
-    resource: '',
-    onDelete: () => Promise.resolve(console.log('Delete resource')),
+    resource: "",
+    onDelete: () => Promise.resolve(console.log("Delete resource")),
     show: false,
   };
 
@@ -59,7 +59,7 @@ const DraftOrderDetails = () => {
   const { draft_order, isLoading } = useAdminDraftOrder(id!);
   const { store, isLoading: isLoadingStore } = useAdminStore();
 
-  const [paymentLink, setPaymentLink] = useState('');
+  const [paymentLink, setPaymentLink] = useState("");
 
   useEffect(() => {
     if (store && draft_order && store.payment_link_template) {
@@ -76,10 +76,10 @@ const DraftOrderDetails = () => {
 
   const OrderStatusComponent = () => {
     switch (draft_order?.status) {
-      case 'completed':
-        return <StatusDot title='Completed' variant='success' />;
-      case 'open':
-        return <StatusDot title='Open' variant='default' />;
+      case "completed":
+        return <StatusDot title='Dokončeno' variant='success' />;
+      case "open":
+        return <StatusDot title='Otevřít' variant='default' />;
       default:
         return null;
     }
@@ -87,7 +87,7 @@ const DraftOrderDetails = () => {
 
   const PaymentActionables = () => {
     // Default label and action
-    const label = 'Mark as paid';
+    const label = "Označit jako zaplacené";
     const action = () => setShowAsPaidConfirmation(true);
 
     return (
@@ -100,9 +100,9 @@ const DraftOrderDetails = () => {
   const onMarkAsPaidConfirm = async () => {
     try {
       await markPaid.mutateAsync();
-      notification('Success', 'Successfully mark as paid', 'success');
+      notification("Úspěch", "Úspěšně označit jako zaplacené", "success");
     } catch (err) {
-      notification('Error', getErrorMessage(err), 'error');
+      notification("Chyba", getErrorMessage(err), "error");
     } finally {
       setShowAsPaidConfirmation(false);
     }
@@ -110,8 +110,8 @@ const DraftOrderDetails = () => {
 
   const handleDeleteOrder = async () => {
     return cancelOrder.mutate(void {}, {
-      onSuccess: () => notification('Success', 'Successfully canceled order', 'success'),
-      onError: (err) => notification('Error', getErrorMessage(err), 'error'),
+      onSuccess: () => notification("Úspěch", "Úspěšně zrušená objednávka", "success"),
+      onError: (err) => notification("Chyba", getErrorMessage(err), "error"),
     });
   };
 
@@ -121,24 +121,24 @@ const DraftOrderDetails = () => {
   return (
     <div>
       <Breadcrumb
-        currentPage={'Draft Order Details'}
-        previousBreadcrumb={'Draft Orders'}
+        currentPage={"Podrobnosti o návrhu objednávky"}
+        previousBreadcrumb={"Návrhy objednávek"}
         previousRoute='/a/draft-orders'
       />
       {isLoading || !draft_order ? (
         <BodyCard className='w-full pt-2xlarge flex items-center justify-center'>
-          <Spinner size={'large'} variant={'secondary'} />
+          <Spinner size={"large"} variant={"secondary"} />
         </BodyCard>
       ) : (
         <div className='flex space-x-4'>
           <div className='flex flex-col w-full h-full'>
             <BodyCard
-              className={'w-full mb-4 min-h-[200px]'}
-              title={`Order #${draft_order.display_id}`}
-              subtitle={moment(draft_order.created_at).format('D MMMM YYYY hh:mm a')}
+              className={"w-full mb-4 min-h-[200px]"}
+              title={`Objednávka #${draft_order.display_id}`}
+              subtitle={moment(draft_order.created_at).format("D MMMM YYYY hh:mm a")}
               status={<OrderStatusComponent />}
               customActionable={
-                draft_order?.status === 'completed' && (
+                draft_order?.status === "completed" && (
                   <Button
                     variant='secondary'
                     size='small'
@@ -148,25 +148,25 @@ const DraftOrderDetails = () => {
                   </Button>
                 )
               }
-              forceDropdown={draft_order?.status === 'completed' ? false : true}
+              forceDropdown={draft_order?.status === "completed" ? false : true}
               actionables={
-                draft_order?.status === 'completed'
+                draft_order?.status === "completed"
                   ? [
                       {
-                        label: 'Go to Order',
+                        label: "Přejít na objednávku",
                         icon: null,
-                        onClick: () => console.log('Should not be here'),
+                        onClick: () => console.log("Should not be here"),
                       },
                     ]
                   : [
                       {
-                        label: 'Cancel Draft Order',
+                        label: "Zrušit návrh objednávky",
                         icon: null,
                         // icon: <CancelIcon size={"20"} />,
-                        variant: 'danger',
+                        variant: "danger",
                         onClick: () =>
                           setDeletePromptData({
-                            resource: 'Draft Order',
+                            resource: "Návrh objednávky",
                             onDelete: () => handleDeleteOrder(),
                             show: true,
                           }),
@@ -180,8 +180,8 @@ const DraftOrderDetails = () => {
                   <div>{cart?.email}</div>
                 </div>
                 <div className='flex flex-col pl-6'>
-                  <div className='inter-smaller-regular text-grey-50 mb-1'>Phone</div>
-                  <div>{cart?.shipping_address?.phone || 'N/A'}</div>
+                  <div className='inter-smaller-regular text-grey-50 mb-1'>Telefon</div>
+                  <div>{cart?.shipping_address?.phone || "N/A"}</div>
                 </div>
                 <div className='flex flex-col pl-6'>
                   <div className='inter-smaller-regular text-grey-50 mb-1'>
@@ -193,12 +193,12 @@ const DraftOrderDetails = () => {
                           amount: cart?.total,
                           currency: region?.currency_code,
                         })
-                      : 'N/A'}
+                      : "N/A"}
                   </div>
                 </div>
               </div>
             </BodyCard>
-            <BodyCard className={'w-full mb-4 min-h-0 h-auto'} title='Summary'>
+            <BodyCard className={"w-full mb-4 min-h-0 h-auto"} title='Souhrn'>
               <div className='mt-6'>
                 {cart?.items?.map((item, i) => (
                   <div
@@ -214,12 +214,8 @@ const DraftOrderDetails = () => {
                         )}
                       </div>
                       <div className='flex flex-col justify-center'>
-                        <span className='inter-small-regular text-grey-90 max-w-[225px] truncate'>
-                          {item.title}
-                        </span>
-                        {item?.variant && (
-                          <span className='inter-small-regular text-grey-50'>{item.variant.sku}</span>
-                        )}
+                        <span className='inter-small-regular text-grey-90 max-w-[225px] truncate'>{item.title}</span>
+                        {item?.variant && <span className='inter-small-regular text-grey-50'>{item.variant.sku}</span>}
                       </div>
                     </div>
                     <div className='flex  items-center'>
@@ -227,7 +223,7 @@ const DraftOrderDetails = () => {
                         <div className='inter-small-regular text-grey-50'>
                           {formatAmountWithSymbol({
                             amount: (item?.total ?? 0) / item.quantity,
-                            currency: region?.currency_code ?? '',
+                            currency: region?.currency_code ?? "",
                             digits: 2,
                             tax: [],
                           })}
@@ -236,27 +232,25 @@ const DraftOrderDetails = () => {
                         <div className='inter-small-regular text-grey-90'>
                           {formatAmountWithSymbol({
                             amount: item.total ?? 0,
-                            currency: region?.currency_code ?? '',
+                            currency: region?.currency_code ?? "",
                             digits: 2,
                             tax: [],
                           })}
                         </div>
                       </div>
-                      <div className='inter-small-regular text-grey-50'>
-                        {region?.currency_code.toUpperCase()}
-                      </div>
+                      <div className='inter-small-regular text-grey-50'>{region?.currency_code.toUpperCase()}</div>
                     </div>
                   </div>
                 ))}
                 <DisplayTotal
                   currency={region?.currency_code}
                   totalAmount={draft_order?.cart?.subtotal}
-                  totalTitle={'Subtotal'}
+                  totalTitle={"Subtotal"}
                 />
                 {cart?.discounts?.map((discount, index) => (
                   <div key={index} className='flex justify-between mt-4 items-center'>
                     <div className='flex inter-small-regular text-grey-90 items-center'>
-                      Discount:{' '}
+                      Discount:{" "}
                       <Badge className='ml-3' variant='default'>
                         {discount.code}
                       </Badge>
@@ -265,7 +259,7 @@ const DraftOrderDetails = () => {
                       -
                       {formatAmountWithSymbol({
                         amount: cart?.discount_total,
-                        currency: region?.currency_code || '',
+                        currency: region?.currency_code || "",
                         digits: 2,
                         tax: region?.tax_rate,
                       })}
@@ -275,75 +269,57 @@ const DraftOrderDetails = () => {
                 <DisplayTotal
                   currency={region?.currency_code}
                   totalAmount={cart?.shipping_total}
-                  totalTitle={'Shipping'}
+                  totalTitle={"Přeprava"}
                 />
-                <DisplayTotal
-                  currency={region?.currency_code}
-                  totalAmount={cart?.tax_total}
-                  totalTitle={`Tax`}
-                />
+                <DisplayTotal currency={region?.currency_code} totalAmount={cart?.tax_total} totalTitle={"Daň"} />
                 <DisplayTotal
                   currency={region?.currency_code}
                   variant='large'
                   totalAmount={cart?.total}
-                  totalTitle={`Total`}
+                  totalTitle={"Celkem"}
                 />
               </div>
             </BodyCard>
             <BodyCard
-              className={'w-full mb-4 min-h-0 h-auto'}
-              title='Payment'
-              customActionable={draft_order?.status !== 'completed' && <PaymentActionables />}
+              className={"w-full mb-4 min-h-0 h-auto"}
+              title='Platba'
+              customActionable={draft_order?.status !== "completed" && <PaymentActionables />}
             >
               <div className='mt-6'>
-                <DisplayTotal
-                  currency={region?.currency_code}
-                  totalAmount={cart?.subtotal}
-                  totalTitle={'Subtotal'}
-                />
+                <DisplayTotal currency={region?.currency_code} totalAmount={cart?.subtotal} totalTitle={"Mezisoučet"} />
                 <DisplayTotal
                   currency={region?.currency_code}
                   totalAmount={cart?.shipping_total}
-                  totalTitle={'Shipping'}
+                  totalTitle={"Přeprava"}
                 />
-                <DisplayTotal
-                  currency={region?.currency_code}
-                  totalAmount={cart?.tax_total}
-                  totalTitle={'Tax'}
-                />
+                <DisplayTotal currency={region?.currency_code} totalAmount={cart?.tax_total} totalTitle={"Daň"} />
                 <DisplayTotal
                   variant='bold'
                   currency={region?.currency_code}
                   totalAmount={cart?.total}
-                  totalTitle={'Total to pay'}
+                  totalTitle={"Celkem k úhradě"}
                 />
-                {draft_order?.status !== 'completed' && (
+                {draft_order?.status !== "completed" && (
                   <div className='text-grey-50 inter-small-regular w-full flex items-center mt-5'>
-                    <span className='mr-2.5'>Payment link:</span>
+                    <span className='mr-2.5'>Platební odkaz:</span>
                     {store?.payment_link_template ? (
-                      <CopyToClipboard
-                        value={paymentLink}
-                        displayValue={draft_order.cart_id}
-                        successDuration={1000}
-                      />
+                      <CopyToClipboard value={paymentLink} displayValue={draft_order.cart_id} successDuration={1000} />
                     ) : (
-                      'Configure payment link in store settings'
+                      "Konfigurace platebního odkazu v nastavení obchodu"
                     )}
                   </div>
                 )}
               </div>
             </BodyCard>
-            <BodyCard className={'w-full mb-4 min-h-0 h-auto'} title='Shipping'>
+            <BodyCard className={"w-full mb-4 min-h-0 h-auto"} title='Přeprava'>
               <div className='mt-6'>
                 {cart?.shipping_methods.map((method) => (
                   <div className='flex flex-col' key={method.id}>
-                    <span className='inter-small-regular text-grey-50'>Shipping Method</span>
-                    <span className='inter-small-regular text-grey-90 mt-2'>
-                      {method?.shipping_option.name || ''}
-                    </span>
+                    <span className='inter-small-regular text-grey-50'>Způsob přepravy</span>
+                    <span className='inter-small-regular text-grey-90 mt-2'>{method?.shipping_option.name || ""}</span>
                     <div className='flex flex-col min-h-[100px] mt-8 bg-grey-5 px-3 py-2 h-full'>
                       <span className='inter-base-semibold'>
-                        Data <span className='text-grey-50 inter-base-regular'>(1 item)</span>
+                        Data <span className='text-grey-50 inter-base-regular'>(1 položka)</span>
                       </span>
                       <div className='flex flex-grow items-center mt-4'>
                         <JSONView data={method?.data} />
@@ -354,12 +330,12 @@ const DraftOrderDetails = () => {
               </div>
             </BodyCard>
             <BodyCard
-              className={'w-full mb-4 min-h-0 h-auto'}
+              className={"w-full mb-4 min-h-0 h-auto"}
               title='Customer'
               actionables={[
                 {
-                  label: 'Edit Shipping Address',
-                  icon: <TruckIcon size={'20'} />,
+                  label: "Edit Shipping Address",
+                  icon: <TruckIcon size={"20"} />,
                   onClick: () =>
                     setAddressModal({
                       address: cart?.shipping_address,
@@ -367,8 +343,8 @@ const DraftOrderDetails = () => {
                     }),
                 },
                 {
-                  label: 'Edit Billing Address',
-                  icon: <DollarSignIcon size={'20'} />,
+                  label: "Edit Billing Address",
+                  icon: <DollarSignIcon size={"20"} />,
                   onClick: () => {
                     if (cart?.billing_address) {
                       setAddressModal({
@@ -379,8 +355,8 @@ const DraftOrderDetails = () => {
                   },
                 },
                 {
-                  label: 'Go to Customer',
-                  icon: <DetailsIcon size={'20'} />, // TODO: Change to Contact icon
+                  label: "Přejít k zákazníkovi",
+                  icon: <DetailsIcon size={"20"} />, // TODO: Change to Contact icon
                   onClick: () => navigate(`/a/customers/${cart?.customer.id}`),
                 },
               ]}
@@ -394,7 +370,7 @@ const DraftOrderDetails = () => {
                     <h1 className='inter-large-semibold text-grey-90'>{extractCustomerName(cart)}</h1>
                     {cart?.shipping_address && (
                       <span className='inter-small-regular text-grey-50'>
-                        {cart.shipping_address.city},{' '}
+                        {cart.shipping_address.city},{" "}
                         {isoAlpha2Countries[cart.shipping_address.country_code?.toUpperCase()]}
                       </span>
                     )}
@@ -402,18 +378,18 @@ const DraftOrderDetails = () => {
                 </div>
                 <div className='flex mt-6 space-x-6 divide-x'>
                   <div className='flex flex-col'>
-                    <div className='inter-small-regular text-grey-50 mb-1'>Contact</div>
+                    <div className='inter-small-regular text-grey-50 mb-1'>Kontakt</div>
                     <div className='flex flex-col inter-small-regular'>
                       <span>{cart?.email}</span>
-                      <span>{cart?.shipping_address?.phone || ''}</span>
+                      <span>{cart?.shipping_address?.phone || ""}</span>
                     </div>
                   </div>
-                  <FormattedAddress title={'Shipping'} addr={cart?.shipping_address || undefined} />
-                  <FormattedAddress title={'Billing'} addr={cart?.billing_address || undefined} />
+                  <FormattedAddress title={"Shipping"} addr={cart?.shipping_address || undefined} />
+                  <FormattedAddress title={"Billing"} addr={cart?.billing_address || undefined} />
                 </div>
               </div>
             </BodyCard>
-            <BodyCard className={'w-full mb-4 min-h-0 h-auto pt-[15px]'} title='Raw Draft Order'>
+            <BodyCard className={"w-full mb-4 min-h-0 h-auto pt-[15px]"} title='Raw Draft Order'>
               <JSONView data={draft_order!} />
             </BodyCard>
           </div>
@@ -432,9 +408,9 @@ const DraftOrderDetails = () => {
       state variables for showing different prompts */}
       {deletePromptData.show && (
         <DeletePrompt
-          text={'Are you sure?'}
-          heading={`Remove ${deletePromptData?.resource}`}
-          successText={`${deletePromptData?.resource || 'Resource'} has been removed`}
+          text={"Jste si jistý?"}
+          heading={`Odstranění ${deletePromptData?.resource}`}
+          successText={`${deletePromptData?.resource || "Zdroje"} byl odstraněn`}
           onDelete={() => deletePromptData.onDelete()}
           handleClose={() => setDeletePromptData(initDeleteState)}
         />
@@ -442,10 +418,10 @@ const DraftOrderDetails = () => {
 
       {showMarkAsPaidConfirmation && (
         <ConfirmationPrompt
-          heading='Mark as paid'
-          text='This will create an order. Mark this as paid if you received the payment.'
-          confirmText='Mark paid'
-          cancelText='Cancel'
+          heading='Označit jako zaplacené'
+          text='Tím se vytvoří objednávka. Pokud jste platbu obdrželi, označte ji jako zaplacenou.'
+          confirmText='Označit jako zaplacené'
+          cancelText='Zrušit'
           handleClose={() => setShowAsPaidConfirmation(false)}
           onConfirm={onMarkAsPaidConfirm}
         />

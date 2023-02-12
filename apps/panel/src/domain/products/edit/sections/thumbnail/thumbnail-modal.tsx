@@ -49,15 +49,14 @@ const ThumbnailModal = ({ product, open, onClose }: Props) => {
     try {
       preppedImages = await prepareImages(data.thumbnail.images);
     } catch (error) {
-      let errorMessage = "Something went wrong while trying to upload the thumbnail.";
+      let errorMessage = "Při pokusu o nahrání miniatury se něco pokazilo.";
       const response = (error as any).response as Response;
 
       if (response.status === 500) {
-        errorMessage =
-          `${errorMessage} You might not have a file service configured. Please contact your administrator`;
+        errorMessage = `${errorMessage} Možná nemáte nakonfigurovanou souborovou službu. Obraťte se na svého správce`;
       }
 
-      notification("Error", errorMessage, "error");
+      notification("Chyba", errorMessage, "error");
       return;
     }
     const url = preppedImages?.[0]?.url;
@@ -75,20 +74,20 @@ const ThumbnailModal = ({ product, open, onClose }: Props) => {
     <Modal open={open} handleClose={onReset} isLargeModal>
       <Modal.Body>
         <Modal.Header handleClose={onReset}>
-          <h1 className='inter-xlarge-semibold m-0'>Upload Thumbnail</h1>
+          <h1 className='inter-xlarge-semibold m-0'>Nahrát miniaturu</h1>
         </Modal.Header>
         <form onSubmit={onSubmit}>
           <Modal.Content>
-            <h2 className='inter-large-semibold mb-2xsmall'>Thumbnail</h2>
+            <h2 className='inter-large-semibold mb-2xsmall'>Miniatury</h2>
             <p className='inter-base-regular text-grey-50 mb-large'>
-              Used to represent your product during checkout, social sharing and more.
+              Slouží k reprezentaci vašeho produktu při placení, sdílení na sociálních sítích a podobně.
             </p>
             <ThumbnailForm form={nestedForm(form, "thumbnail")} />
           </Modal.Content>
           <Modal.Footer>
             <div className='flex gap-x-2 justify-end w-full'>
               <Button size='small' variant='secondary' type='button' onClick={onReset}>
-                Cancel
+                Zrušit
               </Button>
               <Button size='small' variant='primary' type='submit' disabled={!isDirty} loading={updating}>
                 Uložit a zavřít

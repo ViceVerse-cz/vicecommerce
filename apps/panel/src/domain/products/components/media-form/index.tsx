@@ -1,13 +1,13 @@
-import clsx from 'clsx';
-import React, { useMemo } from 'react';
-import { Controller, FieldArrayWithId, useFieldArray, useWatch } from 'react-hook-form';
-import FileUploadField from '../../../../components/atoms/file-upload-field';
-import Button from '../../../../components/fundamentals/button';
-import CheckCircleFillIcon from '../../../../components/fundamentals/icons/check-circle-fill-icon';
-import TrashIcon from '../../../../components/fundamentals/icons/trash-icon';
-import Actionables, { ActionType } from '../../../../components/molecules/actionables';
-import { FormImage } from '../../../../types/shared';
-import { NestedForm } from '../../../../utils/nested-form';
+import clsx from "clsx";
+import React, { useMemo } from "react";
+import { Controller, FieldArrayWithId, useFieldArray, useWatch } from "react-hook-form";
+import FileUploadField from "../../../../components/atoms/file-upload-field";
+import Button from "../../../../components/fundamentals/button";
+import CheckCircleFillIcon from "../../../../components/fundamentals/icons/check-circle-fill-icon";
+import TrashIcon from "../../../../components/fundamentals/icons/trash-icon";
+import Actionables, { ActionType } from "../../../../components/molecules/actionables";
+import { FormImage } from "../../../../types/shared";
+import { NestedForm } from "../../../../utils/nested-form";
 
 type ImageType = { selected: boolean } & FormImage;
 
@@ -24,7 +24,7 @@ const MediaForm = ({ form }: Props) => {
 
   const { fields, append, remove } = useFieldArray({
     control: control,
-    name: path('images'),
+    name: path("images"),
   });
 
   const handleFilesChosen = (files: File[]) => {
@@ -43,7 +43,7 @@ const MediaForm = ({ form }: Props) => {
 
   const images = useWatch({
     control,
-    name: path('images'),
+    name: path("images"),
     defaultValue: [],
   });
 
@@ -75,9 +75,9 @@ const MediaForm = ({ form }: Props) => {
         <div>
           <FileUploadField
             onFileChosen={handleFilesChosen}
-            placeholder='1200 x 1600 (3:4) recommended, up to 10MB each'
+            placeholder='Doporučené rozměry 1200 x 1600 (3:4), každý až 10 MB'
             multiple
-            filetypes={['image/gif', 'image/jpeg', 'image/png', 'image/webp']}
+            filetypes={["image/gif", "image/jpeg", "image/png", "image/webp"]}
             className='py-large'
           />
         </div>
@@ -85,7 +85,7 @@ const MediaForm = ({ form }: Props) => {
       {fields.length > 0 && (
         <div className='mt-large'>
           <div className='mb-small flex items-center justify-between'>
-            <h2 className='inter-large-semibold'>Uploads</h2>
+            <h2 className='inter-large-semibold'>Nahrávání</h2>
             <ModalActions number={selected.length} onDeselect={handleDeselect} onRemove={handleRemove} />
           </div>
           <div className='flex flex-col gap-y-2xsmall'>
@@ -100,7 +100,7 @@ const MediaForm = ({ form }: Props) => {
 };
 
 type ImageProps = {
-  image: FieldArrayWithId<MediaFormType, 'images', 'id'>;
+  image: FieldArrayWithId<MediaFormType, "images", "id">;
   index: number;
   remove: (index: number) => void;
   form: NestedForm<MediaFormType>;
@@ -111,10 +111,10 @@ const Image = ({ image, index, form, remove }: ImageProps) => {
 
   const actions: ActionType[] = [
     {
-      label: 'Delete',
+      label: "Odstranit",
       onClick: () => remove(index),
       icon: <TrashIcon size={20} />,
-      variant: 'danger',
+      variant: "danger",
     },
   ];
 
@@ -127,9 +127,9 @@ const Image = ({ image, index, form, remove }: ImageProps) => {
           <div className='relative'>
             <button
               className={clsx(
-                'px-base py-xsmall group hover:bg-grey-5 rounded-rounded flex items-center justify-between',
+                "px-base py-xsmall group hover:bg-grey-5 rounded-rounded flex items-center justify-between",
                 {
-                  'bg-grey-5': value,
+                  "bg-grey-5": value,
                 },
               )}
               type='button'
@@ -139,19 +139,19 @@ const Image = ({ image, index, form, remove }: ImageProps) => {
                 <div className='w-16 h-16 flex items-center justify-center'>
                   <img
                     src={image.url}
-                    alt={image.name || 'Uploaded image'}
+                    alt={image.name || "Uploaded image"}
                     className='max-w-[64px] max-h-[64px] rounded-rounded'
                   />
                 </div>
                 <div className='flex flex-col inter-small-regular text-left'>
                   <p>{image.name}</p>
-                  <p className='text-grey-50'>{image.size ? `${(image.size / 1024).toFixed(2)} KB` : ''}</p>
+                  <p className='text-grey-50'>{image.size ? `${(image.size / 1024).toFixed(2)} KB` : ""}</p>
                 </div>
               </div>
               <div className='flex items-center gap-x-base'>
                 <span
-                  className={clsx('hidden', {
-                    '!block !text-violet-60': value,
+                  className={clsx("hidden", {
+                    "!block !text-violet-60": value,
                   })}
                 >
                   <CheckCircleFillIcon size={24} />
@@ -178,19 +178,19 @@ const ModalActions = ({ number, onRemove, onDeselect }: ModalActionsProps) => {
   return (
     <div className='h-10 overflow-y-hidden flex items-center pr-1'>
       <div
-        className={clsx('flex items-center gap-x-small transition-all duration-200', {
-          'translate-y-[-42px]': !number,
-          'translate-y-[0px]': number,
+        className={clsx("flex items-center gap-x-small transition-all duration-200", {
+          "translate-y-[-42px]": !number,
+          "translate-y-[0px]": number,
         })}
       >
         <span>{number} selected</span>
         <div className='w-px h-5 bg-grey-20' />
         <div className='flex items-center gap-x-xsmall'>
           <Button variant='secondary' size='small' type='button' onClick={onDeselect}>
-            Deselect
+            Zrušení výběru
           </Button>
           <Button variant='danger' size='small' type='button' onClick={onRemove}>
-            Delete
+            Odstranit
           </Button>
         </div>
       </div>

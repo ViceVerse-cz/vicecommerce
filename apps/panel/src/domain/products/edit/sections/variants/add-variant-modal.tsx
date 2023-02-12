@@ -38,7 +38,7 @@ const AddVariantModal = ({ open, onClose, product }: Props) => {
     <Modal open={open} handleClose={resetAndClose}>
       <Modal.Body>
         <Modal.Header handleClose={resetAndClose}>
-          <h1 className='inter-xlarge-semibold'>Add Variant</h1>
+          <h1 className='inter-xlarge-semibold'>Přidat variantu</h1>
         </Modal.Header>
         <form onSubmit={onSubmit}>
           <Modal.Content>
@@ -47,7 +47,7 @@ const AddVariantModal = ({ open, onClose, product }: Props) => {
           <Modal.Footer>
             <div className='flex items-center gap-x-xsmall justify-end w-full'>
               <Button variant='secondary' size='small' type='button' onClick={resetAndClose}>
-                Cancel
+                Zrušit
               </Button>
               <Button variant='primary' size='small' type='submit' loading={addingVariant}>
                 Uložit a zavřít

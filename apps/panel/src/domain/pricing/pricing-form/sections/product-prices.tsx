@@ -1,21 +1,21 @@
-import { MoneyAmount, Product, ProductVariant } from '@medusajs/medusa';
-import { useAdminStore } from 'medusa-react';
-import * as React from 'react';
-import Button from '../../../../components/fundamentals/button';
-import EditIcon from '../../../../components/fundamentals/icons/edit-icon';
-import PlusIcon from '../../../../components/fundamentals/icons/plus-icon';
-import SearchIcon from '../../../../components/fundamentals/icons/search-icon';
-import TrashIcon from '../../../../components/fundamentals/icons/trash-icon';
-import LoadingContainer from '../../../../components/loading-container';
-import { ActionType } from '../../../../components/molecules/actionables';
-import InputField from '../../../../components/molecules/input';
-import Modal from '../../../../components/molecules/modal';
-import ProductVariantTree from '../../../../components/organisms/product-variant-tree';
-import AddProductsModal from '../../../../components/templates/add-products-modal';
-import PriceOverrides from '../../../../components/templates/price-overrides';
-import { mergeExistingWithDefault } from '../../details/utils';
-import { usePriceListForm } from '../form/pricing-form-context';
-import { CreatePriceListPricesFormValues } from '../types';
+import { MoneyAmount, Product, ProductVariant } from "@medusajs/medusa";
+import { useAdminStore } from "medusa-react";
+import * as React from "react";
+import Button from "../../../../components/fundamentals/button";
+import EditIcon from "../../../../components/fundamentals/icons/edit-icon";
+import PlusIcon from "../../../../components/fundamentals/icons/plus-icon";
+import SearchIcon from "../../../../components/fundamentals/icons/search-icon";
+import TrashIcon from "../../../../components/fundamentals/icons/trash-icon";
+import LoadingContainer from "../../../../components/loading-container";
+import { ActionType } from "../../../../components/molecules/actionables";
+import InputField from "../../../../components/molecules/input";
+import Modal from "../../../../components/molecules/modal";
+import ProductVariantTree from "../../../../components/organisms/product-variant-tree";
+import AddProductsModal from "../../../../components/templates/add-products-modal";
+import PriceOverrides from "../../../../components/templates/price-overrides";
+import { mergeExistingWithDefault } from "../../details/utils";
+import { usePriceListForm } from "../form/pricing-form-context";
+import { CreatePriceListPricesFormValues } from "../types";
 
 export type ProductPricesProps = {
   products: Product[];
@@ -27,13 +27,7 @@ export type ProductPricesProps = {
   onFileChosen?: (files: any[]) => void;
 };
 
-const ProductPrices = ({
-  products,
-  setProducts,
-  isLoading = false,
-  onSearch,
-  onFileChosen,
-}: ProductPricesProps) => {
+const ProductPrices = ({ products, setProducts, isLoading = false, onSearch, onFileChosen }: ProductPricesProps) => {
   const [showAdd, setShowAdd] = React.useState(false);
   const [selectedVariant, setSelectedVariant] = React.useState<ProductVariant | null>(null);
   const unselect = () => setSelectedVariant(null);
@@ -56,19 +50,19 @@ const ProductPrices = ({
   const getVariantActions = (variant) => {
     return [
       {
-        label: 'Edit prices',
+        label: "Upravit ceny",
         icon: <EditIcon />,
         onClick: () => {
           setSelectedVariant(variant);
         },
       },
       {
-        label: 'Remove from list',
+        label: "Odebrat ze seznamu",
         icon: <TrashIcon size={20} />,
         onClick: () => {
           // missing core support
         },
-        variant: 'danger' as const,
+        variant: "danger" as const,
       },
     ];
   };
@@ -96,32 +90,23 @@ const ProductPrices = ({
       <div>
         {onSearch && (
           <div className='mb-2'>
-            <InputField placeholder='Search by name or SKU...' prefix={<SearchIcon />} onChange={onChange} />
+            <InputField placeholder='Vyhledávání podle názvu nebo SKU...' prefix={<SearchIcon />} onChange={onChange} />
           </div>
         )}
         <div>
           <LoadingContainer isLoading={isLoading}>
             {products.map((product) => (
               <div className='mt-2'>
-                <ProductVariantTree
-                  product={product}
-                  key={product.id}
-                  getVariantActions={getVariantActions}
-                />
+                <ProductVariantTree product={product} key={product.id} getVariantActions={getVariantActions} />
               </div>
             ))}
           </LoadingContainer>
         </div>
       </div>
       <div className='mt-6'>
-        <Button
-          variant='secondary'
-          size='medium'
-          className='w-full rounded-rounded'
-          onClick={() => setShowAdd(true)}
-        >
+        <Button variant='secondary' size='medium' className='w-full rounded-rounded' onClick={() => setShowAdd(true)}>
           <PlusIcon />
-          Add Products Manually
+          Ruční přidání produktů
         </Button>
       </div>
 
@@ -142,22 +127,18 @@ const ProductPrices = ({
         </div>
       )} */}
 
-      {showAdd && (
-        <AddProductsModal onSave={setProducts} initialSelection={products} close={() => setShowAdd(false)} />
-      )}
+      {showAdd && <AddProductsModal onSave={setProducts} initialSelection={products} close={() => setShowAdd(false)} />}
       {selectedVariant && (
         <Modal open handleClose={unselect}>
           <Modal.Body>
             <Modal.Header handleClose={unselect}>
-              <h2 className='inter-xlarge-semibold'>Edit Prices</h2>
+              <h2 className='inter-xlarge-semibold'>Upravit ceny</h2>
             </Modal.Header>
 
             <PriceOverrides
               onClose={unselect}
               variants={selectedProduct.variants}
-              prices={
-                prices ? mergeExistingWithDefault(prices[selectedVariant.id], defaultPrices) : defaultPrices
-              }
+              prices={prices ? mergeExistingWithDefault(prices[selectedVariant.id], defaultPrices) : defaultPrices}
               defaultVariant={selectedVariant}
               onSubmit={handleSubmit}
             />

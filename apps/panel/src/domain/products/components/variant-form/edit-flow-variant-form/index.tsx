@@ -1,15 +1,15 @@
-import React from 'react';
-import { useFieldArray, UseFormReturn } from 'react-hook-form';
-import IconTooltip from '../../../../../components/molecules/icon-tooltip';
-import InputField from '../../../../../components/molecules/input';
-import Accordion from '../../../../../components/organisms/accordion';
-import { nestedForm } from '../../../../../utils/nested-form';
-import CustomsForm, { CustomsFormType } from '../../customs-form';
-import DimensionsForm, { DimensionsFormType } from '../../dimensions-form';
-import { PricesFormType } from '../../prices-form';
-import VariantGeneralForm, { VariantGeneralFormType } from '../variant-general-form';
-import VariantPricesForm from '../variant-prices-form';
-import VariantStockForm, { VariantStockFormType } from '../variant-stock-form';
+import React from "react";
+import { useFieldArray, UseFormReturn } from "react-hook-form";
+import IconTooltip from "../../../../../components/molecules/icon-tooltip";
+import InputField from "../../../../../components/molecules/input";
+import Accordion from "../../../../../components/organisms/accordion";
+import { nestedForm } from "../../../../../utils/nested-form";
+import CustomsForm, { CustomsFormType } from "../../customs-form";
+import DimensionsForm, { DimensionsFormType } from "../../dimensions-form";
+import { PricesFormType } from "../../prices-form";
+import VariantGeneralForm, { VariantGeneralFormType } from "../variant-general-form";
+import VariantPricesForm from "../variant-prices-form";
+import VariantStockForm, { VariantStockFormType } from "../variant-stock-form";
 
 export type EditFlowVariantFormType = {
   /**
@@ -54,21 +54,18 @@ type Props = {
 const EditFlowVariantForm = ({ form }: Props) => {
   const { fields } = useFieldArray({
     control: form.control,
-    name: 'options',
+    name: "options",
   });
 
   return (
-    <Accordion type='multiple' defaultValue={['general']}>
+    <Accordion type='multiple' defaultValue={["general"]}>
       <Accordion.Item title='General' value='general' required>
         <div>
-          <VariantGeneralForm form={nestedForm(form, 'general')} />
+          <VariantGeneralForm form={nestedForm(form, "general")} />
           <div className='mt-xlarge'>
             <div className='flex items-center gap-x-2xsmall mb-base'>
-              <h3 className='inter-base-semibold'>Options</h3>
-              <IconTooltip
-                type='info'
-                content='Options are used to define the color, size, etc. of the variant.'
-              />
+              <h3 className='inter-base-semibold'>Možnosti</h3>
+              <IconTooltip type='info' content='Možnosti slouží k určení barvy, velikosti atd. varianty.' />
             </div>
             <div className='grid grid-cols-2 gap-large pb-2xsmall'>
               {fields.map((field, index) => {
@@ -78,7 +75,7 @@ const EditFlowVariantForm = ({ form }: Props) => {
                     key={field.id}
                     label={field.title}
                     {...form.register(`options.${index}.value`, {
-                      required: `Option value for ${field.title} is required`,
+                      required: `Hodnota možnosti pro ${field.title} je povinná`,
                     })}
                     errors={form.formState.errors}
                   />
@@ -88,30 +85,28 @@ const EditFlowVariantForm = ({ form }: Props) => {
           </div>
         </div>
       </Accordion.Item>
-      <Accordion.Item title='Pricing' value='pricing'>
-        <VariantPricesForm form={nestedForm(form, 'prices')} />
+      <Accordion.Item title='Stanovení cen' value='pricing'>
+        <VariantPricesForm form={nestedForm(form, "prices")} />
       </Accordion.Item>
-      <Accordion.Item title='Stock & Inventory' value='stock'>
-        <VariantStockForm form={nestedForm(form, 'stock')} />
+      <Accordion.Item title='Zásoby a inventář' value='stock'>
+        <VariantStockForm form={nestedForm(form, "stock")} />
       </Accordion.Item>
-      <Accordion.Item title='Shipping' value='shipping'>
+      <Accordion.Item title='Přeprava' value='shipping'>
         <p className='inter-base-regular text-grey-50'>
-          Shipping information can be required depending on your shipping provider, and whether or not you are
-          shipping internationally.
+          Informace o přepravě mohou být vyžadovány v závislosti na poskytovateli přepravních služeb a na tom, zda jste
+          nebo nejste mezinárodní přeprava.
         </p>
         <div className='mt-large'>
-          <h3 className='inter-base-semibold mb-2xsmall'>Dimensions</h3>
+          <h3 className='inter-base-semibold mb-2xsmall'>Rozměry</h3>
           <p className='inter-base-regular text-grey-50 mb-large'>
-            Configure to calculate the most accurate shipping rates.
+            Konfigurace pro výpočet nejpřesnějších přepravních sazeb.
           </p>
-          <DimensionsForm form={nestedForm(form, 'dimensions')} />
+          <DimensionsForm form={nestedForm(form, "dimensions")} />
         </div>
         <div className='mt-xlarge'>
-          <h3 className='inter-base-semibold mb-2xsmall'>Customs</h3>
-          <p className='inter-base-regular text-grey-50 mb-large'>
-            Configure if you are shipping internationally.
-          </p>
-          <CustomsForm form={nestedForm(form, 'customs')} />
+          <h3 className='inter-base-semibold mb-2xsmall'>Celní úřad</h3>
+          <p className='inter-base-regular text-grey-50 mb-large'>Konfigurace v případě mezinárodní přepravy.</p>
+          <CustomsForm form={nestedForm(form, "customs")} />
         </div>
       </Accordion.Item>
     </Accordion>

@@ -1,27 +1,27 @@
-import { Product, ProductVariant } from '@medusajs/medusa';
-import React, { useState } from 'react';
-import EditIcon from '../../../../../components/fundamentals/icons/edit-icon';
-import GearIcon from '../../../../../components/fundamentals/icons/gear-icon';
-import PlusIcon from '../../../../../components/fundamentals/icons/plus-icon';
-import { ActionType } from '../../../../../components/molecules/actionables';
-import Section from '../../../../../components/organisms/section';
-import useToggleState from '../../../../../hooks/use-toggle-state';
-import useEditProductActions from '../../hooks/use-edit-product-actions';
-import AddVariantModal from './add-variant-modal';
-import EditVariantModal from './edit-variant-modal';
-import EditVariantsModal from './edit-variants-modal';
-import OptionsModal from './options-modal';
-import OptionsProvider, { useOptionsContext } from './options-provider';
-import VariantsTable from './table';
+import { Product, ProductVariant } from "@medusajs/medusa";
+import React, { useState } from "react";
+import EditIcon from "../../../../../components/fundamentals/icons/edit-icon";
+import GearIcon from "../../../../../components/fundamentals/icons/gear-icon";
+import PlusIcon from "../../../../../components/fundamentals/icons/plus-icon";
+import { ActionType } from "../../../../../components/molecules/actionables";
+import Section from "../../../../../components/organisms/section";
+import useToggleState from "../../../../../hooks/use-toggle-state";
+import useEditProductActions from "../../hooks/use-edit-product-actions";
+import AddVariantModal from "./add-variant-modal";
+import EditVariantModal from "./edit-variant-modal";
+import EditVariantsModal from "./edit-variants-modal";
+import OptionsModal from "./options-modal";
+import OptionsProvider, { useOptionsContext } from "./options-provider";
+import VariantsTable from "./table";
 
 type Props = {
   product: Product;
 };
 
 const VariantsSection = ({ product }: Props) => {
-  const [variantToEdit, setVariantToEdit] = useState<
-    { base: ProductVariant; isDuplicate: boolean } | undefined
-  >(undefined);
+  const [variantToEdit, setVariantToEdit] = useState<{ base: ProductVariant; isDuplicate: boolean } | undefined>(
+    undefined,
+  );
 
   const { state: optionState, close: closeOptions, toggle: toggleOptions } = useToggleState();
 
@@ -31,17 +31,17 @@ const VariantsSection = ({ product }: Props) => {
 
   const actions: ActionType[] = [
     {
-      label: 'Add Variant',
+      label: "Přidat variantu",
       onClick: toggleAddVariant,
       icon: <PlusIcon size='20' />,
     },
     {
-      label: 'Edit Variants',
+      label: "Upravit varianty",
       onClick: toggleEditVariants,
       icon: <EditIcon size='20' />,
     },
     {
-      label: 'Edit Options',
+      label: "Možnosti úprav",
       onClick: toggleOptions,
       icon: <GearIcon size='20' />,
     },
@@ -64,12 +64,11 @@ const VariantsSection = ({ product }: Props) => {
 
   return (
     <OptionsProvider product={product}>
-      <Section title='Variants' actions={actions}>
+      <Section title='Varianty' actions={actions}>
         <ProductOptions />
         <div className='mt-xlarge'>
           <h2 className='inter-large-semibold mb-base'>
-            Product variants{' '}
-            <span className='inter-large-regular text-grey-50'>({product.variants.length})</span>
+            Product variants <span className='inter-large-regular text-grey-50'>({product.variants.length})</span>
           </h2>
           <VariantsTable
             variants={product.variants}
@@ -99,17 +98,17 @@ const VariantsSection = ({ product }: Props) => {
 const ProductOptions = () => {
   const { options, status } = useOptionsContext();
 
-  if (status === 'error') {
+  if (status === "error") {
     return null;
   }
 
-  if (status === 'loading' || !options) {
+  if (status === "loading" || !options) {
     return (
       <div className='mt-base grid grid-cols-3 gap-x-8'>
         {Array.from(Array(2)).map((_, i) => {
           return (
             <div key={i}>
-              <div className='bg-grey-30 h-6 w-9 animate-pulse mb-xsmall'></div>
+              <div className='bg-grey-30 h-6 w-9 animate-pulse mb-xsmall' />
               <ul className='flex flex-wrap items-center gap-1'>
                 {Array.from(Array(3)).map((_, j) => (
                   <li key={j}>

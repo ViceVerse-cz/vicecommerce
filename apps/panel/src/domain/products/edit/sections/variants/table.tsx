@@ -1,11 +1,11 @@
-import { ProductVariant } from '@medusajs/medusa';
-import { useMemo } from 'react';
-import { Column, useTable } from 'react-table';
-import DuplicateIcon from '../../../../../components/fundamentals/icons/duplicate-icon';
-import EditIcon from '../../../../../components/fundamentals/icons/edit-icon';
-import TrashIcon from '../../../../../components/fundamentals/icons/trash-icon';
-import Actionables from '../../../../../components/molecules/actionables';
-import Table from '../../../../../components/molecules/table';
+import { ProductVariant } from "@medusajs/medusa";
+import { useMemo } from "react";
+import { Column, useTable } from "react-table";
+import DuplicateIcon from "../../../../../components/fundamentals/icons/duplicate-icon";
+import EditIcon from "../../../../../components/fundamentals/icons/edit-icon";
+import TrashIcon from "../../../../../components/fundamentals/icons/trash-icon";
+import Actionables from "../../../../../components/molecules/actionables";
+import Table from "../../../../../components/molecules/table";
 
 type Props = {
   variants: ProductVariant[];
@@ -20,23 +20,23 @@ export const useVariantsTableColumns = () => {
   const columns = useMemo<Column<ProductVariant>[]>(
     () => [
       {
-        Header: 'Title',
-        id: 'title',
-        accessor: 'title',
+        Header: "Název",
+        id: "title",
+        accessor: "title",
       },
       {
-        Header: 'SKU',
-        id: 'sku',
-        accessor: 'sku',
+        Header: "SKU",
+        id: "sku",
+        accessor: "sku",
         maxWidth: 264,
         Cell: ({ cell }) => {
           return cell.value ? cell.value : <span className='text-grey-50'>-</span>;
         },
       },
       {
-        Header: 'EAN',
-        id: 'ean',
-        accessor: 'ean',
+        Header: "EAN",
+        id: "ean",
+        accessor: "ean",
         maxWidth: 264,
         Cell: ({ cell }) => {
           return cell.value ? cell.value : <span className='text-grey-50'>-</span>;
@@ -46,12 +46,12 @@ export const useVariantsTableColumns = () => {
         Header: () => {
           return (
             <div className='text-right'>
-              <span>Inventory</span>
+              <span>Zásoby</span>
             </div>
           );
         },
-        id: 'inventory',
-        accessor: 'inventory_quantity',
+        id: "inventory",
+        accessor: "inventory_quantity",
         maxWidth: 56,
         Cell: ({ cell }) => {
           return (
@@ -75,7 +75,7 @@ const VariantsTable = ({ variants, actions }: Props) => {
     columns,
     data: variants,
     defaultColumn: {
-      width: 'auto',
+      width: "auto",
     },
   });
 
@@ -87,7 +87,7 @@ const VariantsTable = ({ variants, actions }: Props) => {
         {headerGroups?.map((headerGroup) => (
           <Table.HeadRow {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((col) => (
-              <Table.HeadCell {...col.getHeaderProps()}>{col.render('Header')}</Table.HeadCell>
+              <Table.HeadCell {...col.getHeaderProps()}>{col.render("Header")}</Table.HeadCell>
             ))}
           </Table.HeadRow>
         ))}
@@ -96,9 +96,9 @@ const VariantsTable = ({ variants, actions }: Props) => {
         {rows.map((row) => {
           prepareRow(row);
           return (
-            <Table.Row color={'inherit'} {...row.getRowProps()}>
+            <Table.Row color={"inherit"} {...row.getRowProps()}>
               {row.cells.map((cell) => {
-                return <Table.Cell {...cell.getCellProps()}>{cell.render('Cell')}</Table.Cell>;
+                return <Table.Cell {...cell.getCellProps()}>{cell.render("Cell")}</Table.Cell>;
               })}
               <Table.Cell>
                 <div className='float-right'>
@@ -106,25 +106,25 @@ const VariantsTable = ({ variants, actions }: Props) => {
                     forceDropdown
                     actions={[
                       {
-                        label: 'Edit Variant',
+                        label: "Upravit variantu",
                         icon: <EditIcon size='20' />,
                         onClick: () => updateVariant(row.original),
                       },
                       {
-                        label: 'Duplicate Variant',
+                        label: "Duplicitní varianta",
                         onClick: () =>
                           // @ts-ignore
                           duplicateVariant({
                             ...row.original,
-                            title: row.original.title + ' Copy',
+                            title: `${row.original.title} Kopie`,
                           }),
                         icon: <DuplicateIcon size='20' />,
                       },
                       {
-                        label: 'Delete Variant',
+                        label: "Odstranit variantu",
                         onClick: () => deleteVariant(row.original.id),
                         icon: <TrashIcon size='20' />,
-                        variant: 'danger',
+                        variant: "danger",
                       },
                     ]}
                   />

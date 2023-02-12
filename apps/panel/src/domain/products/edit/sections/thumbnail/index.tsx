@@ -28,10 +28,10 @@ const TumbnailSection = ({ product }: Props) => {
       },
       {
         onSuccess: () => {
-          notification("Success", "Successfully deleted thumbnail", "success");
+          notification("Úspěch", "Úspěšně odstraněna miniatura", "success");
         },
         onError: (err) => {
-          notification("Error", getErrorMessage(err), "error");
+          notification("Chyba", getErrorMessage(err), "error");
         },
       },
     );
@@ -40,11 +40,11 @@ const TumbnailSection = ({ product }: Props) => {
   return (
     <>
       <Section
-        title='Thumbnail'
+        title='Miniatury'
         customActions={
           <div className='flex items-center gap-x-xsmall'>
             <Button variant='secondary' size='small' type='button' onClick={toggle}>
-              {product.thumbnail ? "Upravit" : "Upload"}
+              {product.thumbnail ? "Upravit" : "Nahrát"}
             </Button>
             {product.thumbnail && <TwoStepDelete onDelete={handleDelete} deleting={updating} />}
           </div>
@@ -59,7 +59,7 @@ const TumbnailSection = ({ product }: Props) => {
             <div className='aspect-square flex items-center justify-center'>
               <img
                 src={product.thumbnail}
-                alt={`Thumbnail for ${product.title}`}
+                alt={`Miniatura pro ${product.title}`}
                 className='object-contain rounded-rounded max-w-full max-h-full'
               />
             </div>

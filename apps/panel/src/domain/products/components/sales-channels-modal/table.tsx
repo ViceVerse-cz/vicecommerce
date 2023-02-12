@@ -1,14 +1,14 @@
-import { SalesChannel } from '@medusajs/medusa';
-import clsx from 'clsx';
-import React, { useMemo } from 'react';
-import { TableInstance } from 'react-table';
-import Button from '../../../../components/fundamentals/button';
-import PlusIcon from '../../../../components/fundamentals/icons/plus-icon';
-import IndeterminateCheckbox from '../../../../components/molecules/indeterminate-checkbox';
-import { LayeredModalContext } from '../../../../components/molecules/modal/layered-modal';
-import Table from '../../../../components/molecules/table';
-import TableContainer from '../../../../components/organisms/table-container';
-import { useAddChannelsModalScreen } from './add-screen';
+import { SalesChannel } from "@medusajs/medusa";
+import clsx from "clsx";
+import React, { useMemo } from "react";
+import { TableInstance } from "react-table";
+import Button from "../../../../components/fundamentals/button";
+import PlusIcon from "../../../../components/fundamentals/icons/plus-icon";
+import IndeterminateCheckbox from "../../../../components/molecules/indeterminate-checkbox";
+import { LayeredModalContext } from "../../../../components/molecules/modal/layered-modal";
+import Table from "../../../../components/molecules/table";
+import TableContainer from "../../../../components/organisms/table-container";
+import { useAddChannelsModalScreen } from "./add-screen";
 
 type SalesChannelsTableProps = {
   count: number;
@@ -33,7 +33,7 @@ export const useSalesChannelsTableColumns = () => {
     () => [
       {
         width: 30,
-        id: 'selection',
+        id: "selection",
         Header: ({ getToggleAllPageRowsSelectedProps }) => (
           <span className='flex justify-center w-[30px]'>
             <IndeterminateCheckbox {...getToggleAllPageRowsSelectedProps()} />
@@ -48,12 +48,12 @@ export const useSalesChannelsTableColumns = () => {
         },
       },
       {
-        Header: 'Title',
-        accessor: 'name',
+        Header: "Název",
+        accessor: "name",
       },
       {
-        Header: 'Description',
-        accessor: 'description',
+        Header: "Popis",
+        accessor: "description",
       },
     ],
     [],
@@ -115,7 +115,7 @@ const SalesChannelTable = ({
         count: count,
         offset: offset,
         pageSize: offset + rows.length,
-        title: 'Sales Channels',
+        title: "Kanál prodeje",
         currentPage: pageIndex + 1,
         pageCount: pageCount,
         nextPage: handleNext,
@@ -131,7 +131,7 @@ const SalesChannelTable = ({
           {headerGroups?.map((headerGroup) => (
             <Table.HeadRow {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((col) => (
-                <Table.HeadCell {...col.getHeaderProps()}>{col.render('Header')}</Table.HeadCell>
+                <Table.HeadCell {...col.getHeaderProps()}>{col.render("Header")}</Table.HeadCell>
               ))}
             </Table.HeadRow>
           ))}
@@ -140,9 +140,9 @@ const SalesChannelTable = ({
           {rows.map((row) => {
             prepareRow(row);
             return (
-              <Table.Row color={'inherit'} {...row.getRowProps()}>
+              <Table.Row color={"inherit"} {...row.getRowProps()}>
                 {row.cells.map((cell) => {
-                  return <Table.Cell {...cell.getCellProps()}>{cell.render('Cell')}</Table.Cell>;
+                  return <Table.Cell {...cell.getCellProps()}>{cell.render("Cell")}</Table.Cell>;
                 })}
               </Table.Row>
             );
@@ -163,28 +163,23 @@ export const SalesChannelTableActions = ({
   const showAddChannels = !!numberOfSelectedRows;
 
   const classes = {
-    'translate-y-[-42px]': !showAddChannels,
-    'translate-y-[0px]': showAddChannels,
+    "translate-y-[-42px]": !showAddChannels,
+    "translate-y-[0px]": showAddChannels,
   };
 
   const { push } = React.useContext(LayeredModalContext);
 
   return (
     <div className='flex space-x-xsmall h-[34px] overflow-hidden'>
-      <div className={clsx('transition-all duration-200', classes)}>
+      <div className={clsx("transition-all duration-200", classes)}>
         <div className='divide-x flex items-center h-[34px] mb-2'>
-          <span className='mr-3 inter-small-regular text-grey-50'>{numberOfSelectedRows} selected</span>
+          <span className='mr-3 inter-small-regular text-grey-50'>{numberOfSelectedRows} vybráno</span>
           <div className='flex space-x-xsmall pl-3'>
             <Button onClick={onDeselect} size='small' variant='ghost' className='border border-grey-20'>
-              Deselect
+              Zrušení výběru
             </Button>
-            <Button
-              onClick={onRemove}
-              size='small'
-              variant='ghost'
-              className='border border-grey-20 text-rose-50'
-            >
-              Remove
+            <Button onClick={onRemove} size='small' variant='ghost' className='border border-grey-20 text-rose-50'>
+              Odstranění adresy
             </Button>
           </div>
         </div>
@@ -195,7 +190,7 @@ export const SalesChannelTableActions = ({
             className='border border-grey-20'
             onClick={() => push(addChannelModalScreen)}
           >
-            <PlusIcon size={20} /> Add Channels
+            <PlusIcon size={20} /> Přidání kanálů
           </Button>
         </div>
       </div>

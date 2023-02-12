@@ -57,7 +57,7 @@ const EditVariantModal = ({ onClose, product, variant, isDuplicate = false }: Pr
         <Modal.Footer>
           <div className='w-full flex items-center gap-x-xsmall justify-end'>
             <Button variant='secondary' size='small' type='button' onClick={handleClose}>
-              Cancel
+              Zrušit
             </Button>
             <Button
               variant='primary'

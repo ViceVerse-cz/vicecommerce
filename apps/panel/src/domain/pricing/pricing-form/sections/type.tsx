@@ -1,9 +1,9 @@
-import React from 'react';
-import { Controller } from 'react-hook-form';
-import Accordion from '../../../../components/organisms/accordion';
-import RadioGroup from '../../../../components/organisms/radio-group';
-import { usePriceListForm } from '../form/pricing-form-context';
-import { PriceListType } from '../types';
+import React from "react";
+import { Controller } from "react-hook-form";
+import Accordion from "../../../../components/organisms/accordion";
+import RadioGroup from "../../../../components/organisms/radio-group";
+import { usePriceListForm } from "../form/pricing-form-context";
+import { PriceListType } from "../types";
 
 const Type = () => {
   const { control } = usePriceListForm();
@@ -13,9 +13,9 @@ const Type = () => {
       forceMountContent
       required
       value='type'
-      title='Price list type'
-      description='Select the type of the price list'
-      tooltip='Unlike with sale prices a price override will not communicate to the customer that the price is part of a sale.'
+      title='Typ ceníku'
+      description='Vyberte typ ceníku'
+      tooltip='Na rozdíl od prodejních cen nebude přepis ceny zákazníkovi sdělovat, že cena je součástí prodeje.'
     >
       <Controller
         name='type'
@@ -31,14 +31,14 @@ const Type = () => {
               <RadioGroup.Item
                 value={PriceListType.SALE}
                 className='flex-1'
-                label='Sale'
-                description='Use this if you are creating prices for a sale.'
+                label='Prodej'
+                description='Tuto možnost použijte, pokud vytváříte ceny pro prodej.'
               />
               <RadioGroup.Item
                 value={PriceListType.OVERRIDE}
                 className='flex-1'
-                label='Override'
-                description='Use this to override prices.'
+                label='Přepsat'
+                description='Použijte ji k přepsání cen.'
               />
             </RadioGroup.Root>
           );

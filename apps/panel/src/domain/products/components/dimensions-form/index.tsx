@@ -1,7 +1,7 @@
-import React from 'react';
-import InputField from '../../../../components/molecules/input';
-import FormValidator from '../../../../utils/form-validator';
-import { NestedForm } from '../../../../utils/nested-form';
+import React from "react";
+import InputField from "../../../../components/molecules/input";
+import FormValidator from "../../../../utils/form-validator";
+import { NestedForm } from "../../../../utils/nested-form";
 
 export type DimensionsFormType = {
   length: number | null;
@@ -29,41 +29,41 @@ const DimensionsForm = ({ form }: DimensionsFormProps) => {
   return (
     <div className='grid grid-cols-4 gap-x-large'>
       <InputField
-        label='Width'
+        label='Šířka'
         placeholder='100...'
         type='number'
-        {...register(path('width'), {
-          min: FormValidator.nonNegativeNumberRule('Width'),
+        {...register(path("width"), {
+          min: FormValidator.nonNegativeNumberRule("Width"),
           valueAsNumber: true,
         })}
         errors={errors}
       />
       <InputField
-        label='Length'
+        label='Délka'
         placeholder='100...'
         type='number'
-        {...register(path('length'), {
-          min: FormValidator.nonNegativeNumberRule('Length'),
+        {...register(path("length"), {
+          min: FormValidator.nonNegativeNumberRule("Length"),
           valueAsNumber: true,
         })}
         errors={errors}
       />
       <InputField
-        label='Height'
+        label='Výška'
         placeholder='100...'
         type='number'
-        {...register(path('height'), {
-          min: FormValidator.nonNegativeNumberRule('Height'),
+        {...register(path("height"), {
+          min: FormValidator.nonNegativeNumberRule("Height"),
           valueAsNumber: true,
         })}
         errors={errors}
       />
       <InputField
-        label='Weight'
+        label='Hmotnost'
         placeholder='100...'
         type='number'
-        {...register(path('weight'), {
-          min: FormValidator.nonNegativeNumberRule('Weight'),
+        {...register(path("weight"), {
+          min: FormValidator.nonNegativeNumberRule("Weight"),
           valueAsNumber: true,
         })}
         errors={errors}

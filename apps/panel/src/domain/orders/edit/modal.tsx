@@ -37,7 +37,7 @@ function TotalsSection(props: TotalsSectionProps) {
     <>
       <div className='bg-grey-20 mb-6 h-px w-full' />
       <div className='mb-2 flex h-[40px] justify-between'>
-        <span className='text-gray-500'>Amount Paid</span>
+        <span className='text-gray-500'>Vyplacená částka</span>
         <span className='text-gray-900'>
           {formatAmountWithSymbol({
             amount: amountPaid,
@@ -48,7 +48,7 @@ function TotalsSection(props: TotalsSectionProps) {
       </div>
 
       <div className='mb-2 flex h-[40px] justify-between'>
-        <span className='font-semibold text-gray-900'>New Total</span>
+        <span className='font-semibold text-gray-900'>Nový Celkem</span>
         <span className='text-2xl font-semibold'>
           {formatAmountWithSymbol({
             amount: newTotal,
@@ -58,7 +58,7 @@ function TotalsSection(props: TotalsSectionProps) {
       </div>
 
       <div className='flex justify-between'>
-        <span className='text-gray-500'>Difference Due</span>
+        <span className='text-gray-500'>Rozdíl z důvodu</span>
         <span
           className={clsx("text-gray-900", {
             "text-rose-500": differenceDue < 0,
@@ -121,7 +121,7 @@ export function AddProductVariant(props: AddProductVariantProps) {
       <Modal.Footer>
         <div className='space-x-xsmall flex w-full justify-end'>
           <Button variant='secondary' size='small' onClick={onBack}>
-            Back
+            Zpět
           </Button>
           <Button variant='primary' size='small' onClick={onSubmit}>
             Uložit a vrátit se zpět
@@ -176,9 +176,9 @@ function OrderEditModal(props: OrderEditModalProps) {
         await updateOrderEdit({ internal_note: note });
       }
 
-      notification("Success", "Order edit set as requested", "success");
+      notification("Úspěch", "Objednat sadu úprav podle požadavku", "success");
     } catch (e) {
-      notification("Error", "Failed to request confirmation", "error");
+      notification("Chyba", "Nepodařilo se vyžádat potvrzení", "error");
     }
     close();
   };
@@ -201,9 +201,9 @@ function OrderEditModal(props: OrderEditModalProps) {
 
       await Promise.all(promises);
 
-      notification("Success", "Added successfully", "success");
+      notification("Úspěch", "Úspěšně přidáno", "success");
     } catch (e) {
-      notification("Error", "Error occurred", "error");
+      notification("Chyba", "Došlo k chybě", "error");
     }
   };
 
@@ -227,7 +227,7 @@ function OrderEditModal(props: OrderEditModalProps) {
   }
 
   const addProductVariantScreen = {
-    title: "Add Product Variants",
+    title: "Přidání variant produktu",
     onBack: layeredModalContext.pop,
     view: (
       <AddProductVariant
@@ -243,11 +243,11 @@ function OrderEditModal(props: OrderEditModalProps) {
     <LayeredModal open isLargeModal handleClose={onCancel} context={layeredModalContext}>
       <Modal.Body>
         <Modal.Header handleClose={onCancel}>
-          <h1 className='inter-xlarge-semibold'>Edit Order</h1>
+          <h1 className='inter-xlarge-semibold'>Upravit pořadí</h1>
         </Modal.Header>
         <Modal.Content>
           <div className='mb-4 flex items-center justify-between'>
-            <span className='text-large font-semibold text-gray-900'>Items</span>
+            <span className='text-large font-semibold text-gray-900'>Položky</span>
             <div className='flex items-center justify-between'>
               <Button
                 size='small'
@@ -255,7 +255,7 @@ function OrderEditModal(props: OrderEditModalProps) {
                 className='border-grey-20 mr-2 h-[32px] flex-shrink-0 border text-gray-900'
                 onClick={() => layeredModalContext.push(addProductVariantScreen)}
               >
-                Add items
+                Přidat položky
               </Button>
               {!showFilter && (
                 <Button
@@ -313,10 +313,10 @@ function OrderEditModal(props: OrderEditModalProps) {
           {/* NOTE */}
           {showNote && (
             <div className='flex items-center justify-between'>
-              <span className='text-gray-500'>Note</span>
+              <span className='text-gray-500'>Poznámka</span>
               <InputField
                 className='max-w-[455px]'
-                placeholder='Add a note...'
+                placeholder='Přidejte poznámku...'
                 onChange={(e) => setNote(e.target.value)}
                 value={note}
               />
@@ -371,7 +371,7 @@ function OrderEditModalContainer(props: OrderEditModalContainerProps) {
     createOrderEdit({ order_id: order.id })
       .then(({ order_edit }) => setActiveOrderEdit(order_edit.id))
       .catch(() => {
-        notification("Error", "There is already an active order edit on this order", "error");
+        notification("Chyba", "Na této objednávce je již aktivní úprava objednávky", "error");
         hideModal();
       })
       .finally(() => (isRequestRunningFlag = false));

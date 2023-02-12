@@ -59,7 +59,7 @@ const EditVariantScreen = ({ variant, product }: Props) => {
         <Modal.Footer>
           <div className='flex items-center w-full justify-end gap-x-xsmall'>
             <Button variant='secondary' size='small' type='button'>
-              Cancel
+              Zrušit
             </Button>
             <Button
               variant='primary'
@@ -125,7 +125,7 @@ export const useEditVariantScreen = (props: Props) => {
 
   const screen = useMemo(() => {
     return {
-      title: "Edit Variant",
+      title: "Upravit variantu",
       subtitle: props.variant.title,
       onBack: pop,
       view: <EditVariantScreen {...props} />,

@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from "react";
 
-import { BatchJob } from '@medusajs/medusa';
+import { BatchJob } from "@medusajs/medusa";
 import {
   useAdminBatchJob,
   useAdminCancelBatchJob,
@@ -8,11 +8,11 @@ import {
   useAdminCreateBatchJob,
   useAdminDeleteFile,
   useAdminUploadFile,
-} from 'medusa-react';
+} from "medusa-react";
 
-import UploadModal from '../../../components/organisms/upload-modal';
-import useNotification from '../../../hooks/use-notification';
-import { PollingContext } from '../../../context/polling';
+import UploadModal from "../../../components/organisms/upload-modal";
+import useNotification from "../../../hooks/use-notification";
+import { PollingContext } from "../../../context/polling";
 
 /**
  * Hook returns a batch job. The endpoint is polled every 2s while the job is processing.
@@ -20,7 +20,7 @@ import { PollingContext } from '../../../context/polling';
 function useImportBatchJob(batchJobId?: string) {
   const [batchJob, setBatchJob] = useState<BatchJob>();
 
-  const isBatchJobProcessing = batchJob?.status === 'created' || batchJob?.status === 'confirmed';
+  const isBatchJobProcessing = batchJob?.status === "created" || batchJob?.status === "confirmed";
 
   const { batch_job } = useAdminBatchJob(batchJobId!, {
     enabled: !!batchJobId,
@@ -64,19 +64,19 @@ function ImportPrices(props: ImportPricesProps) {
 
   const isUploaded = !!fileKey;
   const isPreprocessed = !!batchJob?.result;
-  const hasError = batchJob?.status === 'failed';
+  const hasError = batchJob?.status === "failed";
 
   const progress = isPreprocessed
     ? (batchJob!.result?.advancement_count || 0) / (batchJob!.result?.count || 1)
     : undefined;
 
   const status = hasError
-    ? 'Error occurred while processing'
+    ? "Při zpracování došlo k chybě"
     : isPreprocessed
     ? undefined
     : isUploaded
-    ? 'Preprocessing...'
-    : 'Uploading...';
+    ? "Předběžné zpracování..."
+    : "Nahrávání...";
 
   /**
    * Confirm job on submit.
@@ -84,9 +84,9 @@ function ImportPrices(props: ImportPricesProps) {
   const onSubmit = async () => {
     await confirmBatchJob();
     notification(
-      'Success',
-      'Import confirmed for processing. Progress info is available in the activity drawer.',
-      'success',
+      "Úspěch",
+      "Import potvrzen ke zpracování. Informace o průběhu jsou k dispozici v zásuvce aktivity.",
+      "success",
     );
     props.handleClose();
   };
@@ -103,14 +103,14 @@ function ImportPrices(props: ImportPricesProps) {
       const batchJob = await createBatchJob({
         dry_run: true,
         context: { fileKey: _fileKey, price_list_id: props.priceListId },
-        type: 'price-list-import',
+        type: "price-list-import",
       });
 
       resetInterval();
 
       setBatchJobId(batchJob.batch_job.id);
     } catch (e) {
-      notification('Error', 'Import failed.', 'error');
+      notification("Chyba", "Import se nezdařil.", "error");
       if (fileKey) {
         await deleteFile({ file_key: fileKey });
       }
@@ -155,7 +155,7 @@ function ImportPrices(props: ImportPricesProps) {
    */
   const onClose = () => {
     props.handleClose();
-    if (!['confirmed', 'completed', 'canceled', 'failed'].includes(batchJob?.status || '')) {
+    if (!["confirmed", "completed", "canceled", "failed"].includes(batchJob?.status || "")) {
       if (fileKey) {
         deleteFile({ file_key: fileKey });
       }
@@ -167,11 +167,11 @@ function ImportPrices(props: ImportPricesProps) {
 
   return (
     <UploadModal
-      type='prices'
-      fileTitle='Price List prices'
-      description1Text='Upload a CSV file with variants and prices to update your price list. Note that any existing prices will be deleted.'
-      description2Title='Unsure about how to arrange your list?'
-      description2Text='Download the template file below and update your prices'
+      type='ceny'
+      fileTitle='Ceníkové ceny'
+      description1Text='Nahrajte soubor CSV s variantami a cenami a aktualizujte svůj ceník. Upozorňujeme, že všechny stávající ceny budou smazány.'
+      description2Title='Nejste si jisti, jak seznam uspořádat?'
+      description2Text='Stáhněte si níže uvedený soubor se šablonou a aktualizujte své ceny.'
       status={status}
       progress={progress}
       canImport={isPreprocessed}

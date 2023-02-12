@@ -1,15 +1,15 @@
-import { Product } from '@medusajs/medusa';
-import * as React from 'react';
-import { Column } from 'react-table';
-import ImagePlaceholder from '../../../../../../components/fundamentals/image-placeholder';
-import Table from '../../../../../../components/molecules/table';
+import { Product } from "@medusajs/medusa";
+import * as React from "react";
+import { Column } from "react-table";
+import ImagePlaceholder from "../../../../../../components/fundamentals/image-placeholder";
+import Table from "../../../../../../components/molecules/table";
 
 const usePricesColumns = () => {
   const columns = React.useMemo<Column<Product>[]>(
     () => [
       {
-        Header: <div className='pl-4'>Name</div>,
-        accessor: 'title',
+        Header: <div className='pl-4'>Název</div>,
+        accessor: "title",
         Cell: ({ row: { original } }) => (
           <div className='pl-4 flex items-center'>
             <div className='h-[40px] w-[30px] my-1.5 flex items-center mr-4'>
@@ -26,16 +26,14 @@ const usePricesColumns = () => {
         ),
       },
       {
-        Header: <div className='w-[400px]'>Collection</div>,
-        accessor: 'collection',
+        Header: <div className='w-[400px]'>Sbírka</div>,
+        accessor: "collection",
         Cell: ({ cell: { value } }) => (
-          <Table.Cell>
-            {value?.title ? value.title : <span className='text-grey-40'>No collection</span>}
-          </Table.Cell>
+          <Table.Cell>{value?.title ? value.title : <span className='text-grey-40'>Žádná sbírka</span>}</Table.Cell>
         ),
       },
       {
-        Header: 'Variants',
+        Header: "Varianty",
         Cell: ({ row: { original } }) => <Table.Cell>{original.variants.length}</Table.Cell>,
       },
     ],

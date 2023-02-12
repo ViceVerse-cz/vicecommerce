@@ -1,9 +1,9 @@
-import { Product } from '@medusajs/medusa';
-import { useAdminPriceListProducts } from 'medusa-react';
-import * as React from 'react';
-import Accordion from '../../../../components/organisms/accordion';
-import { merge } from '../../details/sections/prices-details/utils';
-import ProductPrices from './product-prices';
+import { Product } from "@medusajs/medusa";
+import { useAdminPriceListProducts } from "medusa-react";
+import * as React from "react";
+import Accordion from "../../../../components/organisms/accordion";
+import { merge } from "../../details/sections/prices-details/utils";
+import ProductPrices from "./product-prices";
 
 type PricesSectionProps = {
   isEdit?: boolean;
@@ -32,9 +32,9 @@ const PricesSection = ({ isEdit = false, id }: PricesSectionProps) => {
       forceMountContent
       required
       value='prices'
-      title='Prices'
-      description='You will be able to override the prices for the products you add here'
-      tooltip='Define the price overrides for the price list'
+      title='Ceny'
+      description='Zde budete moci přepsat ceny produktů, které přidáte.'
+      tooltip='Definice přepisů cen pro ceník'
     >
       <ProductPrices
         products={mergedProducts}

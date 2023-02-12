@@ -1,15 +1,15 @@
-import { useAdminVariants } from 'medusa-react';
-import React, { useEffect, useMemo, useState } from 'react';
-import { usePagination, useRowSelect, useTable } from 'react-table';
-import { ProductVariant } from '@medusajs/medusa';
-import clsx from 'clsx';
+import { useAdminVariants } from "medusa-react";
+import React, { useEffect, useMemo, useState } from "react";
+import { usePagination, useRowSelect, useTable } from "react-table";
+import { ProductVariant } from "@medusajs/medusa";
+import clsx from "clsx";
 
-import { useDebounce } from '../../../hooks/use-debounce';
-import ImagePlaceholder from '../../../components/fundamentals/image-placeholder';
-import Table from '../../../components/molecules/table';
-import IndeterminateCheckbox from '../../../components/molecules/indeterminate-checkbox';
-import { formatAmountWithSymbol } from '../../../utils/prices';
-import TableContainer from '../../../components/organisms/table-container';
+import { useDebounce } from "../../../hooks/use-debounce";
+import ImagePlaceholder from "../../../components/fundamentals/image-placeholder";
+import Table from "../../../components/molecules/table";
+import IndeterminateCheckbox from "../../../components/molecules/indeterminate-checkbox";
+import { formatAmountWithSymbol } from "../../../utils/prices";
+import TableContainer from "../../../components/organisms/table-container";
 
 const PAGE_SIZE = 12;
 
@@ -24,7 +24,7 @@ type Props = {
 const VariantsTable: React.FC<Props> = (props) => {
   const { isReplace, regionId, currencyCode, customerId, setSelectedVariants } = props;
 
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [offset, setOffset] = useState(0);
   const [numPages, setNumPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
@@ -40,7 +40,7 @@ const VariantsTable: React.FC<Props> = (props) => {
   });
 
   useEffect(() => {
-    if (typeof count !== 'undefined') {
+    if (typeof count !== "undefined") {
       setNumPages(Math.ceil(count / PAGE_SIZE));
     }
   }, [count]);
@@ -49,7 +49,7 @@ const VariantsTable: React.FC<Props> = (props) => {
     return [
       {
         Header: <div className='text-gray-500 text-small font-semibold'>Name</div>,
-        accessor: 'title',
+        accessor: "title",
         Cell: ({ row: { original } }) => {
           return (
             <div className='flex items-center'>
@@ -70,14 +70,14 @@ const VariantsTable: React.FC<Props> = (props) => {
       },
       {
         Header: <div className='text-gray-500 text-small font-semibold'>SKU</div>,
-        accessor: 'sku',
+        accessor: "sku",
         Cell: ({ row: { original } }) => <div>{original.sku}</div>,
       },
       {
-        Header: <div className='text-gray-500 text-small font-semibold'>Options</div>,
-        accessor: 'options',
+        Header: <div className='text-gray-500 text-small font-semibold'>Možnosti</div>,
+        accessor: "options",
         Cell: ({ row: { original } }) => {
-          const options = original.options?.map(({ value }) => value).join(', ');
+          const options = original.options?.map(({ value }) => value).join(", ");
 
           return (
             <div title={options} className='truncate max-w-[160px]'>
@@ -87,19 +87,19 @@ const VariantsTable: React.FC<Props> = (props) => {
         },
       },
       {
-        Header: <div className='text-right text-gray-500 text-small font-semibold'>In Stock</div>,
-        accessor: 'inventory_quantity',
+        Header: <div className='text-right text-gray-500 text-small font-semibold'>Skladem</div>,
+        accessor: "inventory_quantity",
         Cell: ({ row: { original } }) => <div className='text-right'>{original.inventory_quantity}</div>,
       },
       {
-        Header: <div className='text-right text-gray-500 text-small font-semibold'>Price</div>,
-        accessor: 'amount',
+        Header: <div className='text-right text-gray-500 text-small font-semibold'>Cena</div>,
+        accessor: "amount",
         Cell: ({ row: { original } }) => {
           if (!original.original_price_incl_tax) {
             return null;
           }
 
-          const showOriginal = original.calculated_price_type !== 'default';
+          const showOriginal = original.calculated_price_type !== "default";
 
           return (
             <div className='flex justify-end items-center gap-2'>
@@ -147,7 +147,7 @@ const VariantsTable: React.FC<Props> = (props) => {
     (hooks) => {
       hooks.visibleColumns.push((columns) => [
         {
-          id: 'selection',
+          id: "selection",
           Header: ({ getToggleAllRowsSelectedProps }) => {
             if (isReplace) {
               return null;
@@ -155,10 +155,7 @@ const VariantsTable: React.FC<Props> = (props) => {
 
             return (
               <div>
-                <IndeterminateCheckbox
-                  {...getToggleAllRowsSelectedProps()}
-                  type={isReplace ? 'radio' : 'checkbox'}
-                />
+                <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} type={isReplace ? "radio" : "checkbox"} />
               </div>
             );
           },
@@ -167,10 +164,10 @@ const VariantsTable: React.FC<Props> = (props) => {
             const selectProps = row.getToggleRowSelectedProps();
 
             return (
-              <div className={clsx({ 'mr-2': isReplace })}>
+              <div className={clsx({ "mr-2": isReplace })}>
                 <IndeterminateCheckbox
                   {...selectProps}
-                  type={isReplace ? 'radio' : 'checkbox'}
+                  type={isReplace ? "radio" : "checkbox"}
                   onChange={
                     isReplace
                       ? () => {
@@ -229,7 +226,7 @@ const VariantsTable: React.FC<Props> = (props) => {
         count: count!,
         offset: offset,
         pageSize: offset + table.rows.length,
-        title: 'Products',
+        title: "Produkty",
         currentPage: table.state.pageIndex + 1,
         pageCount: table.pageCount,
         nextPage: handleNext,
@@ -241,7 +238,7 @@ const VariantsTable: React.FC<Props> = (props) => {
       <Table
         immediateSearchFocus
         enableSearch
-        searchPlaceholder='Search Product Variants...'
+        searchPlaceholder='Hledat varianty produktu...'
         searchValue={query}
         handleSearch={handleSearch}
         {...table.getTableProps()}
@@ -249,7 +246,7 @@ const VariantsTable: React.FC<Props> = (props) => {
         {table.headerGroups.map((headerGroup) => (
           <Table.HeadRow {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((col) => (
-              <Table.HeadCell {...col.getHeaderProps()}>{col.render('Header')}</Table.HeadCell>
+              <Table.HeadCell {...col.getHeaderProps()}>{col.render("Header")}</Table.HeadCell>
             ))}
           </Table.HeadRow>
         ))}
@@ -260,7 +257,7 @@ const VariantsTable: React.FC<Props> = (props) => {
             return (
               <Table.Row {...row.getRowProps()}>
                 {row.cells.map((cell) => {
-                  return <Table.Cell {...cell.getCellProps()}>{cell.render('Cell')}</Table.Cell>;
+                  return <Table.Cell {...cell.getCellProps()}>{cell.render("Cell")}</Table.Cell>;
                 })}
               </Table.Row>
             );

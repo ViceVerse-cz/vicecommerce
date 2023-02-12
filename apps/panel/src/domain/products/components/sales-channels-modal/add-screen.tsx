@@ -89,7 +89,7 @@ const AddScreen = () => {
       <Modal.Footer>
         <div className='flex justify-end w-full space-x-xsmall'>
           <Button variant='secondary' size='small' onClick={pop}>
-            Cancel
+            Zrušit
           </Button>
           <Button variant='primary' size='small' onClick={saveAndGoBack} disabled={disableSave}>
             Uložit a vrátit se zpět
@@ -107,7 +107,7 @@ export const useAddChannelsModalScreen = () => {
   const { pop } = React.useContext(LayeredModalContext);
 
   return {
-    title: "Add Sales Channels",
+    title: "Přidání prodejních kanálů",
     onBack: pop,
     view: <AddScreen />,
   };
