@@ -63,7 +63,7 @@ const OrderEditLine = ({ item, currencyCode, change, customerId, regionId }: Ord
 
   const onDuplicate = async () => {
     if (!item.variant) {
-      notification("Warning", "Cannot duplicate an item without a variant", "warning");
+      notification("Varování", "Nelze duplikovat položku bez varianty", "warning");
       return;
     }
 
@@ -73,7 +73,7 @@ const OrderEditLine = ({ item, currencyCode, change, customerId, regionId }: Ord
         quantity: item.quantity,
       });
     } catch (e) {
-      notification("Error", "Failed to duplicate item", "error");
+      notification("Chyba", "Nepodařilo se duplikovat položku", "error");
     }
   };
 
@@ -90,9 +90,9 @@ const OrderEditLine = ({ item, currencyCode, change, customerId, regionId }: Ord
       } else {
         await removeItem();
       }
-      notification("Success", "Item removed", "success");
+      notification("Úspěch", "Odstraněná položka", "success");
     } catch (e) {
-      notification("Error", "Failed to remove item", "error");
+      notification("Chyba", "Nepodařilo se odstranit položku", "error");
     }
   };
 
@@ -101,14 +101,14 @@ const OrderEditLine = ({ item, currencyCode, change, customerId, regionId }: Ord
     try {
       await onRemove();
       await addLineItem({ variant_id: newVariantId, quantity: item.quantity });
-      notification("Success", "Item added", "success");
+      notification("Úspěch", "Přidaná položka", "success");
     } catch (e) {
-      notification("Error", "Failed to replace the item", "error");
+      notification("Chyba", "Nepodařilo se vyměnit položku", "error");
     }
   };
 
   const replaceProductVariantScreen = {
-    title: "Replace Product Variants",
+    title: "Nahradit varianty produktu",
     onBack: pop,
     view: (
       <AddProductVariant
@@ -123,17 +123,17 @@ const OrderEditLine = ({ item, currencyCode, change, customerId, regionId }: Ord
 
   const actions = [
     !isLocked && {
-      label: "Replace with other item",
+      label: "Nahradit jinou položkou",
       onClick: () => push(replaceProductVariantScreen),
       icon: <RefreshIcon size='20' />,
     },
     {
-      label: "Duplicate item",
+      label: "Duplicitní položka",
       onClick: onDuplicate,
       icon: <DuplicateIcon size='20' />,
     },
     !isLocked && {
-      label: "Remove item",
+      label: "Odebrat položku",
       onClick: onRemove,
       variant: "danger",
       icon: <TrashIcon size='20' />,
@@ -144,7 +144,7 @@ const OrderEditLine = ({ item, currencyCode, change, customerId, regionId }: Ord
     <Tooltip
       side='top'
       open={isLocked ? undefined : false}
-      content='This line item is part of a fulfillment and cannot be edited. Cancel the fulfillment to edit the line item.'
+      content='Tato položka je součástí plnění a nelze ji upravovat. Chcete-li položku upravit, zrušte plnění.'
     >
       <div className='hover:bg-grey-5 rounded-rounded mx-[-5px] mb-1 flex h-[64px] justify-between py-2 px-[5px]'>
         <div className='flex-grow-1 flex justify-center space-x-4'>
@@ -173,13 +173,13 @@ const OrderEditLine = ({ item, currencyCode, change, customerId, regionId }: Ord
             <div className='flex items-center'>
               {isNew && (
                 <div className='text-small bg-blue-10 rounded-rounded mr-2 flex h-[24px] w-[42px] flex-shrink-0 items-center justify-center text-blue-500'>
-                  New
+                  Nový
                 </div>
               )}
 
               {isModified && (
                 <div className='text-small bg-orange-10 rounded-rounded mr-2 flex h-[24px] w-[68px] flex-shrink-0 items-center justify-center text-orange-500'>
-                  Modified
+                  Upraveno
                 </div>
               )}
 

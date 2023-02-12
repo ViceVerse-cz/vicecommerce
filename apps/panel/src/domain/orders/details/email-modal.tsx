@@ -1,12 +1,12 @@
-import { useAdminUpdateOrder } from 'medusa-react';
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import { useAdminUpdateOrder } from "medusa-react";
+import React from "react";
+import { useForm } from "react-hook-form";
 
-import Button from '../../../components/fundamentals/button';
-import Input from '../../../components/molecules/input';
-import Modal from '../../../components/molecules/modal';
-import useNotification from '../../../hooks/use-notification';
-import { getErrorMessage } from '../../../utils/error-messages';
+import Button from "../../../components/fundamentals/button";
+import Input from "../../../components/molecules/input";
+import Modal from "../../../components/molecules/modal";
+import useNotification from "../../../hooks/use-notification";
+import { getErrorMessage } from "../../../utils/error-messages";
 
 type EmailModalProps = {
   handleClose: () => void;
@@ -30,10 +30,10 @@ const EmailModal: React.FC<EmailModalProps> = ({ orderId, email, handleClose }) 
 
     return updateEmail(updateObj, {
       onSuccess: () => {
-        notification('Success', 'Successfully updated the email address', 'success');
+        notification("Úspěch", "Úspěšná aktualizace e-mailové adresy", "success");
         handleClose();
       },
-      onError: (err) => notification('Error', getErrorMessage(err), 'error'),
+      onError: (err) => notification("Chyba", getErrorMessage(err), "error"),
     });
   };
 
@@ -42,12 +42,12 @@ const EmailModal: React.FC<EmailModalProps> = ({ orderId, email, handleClose }) 
       <form onSubmit={handleSubmit(handleUpdateEmail)}>
         <Modal.Body>
           <Modal.Header handleClose={handleClose}>
-            <span className='inter-xlarge-semibold'>Email Address</span>
+            <span className='inter-xlarge-semibold'>E-mailová adresa</span>
           </Modal.Header>
           <Modal.Content>
             <div className='space-y-4'>
               <div className='flex mt-4 space-x-4'>
-                <Input label='Email' {...register('email')} placeholder='Email' />
+                <Input label='E-mail' {...register("email")} placeholder='E-mail' />
               </div>
             </div>
           </Modal.Content>
@@ -60,7 +60,7 @@ const EmailModal: React.FC<EmailModalProps> = ({ orderId, email, handleClose }) 
                 type='button'
                 onClick={handleClose}
               >
-                Cancel
+                Zrušit
               </Button>
               <Button
                 size='large'
@@ -70,7 +70,7 @@ const EmailModal: React.FC<EmailModalProps> = ({ orderId, email, handleClose }) 
                 disabled={isLoading}
                 type='submit'
               >
-                Save
+                Uložit
               </Button>
             </div>
           </Modal.Footer>

@@ -5,17 +5,17 @@ import {
   ClaimOrder,
   Order,
   Swap,
-} from '@medusajs/medusa';
-import { useAdminCreateFulfillment, useAdminFulfillClaim, useAdminFulfillSwap } from 'medusa-react';
-import React, { useState } from 'react';
-import Button from '../../../../components/fundamentals/button';
-import CheckIcon from '../../../../components/fundamentals/icons/check-icon';
-import IconTooltip from '../../../../components/molecules/icon-tooltip';
-import Modal from '../../../../components/molecules/modal';
-import Metadata, { MetadataField } from '../../../../components/organisms/metadata';
-import useNotification from '../../../../hooks/use-notification';
-import { getErrorMessage } from '../../../../utils/error-messages';
-import CreateFulfillmentItemsTable from './item-table';
+} from "@medusajs/medusa";
+import { useAdminCreateFulfillment, useAdminFulfillClaim, useAdminFulfillSwap } from "medusa-react";
+import React, { useState } from "react";
+import Button from "../../../../components/fundamentals/button";
+import CheckIcon from "../../../../components/fundamentals/icons/check-icon";
+import IconTooltip from "../../../../components/molecules/icon-tooltip";
+import Modal from "../../../../components/molecules/modal";
+import Metadata, { MetadataField } from "../../../../components/organisms/metadata";
+import useNotification from "../../../../hooks/use-notification";
+import { getErrorMessage } from "../../../../utils/error-messages";
+import CreateFulfillmentItemsTable from "./item-table";
 
 type CreateFulfillmentModalProps = {
   handleCancel: () => void;
@@ -25,17 +25,13 @@ type CreateFulfillmentModalProps = {
   orderId: string;
 };
 
-const CreateFulfillmentModal: React.FC<CreateFulfillmentModalProps> = ({
-  handleCancel,
-  orderToFulfill,
-  orderId,
-}) => {
+const CreateFulfillmentModal: React.FC<CreateFulfillmentModalProps> = ({ handleCancel, orderToFulfill, orderId }) => {
   const [toFulfill, setToFulfill] = useState<string[]>([]);
   const [quantities, setQuantities] = useState({});
   const [noNotis, setNoNotis] = useState(false);
-  const [metadata, setMetadata] = useState<MetadataField[]>([{ key: '', value: '' }]);
+  const [metadata, setMetadata] = useState<MetadataField[]>([{ key: "", value: "" }]);
 
-  const items = 'items' in orderToFulfill ? orderToFulfill.items : orderToFulfill.additional_items;
+  const items = "items" in orderToFulfill ? orderToFulfill.items : orderToFulfill.additional_items;
 
   const createOrderFulfillment = useAdminCreateFulfillment(orderId);
   const createSwapFulfillment = useAdminFulfillSwap(orderId);
@@ -47,15 +43,12 @@ const CreateFulfillmentModal: React.FC<CreateFulfillmentModalProps> = ({
   const notification = useNotification();
 
   const createFulfillment = () => {
-    const [type] = orderToFulfill.id.split('_');
+    const [type] = orderToFulfill.id.split("_");
 
-    type actionType =
-      | typeof createOrderFulfillment
-      | typeof createSwapFulfillment
-      | typeof createClaimFulfillment;
+    type actionType = typeof createOrderFulfillment | typeof createSwapFulfillment | typeof createClaimFulfillment;
 
     let action: actionType = createOrderFulfillment;
-    let successText = 'Successfully fulfilled order';
+    let successText = "Úspěšně vyřízená objednávka";
     let requestObj;
 
     const preparedMetadata = metadata.reduce((acc, next) => {
@@ -70,9 +63,9 @@ const CreateFulfillmentModal: React.FC<CreateFulfillmentModalProps> = ({
     }, {});
 
     switch (type) {
-      case 'swap':
+      case "swap":
         action = createSwapFulfillment;
-        successText = 'Successfully fulfilled swap';
+        successText = "Úspěšně splněná výměna";
         requestObj = {
           swap_id: orderToFulfill.id,
           metadata: preparedMetadata,
@@ -80,9 +73,9 @@ const CreateFulfillmentModal: React.FC<CreateFulfillmentModalProps> = ({
         } as AdminPostOrdersOrderSwapsSwapFulfillmentsReq;
         break;
 
-      case 'claim':
+      case "claim":
         action = createClaimFulfillment;
-        successText = 'Successfully fulfilled claim';
+        successText = "Úspěšně splněná reklamace";
         requestObj = {
           claim_id: orderToFulfill.id,
           metadata: preparedMetadata,
@@ -103,10 +96,10 @@ const CreateFulfillmentModal: React.FC<CreateFulfillmentModalProps> = ({
 
     action.mutate(requestObj, {
       onSuccess: () => {
-        notification('Success', successText, 'success');
+        notification("Úspěch", successText, "success");
         handleCancel();
       },
-      onError: (err) => notification('Error', getErrorMessage(err), 'error'),
+      onError: (err) => notification("Chyba", getErrorMessage(err), "error"),
     });
   };
 
@@ -114,11 +107,11 @@ const CreateFulfillmentModal: React.FC<CreateFulfillmentModalProps> = ({
     <Modal handleClose={handleCancel}>
       <Modal.Body>
         <Modal.Header handleClose={handleCancel}>
-          <span className='inter-xlarge-semibold'>Create Fulfillment</span>
+          <span className='inter-xlarge-semibold'>Vytvořit plnění</span>
         </Modal.Header>
         <Modal.Content>
           <div className='flex flex-col'>
-            <span className='inter-base-semibold mb-2'>Items</span>
+            <span className='inter-base-semibold mb-2'>Položky</span>
             <CreateFulfillmentItemsTable
               items={items}
               toFulfill={toFulfill}
@@ -136,20 +129,14 @@ const CreateFulfillmentModal: React.FC<CreateFulfillmentModalProps> = ({
             <div className='items-center h-full flex cursor-pointer' onClick={() => setNoNotis(!noNotis)}>
               <div
                 className={`w-5 h-5 flex justify-center text-grey-0 border-grey-30 border rounded-base ${
-                  !noNotis && 'bg-violet-60'
+                  !noNotis && "bg-violet-60"
                 }`}
               >
                 <span className='self-center'>{!noNotis && <CheckIcon size={16} />}</span>
               </div>
-              <input
-                id='noNotification'
-                className='hidden'
-                name='noNotification'
-                checked={!noNotis}
-                type='checkbox'
-              />
+              <input id='noNotification' className='hidden' name='noNotification' checked={!noNotis} type='checkbox' />
               <span className='ml-3 flex items-center text-grey-90 gap-x-xsmall'>
-                Send notifications
+                Odesílání oznámení
                 <IconTooltip content='' />
               </span>
             </div>
@@ -160,7 +147,7 @@ const CreateFulfillmentModal: React.FC<CreateFulfillmentModalProps> = ({
                 size='large'
                 onClick={handleCancel}
               >
-                Cancel
+                Zrušit
               </Button>
               <Button
                 size='large'
@@ -170,7 +157,7 @@ const CreateFulfillmentModal: React.FC<CreateFulfillmentModalProps> = ({
                 onClick={createFulfillment}
                 loading={isSubmitting}
               >
-                Complete
+                Kompletní
               </Button>
             </div>
           </div>

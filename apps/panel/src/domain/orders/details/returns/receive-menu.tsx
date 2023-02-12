@@ -1,13 +1,13 @@
-import { LineItem as RawLineItem, Order, Return, ReturnItem } from '@medusajs/medusa';
-import React, { useEffect, useMemo, useState } from 'react';
-import Button from '../../../../components/fundamentals/button';
-import EditIcon from '../../../../components/fundamentals/icons/edit-icon';
-import Modal from '../../../../components/molecules/modal';
-import CurrencyInput from '../../../../components/organisms/currency-input';
-import RMASelectReturnProductTable from '../../../../components/organisms/rma-select-receive-product-table';
-import useNotification from '../../../../hooks/use-notification';
-import { getErrorMessage } from '../../../../utils/error-messages';
-import { displayAmount } from '../../../../utils/prices';
+import { LineItem as RawLineItem, Order, Return, ReturnItem } from "@medusajs/medusa";
+import React, { useEffect, useMemo, useState } from "react";
+import Button from "../../../../components/fundamentals/button";
+import EditIcon from "../../../../components/fundamentals/icons/edit-icon";
+import Modal from "../../../../components/molecules/modal";
+import CurrencyInput from "../../../../components/organisms/currency-input";
+import RMASelectReturnProductTable from "../../../../components/organisms/rma-select-receive-product-table";
+import useNotification from "../../../../hooks/use-notification";
+import { getErrorMessage } from "../../../../utils/error-messages";
+import { displayAmount } from "../../../../utils/prices";
 
 type Item = {
   item_id: string;
@@ -15,15 +15,15 @@ type Item = {
 };
 
 type ReceiveMenuProps = {
-  order: Omit<Order, 'beforeInsert'>;
-  returnRequest: Omit<Return, 'beforeInsert'>;
+  order: Omit<Order, "beforeInsert">;
+  returnRequest: Omit<Return, "beforeInsert">;
   onDismiss: () => void;
   onReceiveSwap?: (items: Item[]) => Promise<void>;
   onReceiveReturn?: (items: Item[], refund?: number) => Promise<void>;
   refunded?: boolean;
 };
 
-type LineItem = Omit<RawLineItem, 'beforeInsert'>;
+type LineItem = Omit<RawLineItem, "beforeInsert">;
 
 const ReceiveMenu: React.FC<ReceiveMenuProps> = ({
   order,
@@ -40,18 +40,18 @@ const ReceiveMenu: React.FC<ReceiveMenuProps> = ({
 
   const notification = useNotification();
 
-  const allItems: Omit<LineItem, 'beforeInsert'>[] = useMemo(() => {
+  const allItems: Omit<LineItem, "beforeInsert">[] = useMemo(() => {
     const idLookUp = returnRequest.items.map((i) => i.item_id);
 
     let allItems = [...order.items];
 
-    if (order.swaps && order.swaps.length) {
+    if (order.swaps?.length) {
       for (const swap of order.swaps) {
         allItems = [...allItems, ...swap.additional_items];
       }
     }
 
-    if (order.claims && order.claims.length) {
+    if (order.claims?.length) {
       for (const claim of order.claims) {
         allItems = [...allItems, ...claim.additional_items];
       }
@@ -94,7 +94,7 @@ const ReceiveMenu: React.FC<ReceiveMenuProps> = ({
       .map((t) => ({
         ...allItems.find((i) => i.id === t),
       }))
-      .filter((i) => typeof i !== 'undefined') as LineItem[];
+      .filter((i) => typeof i !== "undefined") as LineItem[];
 
     const itemTotal = items.reduce((acc: number, curr: LineItem): number => {
       const unitRefundable = (curr.refundable || 0) / (curr.quantity - curr.returned_quantity);
@@ -103,8 +103,7 @@ const ReceiveMenu: React.FC<ReceiveMenuProps> = ({
     }, 0);
 
     const shippingTotal =
-      (returnRequest.shipping_method && returnRequest.shipping_method.price * (1 + shippingTaxRate / 100)) ||
-      0;
+      (returnRequest.shipping_method && returnRequest.shipping_method.price * (1 + shippingTaxRate / 100)) || 0;
 
     const total = itemTotal - shippingTotal;
 
@@ -123,8 +122,8 @@ const ReceiveMenu: React.FC<ReceiveMenuProps> = ({
       setSubmitting(true);
       return onReceiveSwap(items)
         .then(() => onDismiss())
-        .then(() => notification('Success', 'Successfully received return', 'success'))
-        .catch((error) => notification('Error', getErrorMessage(error), 'error'))
+        .then(() => notification("Úspěch", "Úspěšně přijaté vrácení", "success"))
+        .catch((error) => notification("Error", getErrorMessage(error), "error"))
         .finally(() => setSubmitting(false));
     }
 
@@ -132,8 +131,8 @@ const ReceiveMenu: React.FC<ReceiveMenuProps> = ({
       setSubmitting(true);
       return onReceiveReturn(items, Math.round(refundAmount))
         .then(() => onDismiss())
-        .then(() => notification('Success', 'Successfully returned order', 'success'))
-        .catch((error) => notification('Error', getErrorMessage(error), 'error'))
+        .then(() => notification("Úspěch", "Úspěšně vrácená objednávka", "success"))
+        .catch((error) => notification("Error", getErrorMessage(error), "error"))
         .finally(() => setSubmitting(false));
     }
   };
@@ -153,10 +152,10 @@ const ReceiveMenu: React.FC<ReceiveMenuProps> = ({
     <Modal handleClose={onDismiss}>
       <Modal.Body>
         <Modal.Header handleClose={onDismiss}>
-          <h2 className='inter-xlarge-semibold'>Receive Return</h2>
+          <h2 className='inter-xlarge-semibold'>Přijmout návratku</h2>
         </Modal.Header>
         <Modal.Content>
-          <h3 className='inter-base-semibold'>Items to receive</h3>
+          <h3 className='inter-base-semibold'>Položky, které obdržíte</h3>
           <RMASelectReturnProductTable
             order={order}
             allItems={allItems}
@@ -166,11 +165,11 @@ const ReceiveMenu: React.FC<ReceiveMenuProps> = ({
 
           {!returnRequest.swap_id && (
             <>
-              {returnRequest.shipping_method && returnRequest.shipping_method.price !== undefined && (
+              {returnRequest.shipping_method?.price !== undefined && (
                 <div className='my-4 flex justify-between'>
-                  <span className='inter-base-semibold'>Shipping cost</span>
+                  <span className='inter-base-semibold'>Náklady na dopravu</span>
                   <span>
-                    {((returnRequest.shipping_method.price / 100) * (1 + shippingTaxRate / 100)).toFixed(2)}{' '}
+                    {((returnRequest.shipping_method.price / 100) * (1 + shippingTaxRate / 100)).toFixed(2)}{" "}
                     <span className='text-grey-50'>{order.currency_code.toUpperCase()}</span>
                   </span>
                 </div>
@@ -178,36 +177,21 @@ const ReceiveMenu: React.FC<ReceiveMenuProps> = ({
               {!refunded && (
                 <div>
                   <div className='flex inter-base-semibold justify-between w-full'>
-                    <span>Total Refund</span>
+                    <span>Celková náhrada</span>
                     <div className='flex items-center'>
                       {!refundEdited && (
                         <>
-                          <span
-                            className='mr-2 cursor-pointer text-grey-40'
-                            onClick={() => setRefundEdited(true)}
-                          >
-                            <EditIcon size={20} />{' '}
+                          <span className='mr-2 cursor-pointer text-grey-40' onClick={() => setRefundEdited(true)}>
+                            <EditIcon size={20} />{" "}
                           </span>
-                          {`${displayAmount(
-                            order.currency_code,
-                            refundAmount,
-                          )} ${order.currency_code.toUpperCase()}`}
+                          {`${displayAmount(order.currency_code, refundAmount)} ${order.currency_code.toUpperCase()}`}
                         </>
                       )}
                     </div>
                   </div>
                   {refundEdited && (
-                    <CurrencyInput.Root
-                      className='mt-2'
-                      size='small'
-                      currentCurrency={order.currency_code}
-                      readOnly
-                    >
-                      <CurrencyInput.Amount
-                        label={'Amount'}
-                        amount={refundAmount}
-                        onChange={handleRefundUpdated}
-                      />
+                    <CurrencyInput.Root className='mt-2' size='small' currentCurrency={order.currency_code} readOnly>
+                      <CurrencyInput.Amount label={"Částka"} amount={refundAmount} onChange={handleRefundUpdated} />
                     </CurrencyInput.Root>
                   )}
                 </div>
@@ -217,23 +201,11 @@ const ReceiveMenu: React.FC<ReceiveMenuProps> = ({
         </Modal.Content>
         <Modal.Footer>
           <div className='flex w-full justify-end gap-x-xsmall'>
-            <Button
-              onClick={() => onDismiss()}
-              className='w-[112px]'
-              type='submit'
-              size='small'
-              variant='ghost'
-            >
-              Back
+            <Button onClick={() => onDismiss()} className='w-[112px]' type='submit' size='small' variant='ghost'>
+              Zpět
             </Button>
-            <Button
-              onClick={onSubmit}
-              loading={submitting}
-              className='w-[112px]'
-              variant='primary'
-              size='small'
-            >
-              Complete
+            <Button onClick={onSubmit} loading={submitting} className='w-[112px]' variant='primary' size='small'>
+              Kompletní
             </Button>
           </div>
         </Modal.Footer>

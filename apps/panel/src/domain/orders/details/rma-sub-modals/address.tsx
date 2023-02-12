@@ -1,19 +1,19 @@
-import { Order } from '@medusajs/medusa';
-import { useAdminRegion } from 'medusa-react';
-import React, { useContext, useEffect, useMemo } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import Button from '../../../../components/fundamentals/button';
-import Input from '../../../../components/molecules/input';
-import Modal from '../../../../components/molecules/modal';
-import { LayeredModalContext } from '../../../../components/molecules/modal/layered-modal';
-import Select from '../../../../components/molecules/select';
-import { Option } from '../../../../types/shared';
-import { AddressPayload } from '../claim/create';
+import { Order } from "@medusajs/medusa";
+import { useAdminRegion } from "medusa-react";
+import React, { useContext, useEffect, useMemo } from "react";
+import { Controller, useForm } from "react-hook-form";
+import Button from "../../../../components/fundamentals/button";
+import Input from "../../../../components/molecules/input";
+import Modal from "../../../../components/molecules/modal";
+import { LayeredModalContext } from "../../../../components/molecules/modal/layered-modal";
+import Select from "../../../../components/molecules/select";
+import { Option } from "../../../../types/shared";
+import { AddressPayload } from "../claim/create";
 
 type RMAEditAddressSubModalProps = {
   onSubmit: (address: AddressPayload) => void;
   address: AddressPayload;
-  order: Omit<Order, 'beforeInsert'>;
+  order: Omit<Order, "beforeInsert">;
 };
 
 type RMAEditAddressSubModalFormData = {
@@ -69,72 +69,72 @@ const RMAEditAddressSubModal: React.FC<RMAEditAddressSubModalProps> = ({ onSubmi
       <form onSubmit={handleSubmit(submit)}>
         <Modal.Content>
           <div className='h-full'>
-            <h2 className='inter-base-semibold mb-4'>Search for additional </h2>
+            <h2 className='inter-base-semibold mb-4'>Vyhledávání dalších </h2>
           </div>
           <div>
             <div>
               <div>
-                <span className='inter-base-semibold'>General</span>
+                <span className='inter-base-semibold'>Obecné</span>
 
                 <div className='grid grid-cols-2 gap-x-base gap-y-base'>
                   <Input
-                    {...register('first_name', {
+                    {...register("first_name", {
                       required: true,
                     })}
-                    placeholder='First Name'
-                    label='First Name'
+                    placeholder='Jméno'
+                    label='Jméno'
                     required
                   />
                   <Input
-                    {...register('last_name', {
+                    {...register("last_name", {
                       required: true,
                     })}
-                    placeholder='Last Name'
-                    label='Last Name'
+                    placeholder='Příjmení'
+                    label='Příjmení'
                     required
                   />
-                  <Input {...register('phone')} placeholder='Phone' label='Phone' />
+                  <Input {...register("phone")} placeholder='Telefon' label='Telefon ' />
                 </div>
               </div>
               <div className='mt-8'>
-                <span className='inter-base-semibold'>Shipping Address</span>
+                <span className='inter-base-semibold'>Dodací adresa</span>
                 <div className='grid gap-y-base my-4'>
                   <Input
-                    {...register('address_1', {
+                    {...register("address_1", {
                       required: true,
                     })}
-                    placeholder='Address 1'
-                    label='Address 1'
+                    placeholder='Adresa 1'
+                    label='Adresa 1'
                     required
                   />
-                  <Input {...register('address_2')} placeholder='Address 2' label='Address 2' />
+                  <Input {...register("address_2")} placeholder='Adresa 2' label='Addresa 2' />
                 </div>
                 <div className='grid grid-cols-2 gap-x-base gap-y-base'>
-                  <Input {...register('province')} placeholder='Province' label='Province' />
+                  <Input {...register("province")} placeholder='Provincie' label='Provincie' />
                   <Input
-                    {...register('postal_code', {
+                    {...register("postal_code", {
                       required: true,
                     })}
-                    placeholder='Postal code'
-                    label='Postal code'
+                    placeholder='Poštovní směrovací číslo'
+                    label='Poštovní směrovací číslo'
                     required
                   />
                   <Input
-                    placeholder='City'
-                    label='City'
-                    {...register('city', {
+                    placeholder='Město'
+                    label='Město'
+                    {...register("city", {
                       required: true,
                     })}
                     required
                   />
                   <Controller
                     control={control}
-                    name={'country_code'}
+                    name={"country_code"}
                     rules={{
                       required: true,
                     }}
                     render={({ field }) => {
-                      return <Select {...field} label='Country' options={countryOptions} required />;
+                      return <Select {...field} label='Země' options={countryOptions} required />;
                     }}
                   />
                 </div>
@@ -145,10 +145,10 @@ const RMAEditAddressSubModal: React.FC<RMAEditAddressSubModalProps> = ({ onSubmi
         <Modal.Footer>
           <div className='flex w-full justify-end gap-x-xsmall'>
             <Button variant='ghost' size='small' className='w-[112px]' onClick={() => pop()} type='button'>
-              Back
+              Zpět
             </Button>
             <Button variant='primary' className='w-[112px]' size='small' type='submit'>
-              Add
+              Přidat
             </Button>
           </div>
         </Modal.Footer>

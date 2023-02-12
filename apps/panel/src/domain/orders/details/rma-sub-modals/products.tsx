@@ -79,7 +79,7 @@ const RMASelectProductSubModal: React.FC<RMASelectProductSubModalProps> = ({ onS
         },
       },
       {
-        Header: "Status",
+        Header: "Stav",
         accessor: "status",
         Cell: ({ row: { original } }) => (
           <StatusIndicator
@@ -89,7 +89,7 @@ const RMASelectProductSubModal: React.FC<RMASelectProductSubModalProps> = ({ onS
         ),
       },
       {
-        Header: <div className='text-right'>In Stock</div>,
+        Header: <div className='text-right'>Skladem</div>,
         accessor: "inventory_quantity",
         Cell: ({ row: { original } }) => <div className='text-right'>{original.inventory_quantity}</div>,
       },
@@ -206,7 +206,7 @@ const RMASelectProductSubModal: React.FC<RMASelectProductSubModalProps> = ({ onS
             count: count!,
             offset: offset,
             pageSize: offset + rows.length,
-            title: "Products",
+            title: "Produkty",
             currentPage: pageIndex + 1,
             pageCount: pageCount,
             nextPage: handleNext,
@@ -218,7 +218,7 @@ const RMASelectProductSubModal: React.FC<RMASelectProductSubModalProps> = ({ onS
           <Table
             immediateSearchFocus
             enableSearch
-            searchPlaceholder='Search Products..'
+            searchPlaceholder='Vyhledávání zboží..'
             searchValue={query}
             handleSearch={handleSearch}
             {...getTableProps()}
@@ -249,10 +249,10 @@ const RMASelectProductSubModal: React.FC<RMASelectProductSubModalProps> = ({ onS
       <Modal.Footer>
         <div className='flex w-full justify-end gap-x-xsmall'>
           <Button variant='ghost' size='small' className='w-[112px]' onClick={() => pop()}>
-            Back
+            Zpět
           </Button>
           <Button variant='primary' className='w-[112px]' size='small' onClick={handleSubmit}>
-            Add
+            Přidat
           </Button>
         </div>
       </Modal.Footer>

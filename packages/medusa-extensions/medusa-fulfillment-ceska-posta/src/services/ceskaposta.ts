@@ -102,11 +102,6 @@ class ZasilkovnaService extends FulfillmentService {
     throw Error("Manual Fulfillment service cannot calculatePrice");
   }
 
-  createReturn() {
-    console.log("create return");
-    return Promise.resolve({});
-  }
-
   async createFulfillment(data: Data, items: LineItem[], order: Order, fulfillment: Fulfillment): Promise<void> {
     const itemsVarians = items.map((el) => el.variant);
 
@@ -145,9 +140,6 @@ class ZasilkovnaService extends FulfillmentService {
       body: JSON.stringify(body),
     });
 
-    console.log(request.status);
-    console.log(await request.json());
-
     if (request.status === 200) {
       return Promise.resolve();
     } else {
@@ -183,11 +175,6 @@ class ZasilkovnaService extends FulfillmentService {
     };
 
     return headers;
-  }
-
-  cancelFulfillment() {
-    console.log("cancel fulfillment");
-    return Promise.resolve({});
   }
 }
 

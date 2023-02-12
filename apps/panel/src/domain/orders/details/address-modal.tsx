@@ -1,19 +1,19 @@
-import { Address, AdminPostDraftOrdersReq, AdminPostOrdersOrderReq, Country } from '@medusajs/medusa';
-import { MutateOptions } from '@tanstack/react-query';
-import { useForm } from 'react-hook-form';
-import Button from '../../../components/fundamentals/button';
-import Modal from '../../../components/molecules/modal';
-import AddressForm, { AddressPayload, AddressType } from '../../../components/templates/address-form';
-import useNotification from '../../../hooks/use-notification';
-import { isoAlpha2Countries } from '../../../utils/countries';
-import { getErrorMessage } from '../../../utils/error-messages';
-import { nestedForm } from '../../../utils/nested-form';
+import { Address, AdminPostDraftOrdersReq, AdminPostOrdersOrderReq, Country } from "@medusajs/medusa";
+import { MutateOptions } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import Button from "../../../components/fundamentals/button";
+import Modal from "../../../components/molecules/modal";
+import AddressForm, { AddressPayload, AddressType } from "../../../components/templates/address-form";
+import useNotification from "../../../hooks/use-notification";
+import { isoAlpha2Countries } from "../../../utils/countries";
+import { getErrorMessage } from "../../../utils/error-messages";
+import { nestedForm } from "../../../utils/nested-form";
 
 type AddressPayloadType =
-  | AdminPostOrdersOrderReq['shipping_address']
-  | Partial<AdminPostOrdersOrderReq['shipping_address']>
-  | AdminPostDraftOrdersReq['shipping_address']
-  | Partial<AdminPostDraftOrdersReq['shipping_address']>;
+  | AdminPostOrdersOrderReq["shipping_address"]
+  | Partial<AdminPostOrdersOrderReq["shipping_address"]>
+  | AdminPostDraftOrdersReq["shipping_address"]
+  | Partial<AdminPostDraftOrdersReq["shipping_address"]>;
 
 type TVariables = {
   shipping_address?: AddressPayloadType;
@@ -50,22 +50,20 @@ const AddressModal = ({
   } = form;
   const notification = useNotification();
 
-  const countryOptions = allowedCountries
-    .map((c) => ({ label: c.display_name, value: c.iso_2 }))
-    .filter(Boolean);
+  const countryOptions = allowedCountries.map((c) => ({ label: c.display_name, value: c.iso_2 })).filter(Boolean);
 
   const handleUpdateAddress = (data: AddressPayload) => {
     const updateObj: TVariables = {};
 
-    if (type === 'shipping') {
+    if (type === "shipping") {
       // @ts-ignore
-      updateObj['shipping_address'] = {
+      updateObj["shipping_address"] = {
         ...data,
         country_code: data.country_code.value,
       };
     } else {
       // @ts-ignore
-      updateObj['billing_address'] = {
+      updateObj["billing_address"] = {
         ...data,
         country_code: data.country_code.value,
       };
@@ -73,10 +71,10 @@ const AddressModal = ({
 
     return submit(updateObj, {
       onSuccess: () => {
-        notification('Success', 'Successfully updated address', 'success');
+        notification("Úspěch", "Úspěšně aktualizovaná adresa", "success");
         handleClose();
       },
-      onError: (err) => notification('Error', getErrorMessage(err), 'error'),
+      onError: (err) => notification("Chyba", getErrorMessage(err), "error"),
     });
   };
 
@@ -86,7 +84,7 @@ const AddressModal = ({
         <Modal.Body>
           <Modal.Header handleClose={handleClose}>
             <span className='inter-xlarge-semibold'>
-              {type === AddressType.BILLING ? 'Billing' : 'Shipping'} Address
+              {type === AddressType.BILLING ? "Fakturace" : "Přeprava"} Address
             </span>
           </Modal.Header>
           <Modal.Content>
@@ -101,7 +99,7 @@ const AddressModal = ({
                 onClick={handleClose}
                 type='button'
               >
-                Cancel
+                Zrušit
               </Button>
               <Button
                 size='large'
@@ -111,7 +109,7 @@ const AddressModal = ({
                 loading={submitting}
                 disabled={submitting || !isDirty}
               >
-                Save
+                Uložit
               </Button>
             </div>
           </Modal.Footer>
@@ -125,18 +123,18 @@ const mapAddressToFormData = (address?: Address): AddressPayload => {
   const countryDisplayName = isoAlpha2Countries[address?.country_code?.toUpperCase()];
 
   return {
-    first_name: address?.first_name || '',
-    last_name: address?.last_name || '',
+    first_name: address?.first_name || "",
+    last_name: address?.last_name || "",
     phone: address?.phone || null,
     company: address?.company || null,
-    address_1: address?.address_1 || '',
+    address_1: address?.address_1 || "",
     address_2: address?.address_2 || null,
-    city: address?.city || '',
+    city: address?.city || "",
     province: address?.province || null,
     country_code: address?.country_code
       ? { label: countryDisplayName, value: address.country_code }
-      : { label: '', value: '' },
-    postal_code: address?.postal_code || '',
+      : { label: "", value: "" },
+    postal_code: address?.postal_code || "",
   };
 };
 

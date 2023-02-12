@@ -1,25 +1,25 @@
-import { AdminPostOrdersOrderSwapsReq, Order, ProductVariant, ReturnReason } from '@medusajs/medusa';
-import { useAdminCreateSwap, useAdminOrder, useAdminShippingOptions } from 'medusa-react';
-import React, { useContext, useEffect, useMemo, useState } from 'react';
-import Spinner from '../../../../components/atoms/spinner';
-import Button from '../../../../components/fundamentals/button';
-import CheckIcon from '../../../../components/fundamentals/icons/check-icon';
-import IconTooltip from '../../../../components/molecules/icon-tooltip';
-import Modal from '../../../../components/molecules/modal';
-import LayeredModal, { LayeredModalContext } from '../../../../components/molecules/modal/layered-modal';
-import RMAShippingPrice from '../../../../components/molecules/rma-select-shipping';
-import Select from '../../../../components/molecules/select';
-import RMAReturnProductsTable from '../../../../components/organisms/rma-return-product-table';
-import RMASelectProductTable from '../../../../components/organisms/rma-select-product-table';
-import useNotification from '../../../../hooks/use-notification';
-import { Option } from '../../../../types/shared';
-import { getErrorMessage } from '../../../../utils/error-messages';
-import { formatAmountWithSymbol } from '../../../../utils/prices';
-import RMASelectProductSubModal from '../rma-sub-modals/products';
-import { filterItems } from '../utils/create-filtering';
+import { AdminPostOrdersOrderSwapsReq, Order, ProductVariant, ReturnReason } from "@medusajs/medusa";
+import { useAdminCreateSwap, useAdminOrder, useAdminShippingOptions } from "medusa-react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
+import Spinner from "../../../../components/atoms/spinner";
+import Button from "../../../../components/fundamentals/button";
+import CheckIcon from "../../../../components/fundamentals/icons/check-icon";
+import IconTooltip from "../../../../components/molecules/icon-tooltip";
+import Modal from "../../../../components/molecules/modal";
+import LayeredModal, { LayeredModalContext } from "../../../../components/molecules/modal/layered-modal";
+import RMAShippingPrice from "../../../../components/molecules/rma-select-shipping";
+import Select from "../../../../components/molecules/select";
+import RMAReturnProductsTable from "../../../../components/organisms/rma-return-product-table";
+import RMASelectProductTable from "../../../../components/organisms/rma-select-product-table";
+import useNotification from "../../../../hooks/use-notification";
+import { Option } from "../../../../types/shared";
+import { getErrorMessage } from "../../../../utils/error-messages";
+import { formatAmountWithSymbol } from "../../../../utils/prices";
+import RMASelectProductSubModal from "../rma-sub-modals/products";
+import { filterItems } from "../utils/create-filtering";
 
 type SwapMenuProps = {
-  order: Omit<Order, 'beforeInsert'>;
+  order: Omit<Order, "beforeInsert">;
   onDismiss: () => void;
 };
 
@@ -36,7 +36,7 @@ type ReturnRecord = Record<
   }
 >;
 
-type SelectProduct = Omit<ProductVariant & { quantity: number }, 'beforeInsert'>;
+type SelectProduct = Omit<ProductVariant & { quantity: number }, "beforeInsert">;
 
 const SwapMenu: React.FC<SwapMenuProps> = ({ order, onDismiss }) => {
   const { refetch } = useAdminOrder(order.id);
@@ -74,10 +74,7 @@ const SwapMenu: React.FC<SwapMenuProps> = ({ order, onDismiss }) => {
           return acc;
         }
 
-        return (
-          acc +
-          ((next.refundable || 0) / (next.quantity - next.returned_quantity)) * toReturn[next.id].quantity
-        );
+        return acc + ((next.refundable || 0) / (next.quantity - next.returned_quantity)) * toReturn[next.id].quantity;
       }, 0) - (shippingPrice || 0)
     );
   }, [toReturn, shippingPrice]);
@@ -183,11 +180,11 @@ const SwapMenu: React.FC<SwapMenuProps> = ({ order, onDismiss }) => {
     return mutate(data, {
       onSuccess: () => {
         refetch();
-        notification('Success', 'Successfully created exchange', 'success');
+        notification("Úspěch", "Úspěšně vytvořená výměna", "success");
         onDismiss();
       },
       onError: (err) => {
-        notification('Error', getErrorMessage(err), 'error');
+        notification("Chyba", getErrorMessage(err), "error");
       },
     });
   };
@@ -196,11 +193,11 @@ const SwapMenu: React.FC<SwapMenuProps> = ({ order, onDismiss }) => {
     <LayeredModal context={layeredModalContext} handleClose={onDismiss}>
       <Modal.Body>
         <Modal.Header handleClose={onDismiss}>
-          <h2 className='inter-xlarge-semibold'>Register Exchange</h2>
+          <h2 className='inter-xlarge-semibold'>Výměna registrů</h2>
         </Modal.Header>
         <Modal.Content>
           <div className='mb-7'>
-            <h3 className='inter-base-semibold'>Items to return</h3>
+            <h3 className='inter-base-semibold'>Položky k vrácení</h3>
             <RMASelectProductTable
               order={order}
               allItems={allItems}
@@ -210,16 +207,16 @@ const SwapMenu: React.FC<SwapMenuProps> = ({ order, onDismiss }) => {
           </div>
 
           <div>
-            <h3 className='inter-base-semibold '>Shipping</h3>
+            <h3 className='inter-base-semibold '>Přeprava</h3>
             {shippingLoading ? (
               <div className='flex justify-center'>
                 <Spinner size='medium' variant='secondary' />
               </div>
             ) : (
               <Select
-                label='Shipping Method'
+                label='Způsob přepravy'
                 className='mt-2'
-                placeholder='Add a shipping method'
+                placeholder='Přidání způsobu přepravy'
                 value={shippingMethod}
                 onChange={handleShippingSelected}
                 options={
@@ -242,7 +239,7 @@ const SwapMenu: React.FC<SwapMenuProps> = ({ order, onDismiss }) => {
             )}
           </div>
           <div className='flex justify-between mt-8 items-center'>
-            <h3 className='inter-base-semibold '>Items to send</h3>
+            <h3 className='inter-base-semibold '>Položky k odeslání</h3>
             {itemsToAdd.length === 0 ? (
               <Button
                 variant='ghost'
@@ -254,7 +251,7 @@ const SwapMenu: React.FC<SwapMenuProps> = ({ order, onDismiss }) => {
                   );
                 }}
               >
-                Add Product
+                Přidat produkt
               </Button>
             ) : (
               <></>
@@ -281,13 +278,13 @@ const SwapMenu: React.FC<SwapMenuProps> = ({ order, onDismiss }) => {
                     );
                   }}
                 >
-                  Add Product
+                  Přidat produkt
                 </Button>
               </div>
             </>
           )}
           <div className='flex text-grey-90 justify-between items-center inter-small-regular mt-8'>
-            <span>Return Total</span>
+            <span>Návratnost Celkem</span>
             <span>
               {formatAmountWithSymbol({
                 currency: order.currency_code,
@@ -296,7 +293,7 @@ const SwapMenu: React.FC<SwapMenuProps> = ({ order, onDismiss }) => {
             </span>
           </div>
           <div className='flex text-grey-90 justify-between items-center inter-small-regular mt-2'>
-            <span>Additional Total</span>
+            <span>Další Celkem</span>
             <span>
               {formatAmountWithSymbol({
                 currency: order.currency_code,
@@ -307,11 +304,11 @@ const SwapMenu: React.FC<SwapMenuProps> = ({ order, onDismiss }) => {
             </span>
           </div>
           <div className='flex text-grey-90 justify-between items-center inter-small-regular mt-2'>
-            <span>Outbond Shipping</span>
-            <span>Calculated at checkout</span>
+            <span>Přepravní služba Outbond</span>
+            <span>Vypočítáno při pokladně</span>
           </div>
           <div className='flex justify-between items-center inter-base-semibold mt-4'>
-            <span>Estimated difference</span>
+            <span>Odhadovaný rozdíl</span>
             <span className='inter-large-semibold'>
               {formatAmountWithSymbol({
                 currency: order.currency_code,
@@ -324,13 +321,10 @@ const SwapMenu: React.FC<SwapMenuProps> = ({ order, onDismiss }) => {
         </Modal.Content>
         <Modal.Footer>
           <div className='flex w-full justify-between'>
-            <div
-              className='items-center h-full flex cursor-pointer'
-              onClick={() => setNoNotification(!noNotification)}
-            >
+            <div className='items-center h-full flex cursor-pointer' onClick={() => setNoNotification(!noNotification)}>
               <div
                 className={`w-5 h-5 flex justify-center text-grey-0 border-grey-30 border rounded-base ${
-                  !noNotification && 'bg-violet-60'
+                  !noNotification && "bg-violet-60"
                 }`}
               >
                 <span className='self-center'>{!noNotification && <CheckIcon size={16} />}</span>
@@ -343,7 +337,7 @@ const SwapMenu: React.FC<SwapMenuProps> = ({ order, onDismiss }) => {
                 type='checkbox'
               />
               <span className='ml-3 flex items-center text-grey-90 gap-x-xsmall'>
-                Send notifications
+                Odesílání oznámení
                 <IconTooltip content='If unchecked the customer will not receive communication about this exchange' />
               </span>
             </div>
@@ -355,7 +349,7 @@ const SwapMenu: React.FC<SwapMenuProps> = ({ order, onDismiss }) => {
               type='submit'
               variant='primary'
             >
-              Complete
+              Kompletní
             </Button>
           </div>
         </Modal.Footer>
@@ -366,7 +360,7 @@ const SwapMenu: React.FC<SwapMenuProps> = ({ order, onDismiss }) => {
 
 const SelectProductsScreen = (pop, itemsToAdd, setSelectedItems) => {
   return {
-    title: 'Add Products',
+    title: "Přidat produkty",
     onBack: () => pop(),
     view: <RMASelectProductSubModal selectedItems={itemsToAdd || []} onSubmit={setSelectedItems} />,
   };

@@ -1,10 +1,10 @@
-import { LineItem } from '@medusajs/medusa';
-import clsx from 'clsx';
-import React from 'react';
-import CheckIcon from '../../../../components/fundamentals/icons/check-icon';
-import MinusIcon from '../../../../components/fundamentals/icons/minus-icon';
-import PlusIcon from '../../../../components/fundamentals/icons/plus-icon';
-import Table from '../../../../components/molecules/table';
+import { LineItem } from "@medusajs/medusa";
+import clsx from "clsx";
+import React from "react";
+import CheckIcon from "../../../../components/fundamentals/icons/check-icon";
+import MinusIcon from "../../../../components/fundamentals/icons/minus-icon";
+import PlusIcon from "../../../../components/fundamentals/icons/plus-icon";
+import Table from "../../../../components/molecules/table";
 
 const getFulfillableQuantity = (item: LineItem): number => {
   return item.quantity - item.fulfilled_quantity - item.returned_quantity;
@@ -57,9 +57,9 @@ const CreateFulfillmentItemsTable = ({ items, toFulfill, setToFulfill, quantitie
   return (
     <Table>
       <Table.HeadRow className='text-grey-50 inter-small-semibold border-t border-t-grey-20'>
-        <Table.HeadCell>Details</Table.HeadCell>
+        <Table.HeadCell>Podrobnosti</Table.HeadCell>
         <Table.HeadCell />
-        <Table.HeadCell className='text-right pr-8'>Quantity</Table.HeadCell>
+        <Table.HeadCell className='text-right pr-8'>Množství</Table.HeadCell>
       </Table.HeadRow>
       <Table.Body>
         {items
@@ -68,13 +68,13 @@ const CreateFulfillmentItemsTable = ({ items, toFulfill, setToFulfill, quantitie
             const checked = toFulfill.includes(item.id);
             return (
               <>
-                <Table.Row className={'border-b-grey-0 hover:bg-grey-0'}>
+                <Table.Row className={"border-b-grey-0 hover:bg-grey-0"}>
                   <Table.Cell className='w-[50px]'>
                     <div className='items-center ml-1 h-full flex'>
                       <div
                         onClick={() => handleFulfillmentItemToggle(item)}
                         className={`w-5 h-5 flex justify-center text-grey-0 border-grey-30 border cursor-pointer rounded-base ${
-                          checked && 'bg-violet-60'
+                          checked && "bg-violet-60"
                         }`}
                       >
                         <span className='self-center'>{checked && <CheckIcon size={16} />}</span>
@@ -98,7 +98,7 @@ const CreateFulfillmentItemsTable = ({ items, toFulfill, setToFulfill, quantitie
                         <span>
                           <span className='text-grey-90'>{item.title}</span>
                         </span>
-                        <span>{item?.variant?.title || ''}</span>
+                        <span>{item?.variant?.title || ""}</span>
                       </div>
                     </div>
                   </Table.Cell>
@@ -108,21 +108,21 @@ const CreateFulfillmentItemsTable = ({ items, toFulfill, setToFulfill, quantitie
                         <span
                           onClick={() => handleQuantity(-1, item)}
                           className={clsx(
-                            'w-5 h-5 flex text-grey-50 items-center justify-center rounded cursor-pointer hover:bg-grey-20 mr-2',
+                            "w-5 h-5 flex text-grey-50 items-center justify-center rounded cursor-pointer hover:bg-grey-20 mr-2",
                             {
-                              ['pointer-events-none text-grey-30']: quantities[item.id] === 1,
+                              ["pointer-events-none text-grey-30"]: quantities[item.id] === 1,
                             },
                           )}
                         >
                           <MinusIcon size={16} />
                         </span>
-                        <span>{quantities[item.id] || ''}</span>
+                        <span>{quantities[item.id] || ""}</span>
                         <span
                           onClick={() => handleQuantity(1, item)}
                           className={clsx(
-                            'w-5 h-5 flex text-grey-50 items-center justify-center rounded cursor-pointer hover:bg-grey-20 ml-2',
+                            "w-5 h-5 flex text-grey-50 items-center justify-center rounded cursor-pointer hover:bg-grey-20 ml-2",
                             {
-                              ['pointer-events-none text-grey-30']:
+                              ["pointer-events-none text-grey-30"]:
                                 item.quantity - item.fulfilled_quantity === quantities[item.id],
                             },
                           )}

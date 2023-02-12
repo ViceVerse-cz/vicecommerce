@@ -1,18 +1,14 @@
-import { Fulfillment } from '@medusajs/medusa';
-import {
-  useAdminCreateClaimShipment,
-  useAdminCreateShipment,
-  useAdminCreateSwapShipment,
-} from 'medusa-react';
-import React, { useState } from 'react';
-import { Controller, useFieldArray, useForm } from 'react-hook-form';
-import Button from '../../../../components/fundamentals/button';
-import CheckIcon from '../../../../components/fundamentals/icons/check-icon';
-import IconTooltip from '../../../../components/molecules/icon-tooltip';
-import Input from '../../../../components/molecules/input';
-import Modal from '../../../../components/molecules/modal';
-import useNotification from '../../../../hooks/use-notification';
-import { getErrorMessage } from '../../../../utils/error-messages';
+import { Fulfillment } from "@medusajs/medusa";
+import { useAdminCreateClaimShipment, useAdminCreateShipment, useAdminCreateSwapShipment } from "medusa-react";
+import React, { useState } from "react";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
+import Button from "../../../../components/fundamentals/button";
+import CheckIcon from "../../../../components/fundamentals/icons/check-icon";
+import IconTooltip from "../../../../components/molecules/icon-tooltip";
+import Input from "../../../../components/molecules/input";
+import Modal from "../../../../components/molecules/modal";
+import useNotification from "../../../../hooks/use-notification";
+import { getErrorMessage } from "../../../../utils/error-messages";
 
 type MarkShippedModalProps = {
   orderId: string;
@@ -29,7 +25,7 @@ type MarkShippedFormData = {
 const MarkShippedModal: React.FC<MarkShippedModalProps> = ({ orderId, fulfillment, handleCancel }) => {
   const { control, watch, handleSubmit } = useForm<MarkShippedFormData>({
     defaultValues: {
-      tracking_numbers: [{ value: '' }],
+      tracking_numbers: [{ value: "" }],
     },
     shouldUnregister: true,
   });
@@ -41,10 +37,10 @@ const MarkShippedModal: React.FC<MarkShippedModalProps> = ({ orderId, fulfillmen
     remove: removeTracking,
   } = useFieldArray({
     control,
-    name: 'tracking_numbers',
+    name: "tracking_numbers",
   });
 
-  const watchedFields = watch('tracking_numbers');
+  const watchedFields = watch("tracking_numbers");
 
   // Allows us to listen to onChange events
   const trackingNumbers = fields.map((field, index) => ({
@@ -62,18 +58,18 @@ const MarkShippedModal: React.FC<MarkShippedModalProps> = ({ orderId, fulfillmen
 
   const onSubmit = (data: MarkShippedFormData) => {
     const resourceId = fulfillment.claim_order_id || fulfillment.swap_id || fulfillment.order_id;
-    const [type] = resourceId.split('_');
+    const [type] = resourceId.split("_");
 
     const tracking_numbers = data.tracking_numbers.map((tn) => tn.value);
 
     type actionType = typeof markOrderShipped | typeof markSwapShipped | typeof markClaimShipped;
 
     let action: actionType = markOrderShipped;
-    let successText = 'Successfully marked order as shipped';
+    let successText = "Úspěšně označil objednávku jako odeslanou";
     let requestObj;
 
     switch (type) {
-      case 'swap':
+      case "swap":
         action = markSwapShipped;
         requestObj = {
           fulfillment_id: fulfillment.id,
@@ -81,17 +77,17 @@ const MarkShippedModal: React.FC<MarkShippedModalProps> = ({ orderId, fulfillmen
           tracking_numbers,
           no_notification: noNotis,
         };
-        successText = 'Successfully marked swap as shipped';
+        successText = "Úspěšně označená výměna jako odeslaná";
         break;
 
-      case 'claim':
+      case "claim":
         action = markClaimShipped;
         requestObj = {
           fulfillment_id: fulfillment.id,
           claim_id: resourceId,
           tracking_numbers,
         };
-        successText = 'Successfully marked claim as shipped';
+        successText = "Úspěšně označená reklamace jako odeslaná";
         break;
 
       default:
@@ -105,10 +101,10 @@ const MarkShippedModal: React.FC<MarkShippedModalProps> = ({ orderId, fulfillmen
 
     action.mutate(requestObj, {
       onSuccess: () => {
-        notification('Success', successText, 'success');
+        notification("Úspěch", successText, "success");
         handleCancel();
       },
-      onError: (err) => notification('Error', getErrorMessage(err), 'error'),
+      onError: (err) => notification("Chyba", getErrorMessage(err), "error"),
     });
   };
 
@@ -121,11 +117,11 @@ const MarkShippedModal: React.FC<MarkShippedModalProps> = ({ orderId, fulfillmen
       >
         <Modal.Body>
           <Modal.Header handleClose={handleCancel}>
-            <span className='inter-xlarge-semibold'>Mark Fulfillment Shipped</span>
+            <span className='inter-xlarge-semibold'>Značka Plnění odesláno</span>
           </Modal.Header>
           <Modal.Content>
             <div className='flex flex-col'>
-              <span className='inter-base-semibold mb-2'>Tracking</span>
+              <span className='inter-base-semibold mb-2'>Sledování</span>
               <div className='flex flex-col space-y-2'>
                 {trackingNumbers.map((tn, index) => (
                   <Controller
@@ -139,9 +135,9 @@ const MarkShippedModal: React.FC<MarkShippedModalProps> = ({ orderId, fulfillmen
                       return (
                         <Input
                           deletable={index !== 0}
-                          label={index === 0 ? 'Tracking number' : ''}
+                          label={index === 0 ? "Sledovací číslo" : ""}
                           type='text'
-                          placeholder={'Tracking number...'}
+                          placeholder={"Sledovací číslo..."}
                           {...field}
                           onDelete={() => removeTracking(index)}
                         />
@@ -158,7 +154,7 @@ const MarkShippedModal: React.FC<MarkShippedModalProps> = ({ orderId, fulfillmen
                 variant='secondary'
                 disabled={trackingNumbers.some((tn) => !tn.value)}
               >
-                + Add Additional Tracking Number
+                + Přidání dalšího sledovacího čísla
               </Button>
             </div>
           </Modal.Content>
@@ -167,7 +163,7 @@ const MarkShippedModal: React.FC<MarkShippedModalProps> = ({ orderId, fulfillmen
               <div className='items-center h-full flex cursor-pointer' onClick={() => setNoNotis(!noNotis)}>
                 <div
                   className={`w-5 h-5 flex justify-center text-grey-0 border-grey-30 border rounded-base ${
-                    !noNotis && 'bg-violet-60'
+                    !noNotis && "bg-violet-60"
                   }`}
                 >
                   <span className='self-center'>{!noNotis && <CheckIcon size={16} />}</span>
@@ -180,7 +176,7 @@ const MarkShippedModal: React.FC<MarkShippedModalProps> = ({ orderId, fulfillmen
                   type='checkbox'
                 />
                 <span className='ml-3 flex items-center text-grey-90 gap-x-xsmall'>
-                  Send notifications
+                  Odesílání oznámení
                   <IconTooltip content='' />
                 </span>
               </div>
@@ -192,7 +188,7 @@ const MarkShippedModal: React.FC<MarkShippedModalProps> = ({ orderId, fulfillmen
                   onClick={handleCancel}
                   type='button'
                 >
-                  Cancel
+                  Zrušit
                 </Button>
                 <Button
                   size='large'
@@ -202,7 +198,7 @@ const MarkShippedModal: React.FC<MarkShippedModalProps> = ({ orderId, fulfillmen
                   loading={isSubmitting}
                   disabled={isSubmitting}
                 >
-                  Complete
+                  Kompletní
                 </Button>
               </div>
             </div>

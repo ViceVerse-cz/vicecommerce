@@ -1,30 +1,30 @@
-import { LineItem as RawLineItem, Order } from '@medusajs/medusa';
-import { useAdminRequestReturn, useAdminShippingOptions } from 'medusa-react';
-import React, { useContext, useEffect, useState } from 'react';
-import Spinner from '../../../../components/atoms/spinner';
-import Button from '../../../../components/fundamentals/button';
-import CheckIcon from '../../../../components/fundamentals/icons/check-icon';
-import EditIcon from '../../../../components/fundamentals/icons/edit-icon';
-import IconTooltip from '../../../../components/molecules/icon-tooltip';
-import Modal from '../../../../components/molecules/modal';
-import LayeredModal, { LayeredModalContext } from '../../../../components/molecules/modal/layered-modal';
-import RMAShippingPrice from '../../../../components/molecules/rma-select-shipping';
-import Select from '../../../../components/molecules/select';
-import CurrencyInput from '../../../../components/organisms/currency-input';
-import RMASelectProductTable from '../../../../components/organisms/rma-select-product-table';
-import useNotification from '../../../../hooks/use-notification';
-import { Option } from '../../../../types/shared';
-import { getErrorMessage } from '../../../../utils/error-messages';
-import { displayAmount } from '../../../../utils/prices';
-import { removeNullish } from '../../../../utils/remove-nullish';
-import { filterItems } from '../utils/create-filtering';
+import { LineItem as RawLineItem, Order } from "@medusajs/medusa";
+import { useAdminRequestReturn, useAdminShippingOptions } from "medusa-react";
+import React, { useContext, useEffect, useState } from "react";
+import Spinner from "../../../../components/atoms/spinner";
+import Button from "../../../../components/fundamentals/button";
+import CheckIcon from "../../../../components/fundamentals/icons/check-icon";
+import EditIcon from "../../../../components/fundamentals/icons/edit-icon";
+import IconTooltip from "../../../../components/molecules/icon-tooltip";
+import Modal from "../../../../components/molecules/modal";
+import LayeredModal, { LayeredModalContext } from "../../../../components/molecules/modal/layered-modal";
+import RMAShippingPrice from "../../../../components/molecules/rma-select-shipping";
+import Select from "../../../../components/molecules/select";
+import CurrencyInput from "../../../../components/organisms/currency-input";
+import RMASelectProductTable from "../../../../components/organisms/rma-select-product-table";
+import useNotification from "../../../../hooks/use-notification";
+import { Option } from "../../../../types/shared";
+import { getErrorMessage } from "../../../../utils/error-messages";
+import { displayAmount } from "../../../../utils/prices";
+import { removeNullish } from "../../../../utils/remove-nullish";
+import { filterItems } from "../utils/create-filtering";
 
 type ReturnMenuProps = {
   order: Order;
   onDismiss: () => void;
 };
 
-type LineItem = Omit<RawLineItem, 'beforeInsert'>;
+type LineItem = Omit<RawLineItem, "beforeInsert">;
 
 const ReturnMenu: React.FC<ReturnMenuProps> = ({ order, onDismiss }) => {
   const layoutmodalcontext = useContext(LayeredModalContext);
@@ -40,7 +40,7 @@ const ReturnMenu: React.FC<ReturnMenuProps> = ({ order, onDismiss }) => {
   const [shippingPrice, setShippingPrice] = useState<number>();
   const [shippingMethod, setShippingMethod] = useState<Option | null>(null);
 
-  const [allItems, setAllItems] = useState<Omit<LineItem, 'beforeInsert'>[]>([]);
+  const [allItems, setAllItems] = useState<Omit<LineItem, "beforeInsert">[]>([]);
 
   const notification = useNotification();
 
@@ -60,7 +60,7 @@ const ReturnMenu: React.FC<ReturnMenuProps> = ({ order, onDismiss }) => {
   useEffect(() => {
     const items = Object.keys(toReturn)
       .map((t) => allItems.find((i) => i.id === t))
-      .filter((i) => typeof i !== 'undefined') as LineItem[];
+      .filter((i) => typeof i !== "undefined") as LineItem[];
 
     const itemTotal = items.reduce((acc: number, curr: LineItem): number => {
       const unitRefundable = (curr.refundable || 0) / (curr.quantity - curr.returned_quantity);
@@ -81,7 +81,7 @@ const ReturnMenu: React.FC<ReturnMenuProps> = ({ order, onDismiss }) => {
         reason_id: value.reason?.value.id,
         ...value,
       };
-      delete toSet.reason;
+      toSet.reason = undefined;
       const clean = removeNullish(toSet);
       return {
         item_id: key,
@@ -110,8 +110,8 @@ const ReturnMenu: React.FC<ReturnMenuProps> = ({ order, onDismiss }) => {
     return requestReturnOrder
       .mutateAsync(data)
       .then(() => onDismiss())
-      .then(() => notification('Success', 'Successfully returned order', 'success'))
-      .catch((error) => notification('Error', getErrorMessage(error), 'error'))
+      .then(() => notification("Úspěch", "Úspěšně vrácená objednávka", "success"))
+      .catch((error) => notification("Chyba", getErrorMessage(error), "error"))
       .finally(() => setSubmitting(false));
   };
 
@@ -150,11 +150,11 @@ const ReturnMenu: React.FC<ReturnMenuProps> = ({ order, onDismiss }) => {
     <LayeredModal context={layoutmodalcontext} handleClose={onDismiss}>
       <Modal.Body>
         <Modal.Header handleClose={onDismiss}>
-          <h2 className='inter-xlarge-semibold'>Request Return</h2>
+          <h2 className='inter-xlarge-semibold'>Žádost o vrácení</h2>
         </Modal.Header>
         <Modal.Content>
           <div className='mb-7'>
-            <h3 className='inter-base-semibold'>Items to return</h3>
+            <h3 className='inter-base-semibold'>Položky k vrácení</h3>
             <RMASelectProductTable
               order={order}
               allItems={allItems}
@@ -164,16 +164,16 @@ const ReturnMenu: React.FC<ReturnMenuProps> = ({ order, onDismiss }) => {
           </div>
 
           <div>
-            <h3 className='inter-base-semibold '>Shipping</h3>
+            <h3 className='inter-base-semibold '>Přeprava</h3>
             {shippingLoading ? (
               <div className='flex justify-center'>
                 <Spinner size='medium' variant='secondary' />
               </div>
             ) : (
               <Select
-                label='Shipping Method'
+                label='Způsob přepravy'
                 className='mt-2'
-                placeholder='Add a shipping method'
+                placeholder='Přidání způsobu přepravy'
                 value={shippingMethod}
                 onChange={handleShippingSelected}
                 options={
@@ -201,44 +201,29 @@ const ReturnMenu: React.FC<ReturnMenuProps> = ({ order, onDismiss }) => {
             <div className='mt-10'>
               {!useCustomShippingPrice && shippingMethod && (
                 <div className='flex mb-4 inter-small-regular justify-between'>
-                  <span>Shipping</span>
+                  <span>Přeprava</span>
                   <div>
-                    {displayAmount(order.currency_code, shippingPrice || 0)}{' '}
+                    {displayAmount(order.currency_code, shippingPrice || 0)}{" "}
                     <span className='text-grey-40 ml-3'>{order.currency_code.toUpperCase()}</span>
                   </div>
                 </div>
               )}
               <div className='flex inter-base-semibold justify-between w-full'>
-                <span>Total Refund</span>
+                <span>Celková náhrada</span>
                 <div className='flex items-center'>
                   {!refundEdited && (
                     <>
-                      <span
-                        className='mr-2 cursor-pointer text-grey-40'
-                        onClick={() => setRefundEdited(true)}
-                      >
-                        <EditIcon size={20} />{' '}
+                      <span className='mr-2 cursor-pointer text-grey-40' onClick={() => setRefundEdited(true)}>
+                        <EditIcon size={20} />{" "}
                       </span>
-                      {`${displayAmount(
-                        order.currency_code,
-                        refundAmount,
-                      )} ${order.currency_code.toUpperCase()}`}
+                      {`${displayAmount(order.currency_code, refundAmount)} ${order.currency_code.toUpperCase()}`}
                     </>
                   )}
                 </div>
               </div>
               {refundEdited && (
-                <CurrencyInput.Root
-                  className='mt-2'
-                  size='small'
-                  currentCurrency={order.currency_code}
-                  readOnly
-                >
-                  <CurrencyInput.Amount
-                    label={'Amount'}
-                    amount={refundAmount}
-                    onChange={handleRefundUpdated}
-                  />
+                <CurrencyInput.Root className='mt-2' size='small' currentCurrency={order.currency_code} readOnly>
+                  <CurrencyInput.Amount label={"Částka"} amount={refundAmount} onChange={handleRefundUpdated} />
                 </CurrencyInput.Root>
               )}
             </div>
@@ -246,13 +231,10 @@ const ReturnMenu: React.FC<ReturnMenuProps> = ({ order, onDismiss }) => {
         </Modal.Content>
         <Modal.Footer>
           <div className='flex w-full justify-between'>
-            <div
-              className='items-center h-full flex cursor-pointer'
-              onClick={() => setNoNotification(!noNotification)}
-            >
+            <div className='items-center h-full flex cursor-pointer' onClick={() => setNoNotification(!noNotification)}>
               <div
                 className={`w-5 h-5 flex justify-center text-grey-0 border-grey-30 border rounded-base ${
-                  !noNotification && 'bg-violet-60'
+                  !noNotification && "bg-violet-60"
                 }`}
               >
                 <span className='self-center'>{!noNotification && <CheckIcon size={16} />}</span>
@@ -266,19 +248,13 @@ const ReturnMenu: React.FC<ReturnMenuProps> = ({ order, onDismiss }) => {
                 type='checkbox'
               />
               <span className='ml-3 flex items-center text-grey-90 gap-x-xsmall'>
-                Send notifications
+                Odesílání oznámení
                 <IconTooltip content='Notify customer of created return' />
               </span>
             </div>
             <div className='flex gap-x-xsmall'>
-              <Button
-                onClick={() => onDismiss()}
-                className='w-[112px]'
-                type='submit'
-                size='small'
-                variant='ghost'
-              >
-                Back
+              <Button onClick={() => onDismiss()} className='w-[112px]' type='submit' size='small' variant='ghost'>
+                Zpět
               </Button>
               <Button
                 onClick={onSubmit}
@@ -288,7 +264,7 @@ const ReturnMenu: React.FC<ReturnMenuProps> = ({ order, onDismiss }) => {
                 size='small'
                 variant='primary'
               >
-                Submit
+                Odeslat
               </Button>
             </div>
           </div>

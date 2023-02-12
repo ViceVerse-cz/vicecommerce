@@ -1,33 +1,27 @@
-import {
-  Address,
-  AdminPostOrdersOrderClaimsReq,
-  Order,
-  ProductVariant,
-  ShippingOption,
-} from '@medusajs/medusa';
-import clsx from 'clsx';
-import { useAdminCreateClaim, useAdminOrder, useAdminShippingOptions } from 'medusa-react';
-import React, { useContext, useEffect, useState } from 'react';
-import Button from '../../../../components/fundamentals/button';
-import CheckIcon from '../../../../components/fundamentals/icons/check-icon';
-import TrashIcon from '../../../../components/fundamentals/icons/trash-icon';
-import IconTooltip from '../../../../components/molecules/icon-tooltip';
-import Modal from '../../../../components/molecules/modal';
-import LayeredModal, { LayeredModalContext } from '../../../../components/molecules/modal/layered-modal';
-import RMAShippingPrice from '../../../../components/molecules/rma-select-shipping';
-import Select from '../../../../components/molecules/select';
-import CurrencyInput from '../../../../components/organisms/currency-input';
-import RMAReturnProductsTable from '../../../../components/organisms/rma-return-product-table';
-import RMASelectProductTable from '../../../../components/organisms/rma-select-product-table';
-import useNotification from '../../../../hooks/use-notification';
-import { Option } from '../../../../types/shared';
-import { getErrorMessage } from '../../../../utils/error-messages';
-import RMAEditAddressSubModal from '../rma-sub-modals/address';
-import RMASelectProductSubModal from '../rma-sub-modals/products';
-import { filterItems } from '../utils/create-filtering';
+import { Address, AdminPostOrdersOrderClaimsReq, Order, ProductVariant, ShippingOption } from "@medusajs/medusa";
+import clsx from "clsx";
+import { useAdminCreateClaim, useAdminOrder, useAdminShippingOptions } from "medusa-react";
+import React, { useContext, useEffect, useState } from "react";
+import Button from "../../../../components/fundamentals/button";
+import CheckIcon from "../../../../components/fundamentals/icons/check-icon";
+import TrashIcon from "../../../../components/fundamentals/icons/trash-icon";
+import IconTooltip from "../../../../components/molecules/icon-tooltip";
+import Modal from "../../../../components/molecules/modal";
+import LayeredModal, { LayeredModalContext } from "../../../../components/molecules/modal/layered-modal";
+import RMAShippingPrice from "../../../../components/molecules/rma-select-shipping";
+import Select from "../../../../components/molecules/select";
+import CurrencyInput from "../../../../components/organisms/currency-input";
+import RMAReturnProductsTable from "../../../../components/organisms/rma-return-product-table";
+import RMASelectProductTable from "../../../../components/organisms/rma-select-product-table";
+import useNotification from "../../../../hooks/use-notification";
+import { Option } from "../../../../types/shared";
+import { getErrorMessage } from "../../../../utils/error-messages";
+import RMAEditAddressSubModal from "../rma-sub-modals/address";
+import RMASelectProductSubModal from "../rma-sub-modals/products";
+import { filterItems } from "../utils/create-filtering";
 
 type ClaimMenuProps = {
-  order: Omit<Order, 'beforeInsert'>;
+  order: Omit<Order, "beforeInsert">;
   onDismiss: () => void;
 };
 
@@ -39,12 +33,12 @@ type ReturnRecord = Record<
     quantity: number;
     reason: {
       label: string;
-      value?: 'missing_item' | 'wrong_item' | 'production_failure' | 'other';
+      value?: "missing_item" | "wrong_item" | "production_failure" | "other";
     } | null;
   }
 >;
 
-type SelectProduct = Omit<ProductVariant & { quantity: number }, 'beforeInsert'>;
+type SelectProduct = Omit<ProductVariant & { quantity: number }, "beforeInsert">;
 
 type CustomPrice = {
   return?: number;
@@ -68,20 +62,20 @@ export type AddressPayload =
 
 const reasonOptions = [
   {
-    label: 'Missing Item',
-    value: 'missing_item',
+    label: "Chybějící položka",
+    value: "missing_item",
   },
   {
-    label: 'Wrong Item',
-    value: 'wrong_item',
+    label: "Špatná položka",
+    value: "wrong_item",
   },
   {
-    label: 'Production Failure',
-    value: 'production_failure',
+    label: "Selhání výroby",
+    value: "production_failure",
   },
   {
-    label: 'Other',
-    value: 'other',
+    label: "Další",
+    value: "other",
   },
 ];
 
@@ -123,7 +117,7 @@ const ClaimMenu: React.FC<ClaimMenuProps> = ({ order, onDismiss }) => {
 
     const city = `${address.postal_code} ${address.city}`;
 
-    return `${addr.join(', ')}, ${city}, ${address.country_code?.toUpperCase()}`;
+    return `${addr.join(", ")}, ${city}, ${address.country_code?.toUpperCase()}`;
   };
 
   useEffect(() => {
@@ -184,7 +178,7 @@ const ClaimMenu: React.FC<ClaimMenuProps> = ({ order, onDismiss }) => {
     });
 
     const data: AdminPostOrdersOrderClaimsReq = {
-      type: isReplace ? 'replace' : 'refund',
+      type: isReplace ? "replace" : "refund",
       claim_items,
       additional_items: itemsToAdd.map((i) => ({
         variant_id: i.id,
@@ -219,11 +213,11 @@ const ClaimMenu: React.FC<ClaimMenuProps> = ({ order, onDismiss }) => {
     mutate(data, {
       onSuccess: () => {
         refetch();
-        notification('Success', 'Successfully created claim', 'success');
+        notification("Úspěch", "Úspěšně vytvořená reklamace", "success");
         onDismiss();
       },
       onError: (error) => {
-        notification('Error', getErrorMessage(error), 'error');
+        notification("Error", getErrorMessage(error), "error");
       },
     });
   };
@@ -307,9 +301,9 @@ const ClaimMenu: React.FC<ClaimMenuProps> = ({ order, onDismiss }) => {
             </h3>
             <Select
               clearSelected
-              label='Shipping Method'
+              label='Způsob přepravy'
               className='mt-2'
-              placeholder='Add a shipping method'
+              placeholder='Přidání způsobu přepravy'
               value={
                 returnShippingMethod
                   ? {
@@ -359,12 +353,12 @@ const ClaimMenu: React.FC<ClaimMenuProps> = ({ order, onDismiss }) => {
               }}
             >
               <div
-                className={clsx('rounded-full w-5 h-5 flex mr-3 items-center justify-center', {
-                  'border-violet-60 border-2': isReplace,
-                  'border-grey-40 border': !isReplace,
+                className={clsx("rounded-full w-5 h-5 flex mr-3 items-center justify-center", {
+                  "border-violet-60 border-2": isReplace,
+                  "border-grey-40 border": !isReplace,
                 })}
               >
-                {isReplace && <div className='w-3 h-3 bg-violet-60 rounded-full'></div>}
+                {isReplace && <div className='w-3 h-3 bg-violet-60 rounded-full' />}
               </div>
               Replace
             </div>
@@ -375,12 +369,12 @@ const ClaimMenu: React.FC<ClaimMenuProps> = ({ order, onDismiss }) => {
               }}
             >
               <div
-                className={clsx('rounded-full w-5 h-5 flex mr-3 items-center justify-center', {
-                  'border-violet-60 border-2': !isReplace,
-                  'border-grey-40 border': isReplace,
+                className={clsx("rounded-full w-5 h-5 flex mr-3 items-center justify-center", {
+                  "border-violet-60 border-2": !isReplace,
+                  "border-grey-40 border": isReplace,
                 })}
               >
-                {!isReplace && <div className='w-3 h-3 bg-violet-60 rounded-full'></div>}
+                {!isReplace && <div className='w-3 h-3 bg-violet-60 rounded-full' />}
               </div>
               Refund
             </div>
@@ -432,22 +426,15 @@ const ClaimMenu: React.FC<ClaimMenuProps> = ({ order, onDismiss }) => {
                 </>
               )}
               <div className='mt-8'>
-                <span className='inter-base-semibold'>Shipping Address</span>
+                <span className='inter-base-semibold'>Dodací adresa</span>
                 {shippingAddress ? (
                   <>
-                    <div className='flex w-full inter-small-regular text-grey-50'>
-                      {formatAddress(shippingAddress)}
-                    </div>
+                    <div className='flex w-full inter-small-regular text-grey-50'>{formatAddress(shippingAddress)}</div>
                     <div className='flex w-full justify-end'>
                       <Button
                         onClick={() => {
                           layeredModalContext.push(
-                            showEditAddressScreen(
-                              layeredModalContext.pop,
-                              shippingAddress,
-                              order,
-                              setShippingAddress,
-                            ),
+                            showEditAddressScreen(layeredModalContext.pop, shippingAddress, order, setShippingAddress),
                           );
                         }}
                         variant='ghost'
@@ -479,21 +466,21 @@ const ClaimMenu: React.FC<ClaimMenuProps> = ({ order, onDismiss }) => {
                         size='small'
                         className='border border-grey-20'
                       >
-                        Ship to a different address
+                        Odeslání na jinou adresu
                       </Button>
                     </div>
                   </div>
                 )}
               </div>
               <div>
-                <h3 className='inter-base-semibold mt-8'>Shipping new</h3>
+                <h3 className='inter-base-semibold mt-8'>Přeprava nových</h3>
                 <span className='inter-small-regular text-grey-50'>
-                  Shipping new items is free by default. Use custom price, if this is not the case
+                  Přeprava nových položek je ve výchozím nastavení zdarma. Pokud tomu tak není, použijte vlastní cenu.
                 </span>
                 <Select
-                  label='Shipping Method'
+                  label='Způsob přepravy'
                   className='mt-2'
-                  placeholder='Add a shipping method'
+                  placeholder='Přidání způsobu přepravy'
                   value={
                     shippingMethod
                       ? {
@@ -527,7 +514,7 @@ const ClaimMenu: React.FC<ClaimMenuProps> = ({ order, onDismiss }) => {
                               })
                             }
                           >
-                            {showCustomPrice.standard ? 'Submit' : 'Set custom price'}
+                            {showCustomPrice.standard ? "Submit" : "Set custom price"}
                           </Button>
                         )}
                         {showCustomPrice.standard && (
@@ -539,7 +526,7 @@ const ClaimMenu: React.FC<ClaimMenuProps> = ({ order, onDismiss }) => {
                               currentCurrency={order.currency_code}
                             >
                               <CurrencyInput.Amount
-                                label={'Amount'}
+                                label={"Amount"}
                                 amount={customOptionPrice.standard}
                                 onChange={(value) =>
                                   setCustomOptionPrice({
@@ -574,13 +561,10 @@ const ClaimMenu: React.FC<ClaimMenuProps> = ({ order, onDismiss }) => {
         </Modal.Content>
         <Modal.Footer>
           <div className='flex w-full justify-between'>
-            <div
-              className='items-center h-full flex cursor-pointer'
-              onClick={() => setNoNotification(!noNotification)}
-            >
+            <div className='items-center h-full flex cursor-pointer' onClick={() => setNoNotification(!noNotification)}>
               <div
                 className={`w-5 h-5 flex justify-center text-grey-0 border-grey-30 border rounded-base ${
-                  !noNotification && 'bg-violet-60'
+                  !noNotification && "bg-violet-60"
                 }`}
               >
                 <span className='self-center'>{!noNotification && <CheckIcon size={16} />}</span>
@@ -595,17 +579,11 @@ const ClaimMenu: React.FC<ClaimMenuProps> = ({ order, onDismiss }) => {
               />
               <span className='ml-3 flex items-center text-grey-90 gap-x-xsmall'>
                 Send notifications
-                <IconTooltip content='Notify customer of created return' />
+                <IconTooltip content='Oznámení zákazníkovi o vytvořeném vrácení' />
               </span>
             </div>
             <div className='flex gap-x-xsmall'>
-              <Button
-                onClick={() => onDismiss()}
-                className='w-[112px]'
-                type='submit'
-                size='small'
-                variant='ghost'
-              >
+              <Button onClick={() => onDismiss()} className='w-[112px]' type='submit' size='small' variant='ghost'>
                 Back
               </Button>
               <Button
@@ -628,7 +606,7 @@ const ClaimMenu: React.FC<ClaimMenuProps> = ({ order, onDismiss }) => {
 
 const SelectProductsScreen = (pop, itemsToAdd, setSelectedItems) => {
   return {
-    title: 'Add Products',
+    title: "Přidat produkty",
     onBack: () => pop(),
     view: <RMASelectProductSubModal selectedItems={itemsToAdd || []} onSubmit={setSelectedItems} />,
   };
@@ -637,11 +615,11 @@ const SelectProductsScreen = (pop, itemsToAdd, setSelectedItems) => {
 const showEditAddressScreen = (
   pop: () => void,
   address: AddressPayload,
-  order: Omit<Order, 'beforeInsert'>,
+  order: Omit<Order, "beforeInsert">,
   setShippingAddress: (address: AddressPayload) => void,
 ) => {
   return {
-    title: 'Edit Address',
+    title: "Upravit adresu",
     onBack: () => pop(),
     view: <RMAEditAddressSubModal onSubmit={setShippingAddress} address={address} order={order} />,
   };
@@ -649,16 +627,16 @@ const showEditAddressScreen = (
 
 const mapAddress = (address: Address): AddressPayload => {
   return {
-    first_name: address.first_name || '',
-    last_name: address.last_name || '',
-    company: address.company || '',
-    address_1: address.address_1 || '',
-    address_2: address.address_2 || '',
-    city: address.city || '',
-    province: address.province || '',
-    postal_code: address.postal_code || '',
-    country_code: address.country_code || '',
-    phone: address.phone || '',
+    first_name: address.first_name || "",
+    last_name: address.last_name || "",
+    company: address.company || "",
+    address_1: address.address_1 || "",
+    address_2: address.address_2 || "",
+    city: address.city || "",
+    province: address.province || "",
+    postal_code: address.postal_code || "",
+    country_code: address.country_code || "",
+    phone: address.phone || "",
   };
 };
 

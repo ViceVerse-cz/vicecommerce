@@ -1,13 +1,13 @@
-import { useAdminReturnReasons } from 'medusa-react';
-import React, { useContext, useState } from 'react';
-import FileUploadField from '../../../../components/atoms/file-upload-field';
-import Button from '../../../../components/fundamentals/button';
-import TrashIcon from '../../../../components/fundamentals/icons/trash-icon';
-import InputField from '../../../../components/molecules/input';
-import Modal from '../../../../components/molecules/modal';
-import { LayeredModalContext } from '../../../../components/molecules/modal/layered-modal';
-import Select from '../../../../components/molecules/select';
-import Medusa from '../../../../services/api';
+import { useAdminReturnReasons } from "medusa-react";
+import React, { useContext, useState } from "react";
+import FileUploadField from "../../../../components/atoms/file-upload-field";
+import Button from "../../../../components/fundamentals/button";
+import TrashIcon from "../../../../components/fundamentals/icons/trash-icon";
+import InputField from "../../../../components/molecules/input";
+import Modal from "../../../../components/molecules/modal";
+import { LayeredModalContext } from "../../../../components/molecules/modal/layered-modal";
+import Select from "../../../../components/molecules/select";
+import Medusa from "../../../../services/api";
 
 type RMAReturnReasonSubModalProps = {
   onSubmit: (reason, note, images) => void;
@@ -29,11 +29,9 @@ const RMAReturnReasonSubModal: React.FC<RMAReturnReasonSubModalProps> = ({
 }) => {
   const { pop } = useContext(LayeredModalContext);
   const { return_reasons } = useAdminReturnReasons();
-  const [note, setNote] = useState(existingNote || '');
+  const [note, setNote] = useState(existingNote || "");
   const [files, setFiles] = useState<any[]>([]);
-  const [selectedReason, setSelectedReason] = useState(
-    reason ? { value: reason, label: reason.label } : null,
-  );
+  const [selectedReason, setSelectedReason] = useState(reason ? { value: reason, label: reason.label } : null);
 
   const onFileChosen = (file) => {
     setFiles((files) => [...files, ...file]);
@@ -57,26 +55,18 @@ const RMAReturnReasonSubModal: React.FC<RMAReturnReasonSubModalProps> = ({
     <>
       <Modal.Content>
         <div className='h-full'>
-          <h2 className='inter-base-semibold mb-4'>Reason for Return</h2>
+          <h2 className='inter-base-semibold mb-4'>Důvod vrácení</h2>
           <Select
-            label='Reason'
+            label='Důvod'
             value={selectedReason}
             onChange={setSelectedReason}
-            options={
-              customReturnOptions || return_reasons?.map((rr) => ({ value: rr, label: rr.label })) || []
-            }
+            options={customReturnOptions || return_reasons?.map((rr) => ({ value: rr, label: rr.label })) || []}
           />
-          <InputField label={'Note'} value={note} className='my-4' onChange={(val) => onChange(val)} />
+          <InputField label={"Poznámka"} value={note} className='my-4' onChange={(val) => onChange(val)} />
           {addImage && (
             <div>
-              {images &&
-                images.map((i) => (
-                  <ImageRow
-                    url={i}
-                    name={i.split('//').pop()}
-                    size={undefined}
-                    onDelete={() => handleImageDelete(i)}
-                  />
+              {images?.map((i) => (
+                  <ImageRow url={i} name={i.split("//").pop()} size={undefined} onDelete={() => handleImageDelete(i)} />
                 ))}
               {files.map((f) => (
                 <ImageRow
@@ -111,7 +101,7 @@ const RMAReturnReasonSubModal: React.FC<RMAReturnReasonSubModalProps> = ({
                 // </div>
               ))}
               <div className='h-20'>
-                <FileUploadField onFileChosen={onFileChosen} filetypes={['image/png', 'image/jpeg']} />
+                <FileUploadField onFileChosen={onFileChosen} filetypes={["image/png", "image/jpeg"]} />
               </div>
             </div>
           )}
@@ -120,19 +110,19 @@ const RMAReturnReasonSubModal: React.FC<RMAReturnReasonSubModalProps> = ({
       <Modal.Footer>
         <div className='flex w-full justify-end gap-x-xsmall'>
           <Button variant='ghost' size='small' className='w-[112px]' onClick={() => pop()}>
-            Back
+            Zpět
           </Button>
           <Button
             variant='primary'
             className='w-[112px]'
             size='small'
-            disabled={typeof selectedReason === 'undefined'}
+            disabled={typeof selectedReason === "undefined"}
             onClick={() => {
               onSubmit(selectedReason, note, files);
               pop();
             }}
           >
-            Add
+            Přidat
           </Button>
         </div>
       </Modal.Footer>

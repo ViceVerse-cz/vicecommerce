@@ -1,47 +1,47 @@
-import React from 'react';
-import Button from '../../../../components/fundamentals/button';
-import useNotification from '../../../../hooks/use-notification';
-import { getErrorMessage } from '../../../../utils/error-messages';
+import React from "react";
+import Button from "../../../../components/fundamentals/button";
+import useNotification from "../../../../hooks/use-notification";
+import { getErrorMessage } from "../../../../utils/error-messages";
 
 export const PaymentActionables = ({ order, capturePayment, showRefundMenu }) => {
   const notification = useNotification();
-  const isSystemPayment = order?.payments?.some((p) => p.provider_id === 'system');
+  const isSystemPayment = order?.payments?.some((p) => p.provider_id === "system");
 
   const { payment_status } = order!;
 
   // Default label and action
-  let label = 'Capture payment';
+  let label = "Zachycení platby";
   let action = () => {
     capturePayment.mutate(void {}, {
-      onSuccess: () => notification('Success', 'Successfully captured payment', 'success'),
-      onError: (err) => notification('Error', getErrorMessage(err), 'error'),
+      onSuccess: () => notification("Úspěch", "Úspěšně zachycená platba", "success"),
+      onError: (err) => notification("Chyba", getErrorMessage(err), "error"),
     });
   };
   const loading = capturePayment.isLoading;
 
   let shouldShowNotice = false;
   // If payment is a system payment, we want to show a notice
-  if (payment_status === 'awaiting' && isSystemPayment) {
+  if (payment_status === "awaiting" && isSystemPayment) {
     shouldShowNotice = true;
   }
 
-  if (payment_status === 'requires_action' && isSystemPayment) {
+  if (payment_status === "requires_action" && isSystemPayment) {
     shouldShowNotice = true;
   }
 
   switch (true) {
-    case payment_status === 'captured' || payment_status === 'partially_refunded': {
-      label = 'Refund';
+    case payment_status === "captured" || payment_status === "partially_refunded": {
+      label = "Vrácení peněz";
       action = () => showRefundMenu();
       break;
     }
 
     case shouldShowNotice: {
-      action = () => console.log('TODO: Show alert indicating, that you are capturing a system payment');
+      action = () => console.log("TODO: Show alert indicating, that you are capturing a system payment");
       break;
     }
 
-    case payment_status === 'requires_action': {
+    case payment_status === "requires_action": {
       return null;
     }
     default:

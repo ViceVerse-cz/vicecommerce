@@ -1,17 +1,13 @@
-import { capitalize } from 'lodash';
-import {
-  useAdminCancelClaimFulfillment,
-  useAdminCancelFulfillment,
-  useAdminCancelSwapFulfillment,
-} from 'medusa-react';
-import React from 'react';
-import CancelIcon from '../../../../components/fundamentals/icons/cancel-icon';
-import PackageIcon from '../../../../components/fundamentals/icons/package-icon';
-import Actionables from '../../../../components/molecules/actionables';
-import useImperativeDialog from '../../../../hooks/use-imperative-dialog';
-import useNotification from '../../../../hooks/use-notification';
-import { getErrorMessage } from '../../../../utils/error-messages';
-import { TrackingLink } from './tracking-link';
+import { capitalize } from "lodash";
+import { useAdminCancelClaimFulfillment, useAdminCancelFulfillment, useAdminCancelSwapFulfillment } from "medusa-react";
+import React from "react";
+import CancelIcon from "../../../../components/fundamentals/icons/cancel-icon";
+import PackageIcon from "../../../../components/fundamentals/icons/package-icon";
+import Actionables from "../../../../components/molecules/actionables";
+import useImperativeDialog from "../../../../hooks/use-imperative-dialog";
+import useNotification from "../../../../hooks/use-notification";
+import { getErrorMessage } from "../../../../utils/error-messages";
+import { TrackingLink } from "./tracking-link";
 
 export const FormattedFulfillment = ({ setFullfilmentToShip, order, fulfillmentObj }) => {
   const dialog = useImperativeDialog();
@@ -29,15 +25,15 @@ export const FormattedFulfillment = ({ setFullfilmentToShip, order, fulfillmentO
       case !!fulfillment?.claim_order_id:
         return {
           resourceId: fulfillment.claim_order_id,
-          resourceType: 'claim',
+          resourceType: "claim",
         };
       case !!fulfillment?.swap_id:
         return {
           resourceId: fulfillment.swap_id,
-          resourceType: 'swap',
+          resourceType: "swap",
         };
       default:
-        return { resourceId: order?.id, resourceType: 'order' };
+        return { resourceId: order?.id, resourceType: "order" };
     }
   };
 
@@ -45,8 +41,8 @@ export const FormattedFulfillment = ({ setFullfilmentToShip, order, fulfillmentO
     const { resourceId, resourceType } = getData();
 
     const shouldCancel = await dialog({
-      heading: 'Cancel fulfillment?',
-      text: 'Are you sure you want to cancel the fulfillment?',
+      heading: "Zrušit plnění?",
+      text: "Jste si jisti, že chcete zrušit plnění?",
     });
 
     if (!shouldCancel) {
@@ -54,26 +50,26 @@ export const FormattedFulfillment = ({ setFullfilmentToShip, order, fulfillmentO
     }
 
     switch (resourceType) {
-      case 'swap':
+      case "swap":
         return cancelSwapFulfillment.mutate(
           { swap_id: resourceId, fulfillment_id: fulfillment.id },
           {
-            onSuccess: () => notification('Success', 'Successfully canceled swap', 'success'),
-            onError: (err) => notification('Error', getErrorMessage(err), 'error'),
+            onSuccess: () => notification("Úspěch", "Úspěšně zrušená výměna", "success"),
+            onError: (err) => notification("Error", getErrorMessage(err), "error"),
           },
         );
-      case 'claim':
+      case "claim":
         return cancelClaimFulfillment.mutate(
           { claim_id: resourceId, fulfillment_id: fulfillment.id },
           {
-            onSuccess: () => notification('Success', 'Successfully canceled claim', 'success'),
-            onError: (err) => notification('Error', getErrorMessage(err), 'error'),
+            onSuccess: () => notification("Success", "Úspěch", "success"),
+            onError: (err) => notification("Error", getErrorMessage(err), "error"),
           },
         );
       default:
         return cancelFulfillment.mutate(fulfillment.id, {
-          onSuccess: () => notification('Success', 'Successfully canceled order', 'success'),
-          onError: (err) => notification('Error', getErrorMessage(err), 'error'),
+          onSuccess: () => notification("Úspěch", "Úspěšně zrušená objednávka", "success"),
+          onError: (err) => notification("Error", getErrorMessage(err), "error"),
         });
     }
   };
@@ -83,26 +79,26 @@ export const FormattedFulfillment = ({ setFullfilmentToShip, order, fulfillmentO
       <div className='flex flex-col space-y-1 py-2'>
         <div className='text-grey-90'>
           {fulfillment.canceled_at
-            ? 'Fulfillment has been canceled'
-            : `${fulfillmentObj.title} Fulfilled by ${capitalize(fulfillment.provider_id)}`}
+            ? "Plnění bylo zrušeno"
+            : `${fulfillmentObj.title} Splněno od ${capitalize(fulfillment.provider_id)}`}
         </div>
         <div className='flex text-grey-50'>
-          {!fulfillment.shipped_at ? 'Not shipped' : 'Tracking'}
+          {!fulfillment.shipped_at ? "Nebylo dodáno" : "Sledování"}
           {hasLinks && fulfillment.tracking_links.map((tl, j) => <TrackingLink key={j} trackingLink={tl} />)}
         </div>
       </div>
-      {!fulfillment.canceled_at && !fulfillment.shipped_at && (
+      {!(fulfillment.canceled_at || fulfillment.shipped_at ) && (
         <div className='flex items-center space-x-2'>
           <Actionables
             actions={[
               {
-                label: 'Mark Shipped',
-                icon: <PackageIcon size={'20'} />,
+                label: "Označit jako odeslané",
+                icon: <PackageIcon size={"20"} />,
                 onClick: () => setFullfilmentToShip(fulfillment),
               },
               {
-                label: 'Cancel Fulfillment',
-                icon: <CancelIcon size={'20'} />,
+                label: "Zrušit",
+                icon: <CancelIcon size={"20"} />,
                 onClick: () => handleCancelFulfillment(),
               },
             ]}
