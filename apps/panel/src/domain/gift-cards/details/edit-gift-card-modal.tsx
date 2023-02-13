@@ -1,10 +1,10 @@
-import { AdminPostGiftCardsGiftCardReq, Region } from '@medusajs/medusa';
-import React, { useMemo } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import Button from '../../../components/fundamentals/button';
-import Modal from '../../../components/molecules/modal';
-import Select from '../../../components/molecules/select';
-import { Option } from '../../../types/shared';
+import { AdminPostGiftCardsGiftCardReq, Region } from "@medusajs/medusa";
+import React, { useMemo } from "react";
+import { Controller, useForm } from "react-hook-form";
+import Button from "../../../components/fundamentals/button";
+import Modal from "../../../components/molecules/modal";
+import Select from "../../../components/molecules/select";
+import { Option } from "../../../types/shared";
 
 type EditGiftCardModalProps = {
   handleClose: () => void;
@@ -18,13 +18,7 @@ type EditGiftCardModalFormData = {
   region: Option;
 };
 
-const EditGiftCardModal = ({
-  handleClose,
-  handleSave,
-  updating,
-  regions,
-  region,
-}: EditGiftCardModalProps) => {
+const EditGiftCardModal = ({ handleClose, handleSave, updating, regions, region }: EditGiftCardModalProps) => {
   const { control, handleSubmit } = useForm<EditGiftCardModalFormData>({
     defaultValues: {
       region: {
@@ -52,7 +46,7 @@ const EditGiftCardModal = ({
       <form onSubmit={handleSubmit(onSubmit)}>
         <Modal.Body isLargeModal={true}>
           <Modal.Header handleClose={handleClose}>
-            <span className='inter-xlarge-semibold'>Edit Gift Card Details</span>
+            <span className='inter-xlarge-semibold'>Úprava údajů o dárkové kartě</span>
           </Modal.Header>
           <Modal.Content>
             {/* TODO: Missing backend support for updating code
@@ -74,7 +68,7 @@ const EditGiftCardModal = ({
           <Modal.Footer>
             <div className='w-full flex justify-end'>
               <Button variant='ghost' size='small' onClick={handleClose} className='mr-2' type='button'>
-                Cancel
+                Zrušit
               </Button>
               <Button
                 loading={updating}
@@ -84,7 +78,7 @@ const EditGiftCardModal = ({
                 size='small'
                 type='submit'
               >
-                Save
+                Uložit
               </Button>
             </div>
           </Modal.Footer>

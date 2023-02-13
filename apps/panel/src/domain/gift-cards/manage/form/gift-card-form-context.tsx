@@ -1,11 +1,11 @@
-import { useAdminUpdateProduct } from 'medusa-react';
-import React, { useEffect, useState } from 'react';
-import { FormProvider, useForm, useFormContext } from 'react-hook-form';
-import useNotification from '../../../../hooks/use-notification';
-import { handleFormError } from '../../../../utils/handle-form-error';
-import { trimValues } from '../../../../utils/trim-values';
-import { ManageGiftCardFormData } from '../utils/types';
-import { formValuesToUpdateGiftCardMapper } from './mappers';
+import { useAdminUpdateProduct } from "medusa-react";
+import React, { useEffect, useState } from "react";
+import { FormProvider, useForm, useFormContext } from "react-hook-form";
+import useNotification from "../../../../hooks/use-notification";
+import { handleFormError } from "../../../../utils/handle-form-error";
+import { trimValues } from "../../../../utils/trim-values";
+import { ManageGiftCardFormData } from "../utils/types";
+import { formValuesToUpdateGiftCardMapper } from "./mappers";
 
 type GiftCardFormProviderProps = {
   giftCardId: string;
@@ -46,7 +46,7 @@ export const GiftCardFormProvider = ({ giftCardId, giftCard, children }: GiftCar
 
     update(payload, {
       onSuccess: () => {
-        notification('Success', 'Product updated successfully', 'success');
+        notification("Úspěch", "Produkt byl úspěšně aktualizován", "success");
       },
     });
   }, handleFormError);
@@ -80,7 +80,7 @@ export const useGiftCardForm = () => {
   const context = React.useContext(GiftCardFormContext);
   const form = useFormContext<ManageGiftCardFormData>();
   if (!context) {
-    throw new Error('useGiftCardForm must be a child of GiftCardFormContext');
+    throw new Error("useGiftCardForm must be a child of GiftCardFormContext");
   }
   return { form, ...context };
 };

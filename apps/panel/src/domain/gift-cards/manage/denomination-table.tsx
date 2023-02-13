@@ -1,10 +1,10 @@
-import { useAdminDeleteVariant } from 'medusa-react';
-import React, { useState } from 'react';
-import EditIcon from '../../../components/fundamentals/icons/edit-icon';
-import TrashIcon from '../../../components/fundamentals/icons/trash-icon';
-import Table from '../../../components/molecules/table';
-import DeletePrompt from '../../../components/organisms/delete-prompt';
-import { stringDisplayPrice } from '../../../utils/prices';
+import { useAdminDeleteVariant } from "medusa-react";
+import React, { useState } from "react";
+import EditIcon from "../../../components/fundamentals/icons/edit-icon";
+import TrashIcon from "../../../components/fundamentals/icons/trash-icon";
+import Table from "../../../components/molecules/table";
+import DeletePrompt from "../../../components/organisms/delete-prompt";
+import { stringDisplayPrice } from "../../../utils/prices";
 
 type DenominationTableProps = {
   giftCardId: string;
@@ -41,7 +41,7 @@ const DenominationTable: React.FC<DenominationTableProps> = ({
       .filter((p) => p.currency_code !== defaultCurrency) // without default
       .sort(sortHelper) // sort by currency code
       .map((p) => stringDisplayPrice({ currencyCode: p.currency_code, amount: p.amount })) // get formatted price
-      .join(', '); // concatenate to single comma separated string
+      .join(", "); // concatenate to single comma separated string
   };
 
   const getDenominationRow = (denomination, index) => {
@@ -54,16 +54,16 @@ const DenominationTable: React.FC<DenominationTableProps> = ({
     return (
       <Table.Row
         key={`denomination-${index}`}
-        color={'inherit'}
+        color={"inherit"}
         actions={[
           {
-            label: 'Edit denomination',
+            label: "Upravit pojmenování",
             onClick: () => setEditDenom(denomination),
             icon: <EditIcon size={20} />,
           },
           {
-            label: 'Delete denomination',
-            variant: 'danger',
+            label: "Vymazat označení",
+            variant: "danger",
             onClick: () => setSelectedDenom(denomination.id),
             icon: <TrashIcon size={20} />,
           },
@@ -76,7 +76,6 @@ const DenominationTable: React.FC<DenominationTableProps> = ({
           })}
         </Table.Cell>
         <Table.Cell>{getDenominationPrices(denomination)}</Table.Cell>
-        <Table.Cell></Table.Cell>
       </Table.Row>
     );
   };
@@ -94,18 +93,16 @@ const DenominationTable: React.FC<DenominationTableProps> = ({
             <Table.HeadCell>Other Values</Table.HeadCell>
           </Table.HeadRow>
         </Table.Head>
-        <Table.Body className='text-grey-90'>
-          {denominations?.map((d, idx) => getDenominationRow(d, idx))}
-        </Table.Body>
+        <Table.Body className='text-grey-90'>{denominations?.map((d, idx) => getDenominationRow(d, idx))}</Table.Body>
       </Table>
       {selectedDenom && (
         <DeletePrompt
           handleClose={() => setSelectedDenom(null)}
-          text='Are you sure you want to delete this denomination from your Medusa Store?'
-          heading='Delete denomination'
+          text='Jste si jisti, že chcete tuto nominální hodnotu z obchodu odstranit?'
+          heading='Vymazat označení'
           onDelete={() => handleDeleteDenomination()}
-          successText='Successfully deleted denomination'
-          confirmText='Yes, delete'
+          successText='Úspěšně odstraněný název'
+          confirmText='Ano, vymazat'
         />
       )}
     </div>

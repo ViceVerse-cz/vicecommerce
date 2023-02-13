@@ -41,12 +41,12 @@ const GiftCardDetails = () => {
       icon: <EditIcon size={20} />,
     },
     {
-      label: `${giftCard?.is_disabled ? "Activate" : "Disable"}`,
+      label: `${giftCard?.is_disabled ? "Aktivace" : "Zakázat"}`,
       onClick: () => handleUpdate({ is_disabled: !giftCard?.is_disabled }),
       icon: giftCard?.is_disabled ? <PublishIcon size={20} /> : <UnpublishIcon size={20} />,
     },
     {
-      label: "Update balance",
+      label: "Aktualizace zůstatku",
       onClick: () => setShowUpdateBalance(true),
       icon: <DollarSignIcon size={20} />,
     },
@@ -57,18 +57,22 @@ const GiftCardDetails = () => {
       { ...data },
       {
         onSuccess: () => {
-          notification("Success", "Succesfully updated Gift Card", "success");
+          notification("Úspěch", "Úspěšně aktualizovaná dárková karta", "success");
           setShowEdit(false);
           setShowUpdateBalance(false);
         },
-        onError: (err) => notification("Error", getErrorMessage(err), "error"),
+        onError: (err) => notification("Chyba", getErrorMessage(err), "error"),
       },
     );
   };
 
   return (
     <div>
-      <Breadcrumb currentPage={"Gift Card Details"} previousBreadcrumb={"Gift Cards"} previousRoute='/a/gift-cards' />
+      <Breadcrumb
+        currentPage={"Podrobnosti o dárkové kartě"}
+        previousBreadcrumb={"Dárkové karty"}
+        previousRoute='/a/gift-cards'
+      />
       {isLoading || !giftCard ? (
         <div className='w-full bg-grey-0 border border-grey-20 rounded-rounded py-xlarge flex items-center justify-center'>
           <Spinner size={"large"} variant={"secondary"} />
@@ -78,12 +82,12 @@ const GiftCardDetails = () => {
           <BodyCard
             className={"h-auto min-h-0 w-full"}
             title={`${giftCard?.code}`}
-            subtitle={`Gift Card id: ${giftCard?.id}`}
+            subtitle={`ID dárkové karty: ${giftCard?.id}`}
             status={
               <StatusSelector
                 isDraft={!!giftCard?.is_disabled}
-                activeState={"Active"}
-                draftState={"Disable"}
+                activeState={"Aktivní"}
+                draftState={"Zakázáno"}
                 onChange={() => handleUpdate({ is_disabled: !giftCard?.is_disabled })}
               />
             }
@@ -92,7 +96,7 @@ const GiftCardDetails = () => {
             <div className='flex justify-between'>
               <div className='flex mt-6 space-x-6 divide-x'>
                 <div className='flex flex-col'>
-                  <div className='inter-smaller-regular text-grey-50 mb-1'>Original amount</div>
+                  <div className='inter-smaller-regular text-grey-50 mb-1'>Původní částka</div>
                   <div>
                     {formatAmountWithSymbol({
                       amount: giftCard?.value,
@@ -101,7 +105,7 @@ const GiftCardDetails = () => {
                   </div>
                 </div>
                 <div className='flex flex-col pl-6'>
-                  <div className='inter-smaller-regular text-grey-50 mb-1'>Balance</div>
+                  <div className='inter-smaller-regular text-grey-50 mb-1'>Bilance</div>
                   <div>
                     {formatAmountWithSymbol({
                       amount: giftCard?.balance,
@@ -110,7 +114,7 @@ const GiftCardDetails = () => {
                   </div>
                 </div>
                 <div className='flex flex-col pl-6'>
-                  <div className='inter-smaller-regular text-grey-50 mb-1'>Created</div>
+                  <div className='inter-smaller-regular text-grey-50 mb-1'>Vytvořeno</div>
                   <div>{moment(giftCard?.created_at).format("DD MMM YYYY")}</div>
                 </div>
               </div>
@@ -120,7 +124,7 @@ const GiftCardDetails = () => {
             </div>
           </BodyCard>
           <div className='mt-large'>
-            <RawJSON data={giftCard} title='Raw gift card' rootName='product' />
+            <RawJSON data={giftCard} title='Surová dárková karta' rootName='product' />
           </div>
         </>
       )}

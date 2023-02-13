@@ -1,11 +1,11 @@
-import { AdminPostGiftCardsGiftCardReq, GiftCard } from '@medusajs/medusa';
-import clsx from 'clsx';
-import React from 'react';
-import { Controller, useForm, useWatch } from 'react-hook-form';
-import Tooltip from '../../../components/atoms/tooltip';
-import Button from '../../../components/fundamentals/button';
-import Modal from '../../../components/molecules/modal';
-import CurrencyInput from '../../../components/organisms/currency-input';
+import { AdminPostGiftCardsGiftCardReq, GiftCard } from "@medusajs/medusa";
+import clsx from "clsx";
+import React from "react";
+import { Controller, useForm, useWatch } from "react-hook-form";
+import Tooltip from "../../../components/atoms/tooltip";
+import Button from "../../../components/fundamentals/button";
+import Modal from "../../../components/molecules/modal";
+import CurrencyInput from "../../../components/organisms/currency-input";
 
 type UpdateBalanceModalProps = {
   handleClose: () => void;
@@ -19,13 +19,7 @@ type UpdateBalanceModalFormData = {
   balance: number;
 };
 
-const UpdateBalanceModal = ({
-  handleClose,
-  handleSave,
-  currencyCode,
-  giftCard,
-  updating,
-}: UpdateBalanceModalProps) => {
+const UpdateBalanceModal = ({ handleClose, handleSave, currencyCode, giftCard, updating }: UpdateBalanceModalProps) => {
   const { control, handleSubmit } = useForm<UpdateBalanceModalFormData>({
     defaultValues: {
       balance: giftCard.balance,
@@ -34,7 +28,7 @@ const UpdateBalanceModal = ({
 
   const balance = useWatch({
     control,
-    name: 'balance',
+    name: "balance",
   });
 
   return (
@@ -42,13 +36,13 @@ const UpdateBalanceModal = ({
       <Modal.Body>
         <form onSubmit={handleSubmit(handleSave)}>
           <Modal.Header handleClose={handleClose}>
-            <span className='inter-xlarge-semibold'>Update Balance</span>
+            <span className='inter-xlarge-semibold'>Aktualizace zůstatku</span>
             <span
-              className={clsx('inter-small-regular text-rose-50 mt-2xsmall transition-display delay-75', {
+              className={clsx("inter-small-regular text-rose-50 mt-2xsmall transition-display delay-75", {
                 hidden: !(balance > giftCard.value),
               })}
             >
-              Balance can't be updated to a value that is greater than the original amount
+              Zůstatek nelze aktualizovat na hodnotu, která je vyšší než původní částka.
             </span>
           </Modal.Header>
           <Modal.Content>
@@ -60,7 +54,7 @@ const UpdateBalanceModal = ({
                   required: true,
                 }}
                 render={({ field: { value, onChange } }) => {
-                  return <CurrencyInput.Amount amount={value} label='Price' onChange={onChange} />;
+                  return <CurrencyInput.Amount amount={value} label='Cena' onChange={onChange} />;
                 }}
               />
             </CurrencyInput.Root>
@@ -68,7 +62,7 @@ const UpdateBalanceModal = ({
           <Modal.Footer>
             <div className='w-full flex justify-end'>
               <Button variant='ghost' size='small' onClick={handleClose} className='mr-2' type='button'>
-                Cancel
+                Zrušit
               </Button>
               <Button
                 loading={updating}
@@ -79,9 +73,9 @@ const UpdateBalanceModal = ({
                 disabled={balance > giftCard.value || updating}
               >
                 {balance > giftCard.value ? (
-                  <Tooltip content='Balance is above original value'>Save</Tooltip>
+                  <Tooltip content='Balance is above original value'>Uložit</Tooltip>
                 ) : (
-                  'Save'
+                  "Uložit"
                 )}
               </Button>
             </div>

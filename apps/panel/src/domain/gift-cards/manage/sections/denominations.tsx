@@ -1,20 +1,20 @@
-import { Product, ProductVariant } from '@medusajs/medusa';
-import { useAdminDeleteVariant, useAdminStore, useAdminUpdateVariant } from 'medusa-react';
-import React, { useState } from 'react';
-import PlusIcon from '../../../../components/fundamentals/icons/plus-icon';
-import AddDenominationModal from '../../../../components/organisms/add-denomination-modal';
-import BodyCard from '../../../../components/organisms/body-card';
-import EditDenominationsModal from '../../../../components/organisms/edit-denominations-modal';
-import useNotification from '../../../../hooks/use-notification';
-import { getErrorMessage } from '../../../../utils/error-messages';
-import DenominationTable from '../denomination-table';
+import { Product, ProductVariant } from "@medusajs/medusa";
+import { useAdminDeleteVariant, useAdminStore, useAdminUpdateVariant } from "medusa-react";
+import React, { useState } from "react";
+import PlusIcon from "../../../../components/fundamentals/icons/plus-icon";
+import AddDenominationModal from "../../../../components/organisms/add-denomination-modal";
+import BodyCard from "../../../../components/organisms/body-card";
+import EditDenominationsModal from "../../../../components/organisms/edit-denominations-modal";
+import useNotification from "../../../../hooks/use-notification";
+import { getErrorMessage } from "../../../../utils/error-messages";
+import DenominationTable from "../denomination-table";
 
 type DenominationsProps = {
   giftCard: Product;
 };
 
 const Denominations: React.FC<DenominationsProps> = ({ giftCard }) => {
-  const [editDenom, setEditDenom] = useState<Omit<ProductVariant, 'beforeInsert'> | null>(null);
+  const [editDenom, setEditDenom] = useState<Omit<ProductVariant, "beforeInsert"> | null>(null);
   const [addDenom, setAddDenom] = useState(false);
 
   const { store } = useAdminStore();
@@ -32,10 +32,10 @@ const Denominations: React.FC<DenominationsProps> = ({ giftCard }) => {
       // if a update would result in the variant having 0 prices, then we delete it instead
       deleteGiftCardVariant.mutate(editDenom!.id, {
         onSuccess: () => {
-          notification('Success', 'Successfully updated denominations', 'success');
+          notification("Úspěch", "Úspěšně aktualizované názvy", "success");
           setEditDenom(null);
         },
-        onError: (err) => notification('Error', getErrorMessage(err), 'error'),
+        onError: (err) => notification("Chyba", getErrorMessage(err), "error"),
       });
       return;
     }
@@ -56,22 +56,22 @@ const Denominations: React.FC<DenominationsProps> = ({ giftCard }) => {
       },
       {
         onSuccess: () => {
-          notification('Success', 'Successfully updated denominations', 'success');
+          notification("Úspěch", "Úspěšně aktualizované nominální hodnoty", "success");
           setEditDenom(null);
         },
-        onError: (err) => notification('Error', getErrorMessage(err), 'error'),
+        onError: (err) => notification("Chyba", getErrorMessage(err), "error"),
       },
     );
   };
   return (
     <>
       <BodyCard
-        title='Denominations'
-        subtitle='Manage your denominations'
-        className={'h-auto w-full'}
+        title='Denominace'
+        subtitle='Správa nominálních hodnot'
+        className={"h-auto w-full"}
         actionables={[
           {
-            label: 'Add Denomination',
+            label: "Přidat nominální hodnotu",
             onClick: () => setAddDenom(true),
             icon: <PlusIcon size={20} />,
           },
@@ -80,7 +80,7 @@ const Denominations: React.FC<DenominationsProps> = ({ giftCard }) => {
         <DenominationTable
           giftCardId={giftCard.id}
           denominations={giftCard.variants || []}
-          defaultCurrency={store?.default_currency_code || ''}
+          defaultCurrency={store?.default_currency_code || ""}
           setEditDenom={setEditDenom}
         />
       </BodyCard>

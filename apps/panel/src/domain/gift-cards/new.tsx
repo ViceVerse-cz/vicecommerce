@@ -71,13 +71,13 @@ const NewGiftCard = ({ onClose }: NewGiftCardProps) => {
     const trimmedName = data.title.trim();
 
     if (!trimmedName) {
-      notification("Error", "Please enter a name for the Gift Card", "error");
+      notification("Chyba", "Zadejte prosím název dárkové karty", "error");
       focusByName("name");
       return;
     }
 
     if (!data.denominations?.length) {
-      notification("Error", "Please add at least one denomination", "error");
+      notification("Chyba", "Přidejte prosím alespoň jednu denominaci", "error");
       focusByName("add-denomination");
       return;
     }
@@ -113,12 +113,12 @@ const NewGiftCard = ({ onClose }: NewGiftCardProps) => {
       },
       {
         onSuccess: () => {
-          notification("Success", "Successfully created Gift Card", "success");
+          notification("Úspěch", "Úspěšně vytvořená dárková karta", "success");
           refetch();
           navigate("/a/gift-cards/manage");
         },
         onError: (err) => {
-          notification("Error", getErrorMessage(err), "error");
+          notification("Chyba", getErrorMessage(err), "error");
         },
       },
     );
@@ -130,24 +130,24 @@ const NewGiftCard = ({ onClose }: NewGiftCardProps) => {
         <Modal.Body>
           <Modal.Header handleClose={onClose}>
             <div>
-              <h1 className='inter-xlarge-semibold'>Create Gift Card</h1>
+              <h1 className='inter-xlarge-semibold'>Vytvořit dárkovou kartu</h1>
             </div>
           </Modal.Header>
           <Modal.Content>
             <div className='mb-base'>
-              <h3 className='inter-base-semibold'>Gift Card Details</h3>
+              <h3 className='inter-base-semibold'>Podrobnosti o dárkové kartě</h3>
             </div>
             <div className='flex flex-col gap-y-base'>
               <InputField
-                label={"Name"}
+                label={"Název"}
                 required
-                placeholder='The best Gift Card'
+                placeholder='Nejlepší dárková karta'
                 {...register("title", { required: true })}
               />
-              <TextArea label='Description' placeholder='The best Gift Card of all time' {...register("description")} />
+              <TextArea label='Popis' placeholder='Nejlepší dárková karta všech dob' {...register("description")} />
             </div>
             <div className='mt-xlarge'>
-              <h3 className='inter-base-semibold'>Thumbnail</h3>
+              <h3 className='inter-base-semibold'>Miniatury</h3>
               <div className='h-[80px] mt-base'>
                 {thumbnail ? (
                   <div className='flex items-center gap-x-6'>
@@ -160,7 +160,7 @@ const NewGiftCard = ({ onClose }: NewGiftCardProps) => {
                           type='button'
                           onClick={() => setValue("thumbnail", null)}
                         >
-                          Delete
+                          Odstranit
                         </button>
                       </div>
                     </div>
@@ -169,14 +169,14 @@ const NewGiftCard = ({ onClose }: NewGiftCardProps) => {
                   <FileUploadField
                     filetypes={["image/gif", "image/jpeg", "image/png", "image/webp"]}
                     onFileChosen={handleFileUpload}
-                    placeholder='1200 x 1600 (3:4) recommended, up to 10MB each'
+                    placeholder='Doporučené rozměry 1200 x 1600 (3:4), každý až 10 MB'
                   />
                 )}
               </div>
             </div>
             <div className='mt-xlarge'>
               <h3 className='inter-base-semibold mb-base'>
-                Denominations<span className='text-rose-50'>*</span>
+                Denominace<span className='text-rose-50'>*</span>
               </h3>
               <div className='flex flex-col gap-y-xsmall'>
                 {fields.map((denomination, index) => {
@@ -193,7 +193,7 @@ const NewGiftCard = ({ onClose }: NewGiftCardProps) => {
                           render={({ field: { value, onChange, ref } }) => {
                             return (
                               <CurrencyInput.Amount
-                                label='Amount'
+                                label='Částka'
                                 amount={value || undefined}
                                 onChange={onChange}
                                 ref={ref}
@@ -227,14 +227,14 @@ const NewGiftCard = ({ onClose }: NewGiftCardProps) => {
                 type='button'
               >
                 <PlusIcon size={20} />
-                Add Denomination
+                Přidat nominální hodnotu
               </Button>
             </div>
           </Modal.Content>
           <Modal.Footer>
             <div className='flex items-center justify-end w-full'>
               <Button type='submit' variant='ghost' size='small' className='w-eventButton' onClick={onClose}>
-                Cancel
+                Zrušit
               </Button>
               <Button
                 type='submit'
@@ -244,7 +244,7 @@ const NewGiftCard = ({ onClose }: NewGiftCardProps) => {
                 loading={isLoading}
                 disabled={isLoading}
               >
-                Create & Publish
+                Vytvořit a publikovat
               </Button>
             </div>
           </Modal.Footer>

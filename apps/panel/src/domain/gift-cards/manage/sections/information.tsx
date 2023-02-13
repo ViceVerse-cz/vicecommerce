@@ -1,34 +1,29 @@
-import { Product } from '@medusajs/medusa';
-import { useAdminDeleteProduct, useAdminProductTypes, useAdminUpdateProduct } from 'medusa-react';
-import React from 'react';
-import { Controller } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import TrashIcon from '../../../../components/fundamentals/icons/trash-icon';
-import UnpublishIcon from '../../../../components/fundamentals/icons/unpublish-icon';
-import Input from '../../../../components/molecules/input';
-import Select from '../../../../components/molecules/select';
-import StatusSelector from '../../../../components/molecules/status-selector';
-import TagInput from '../../../../components/molecules/tag-input';
-import TextArea from '../../../../components/molecules/textarea';
-import BodyCard from '../../../../components/organisms/body-card';
-import DetailsCollapsible from '../../../../components/organisms/details-collapsible';
-import useNotification from '../../../../hooks/use-notification';
-import { getErrorMessage } from '../../../../utils/error-messages';
-import FormValidator from '../../../../utils/form-validator';
-import { useGiftCardForm } from '../form/gift-card-form-context';
+import { Product } from "@medusajs/medusa";
+import { useAdminDeleteProduct, useAdminProductTypes, useAdminUpdateProduct } from "medusa-react";
+import React from "react";
+import { Controller } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import TrashIcon from "../../../../components/fundamentals/icons/trash-icon";
+import UnpublishIcon from "../../../../components/fundamentals/icons/unpublish-icon";
+import Input from "../../../../components/molecules/input";
+import Select from "../../../../components/molecules/select";
+import StatusSelector from "../../../../components/molecules/status-selector";
+import TagInput from "../../../../components/molecules/tag-input";
+import TextArea from "../../../../components/molecules/textarea";
+import BodyCard from "../../../../components/organisms/body-card";
+import DetailsCollapsible from "../../../../components/organisms/details-collapsible";
+import useNotification from "../../../../hooks/use-notification";
+import { getErrorMessage } from "../../../../utils/error-messages";
+import FormValidator from "../../../../utils/form-validator";
+import { useGiftCardForm } from "../form/gift-card-form-context";
 
 type InformationProps = {
-  giftCard: Omit<Product, 'beforeInsert'>;
+  giftCard: Omit<Product, "beforeInsert">;
 };
 
 const Information: React.FC<InformationProps> = ({ giftCard }) => {
   const {
-    form: {
-      register,
-      setValue,
-      control,
-      formState: { errors },
-    },
+    form: { register, setValue, control, formState: { errors } },
   } = useGiftCardForm();
   const navigate = useNavigate();
   const notification = useNotification();
@@ -48,7 +43,7 @@ const Information: React.FC<InformationProps> = ({ giftCard }) => {
     };
 
     typeOptions.push(newType);
-    setValue('type', newType);
+    setValue("type", newType);
 
     return newType;
   };
@@ -57,14 +52,14 @@ const Information: React.FC<InformationProps> = ({ giftCard }) => {
     updateGiftCard.mutate(
       {
         // @ts-ignore
-        status: giftCard.status === 'draft' ? 'published' : 'draft',
+        status: giftCard.status === "draft" ? "published" : "draft",
       },
       {
         onSuccess: () => {
-          notification('Success', 'Gift card updated successfully', 'success');
+          notification("Úspěch", "Dárková karta byla úspěšně aktualizována", "success");
         },
         onError: (error) => {
-          notification('Error', getErrorMessage(error), 'error');
+          notification("Chyba", getErrorMessage(error), "error");
         },
       },
     );
@@ -73,31 +68,31 @@ const Information: React.FC<InformationProps> = ({ giftCard }) => {
   const onDelete = () => {
     deleteGiftCard.mutate(undefined, {
       onSuccess: () => {
-        navigate('/a/gift-cards');
-        notification('Success', 'Gift card updated successfully', 'success');
+        navigate("/a/gift-cards");
+        notification("Úspěch", "Dárková karta byla úspěšně aktualizována", "success");
       },
       onError: (error) => {
-        notification('Error', getErrorMessage(error), 'error');
+        notification("Chyba", getErrorMessage(error), "error");
       },
     });
   };
 
   return (
     <BodyCard
-      title='Product information'
-      subtitle='Manage the settings for your Gift Card'
-      className={'h-auto w-full'}
+      title='Informace o výrobku'
+      subtitle='Správa nastavení dárkové karty'
+      className={"h-auto w-full"}
       status={<GiftCardStatusSelector currentStatus={giftCard.status} onUpdate={onUpdate} />}
       actionables={[
         {
-          label: giftCard?.status !== 'published' ? 'Publish Gift Card' : 'Unpublish Gift Card',
+          label: giftCard?.status !== "published" ? "Zveřejnit dárkovou kartu" : "Zrušit zveřejnění dárkové karty",
           onClick: onUpdate,
           icon: <UnpublishIcon size='16' />,
         },
         {
-          label: 'Delete Gift Card',
+          label: "Odstranění dárkové karty",
           onClick: onDelete,
-          variant: 'danger',
+          variant: "danger",
           icon: <TrashIcon size='16' />,
         },
       ]}
@@ -105,51 +100,51 @@ const Information: React.FC<InformationProps> = ({ giftCard }) => {
       <div className='flex flex-col space-y-6'>
         <div className='grid grid-cols-2 gap-large'>
           <Input
-            label='Name'
-            placeholder='Add name'
+            label='Název'
+            placeholder='Přidat jméno'
             required
             defaultValue={giftCard?.title}
-            {...register('title', {
-              required: FormValidator.required('Name'),
-              pattern: FormValidator.whiteSpaceRule('Name'),
-              minLength: FormValidator.minOneCharRule('Name'),
+            {...register("title", {
+              required: FormValidator.required("Name"),
+              pattern: FormValidator.whiteSpaceRule("Name"),
+              minLength: FormValidator.minOneCharRule("Name"),
             })}
             errors={errors}
           />
           <Input
-            label='Subtitle'
-            placeholder='Add a subtitle'
-            {...register('subtitle', {
-              pattern: FormValidator.whiteSpaceRule('Subtitle'),
-              minLength: FormValidator.minOneCharRule('Subtitle'),
+            label='Podtitul'
+            placeholder='Přidání titulku'
+            {...register("subtitle", {
+              pattern: FormValidator.whiteSpaceRule("Subtitle"),
+              minLength: FormValidator.minOneCharRule("Subtitle"),
             })}
             errors={errors}
           />
           <TextArea
-            label='Description'
-            placeholder='Add a description'
-            {...register('description', {
-              pattern: FormValidator.whiteSpaceRule('Description'),
-              minLength: FormValidator.minOneCharRule('Description'),
+            label='Popis'
+            placeholder='Přidání popisu'
+            {...register("description", {
+              pattern: FormValidator.whiteSpaceRule("Description"),
+              minLength: FormValidator.minOneCharRule("Description"),
             })}
             errors={errors}
           />
         </div>
         <DetailsCollapsible
-          triggerProps={{ className: 'ml-2' }}
+          triggerProps={{ className: "ml-2" }}
           contentProps={{
             forceMount: true,
           }}
         >
           <div className='grid grid-cols-2 gap-large'>
             <Input
-              label='Handle'
-              placeholder='Product handle'
-              {...register('handle', {
-                pattern: FormValidator.whiteSpaceRule('Handle'),
-                minLength: FormValidator.minOneCharRule('Handle'),
+              label='Rukojeť'
+              placeholder='Rukojeť výrobku'
+              {...register("handle", {
+                pattern: FormValidator.whiteSpaceRule("Handle"),
+                minLength: FormValidator.minOneCharRule("Handle"),
               })}
-              tooltipContent='URL of the product'
+              tooltipContent='Adresa URL produktu'
               errors={errors}
             />
             <Controller
@@ -159,7 +154,7 @@ const Information: React.FC<InformationProps> = ({ giftCard }) => {
                 return (
                   <Select
                     label='Type'
-                    placeholder='Select type...'
+                    placeholder='Vyberte typ...'
                     options={typeOptions}
                     onChange={onChange}
                     value={value}
@@ -177,9 +172,9 @@ const Information: React.FC<InformationProps> = ({ giftCard }) => {
               render={({ field: { onChange, value } }) => {
                 return (
                   <TagInput
-                    label='Tags (separated by comma)'
+                    label='Značky (oddělené čárkou)'
                     className='w-full'
-                    placeholder='Spring, Summer...'
+                    placeholder='Jaro, léto...'
                     onChange={onChange}
                     values={value || []}
                   />
@@ -198,14 +193,14 @@ const GiftCardStatusSelector = ({
   currentStatus,
   onUpdate,
 }: {
-  currentStatus: 'draft' | 'proposed' | 'published' | 'rejected';
+  currentStatus: "draft" | "proposed" | "published" | "rejected";
   onUpdate: () => void;
 }) => {
   return (
     <StatusSelector
-      activeState='Published'
-      draftState='Draft'
-      isDraft={currentStatus === 'draft'}
+      activeState='Zveřejněno'
+      draftState='Návrh'
+      isDraft={currentStatus === "draft"}
       onChange={onUpdate}
     />
   );

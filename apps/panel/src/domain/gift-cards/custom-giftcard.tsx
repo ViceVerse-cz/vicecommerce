@@ -1,16 +1,16 @@
-import { useAdminCreateGiftCard, useAdminRegions } from 'medusa-react';
-import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import Button from '../../components/fundamentals/button';
-import InputField from '../../components/molecules/input';
-import Modal from '../../components/molecules/modal';
-import Select from '../../components/molecules/select';
-import TextArea from '../../components/molecules/textarea';
-import CurrencyInput from '../../components/organisms/currency-input';
-import useNotification from '../../hooks/use-notification';
-import { getErrorMessage } from '../../utils/error-messages';
-import { focusByName } from '../../utils/focus-by-name';
-import { validateEmail } from '../../utils/validate-email';
+import { useAdminCreateGiftCard, useAdminRegions } from "medusa-react";
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import Button from "../../components/fundamentals/button";
+import InputField from "../../components/molecules/input";
+import Modal from "../../components/molecules/modal";
+import Select from "../../components/molecules/select";
+import TextArea from "../../components/molecules/textarea";
+import CurrencyInput from "../../components/organisms/currency-input";
+import useNotification from "../../hooks/use-notification";
+import { getErrorMessage } from "../../utils/error-messages";
+import { focusByName } from "../../utils/focus-by-name";
+import { validateEmail } from "../../utils/validate-email";
 
 type CustomGiftcardProps = {
   onDismiss: () => void;
@@ -38,14 +38,14 @@ const CustomGiftcard: React.FC<CustomGiftcardProps> = ({ onDismiss }) => {
 
   const onSubmit = (data) => {
     if (!giftCardAmount) {
-      notification('Error', 'Please enter an amount', 'error');
-      focusByName('amount');
+      notification("Chyba", "Zadejte prosím částku", "error");
+      focusByName("amount");
       return;
     }
 
     if (!validateEmail(data.metadata.email)) {
-      notification('Error', 'Invalid email address', 'error');
-      focusByName('metadata.email');
+      notification("Chyba", "Neplatná e-mailová adresa", "error");
+      focusByName("metadata.email");
       return;
     }
 
@@ -57,11 +57,11 @@ const CustomGiftcard: React.FC<CustomGiftcardProps> = ({ onDismiss }) => {
 
     mutate(update, {
       onSuccess: () => {
-        notification('Success', 'Created Custom Gift Card', 'success');
+        notification("Úspěch", "Vytvořená vlastní dárková karta", "success");
         onDismiss();
       },
       onError: (error) => {
-        notification('Error', getErrorMessage(error), 'error');
+        notification("Chyba", getErrorMessage(error), "error");
         onDismiss();
       },
     });
@@ -71,15 +71,15 @@ const CustomGiftcard: React.FC<CustomGiftcardProps> = ({ onDismiss }) => {
     <Modal handleClose={onDismiss}>
       <Modal.Body>
         <Modal.Header handleClose={onDismiss}>
-          <h2 className='inter-xlarge-semibold'>Custom Gift Card</h2>
+          <h2 className='inter-xlarge-semibold'>Vlastní dárková karta</h2>
         </Modal.Header>
         <Modal.Content>
           <div className='flex flex-col'>
-            <span className='inter-base-semibold'>Value</span>
+            <span className='inter-base-semibold'>Hodnota</span>
             <div className='flex gap-x-2xsmall mt-4'>
               <div className='w-[267px]'>
                 <Select
-                  label={'Region'}
+                  label={"Region"}
                   value={selectedRegion}
                   onChange={(value) => setSelectedRegion(value)}
                   options={
@@ -98,7 +98,7 @@ const CustomGiftcard: React.FC<CustomGiftcardProps> = ({ onDismiss }) => {
                   currentCurrency={selectedRegion?.value?.currency_code}
                 >
                   <CurrencyInput.Amount
-                    label={'Amount'}
+                    label={"Částka"}
                     amount={giftCardAmount}
                     onChange={(value) => {
                       setGiftCardAmount(value || 0);
@@ -111,20 +111,20 @@ const CustomGiftcard: React.FC<CustomGiftcardProps> = ({ onDismiss }) => {
             </div>
           </div>
           <div className='mt-8'>
-            <span className='inter-base-semibold'>Receiver</span>
+            <span className='inter-base-semibold'>Příjemce</span>
             <div className='grid grid-cols-1 gap-y-xsmall mt-4'>
               <InputField
-                label={'Email'}
+                label={"Email"}
                 required
-                {...register('metadata.email', { required: true })}
+                {...register("metadata.email", { required: true })}
                 placeholder='lebron@james.com'
                 type='email'
               />
               <TextArea
-                label={'Personal Message'}
+                label={"Osobní vzkaz"}
                 rows={7}
-                placeholder='Something nice to someone special'
-                {...register('metadata.personal_message')}
+                placeholder='Něco hezkého pro někoho zvláštního'
+                {...register("metadata.personal_message")}
               />
             </div>
           </div>
@@ -132,7 +132,7 @@ const CustomGiftcard: React.FC<CustomGiftcardProps> = ({ onDismiss }) => {
         <Modal.Footer>
           <div className='flex w-full justify-end gap-x-xsmall'>
             <Button variant='ghost' onClick={onDismiss} size='small' className='w-[112px]'>
-              Cancel
+              Zrušit
             </Button>
             <Button
               variant='primary'
@@ -143,7 +143,7 @@ const CustomGiftcard: React.FC<CustomGiftcardProps> = ({ onDismiss }) => {
               disabled={isSubmitting}
               loading={isSubmitting}
             >
-              Create & Send
+              Vytvořit a odeslat
             </Button>
           </div>
         </Modal.Footer>

@@ -1,19 +1,19 @@
-import { useAdminDeleteProduct, useAdminProducts, useAdminStore, useAdminUpdateProduct } from 'medusa-react';
-import React, { useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import PageDescription from '../../components/atoms/page-description';
-import Spinner from '../../components/atoms/spinner';
-import PlusIcon from '../../components/fundamentals/icons/plus-icon';
-import BannerCard from '../../components/molecules/banner-card';
-import BodyCard from '../../components/organisms/body-card';
-import DeletePrompt from '../../components/organisms/delete-prompt';
-import GiftCardBanner from '../../components/organisms/gift-card-banner';
-import GiftCardTable from '../../components/templates/gift-card-table';
-import useNotification from '../../hooks/use-notification';
-import { ProductStatus } from '../../types/shared';
-import { getErrorMessage } from '../../utils/error-messages';
-import CustomGiftcard from './custom-giftcard';
-import NewGiftCard from './new';
+import { useAdminDeleteProduct, useAdminProducts, useAdminStore, useAdminUpdateProduct } from "medusa-react";
+import React, { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import PageDescription from "../../components/atoms/page-description";
+import Spinner from "../../components/atoms/spinner";
+import PlusIcon from "../../components/fundamentals/icons/plus-icon";
+import BannerCard from "../../components/molecules/banner-card";
+import BodyCard from "../../components/organisms/body-card";
+import DeletePrompt from "../../components/organisms/delete-prompt";
+import GiftCardBanner from "../../components/organisms/gift-card-banner";
+import GiftCardTable from "../../components/templates/gift-card-table";
+import useNotification from "../../hooks/use-notification";
+import { ProductStatus } from "../../types/shared";
+import { getErrorMessage } from "../../utils/error-messages";
+import CustomGiftcard from "./custom-giftcard";
+import NewGiftCard from "./new";
 
 const Overview = () => {
   const { products, isLoading } = useAdminProducts({
@@ -33,7 +33,7 @@ const Overview = () => {
 
   const onUpdate = () => {
     let status: ProductStatus = ProductStatus.PUBLISHED;
-    if (giftCard?.status === 'published') {
+    if (giftCard?.status === "published") {
       status = ProductStatus.DRAFT;
     }
 
@@ -41,8 +41,8 @@ const Overview = () => {
       // @ts-ignore
       { status },
       {
-        onSuccess: () => notification('Success', 'Successfully updated Gift Card', 'success'),
-        onError: (err) => notification('Error', getErrorMessage(err), 'error'),
+        onSuccess: () => notification("Úspěch", "Úspěšně aktualizovaná dárková karta", "success"),
+        onError: (err) => notification("Chyba", getErrorMessage(err), "error"),
       },
     );
   };
@@ -50,21 +50,21 @@ const Overview = () => {
   const onDelete = () => {
     deleteGiftCard.mutate(undefined, {
       onSuccess: () => {
-        navigate('/a/gift-cards');
+        navigate("/a/gift-cards");
       },
     });
   };
 
   const actionables = [
     {
-      label: 'Custom Gift Card',
+      label: "Vlastní dárková karta",
       onClick: () => setShowCreateCustom(true),
       icon: <PlusIcon size={20} />,
     },
   ];
 
   const giftCardWithCurrency = useMemo(() => {
-    if (!giftCard || !store) {
+    if (!(giftCard && store)) {
       return null;
     }
 
@@ -74,7 +74,7 @@ const Overview = () => {
   return (
     <>
       <div className='flex flex-col grow h-full pb-xlarge'>
-        <PageDescription title='Gift Cards' subtitle='Manage the Gift Cards of your Medusa store' />
+        <PageDescription title='Gift Cards' subtitle='Správa dárkových karet vašeho obchodu Medusa' />
         {!isLoading ? (
           <>
             <div className='mb-base'>
@@ -82,26 +82,26 @@ const Overview = () => {
                 <GiftCardBanner
                   {...giftCardWithCurrency}
                   onDelete={() => setShowDelete(true)}
-                  onEdit={() => navigate('/a/gift-cards/manage')}
+                  onEdit={() => navigate("/a/gift-cards/manage")}
                   onUnpublish={onUpdate}
                 />
               ) : (
-                <BannerCard title='Are you ready to sell your first Gift Card?'>
+                <BannerCard title='Jste připraveni prodat svou první dárkovou kartu?'>
                   <BannerCard.Description
                     cta={{
-                      label: 'Create Gift Card',
+                      label: "Vytvořit dárkovou kartu",
                       onClick: () => setShowCreate(true),
                     }}
                   >
-                    No Gift Card has been added yet.
+                    Zatím nebyla přidána žádná dárková karta.
                   </BannerCard.Description>
                 </BannerCard>
               )}
             </div>
             <div className='w-full flex flex-col grow'>
               <BodyCard
-                title='History'
-                subtitle='See the history of purchased Gift Cards'
+                title='Historie'
+                subtitle='Podívejte se na historii zakoupených dárkových karet'
                 actionables={actionables}
                 className='h-fit'
               >
@@ -121,9 +121,9 @@ const Overview = () => {
         <DeletePrompt
           handleClose={() => setShowDelete(!showDelete)}
           onDelete={async () => onDelete()}
-          successText='Successfully deleted Gift Card'
-          confirmText='Yes, delete'
-          heading='Delete Gift Card'
+          successText='Dárková karta byla úspěšně smazána'
+          confirmText='Ano, vymazat'
+          heading='Odstranění dárkové karty'
         />
       )}
     </>
