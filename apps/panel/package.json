@@ -67,7 +67,7 @@
     "stream-browserify": "^3.0.0",
     "type-fest": "^3.5.5",
     "typeorm": ">=0.2.0 <0.3.0",
-    "uuid": "^8.3.2",
+    "uuid": "^9.0.0",
     "webpack": "^5.75.0"
   },
   "devDependencies": {
