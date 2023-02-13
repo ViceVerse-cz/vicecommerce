@@ -1,15 +1,15 @@
-import { useAdminCollections } from 'medusa-react';
-import React, { useEffect, useState } from 'react';
-import Spinner from '../../../../../../components/atoms/spinner';
-import Modal from '../../../../../../components/molecules/modal';
-import { SelectableTable } from '../../../../../../components/templates/selectable-table';
-import useQueryFilters from '../../../../../../hooks/use-query-filters';
-import { useConditions } from '../../../../details/conditions/add-condition/conditions-provider';
-import { AddConditionSelectorProps, DiscountConditionOperator } from '../../../../types';
-import { CollectionRow, CollectionsHeader, useCollectionColumns } from '../shared/collection';
-import { defaultQueryProps } from '../shared/common';
-import ConditionOperator from '../shared/condition-operator';
-import DetailsConditionFooter from './details-condition-footer';
+import { useAdminCollections } from "medusa-react";
+import React, { useEffect, useState } from "react";
+import Spinner from "../../../../../../components/atoms/spinner";
+import Modal from "../../../../../../components/molecules/modal";
+import { SelectableTable } from "../../../../../../components/templates/selectable-table";
+import useQueryFilters from "../../../../../../hooks/use-query-filters";
+import { useConditions } from "../../../../details/conditions/add-condition/conditions-provider";
+import { AddConditionSelectorProps, DiscountConditionOperator } from "../../../../types";
+import { CollectionRow, CollectionsHeader, useCollectionColumns } from "../shared/collection";
+import { defaultQueryProps } from "../shared/common";
+import ConditionOperator from "../shared/condition-operator";
+import DetailsConditionFooter from "./details-condition-footer";
 
 const DetailsCollectionConditionSelector = ({ onClose }: AddConditionSelectorProps) => {
   const params = useQueryFilters(defaultQueryProps);
@@ -20,9 +20,7 @@ const DetailsCollectionConditionSelector = ({ onClose }: AddConditionSelectorPro
 
   useEffect(() => {}, [conditions]);
 
-  const [operator, setOperator] = useState<DiscountConditionOperator>(
-    conditions.product_collections.operator,
-  );
+  const [operator, setOperator] = useState<DiscountConditionOperator>(conditions.product_collections.operator);
 
   const { isLoading, count, collections } = useAdminCollections(params.queryObject, {
     // avoid UI flickering by keeping previous data
@@ -50,9 +48,9 @@ const DetailsCollectionConditionSelector = ({ onClose }: AddConditionSelectorPro
           options={{
             enableSearch: true,
             immediateSearchFocus: true,
-            searchPlaceholder: 'Search by title...',
+            searchPlaceholder: "Vyhledávání podle názvu...",
           }}
-          resourceName='Collections'
+          resourceName='Sbírky'
           totalCount={count || 0}
           selectedIds={items?.map((c) => c.id)}
           data={collections}
@@ -65,12 +63,7 @@ const DetailsCollectionConditionSelector = ({ onClose }: AddConditionSelectorPro
         />
       </Modal.Content>
       <Modal.Footer>
-        <DetailsConditionFooter
-          type='product_collections'
-          items={items}
-          onClose={onClose}
-          operator={operator}
-        />
+        <DetailsConditionFooter type='product_collections' items={items} onClose={onClose} operator={operator} />
       </Modal.Footer>
     </>
   );

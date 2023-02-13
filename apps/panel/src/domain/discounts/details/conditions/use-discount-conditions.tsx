@@ -1,16 +1,12 @@
-import { Discount } from '@medusajs/medusa';
-import {
-  useAdminDiscount,
-  useAdminDiscountRemoveCondition,
-  useAdminGetDiscountCondition,
-} from 'medusa-react';
-import React, { useState } from 'react';
-import EditIcon from '../../../../components/fundamentals/icons/edit-icon';
-import TrashIcon from '../../../../components/fundamentals/icons/trash-icon';
-import { ActionType } from '../../../../components/molecules/actionables';
-import useNotification from '../../../../hooks/use-notification';
-import { getErrorMessage } from '../../../../utils/error-messages';
-import { DiscountConditionType } from '../../types';
+import { Discount } from "@medusajs/medusa";
+import { useAdminDiscount, useAdminDiscountRemoveCondition, useAdminGetDiscountCondition } from "medusa-react";
+import React, { useState } from "react";
+import EditIcon from "../../../../components/fundamentals/icons/edit-icon";
+import TrashIcon from "../../../../components/fundamentals/icons/trash-icon";
+import { ActionType } from "../../../../components/molecules/actionables";
+import useNotification from "../../../../hooks/use-notification";
+import { getErrorMessage } from "../../../../utils/error-messages";
+import { DiscountConditionType } from "../../types";
 
 export const useDiscountConditions = (discount: Discount) => {
   const [selectedCondition, setSelectedCondition] = useState<string | null>(null);
@@ -20,7 +16,7 @@ export const useDiscountConditions = (discount: Discount) => {
     discount.id,
     selectedCondition!,
     {
-      expand: 'product_collections,product_tags,product_types,customer_groups,products',
+      expand: "product_collections,product_tags,product_types,customer_groups,products",
     },
     { enabled: !!selectedCondition, cacheTime: 0 },
   );
@@ -31,11 +27,11 @@ export const useDiscountConditions = (discount: Discount) => {
   const removeCondition = (conditionId: string) => {
     mutate(conditionId, {
       onSuccess: () => {
-        notification('Success', 'Condition removed', 'success');
+        notification("Úspěch", "Podmínka odstraněna", "success");
         refetch();
       },
       onError: (error) => {
-        notification('Error', getErrorMessage(error), 'error');
+        notification("Chyba", getErrorMessage(error), "error");
       },
     });
   };
@@ -46,15 +42,15 @@ export const useDiscountConditions = (discount: Discount) => {
     description: getDescription(condition.type),
     actions: [
       {
-        label: 'Edit condition',
+        label: "Upravit stav",
         icon: <EditIcon size={16} />,
-        variant: 'ghost',
+        variant: "ghost",
         onClick: () => setSelectedCondition(condition.id),
       },
       {
-        label: 'Delete condition',
+        label: "Odstranit podmínku",
         icon: <TrashIcon size={16} />,
-        variant: 'danger',
+        variant: "danger",
         onClick: () => removeCondition(condition.id),
       },
     ] as ActionType[],
@@ -74,29 +70,29 @@ export const useDiscountConditions = (discount: Discount) => {
 const getTitle = (type: DiscountConditionType) => {
   switch (type) {
     case DiscountConditionType.PRODUCTS:
-      return 'Product';
+      return "Produkt";
     case DiscountConditionType.PRODUCT_COLLECTIONS:
-      return 'Collection';
+      return "Sbírka";
     case DiscountConditionType.PRODUCT_TAGS:
-      return 'Tag';
+      return "Štítek";
     case DiscountConditionType.PRODUCT_TYPES:
-      return 'Type';
+      return "Typ";
     case DiscountConditionType.CUSTOMER_GROUPS:
-      return 'Customer Group';
+      return "Skupina zákazníků";
   }
 };
 
 const getDescription = (type: DiscountConditionType) => {
   switch (type) {
     case DiscountConditionType.PRODUCTS:
-      return 'Discount is applicable to specific products';
+      return "Sleva se vztahuje na konkrétní produkty";
     case DiscountConditionType.PRODUCT_COLLECTIONS:
-      return 'Discount is applicable to specific collections';
+      return "Sleva se vztahuje na konkrétní sbírky";
     case DiscountConditionType.PRODUCT_TAGS:
-      return 'Discount is applicable to specific product tags';
+      return "Sleva se vztahuje na konkrétní značky produktů";
     case DiscountConditionType.PRODUCT_TYPES:
-      return 'Discount is applicable to specific product types';
+      return "Sleva se vztahuje na konkrétní typy produktů";
     case DiscountConditionType.CUSTOMER_GROUPS:
-      return 'Discount is applicable to specific customer groups';
+      return "Sleva se vztahuje na určité skupiny zákazníků";
   }
 };

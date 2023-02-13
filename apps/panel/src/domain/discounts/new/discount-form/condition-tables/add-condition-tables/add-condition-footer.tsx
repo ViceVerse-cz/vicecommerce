@@ -39,7 +39,7 @@ const AddConditionFooter: React.FC<AddConditionFooterProps> = ({ type, items, op
           pop();
         }}
       >
-        Save and add more
+        Uložit a přidat další
       </Button>
       <Button
         variant='primary'

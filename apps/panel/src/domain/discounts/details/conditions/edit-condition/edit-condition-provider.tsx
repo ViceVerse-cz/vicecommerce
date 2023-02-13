@@ -1,11 +1,8 @@
-import { Discount, DiscountCondition } from '@medusajs/medusa';
-import {
-  useAdminAddDiscountConditionResourceBatch,
-  useAdminDeleteDiscountConditionResourceBatch,
-} from 'medusa-react';
-import React, { createContext, ReactNode, useContext } from 'react';
-import { LayeredModalContext } from '../../../../../components/molecules/modal/layered-modal';
-import useNotification from '../../../../../hooks/use-notification';
+import { Discount, DiscountCondition } from "@medusajs/medusa";
+import { useAdminAddDiscountConditionResourceBatch, useAdminDeleteDiscountConditionResourceBatch } from "medusa-react";
+import React, { createContext, ReactNode, useContext } from "react";
+import { LayeredModalContext } from "../../../../../components/molecules/modal/layered-modal";
+import useNotification from "../../../../../hooks/use-notification";
 
 type ConditionsProviderProps = {
   condition: DiscountCondition;
@@ -25,32 +22,24 @@ type EditConditionContextType = {
 
 const EditConditionContext = createContext<EditConditionContextType | null>(null);
 
-export const EditConditionProvider = ({
-  condition,
-  discount,
-  onClose,
-  children,
-}: ConditionsProviderProps) => {
+export const EditConditionProvider = ({ condition, discount, onClose, children }: ConditionsProviderProps) => {
   const notification = useNotification();
 
   const { pop, reset } = useContext(LayeredModalContext);
 
   const addConditionResourceBatch = useAdminAddDiscountConditionResourceBatch(discount.id, condition.id);
 
-  const removeConditionResourceBatch = useAdminDeleteDiscountConditionResourceBatch(
-    discount.id,
-    condition.id,
-  );
+  const removeConditionResourceBatch = useAdminDeleteDiscountConditionResourceBatch(discount.id, condition.id);
 
   const addConditionResources = (resourcesToAdd: string[], onSuccessCallback?: () => void) => {
     addConditionResourceBatch.mutate(
       { resources: resourcesToAdd.map((r) => ({ id: r })) },
       {
         onSuccess: () => {
-          notification('Success', 'The resources were successfully added', 'success');
+          notification("Úspěch", "Prostředky byly úspěšně přidány", "success");
           onSuccessCallback?.();
         },
-        onError: () => notification('Error', 'Failed to add resources', 'error'),
+        onError: () => notification("Chyba", "Nepodařilo se přidat prostředky", "error"),
       },
     );
   };
@@ -60,9 +49,9 @@ export const EditConditionProvider = ({
       { resources: resourcesToRemove.map((r) => ({ id: r })) },
       {
         onSuccess: () => {
-          notification('Success', 'The resources were successfully removed', 'success');
+          notification("Úspěch", "Prostředky byly úspěšně odstraněny", "success");
         },
-        onError: () => notification('Error', 'Failed to remove resources', 'error'),
+        onError: () => notification("Chyba", "Nepodařilo se odebrat prostředky", "error"),
       },
     );
   };
@@ -96,7 +85,7 @@ export const EditConditionProvider = ({
 export const useEditConditionContext = () => {
   const context = useContext(EditConditionContext);
   if (context === null) {
-    throw new Error('useEditConditionContext must be used within an EditConditionProvider');
+    throw new Error("useEditConditionContext must be used within an EditConditionProvider");
   }
   return context;
 };

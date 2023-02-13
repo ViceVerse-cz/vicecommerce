@@ -1,11 +1,11 @@
-import React, { createContext, PropsWithChildren, useState } from 'react';
+import React, { createContext, PropsWithChildren, useState } from "react";
 
-import { CustomerGroup } from '@medusajs/medusa';
-import { useAdminCreateCustomerGroup, useAdminUpdateCustomerGroup } from 'medusa-react';
+import { CustomerGroup } from "@medusajs/medusa";
+import { useAdminCreateCustomerGroup, useAdminUpdateCustomerGroup } from "medusa-react";
 
-import CustomerGroupModal from '../customer-group-modal';
-import { getErrorMessage } from '../../../../utils/error-messages';
-import useNotification from '../../../../hooks/use-notification';
+import CustomerGroupModal from "../customer-group-modal";
+import { getErrorMessage } from "../../../../utils/error-messages";
+import useNotification from "../../../../hooks/use-notification";
 
 type CustomerGroupContextT = {
   group?: CustomerGroup;
@@ -38,14 +38,14 @@ export function CustomerGroupContextContainer(props: CustomerGroupContextContain
     const isEdit = !!props.group;
     const method = isEdit ? updateGroup : createGroup;
 
-    const message = `Successfully ${isEdit ? 'edited' : 'created'} the customer group`;
+    const message = `Úspěšně ${isEdit ? "upravil" : "vytvořil"} skupinu zákazníků`;
 
     method(data, {
       onSuccess: () => {
-        notification('Success', message, 'success');
+        notification("Úspěch", message, "success");
         hideModal();
       },
-      onError: (err) => notification('Error', getErrorMessage(err), 'error'),
+      onError: (err) => notification("Chyba", getErrorMessage(err), "error"),
     });
   };
 

@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
-import TableViewHeader from '../../components/organisms/custom-table-header';
-import { useNavigate } from 'react-router-dom';
+import TableViewHeader from "../../components/organisms/custom-table-header";
+import { useNavigate } from "react-router-dom";
 
 type P = {
-  activeView: 'customers' | 'groups';
+  activeView: "zákazníci" | "skupiny";
 };
 
 /*
@@ -15,13 +15,13 @@ function CustomersPageTableHeader(props: P) {
   return (
     <TableViewHeader
       setActiveView={(v) => {
-        if (v === 'customers') {
-          navigate(`/a/customers`);
+        if (v === "zákazníci") {
+          navigate("/a/customers");
         } else {
-          navigate(`/a/customers/groups`);
+          navigate("/a/customers/groups");
         }
       }}
-      views={['customers', 'groups']}
+      views={["zákazníci", "skupiny"]}
       activeView={props.activeView}
     />
   );

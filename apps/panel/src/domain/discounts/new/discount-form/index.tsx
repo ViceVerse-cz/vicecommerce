@@ -1,21 +1,21 @@
-import * as React from 'react';
-import { useWatch } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import Button from '../../../../components/fundamentals/button';
-import CrossIcon from '../../../../components/fundamentals/icons/cross-icon';
-import FocusModal from '../../../../components/molecules/modal/focus-modal';
-import Accordion from '../../../../components/organisms/accordion';
-import useNotification from '../../../../hooks/use-notification';
-import { getErrorMessage } from '../../../../utils/error-messages';
-import { DiscountRuleType } from '../../types';
-import { useDiscountForm } from './form/discount-form-context';
-import { DiscountFormValues } from './form/mappers';
-import { useFormActions } from './form/use-form-actions';
-import DiscountNewConditions from './sections/conditions';
-import Configuration from './sections/configuration';
-import DiscountAllocation from './sections/discount-allocation';
-import DiscountType from './sections/discount-type';
-import General from './sections/general';
+import * as React from "react";
+import { useWatch } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import Button from "../../../../components/fundamentals/button";
+import CrossIcon from "../../../../components/fundamentals/icons/cross-icon";
+import FocusModal from "../../../../components/molecules/modal/focus-modal";
+import Accordion from "../../../../components/organisms/accordion";
+import useNotification from "../../../../hooks/use-notification";
+import { getErrorMessage } from "../../../../utils/error-messages";
+import { DiscountRuleType } from "../../types";
+import { useDiscountForm } from "./form/discount-form-context";
+import { DiscountFormValues } from "./form/mappers";
+import { useFormActions } from "./form/use-form-actions";
+import DiscountNewConditions from "./sections/conditions";
+import Configuration from "./sections/configuration";
+import DiscountAllocation from "./sections/discount-allocation";
+import DiscountType from "./sections/discount-type";
+import General from "./sections/general";
 
 type DiscountFormProps = {
   closeForm?: () => void;
@@ -32,7 +32,7 @@ const DiscountForm = ({ closeForm }: DiscountFormProps) => {
     if (closeForm) {
       closeForm();
     } else {
-      navigate('/a/discounts');
+      navigate("/a/discounts");
     }
     handleReset();
   };
@@ -44,7 +44,7 @@ const DiscountForm = ({ closeForm }: DiscountFormProps) => {
         handleReset();
       })
       .catch((error) => {
-        notification('Error', getErrorMessage(error), 'error');
+        notification("Chyba", getErrorMessage(error), "error");
       });
   };
 
@@ -54,13 +54,13 @@ const DiscountForm = ({ closeForm }: DiscountFormProps) => {
       closeFormModal();
       handleReset();
     } catch (error) {
-      notification('Error', getErrorMessage(error), 'error');
+      notification("Chyba", getErrorMessage(error), "error");
     }
   };
 
   const discountType = useWatch({
     control,
-    name: 'rule.type',
+    name: "rule.type",
   });
 
   return (
@@ -71,21 +71,11 @@ const DiscountForm = ({ closeForm }: DiscountFormProps) => {
             <CrossIcon size={20} />
           </Button>
           <div className='gap-x-small flex'>
-            <Button
-              onClick={handleSubmit(submitGhost)}
-              size='small'
-              variant='ghost'
-              className='border rounded-rounded'
-            >
-              Save as draft
+            <Button onClick={handleSubmit(submitGhost)} size='small' variant='ghost' className='border rounded-rounded'>
+              Uložit jako návrh
             </Button>
-            <Button
-              size='small'
-              variant='primary'
-              onClick={handleSubmit(submitCTA)}
-              className='rounded-rounded'
-            >
-              Publish discount
+            <Button size='small' variant='primary' onClick={handleSubmit(submitCTA)} className='rounded-rounded'>
+              Zveřejnit slevu
             </Button>
           </div>
         </div>
@@ -93,42 +83,42 @@ const DiscountForm = ({ closeForm }: DiscountFormProps) => {
       <FocusModal.Main>
         <div className='flex justify-center mb-[25%]'>
           <div className='max-w-[700px] w-full pt-16'>
-            <h1 className='inter-xlarge-semibold'>Create new discount</h1>
-            <Accordion className='pt-7 text-grey-90' defaultValue={['promotion-type']} type='multiple'>
+            <h1 className='inter-xlarge-semibold'>Vytvořit novou slevu</h1>
+            <Accordion className='pt-7 text-grey-90' defaultValue={["promotion-type"]} type='multiple'>
               <Accordion.Item
                 forceMountContent
-                title='Discount type'
+                title='Typ slevy'
                 required
-                tooltip='Select a discount type'
+                tooltip='Vyberte typ slevy'
                 value='promotion-type'
               >
                 <DiscountType />
                 {discountType === DiscountRuleType.FIXED && (
                   <div className='mt-xlarge'>
                     <h3 className='inter-base-semibold'>
-                      Allocation<span className='text-rose-50'>*</span>
+                      Přidělení<span className='text-rose-50'>*</span>
                     </h3>
                     <DiscountAllocation />
                   </div>
                 )}
               </Accordion.Item>
-              <Accordion.Item title='General' required value='general' forceMountContent>
+              <Accordion.Item title='Obecné' required value='general' forceMountContent>
                 <General />
               </Accordion.Item>
               <Accordion.Item
                 forceMountContent
-                title='Configuration'
+                title='Konfigurace'
                 value='configuration'
-                description='Discount code applies from you hit the publish button and forever if left untouched.'
+                description='Slevový kód platí od stisknutí tlačítka publikovat a navždy, pokud zůstane nedotčen.'
               >
                 <Configuration />
               </Accordion.Item>
               <Accordion.Item
                 forceMountContent
-                title='Conditions'
-                description='Discount code apply to all products if left untouched.'
+                title='Podmínky'
+                description='Slevový kód se vztahuje na všechny produkty, pokud zůstanou nedotčeny.'
                 value='conditions'
-                tooltip='Add conditions to your Discount'
+                tooltip='Přidání podmínek ke slevě'
               >
                 <DiscountNewConditions />
               </Accordion.Item>

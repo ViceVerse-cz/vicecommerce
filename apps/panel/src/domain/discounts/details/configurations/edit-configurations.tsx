@@ -1,16 +1,16 @@
-import { Discount } from '@medusajs/medusa';
-import { useAdminUpdateDiscount } from 'medusa-react';
-import React, { useEffect } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import DatePicker from '../../../../components/atoms/date-picker/date-picker';
-import TimePicker from '../../../../components/atoms/date-picker/time-picker';
-import Button from '../../../../components/fundamentals/button';
-import AvailabilityDuration from '../../../../components/molecules/availability-duration';
-import InputField from '../../../../components/molecules/input';
-import Modal from '../../../../components/molecules/modal';
-import SwitchableItem from '../../../../components/molecules/switchable-item';
-import useNotification from '../../../../hooks/use-notification';
-import { getErrorMessage } from '../../../../utils/error-messages';
+import { Discount } from "@medusajs/medusa";
+import { useAdminUpdateDiscount } from "medusa-react";
+import React, { useEffect } from "react";
+import { Controller, useForm } from "react-hook-form";
+import DatePicker from "../../../../components/atoms/date-picker/date-picker";
+import TimePicker from "../../../../components/atoms/date-picker/time-picker";
+import Button from "../../../../components/fundamentals/button";
+import AvailabilityDuration from "../../../../components/molecules/availability-duration";
+import InputField from "../../../../components/molecules/input";
+import Modal from "../../../../components/molecules/modal";
+import SwitchableItem from "../../../../components/molecules/switchable-item";
+import useNotification from "../../../../hooks/use-notification";
+import { getErrorMessage } from "../../../../utils/error-messages";
 
 type EditConfigurationsProps = {
   discount: Discount;
@@ -42,12 +42,12 @@ const EditConfigurations: React.FC<EditConfigurationsProps> = ({ discount, onClo
       },
       {
         onSuccess: ({ discount }) => {
-          notification('Success', 'Discount updated successfully', 'success');
+          notification("Úspěch", "Sleva byla úspěšně aktualizována", "success");
           reset(mapConfigurations(discount));
           onClose();
         },
         onError: (error) => {
-          notification('Error', getErrorMessage(error), 'error');
+          notification("Chyba", getErrorMessage(error), "error");
         },
       },
     );
@@ -61,7 +61,7 @@ const EditConfigurations: React.FC<EditConfigurationsProps> = ({ discount, onClo
     <Modal handleClose={onClose} isLargeModal>
       <Modal.Body>
         <Modal.Header handleClose={onClose}>
-          <h1 className='inter-xlarge-semibold'>Edit configurations</h1>
+          <h1 className='inter-xlarge-semibold'>Úprava konfigurací</h1>
         </Modal.Header>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Modal.Content>
@@ -81,12 +81,12 @@ const EditConfigurations: React.FC<EditConfigurationsProps> = ({ discount, onClo
                           onChange(new Date(discount.starts_at));
                         }
                       }}
-                      title='Discount has a start date?'
-                      description='Schedule the discount to activate in the future.'
+                      title='Sleva má datum zahájení?'
+                      description='Naplánujte aktivaci slevy v budoucnu.'
                     >
                       <div className='flex gap-x-xsmall items-center'>
-                        <DatePicker date={value!} label='Start date' onSubmitDate={onChange} />
-                        <TimePicker label='Start time' date={value!} onSubmitDate={onChange} />
+                        <DatePicker date={value!} label='Datum zahájení' onSubmitDate={onChange} />
+                        <TimePicker label='Čas zahájení' date={value!} onSubmitDate={onChange} />
                       </div>
                     </SwitchableItem>
                   );
@@ -106,12 +106,12 @@ const EditConfigurations: React.FC<EditConfigurationsProps> = ({ discount, onClo
                           onChange(new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000));
                         }
                       }}
-                      title='Discount has an expiry date?'
-                      description='Schedule the discount to deactivate in the future.'
+                      title='Platnost slevy končí?'
+                      description='Naplánujte deaktivaci slevy v budoucnu.'
                     >
                       <div className='flex gap-x-xsmall items-center'>
-                        <DatePicker date={value!} label='Expiry date' onSubmitDate={onChange} />
-                        <TimePicker label='Expiry time' date={value!} onSubmitDate={onChange} />
+                        <DatePicker date={value!} label='Datum vypršení platnosti' onSubmitDate={onChange} />
+                        <TimePicker label='Doba platnosti' date={value!} onSubmitDate={onChange} />
                       </div>
                     </SwitchableItem>
                   );
@@ -131,11 +131,11 @@ const EditConfigurations: React.FC<EditConfigurationsProps> = ({ discount, onClo
                           onChange(10);
                         }
                       }}
-                      title='Limit the number of redemtions?'
-                      description='Limit applies across all customers, not per customer.'
+                      title='Omezit počet opakovaných výzev?'
+                      description='Limit platí pro všechny zákazníky, nikoli pro jednoho zákazníka.'
                     >
                       <InputField
-                        label='Number of redemptions'
+                        label='Počet zpětných odkupů'
                         type='number'
                         placeholder='5'
                         min={1}
@@ -158,11 +158,11 @@ const EditConfigurations: React.FC<EditConfigurationsProps> = ({ discount, onClo
                           if (value) {
                             onChange(null);
                           } else {
-                            onChange('P0Y0M0DT00H00M');
+                            onChange("P0Y0M0DT00H00M");
                           }
                         }}
-                        title='Availability duration?'
-                        description='Set the duration of the discount.'
+                        title='Doba dostupnosti?'
+                        description='Nastavte dobu trvání slevy.'
                       >
                         <AvailabilityDuration value={value ?? undefined} onChange={onChange} />
                       </SwitchableItem>
@@ -175,7 +175,7 @@ const EditConfigurations: React.FC<EditConfigurationsProps> = ({ discount, onClo
           <Modal.Footer>
             <div className='gap-x-xsmall flex items-center justify-end w-full'>
               <Button variant='ghost' size='small' className='min-w-[128px]' type='button' onClick={onClose}>
-                Cancel
+                Zrušit
               </Button>
               <Button
                 variant='primary'
@@ -185,7 +185,7 @@ const EditConfigurations: React.FC<EditConfigurationsProps> = ({ discount, onClo
                 loading={isLoading}
                 disabled={isLoading}
               >
-                Save
+                Uložit
               </Button>
             </div>
           </Modal.Footer>

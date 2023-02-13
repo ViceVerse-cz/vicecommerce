@@ -173,7 +173,7 @@ const ConditionItem = <Type extends DiscountConditionType>({
                     </span>
                   );
                 })}
-                {remainder > 0 && <span className='text-grey-40 ml-2'>+{remainder} more</span>}
+                {remainder > 0 && <span className='text-grey-40 ml-2'>+{remainder} dalších</span>}
               </div>
             </div>
           </div>
@@ -188,7 +188,7 @@ const ConditionItem = <Type extends DiscountConditionType>({
                 icon: <EditIcon size={16} />,
               },
               {
-                label: "Delete condition",
+                label: "Odstranit podmínku",
                 onClick: () =>
                   updateCondition({
                     type,
@@ -210,15 +210,15 @@ const ConditionItem = <Type extends DiscountConditionType>({
 const getTitle = (type: DiscountConditionType) => {
   switch (type) {
     case DiscountConditionType.PRODUCTS:
-      return "Product";
+      return "Produkt";
     case DiscountConditionType.PRODUCT_COLLECTIONS:
-      return "Collection";
+      return "Sbírka";
     case DiscountConditionType.PRODUCT_TAGS:
-      return "Tag";
+      return "Štítek";
     case DiscountConditionType.CUSTOMER_GROUPS:
-      return "Customer group";
+      return "Skupina zákazníků";
     case DiscountConditionType.PRODUCT_TYPES:
-      return "Type";
+      return "Typ";
   }
 };
 

@@ -35,7 +35,7 @@ const CustomerDetail = () => {
       icon: <EditIcon size={20} />,
     },
     {
-      label: "Delete (not implemented yet)",
+      label: "Odstranit (zatím neimplementováno)",
       onClick: () => console.log("TODO: delete customer"),
       variant: "danger",
       icon: <TrashIcon size={20} />,
@@ -44,7 +44,11 @@ const CustomerDetail = () => {
 
   return (
     <div>
-      <Breadcrumb currentPage={"Customer Details"} previousBreadcrumb={"Customers"} previousRoute='/a/customers' />
+      <Breadcrumb
+        currentPage={"Podrobnosti o zákaznících"}
+        previousBreadcrumb={"Zákazníci"}
+        previousRoute='/a/customers'
+      />
       <BodyCard className={"relative mb-4 h-auto w-full pt-[100px]"}>
         <div className='from-fuschia-20 absolute inset-x-0 top-0 z-0 h-[120px] w-full bg-gradient-to-b' />
         <div className='flex grow flex-col overflow-y-auto'>
@@ -59,29 +63,29 @@ const CustomerDetail = () => {
         </div>
         <div className='mt-6 flex space-x-6 divide-x'>
           <div className='flex flex-col'>
-            <div className='inter-smaller-regular text-grey-50 mb-1'>First seen</div>
+            <div className='inter-smaller-regular text-grey-50 mb-1'>Poprvé viděno</div>
             <div>{moment(customer?.created_at).format("DD MMM YYYY")}</div>
           </div>
           <div className='flex flex-col pl-6'>
-            <div className='inter-smaller-regular text-grey-50 mb-1'>Phone</div>
+            <div className='inter-smaller-regular text-grey-50 mb-1'>Telefon</div>
             <div className='max-w-[200px] truncate'>{customer?.phone || "N/A"}</div>
           </div>
           <div className='flex flex-col pl-6'>
-            <div className='inter-smaller-regular text-grey-50 mb-1'>Orders</div>
+            <div className='inter-smaller-regular text-grey-50 mb-1'>Objednávky</div>
             <div>{customer?.orders.length}</div>
           </div>
           <div className='h-100 flex flex-col pl-6'>
-            <div className='inter-smaller-regular text-grey-50 mb-1'>User</div>
+            <div className='inter-smaller-regular text-grey-50 mb-1'>Uživatel</div>
             <div className='h-50 flex items-center justify-center'>
               <StatusDot
                 variant={customer?.has_account ? "success" : "danger"}
-                title={customer?.has_account ? "True" : "False"}
+                title={customer?.has_account ? "Ano" : "Ne"}
               />
             </div>
           </div>
         </div>
       </BodyCard>
-      <BodyCard title={`Orders (${customer?.orders.length})`} subtitle='An overview of Customer Orders'>
+      <BodyCard title={`Objednávky (${customer?.orders.length})`} subtitle='Přehled objednávek zákazníků'>
         {isLoading || !customer ? (
           <div className='pt-2xlarge flex w-full items-center justify-center'>
             <Spinner size={"large"} variant={"secondary"} />
@@ -93,7 +97,7 @@ const CustomerDetail = () => {
         )}
       </BodyCard>
       <div className='mt-large'>
-        <RawJSON data={customer} title='Raw customer' rootName='customer' />
+        <RawJSON data={customer} title='Surový zákazník' rootName='customer' />
       </div>
 
       {showEdit && customer && <EditCustomerModal customer={customer} handleClose={() => setShowEdit(false)} />}

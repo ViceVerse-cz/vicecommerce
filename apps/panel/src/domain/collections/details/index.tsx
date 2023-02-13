@@ -82,10 +82,10 @@ const CollectionDetails = () => {
       }
 
       setShowAddProducts(false);
-      notification("Success", "Updated products in collection", "success");
+      notification("Úspěch", "Aktualizované produkty ve sbírce", "success");
       refetch();
     } catch (error) {
-      notification("Error", getErrorMessage(error), "error");
+      notification("Chyba", getErrorMessage(error), "error");
     }
   };
 
@@ -140,17 +140,17 @@ const CollectionDetails = () => {
           )}
         </div>
         <Section
-          title='Products'
+          title='Produkty'
           actions={[
             {
-              label: "Edit Products",
+              label: "Upravit produkty",
               icon: <EditIcon size='20' />,
               onClick: () => setShowAddProducts(!showAddProducts),
             },
           ]}
         >
           <p className='text-grey-50 inter-base-regular mt-xsmall mb-base'>
-            To start selling, all you need is a name, price, and image.
+            K zahájení prodeje potřebujete pouze název, cenu a obrázek.
           </p>
           {collection && (
             <ViewProductsTable
@@ -172,10 +172,10 @@ const CollectionDetails = () => {
       {showDelete && (
         <DeletePrompt
           handleClose={() => setShowDelete(!showDelete)}
-          heading='Delete collection'
-          successText='Successfully deleted collection'
+          heading='Odstranění sbírky'
+          successText='Úspěšně odstraněná kolekce'
           onDelete={async () => handleDelete()}
-          confirmText='Yes, delete'
+          confirmText='Ano, vymazat'
         />
       )}
       {showAddProducts && (

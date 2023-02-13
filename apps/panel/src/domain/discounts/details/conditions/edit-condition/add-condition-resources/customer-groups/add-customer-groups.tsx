@@ -35,9 +35,9 @@ const AddCustomerGroupsConditionsScreen = () => {
           options={{
             enableSearch: true,
             immediateSearchFocus: true,
-            searchPlaceholder: "Search...",
+            searchPlaceholder: "Vyhledávání...",
           }}
-          resourceName='Groups'
+          resourceName='Skupiny'
           totalCount={count ?? 0}
           selectedIds={selectedResources}
           data={customer_groups || []}
@@ -52,7 +52,7 @@ const AddCustomerGroupsConditionsScreen = () => {
       <Modal.Footer>
         <div className='flex justify-end w-full space-x-xsmall'>
           <Button variant='secondary' size='small' onClick={pop}>
-            Cancel
+            Zrušit
           </Button>
           <Button variant='primary' size='small' onClick={() => saveAndGoBack(selectedResources, () => refetch())}>
             Uložit a vrátit se zpět

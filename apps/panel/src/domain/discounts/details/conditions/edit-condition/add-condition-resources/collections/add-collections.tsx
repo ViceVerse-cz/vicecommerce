@@ -35,9 +35,9 @@ const AddCollectionConditionsScreen = () => {
           options={{
             enableSearch: true,
             immediateSearchFocus: true,
-            searchPlaceholder: "Search...",
+            searchPlaceholder: "Vyhledávání...",
           }}
-          resourceName='Collections'
+          resourceName='Sbírky'
           totalCount={count ?? 0}
           selectedIds={selectedResources}
           data={collections || []}
@@ -52,7 +52,7 @@ const AddCollectionConditionsScreen = () => {
       <Modal.Footer>
         <div className='flex justify-end w-full space-x-xsmall'>
           <Button variant='secondary' size='small' onClick={pop}>
-            Cancel
+            Zrušit
           </Button>
           <Button variant='primary' size='small' onClick={() => saveAndGoBack(selectedResources, () => refetch())}>
             Uložit a vrátit se zpět

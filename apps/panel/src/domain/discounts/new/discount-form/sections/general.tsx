@@ -1,14 +1,14 @@
-import { Discount } from '@medusajs/medusa';
-import { useAdminRegions } from 'medusa-react';
-import React, { useEffect, useMemo, useState } from 'react';
-import { Controller, useWatch } from 'react-hook-form';
-import Checkbox from '../../../../../components/atoms/checkbox';
-import IconTooltip from '../../../../../components/molecules/icon-tooltip';
-import InputField from '../../../../../components/molecules/input';
-import { NextSelect } from '../../../../../components/molecules/select/next-select';
-import TextArea from '../../../../../components/molecules/textarea';
-import CurrencyInput from '../../../../../components/organisms/currency-input';
-import { useDiscountForm } from '../form/discount-form-context';
+import { Discount } from "@medusajs/medusa";
+import { useAdminRegions } from "medusa-react";
+import React, { useEffect, useMemo, useState } from "react";
+import { Controller, useWatch } from "react-hook-form";
+import Checkbox from "../../../../../components/atoms/checkbox";
+import IconTooltip from "../../../../../components/molecules/icon-tooltip";
+import InputField from "../../../../../components/molecules/input";
+import { NextSelect } from "../../../../../components/molecules/select/next-select";
+import TextArea from "../../../../../components/molecules/textarea";
+import CurrencyInput from "../../../../../components/organisms/currency-input";
+import { useDiscountForm } from "../form/discount-form-context";
 
 type GeneralProps = {
   discount?: Discount;
@@ -24,11 +24,11 @@ const General: React.FC<GeneralProps> = ({ discount }) => {
 
   const regions = useWatch({
     control,
-    name: 'regions',
+    name: "regions",
   });
 
   useEffect(() => {
-    if (type === 'fixed' && regions) {
+    if (type === "fixed" && regions) {
       let id: string;
 
       if (Array.isArray(regions) && regions.length) {
@@ -62,7 +62,7 @@ const General: React.FC<GeneralProps> = ({ discount }) => {
             name='regions'
             control={control}
             rules={{
-              required: 'Atleast one region is required',
+              required: "Je vyžadován alespoň jeden region",
               validate: (value) => (Array.isArray(value) ? value.length > 0 : !!value),
             }}
             render={({ field: { onChange, value } }) => {
@@ -70,11 +70,11 @@ const General: React.FC<GeneralProps> = ({ discount }) => {
                 <NextSelect
                   value={value || null}
                   onChange={(value) => {
-                    onChange(type === 'fixed' ? [value] : value);
+                    onChange(type === "fixed" ? [value] : value);
                   }}
-                  label='Choose valid regions'
-                  isMulti={type !== 'fixed'}
-                  selectAll={type !== 'fixed'}
+                  label='Výběr platných oblastí'
+                  isMulti={type !== "fixed"}
+                  selectAll={type !== "fixed"}
                   isSearchable
                   required
                   options={regionOptions}
@@ -84,39 +84,27 @@ const General: React.FC<GeneralProps> = ({ discount }) => {
           />
           <div className='flex gap-x-base gap-y-base my-base'>
             <InputField
-              label='Code'
+              label='Kód'
               className='flex-1'
               placeholder='SUMMERSALE10'
               required
-              {...register('code', { required: 'Code is required' })}
+              {...register("code", { required: "Je vyžadován kód" })}
             />
 
-            {type !== 'free_shipping' && (
+            {type !== "free_shipping" && (
               <>
-                {type === 'fixed' ? (
+                {type === "fixed" ? (
                   <div className='flex-1'>
-                    <CurrencyInput.Root
-                      size='small'
-                      currentCurrency={fixedRegionCurrency}
-                      readOnly
-                      hideCurrency
-                    >
+                    <CurrencyInput.Root size='small' currentCurrency={fixedRegionCurrency} readOnly hideCurrency>
                       <Controller
                         name='rule.value'
                         control={control}
                         rules={{
-                          required: 'Amount is required',
+                          required: "Amount is required",
                           min: 1,
                         }}
                         render={({ field: { value, onChange } }) => {
-                          return (
-                            <CurrencyInput.Amount
-                              label={'Amount'}
-                              required
-                              amount={value}
-                              onChange={onChange}
-                            />
-                          );
+                          return <CurrencyInput.Amount label={"Částka"} required amount={value} onChange={onChange} />;
                         }}
                       />
                     </CurrencyInput.Root>
@@ -124,13 +112,13 @@ const General: React.FC<GeneralProps> = ({ discount }) => {
                 ) : (
                   <div className='flex-1'>
                     <InputField
-                      label='Percentage'
+                      label='Procento'
                       min={0}
                       required
                       type='number'
                       placeholder='10'
-                      prefix={'%'}
-                      {...register('rule.value', {
+                      prefix={"%"}
+                      {...register("rule.value", {
                         required: true,
                         valueAsNumber: true,
                       })}
@@ -142,17 +130,15 @@ const General: React.FC<GeneralProps> = ({ discount }) => {
           </div>
 
           <div className='text-grey-50 inter-small-regular flex flex-col mb-6'>
-            <span>
-              The code your customers will enter during checkout. This will appear on your customer’s invoice.
-            </span>
-            <span>Uppercase letters and numbers only.</span>
+            <span>Kód, který vaši zákazníci zadají při placení. Ten se zobrazí na faktuře vašeho zákazníka.</span>
+            <span>Pouze velká písmena a číslice.</span>
           </div>
           <TextArea
-            label='Description'
+            label='Popis'
             required
-            placeholder='Summer Sale 2022'
+            placeholder='Letní výprodej 2022'
             rows={1}
-            {...register('rule.description', {
+            {...register("rule.description", {
               required: true,
             })}
           />
@@ -163,7 +149,7 @@ const General: React.FC<GeneralProps> = ({ discount }) => {
               render={({ field: { onChange, value } }) => {
                 return (
                   <Checkbox
-                    label='This is a template discount'
+                    label='Jedná se o šablonu slevy'
                     name='is_dynamic'
                     id='is_dynamic'
                     checked={value}
@@ -174,7 +160,7 @@ const General: React.FC<GeneralProps> = ({ discount }) => {
             />
             <IconTooltip
               content={
-                'Template discounts allow you to define a set of rules that can be used across a group of discounts. This is useful in campaigns that should generate unique codes for each user, but where the rules for all unique codes should be the same.'
+                "Šablony slev umožňují definovat soubor pravidel, která lze použít pro skupinu slev. To je užitečné v kampaních, které by měly generovat jedinečné kódy pro každého uživatele, ale kde by pravidla pro všechny jedinečné kódy měla být stejná."
               }
             />
           </div>

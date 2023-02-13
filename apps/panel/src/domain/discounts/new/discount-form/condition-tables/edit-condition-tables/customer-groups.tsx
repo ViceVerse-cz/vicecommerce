@@ -1,15 +1,15 @@
-import { useAdminCustomerGroups } from 'medusa-react';
-import React, { useState } from 'react';
-import Spinner from '../../../../../../components/atoms/spinner';
-import Modal from '../../../../../../components/molecules/modal';
-import { SelectableTable } from '../../../../../../components/templates/selectable-table';
-import useQueryFilters from '../../../../../../hooks/use-query-filters';
-import { DiscountConditionOperator } from '../../../../types';
-import { useDiscountForm } from '../../form/discount-form-context';
-import { defaultQueryProps } from '../shared/common';
-import ConditionOperator from '../shared/condition-operator';
-import { CustomerGroupsHeader, CustomerGroupsRow, useGroupColumns } from '../shared/groups';
-import EditConditionFooter from './edit-condition-footer';
+import { useAdminCustomerGroups } from "medusa-react";
+import React, { useState } from "react";
+import Spinner from "../../../../../../components/atoms/spinner";
+import Modal from "../../../../../../components/molecules/modal";
+import { SelectableTable } from "../../../../../../components/templates/selectable-table";
+import useQueryFilters from "../../../../../../hooks/use-query-filters";
+import { DiscountConditionOperator } from "../../../../types";
+import { useDiscountForm } from "../../form/discount-form-context";
+import { defaultQueryProps } from "../shared/common";
+import ConditionOperator from "../shared/condition-operator";
+import { CustomerGroupsHeader, CustomerGroupsRow, useGroupColumns } from "../shared/groups";
+import EditConditionFooter from "./edit-condition-footer";
 
 const EditCustomerGroupConditionSelector = ({ onClose }) => {
   const params = useQueryFilters(defaultQueryProps);
@@ -43,9 +43,9 @@ const EditCustomerGroupConditionSelector = ({ onClose }) => {
           options={{
             enableSearch: true,
             immediateSearchFocus: true,
-            searchPlaceholder: 'Search groups...',
+            searchPlaceholder: "Vyhledávání skupin...",
           }}
-          resourceName='Customer groups'
+          resourceName='Skupiny zákazníků'
           totalCount={count || 0}
           selectedIds={items.map((i) => i.id)}
           data={customer_groups}

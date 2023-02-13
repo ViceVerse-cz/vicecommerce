@@ -36,7 +36,7 @@ const defaultQueryProps = {
 function CustomersListPlaceholder() {
   return (
     <div className='h-full flex center justify-center items-center min-h-[756px]'>
-      <span className='text-xs text-gray-400'>No customers in this group yet</span>
+      <span className='text-xs text-gray-400'>V této skupině zatím nejsou žádní zákazníci</span>
     </div>
   );
 }
@@ -74,11 +74,11 @@ function CustomerGroupCustomersList(props: CustomerGroupCustomersListProps) {
     }
   }, [isLoading, customers]);
 
-  const showPlaceholder = !((isLoading || customers.length ) || q);
+  const showPlaceholder = !(isLoading || customers.length || q);
 
   const actions = [
     {
-      label: "Edit customers",
+      label: "Upravit zákazníky",
       onClick: () => setShowCustomersModal(true),
       icon: (
         <span className='text-grey-90'>
@@ -116,7 +116,7 @@ function CustomerGroupCustomersList(props: CustomerGroupCustomersListProps) {
   };
 
   return (
-    <BodyCard title='Customers' actionables={actions} className='w-full my-4 min-h-[756px]'>
+    <BodyCard title='Zákazníci' actionables={actions} className='w-full my-4 min-h-[756px]'>
       {showCustomersModal && (
         <EditCustomersTable
           selectedCustomerIds={selectedCustomerIds}
@@ -161,12 +161,12 @@ function CustomerGroupDetailsHeader(props: CustomerGroupDetailsHeaderProps) {
 
   const actions = [
     {
-      label: "Edit",
+      label: "Upravit",
       onClick: showModal,
       icon: <EditIcon size={20} />,
     },
     {
-      label: "Delete",
+      label: "Odstranit",
       onClick: () => {
         setShowDeleteConfirmation(true);
       },
@@ -189,10 +189,10 @@ function CustomerGroupDetailsHeader(props: CustomerGroupDetailsHeaderProps) {
         <DeletePrompt
           onDelete={onDeleteConfirmed}
           handleClose={handleConfirmDialogClose}
-          confirmText='Yes, delete'
-          heading='Delete the group'
-          successText='Group deleted'
-          text='Are you sure you want to delete this customer group?'
+          confirmText='Ano, vymazat'
+          heading='Odstranění skupiny'
+          successText='Skupina vymazána'
+          text='Opravdu chcete tuto skupinu zákazníků odstranit?'
         />
       )}
     </>

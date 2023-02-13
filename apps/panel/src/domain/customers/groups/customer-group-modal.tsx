@@ -57,14 +57,16 @@ function CustomerGroupModal(props: CustomerGroupModalProps) {
     <Modal handleClose={handleClose}>
       <Modal.Body>
         <Modal.Header handleClose={handleClose}>
-          <span className='inter-xlarge-semibold'>{props.initialData ? "Upravit" : "Create a New"} Customer Group</span>
+          <span className='inter-xlarge-semibold'>
+            {props.initialData ? "Upravit" : "Vytvoření nového"} Skupina zákazníků
+          </span>
         </Modal.Header>
 
         <Modal.Content>
           <div className='space-y-4'>
-            <span className='inter-base-semibold'>Details</span>
+            <span className='inter-base-semibold'>Podrobnosti</span>
             <div className='flex space-x-4'>
-              <Input label='Title' {...register("name")} placeholder='Customer group name' required />
+              <Input label='Název' {...register("name")} placeholder='Název skupiny zákazníků' required />
             </div>
           </div>
 
@@ -76,7 +78,7 @@ function CustomerGroupModal(props: CustomerGroupModalProps) {
         <Modal.Footer>
           <div className='flex w-full h-8 justify-end'>
             <Button variant='ghost' className='mr-2 w-32 text-small justify-center' size='large' onClick={handleClose}>
-              Cancel
+              Zrušit
             </Button>
             <Button
               size='medium'
@@ -84,7 +86,7 @@ function CustomerGroupModal(props: CustomerGroupModalProps) {
               variant='primary'
               onClick={handleFromSubmit(onSubmit)}
             >
-              <span>{props.initialData ? "Upravit" : "Publish"} Group</span>
+              <span>{props.initialData ? "Upravit" : "Publikovat"} Skupinu</span>
             </Button>
           </div>
         </Modal.Footer>

@@ -1,14 +1,9 @@
-import { Discount } from '@medusajs/medusa';
-import { useAdminUpdateDiscount } from 'medusa-react';
-import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
-import useNotification from '../../../../../hooks/use-notification';
-import { getErrorMessage } from '../../../../../utils/error-messages';
-import {
-  ConditionMap,
-  DiscountConditionOperator,
-  DiscountConditionType,
-  UpdateConditionProps,
-} from '../../../types';
+import { Discount } from "@medusajs/medusa";
+import { useAdminUpdateDiscount } from "medusa-react";
+import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import useNotification from "../../../../../hooks/use-notification";
+import { getErrorMessage } from "../../../../../utils/error-messages";
+import { ConditionMap, DiscountConditionOperator, DiscountConditionType, UpdateConditionProps } from "../../../types";
 
 type ConditionsProviderProps = {
   discount: Discount;
@@ -120,10 +115,10 @@ export const ConditionsProvider = ({ discount, children }: ConditionsProviderPro
       },
       {
         onSuccess: () => {
-          notification('Condtions were succesfully added', 'Discount conditions updated', 'success');
+          notification("Podmínky byly úspěšně přidány", "Aktualizace slevových podmínek", "success");
         },
         onError: (err) => {
-          notification('Error', getErrorMessage(err), 'error');
+          notification("Chyba", getErrorMessage(err), "error");
         },
       },
     );
@@ -164,7 +159,7 @@ export const ConditionsProvider = ({ discount, children }: ConditionsProviderPro
 export const useConditions = () => {
   const context = useContext(ConditionsContext);
   if (context === null) {
-    throw new Error('useConditions must be used within a ConditionsProvider');
+    throw new Error("useConditions must be used within a ConditionsProvider");
   }
   return context;
 };

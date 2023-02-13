@@ -1,18 +1,18 @@
-import { Discount } from '@medusajs/medusa';
-import { useAdminDeleteDiscount, useAdminUpdateDiscount } from 'medusa-react';
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Badge from '../../../../components/fundamentals/badge';
-import EditIcon from '../../../../components/fundamentals/icons/edit-icon';
-import TrashIcon from '../../../../components/fundamentals/icons/trash-icon';
-import { ActionType } from '../../../../components/molecules/actionables';
-import StatusSelector from '../../../../components/molecules/status-selector';
-import BodyCard from '../../../../components/organisms/body-card';
-import useImperativeDialog from '../../../../hooks/use-imperative-dialog';
-import useNotification from '../../../../hooks/use-notification';
-import { getErrorMessage } from '../../../../utils/error-messages';
-import { formatAmountWithSymbol } from '../../../../utils/prices';
-import EditGeneral from './edit-general';
+import { Discount } from "@medusajs/medusa";
+import { useAdminDeleteDiscount, useAdminUpdateDiscount } from "medusa-react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Badge from "../../../../components/fundamentals/badge";
+import EditIcon from "../../../../components/fundamentals/icons/edit-icon";
+import TrashIcon from "../../../../components/fundamentals/icons/trash-icon";
+import { ActionType } from "../../../../components/molecules/actionables";
+import StatusSelector from "../../../../components/molecules/status-selector";
+import BodyCard from "../../../../components/organisms/body-card";
+import useImperativeDialog from "../../../../hooks/use-imperative-dialog";
+import useNotification from "../../../../hooks/use-notification";
+import { getErrorMessage } from "../../../../utils/error-messages";
+import { formatAmountWithSymbol } from "../../../../utils/prices";
+import EditGeneral from "./edit-general";
 
 type GeneralProps = {
   discount: Discount;
@@ -28,17 +28,17 @@ const General: React.FC<GeneralProps> = ({ discount }) => {
 
   const onDelete = async () => {
     const shouldDelete = await dialog({
-      heading: 'Delete Promotion',
-      text: 'Are you sure you want to delete this promotion?',
+      heading: "Odstranit propagaci",
+      text: "Opravdu chcete tuto propagaci odstranit?",
     });
     if (shouldDelete) {
       deletediscount.mutate(undefined, {
         onSuccess: () => {
-          notification('Success', 'Promotion deleted successfully', 'success');
-          navigate('/a/discounts/');
+          notification("Úspěch", "Propagace úspěšně odstraněna", "success");
+          navigate("/a/discounts/");
         },
         onError: (err) => {
-          notification('Error', getErrorMessage(err), 'error');
+          notification("Chyba", getErrorMessage(err), "error");
         },
       });
     }
@@ -51,11 +51,11 @@ const General: React.FC<GeneralProps> = ({ discount }) => {
       },
       {
         onSuccess: ({ discount: { is_disabled } }) => {
-          const pastTense = !is_disabled ? 'published' : 'drafted';
-          notification('Success', `Discount ${pastTense} successfully`, 'success');
+          const pastTense = !is_disabled ? "zveřejněna" : "vypracována";
+          notification("Úspěch", `Sleva ${pastTense} úspěšně`, "success");
         },
         onError: (err) => {
-          notification('Error', getErrorMessage(err), 'error');
+          notification("Chyba", getErrorMessage(err), "error");
         },
       },
     );
@@ -63,14 +63,14 @@ const General: React.FC<GeneralProps> = ({ discount }) => {
 
   const actionables: ActionType[] = [
     {
-      label: 'Edit general information',
+      label: "Upravit obecné informace",
       onClick: () => setShowModal(true),
       icon: <EditIcon size={20} />,
     },
     {
-      label: 'Delete discount',
+      label: "Smazat slevu",
       onClick: onDelete,
-      variant: 'danger',
+      variant: "danger",
       icon: <TrashIcon size={20} />,
     },
   ];
@@ -88,14 +88,14 @@ const General: React.FC<GeneralProps> = ({ discount }) => {
             {discount.is_dynamic && (
               <span>
                 <Badge variant='default'>
-                  <span className='text-grey-90 inter-small-regular'>{'Template discount'}</span>
+                  <span className='text-grey-90 inter-small-regular'>{"Šablona slevy"}</span>
                 </Badge>
               </span>
             )}
             <StatusSelector
               isDraft={discount?.is_disabled}
-              activeState='Published'
-              draftState='Draft'
+              activeState='Zveřejněno na'
+              draftState='Návrh'
               onChange={onStatusChange}
             />
           </div>
@@ -104,19 +104,15 @@ const General: React.FC<GeneralProps> = ({ discount }) => {
         <div className='flex'>
           <div className='border-l border-grey-20 pl-6'>
             {getPromotionDescription(discount)}
-            <span className='inter-small-regular text-grey-50'>Discount Amount</span>
+            <span className='inter-small-regular text-grey-50'>Výše slevy</span>
           </div>
           <div className='border-l border-grey-20 pl-6 ml-12'>
-            <h2 className='inter-xlarge-regular text-grey-90'>
-              {discount.regions.length.toLocaleString('en-US')}
-            </h2>
-            <span className='inter-small-regular text-grey-50'>Valid Regions</span>
+            <h2 className='inter-xlarge-regular text-grey-90'>{discount.regions.length.toLocaleString("en-US")}</h2>
+            <span className='inter-small-regular text-grey-50'>Platné oblasti</span>
           </div>
           <div className='border-l border-grey-20 pl-6 ml-12'>
-            <h2 className='inter-xlarge-regular text-grey-90'>
-              {discount.usage_count.toLocaleString('en-US')}
-            </h2>
-            <span className='inter-small-regular text-grey-50'>Total Redemptions</span>
+            <h2 className='inter-xlarge-regular text-grey-90'>{discount.usage_count.toLocaleString("en-US")}</h2>
+            <span className='inter-small-regular text-grey-50'>Celkový počet odkupů</span>
           </div>
         </div>
       </BodyCard>
@@ -127,7 +123,7 @@ const General: React.FC<GeneralProps> = ({ discount }) => {
 
 const getPromotionDescription = (discount: Discount) => {
   switch (discount.rule.type) {
-    case 'fixed':
+    case "fixed":
       return (
         <div className='flex items-baseline'>
           <h2 className='inter-xlarge-regular'>
@@ -141,17 +137,17 @@ const getPromotionDescription = (discount: Discount) => {
           </span>
         </div>
       );
-    case 'percentage':
+    case "percentage":
       return (
         <div className='flex items-baseline'>
           <h2 className='inter-xlarge-regular text-grey-90'>{discount.rule.value}</h2>
           <span className='inter-base-regular text-grey-50 ml-1'>%</span>
         </div>
       );
-    case 'free_shipping':
-      return <h2 className='inter-xlarge-regular text-grey-90'>{`FREE SHIPPING`}</h2>;
+    case "free_shipping":
+      return <h2 className='inter-xlarge-regular text-grey-90'>{"DOPRAVA ZDARMA"}</h2>;
     default:
-      return 'Unknown discount type';
+      return "Neznámý typ slevy";
   }
 };
 

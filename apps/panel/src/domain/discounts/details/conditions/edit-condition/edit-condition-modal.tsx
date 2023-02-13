@@ -1,16 +1,16 @@
-import React, { useContext } from 'react';
-import Button from '../../../../../components/fundamentals/button';
-import Modal from '../../../../../components/molecules/modal';
-import LayeredModal, { LayeredModalContext } from '../../../../../components/molecules/modal/layered-modal';
-import { EditConditionProvider } from './edit-condition-provider';
-import ProductConditionsTable from './add-condition-resources/products/product-conditions-table';
-import ProductCollectionsConditionsTable from './add-condition-resources/collections/collections-conditions-table';
-import ProductTypesConditionsTable from './add-condition-resources/product-types/type-conditions-table';
-import ProductTagsConditionsTable from './add-condition-resources/tags/tags-conditions-table';
-import CustomerGroupsConditionsTable from './add-condition-resources/customer-groups/customer-groups-conditions-table';
-import { Discount, DiscountCondition } from '@medusajs/medusa';
-import { capitalize } from 'lodash';
-import { getTitle } from '../../../utils';
+import React, { useContext } from "react";
+import Button from "../../../../../components/fundamentals/button";
+import Modal from "../../../../../components/molecules/modal";
+import LayeredModal, { LayeredModalContext } from "../../../../../components/molecules/modal/layered-modal";
+import { EditConditionProvider } from "./edit-condition-provider";
+import ProductConditionsTable from "./add-condition-resources/products/product-conditions-table";
+import ProductCollectionsConditionsTable from "./add-condition-resources/collections/collections-conditions-table";
+import ProductTypesConditionsTable from "./add-condition-resources/product-types/type-conditions-table";
+import ProductTagsConditionsTable from "./add-condition-resources/tags/tags-conditions-table";
+import CustomerGroupsConditionsTable from "./add-condition-resources/customer-groups/customer-groups-conditions-table";
+import { Discount, DiscountCondition } from "@medusajs/medusa";
+import { capitalize } from "lodash";
+import { getTitle } from "../../../utils";
 
 type Props = {
   open: boolean;
@@ -24,15 +24,15 @@ const EditConditionsModal = ({ open, condition, discount, onClose }: Props) => {
 
   const renderModalContext = () => {
     switch (condition.type) {
-      case 'products':
+      case "products":
         return <ProductConditionsTable />;
-      case 'product_collections':
+      case "product_collections":
         return <ProductCollectionsConditionsTable />;
-      case 'product_types':
+      case "product_types":
         return <ProductTypesConditionsTable />;
-      case 'product_tags':
+      case "product_tags":
         return <ProductTagsConditionsTable />;
-      case 'customer_groups':
+      case "customer_groups":
         return <CustomerGroupsConditionsTable />;
     }
   };
@@ -43,14 +43,14 @@ const EditConditionsModal = ({ open, condition, discount, onClose }: Props) => {
         <Modal.Body>
           <Modal.Header handleClose={onClose}>
             <h1 className='inter-xlarge-semibold'>
-              Edit {capitalize(getTitle(condition?.type))} in Discount Condition
+              Upravit {capitalize(getTitle(condition?.type))} v položce Podmínka slevy
             </h1>
           </Modal.Header>
           {renderModalContext()}
           <Modal.Footer>
             <div className='flex items-center justify-end w-full'>
               <Button variant='primary' size='small' type='button' onClick={onClose}>
-                Close
+                Zavřít
               </Button>
             </div>
           </Modal.Footer>

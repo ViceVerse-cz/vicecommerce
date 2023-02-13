@@ -1,14 +1,14 @@
-import { useAdminProductTypes } from 'medusa-react';
-import React, { useState } from 'react';
-import Modal from '../../../../../../components/molecules/modal';
-import { SelectableTable } from '../../../../../../components/templates/selectable-table';
-import useQueryFilters from '../../../../../../hooks/use-query-filters';
-import { useConditions } from '../../../../details/conditions/add-condition/conditions-provider';
-import { AddConditionSelectorProps, DiscountConditionOperator } from '../../../../types';
-import { defaultQueryProps } from '../shared/common';
-import ConditionOperator from '../shared/condition-operator';
-import { TypeRow, TypesHeader, useTypesColumns } from '../shared/types';
-import DetailsConditionFooter from './details-condition-footer';
+import { useAdminProductTypes } from "medusa-react";
+import React, { useState } from "react";
+import Modal from "../../../../../../components/molecules/modal";
+import { SelectableTable } from "../../../../../../components/templates/selectable-table";
+import useQueryFilters from "../../../../../../hooks/use-query-filters";
+import { useConditions } from "../../../../details/conditions/add-condition/conditions-provider";
+import { AddConditionSelectorProps, DiscountConditionOperator } from "../../../../types";
+import { defaultQueryProps } from "../shared/common";
+import ConditionOperator from "../shared/condition-operator";
+import { TypeRow, TypesHeader, useTypesColumns } from "../shared/types";
+import DetailsConditionFooter from "./details-condition-footer";
 
 const DetailsTypeConditionSelector = ({ onClose }: AddConditionSelectorProps) => {
   const params = useQueryFilters(defaultQueryProps);
@@ -39,9 +39,9 @@ const DetailsTypeConditionSelector = ({ onClose }: AddConditionSelectorProps) =>
           options={{
             enableSearch: true,
             immediateSearchFocus: true,
-            searchPlaceholder: 'Search by type...',
+            searchPlaceholder: "Vyhledávání podle typu...",
           }}
-          resourceName='Types'
+          resourceName='Typy'
           totalCount={count || 0}
           selectedIds={items?.map((c) => c.id)}
           data={product_types}

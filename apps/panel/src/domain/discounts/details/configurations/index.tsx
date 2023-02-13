@@ -1,10 +1,10 @@
-import { Discount } from '@medusajs/medusa';
-import React, { useState } from 'react';
-import EditIcon from '../../../../components/fundamentals/icons/edit-icon';
-import NumberedItem from '../../../../components/molecules/numbered-item';
-import BodyCard from '../../../../components/organisms/body-card';
-import EditConfigurations from './edit-configurations';
-import useDiscountConfigurations from './use-discount-configurations';
+import { Discount } from "@medusajs/medusa";
+import React, { useState } from "react";
+import EditIcon from "../../../../components/fundamentals/icons/edit-icon";
+import NumberedItem from "../../../../components/molecules/numbered-item";
+import BodyCard from "../../../../components/organisms/body-card";
+import EditConfigurations from "./edit-configurations";
+import useDiscountConfigurations from "./use-discount-configurations";
 
 type ConfigurationsProps = {
   discount: Discount;
@@ -17,11 +17,11 @@ const Configurations: React.FC<ConfigurationsProps> = ({ discount }) => {
   return (
     <>
       <BodyCard
-        title={'Configurations'}
+        title={"Configurations"}
         className='min-h-[200px]'
         actionables={[
           {
-            label: 'Edit configurations',
+            label: "Úprava konfigurací",
             onClick: () => setShowModal(true),
             icon: <EditIcon size={20} />,
           },

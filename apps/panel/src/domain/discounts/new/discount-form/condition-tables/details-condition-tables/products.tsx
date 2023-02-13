@@ -1,15 +1,15 @@
-import { useAdminProducts } from 'medusa-react';
-import React, { useEffect, useState } from 'react';
-import Spinner from '../../../../../../components/atoms/spinner';
-import Modal from '../../../../../../components/molecules/modal';
-import { SelectableTable } from '../../../../../../components/templates/selectable-table';
-import useQueryFilters from '../../../../../../hooks/use-query-filters';
-import { useConditions } from '../../../../details/conditions/add-condition/conditions-provider';
-import { AddConditionSelectorProps, DiscountConditionOperator } from '../../../../types';
-import { defaultQueryProps } from '../shared/common';
-import ConditionOperator from '../shared/condition-operator';
-import { ProductRow, ProductsHeader, useProductColumns } from '../shared/products';
-import DetailsConditionFooter from './details-condition-footer';
+import { useAdminProducts } from "medusa-react";
+import React, { useEffect, useState } from "react";
+import Spinner from "../../../../../../components/atoms/spinner";
+import Modal from "../../../../../../components/molecules/modal";
+import { SelectableTable } from "../../../../../../components/templates/selectable-table";
+import useQueryFilters from "../../../../../../hooks/use-query-filters";
+import { useConditions } from "../../../../details/conditions/add-condition/conditions-provider";
+import { AddConditionSelectorProps, DiscountConditionOperator } from "../../../../types";
+import { defaultQueryProps } from "../shared/common";
+import ConditionOperator from "../shared/condition-operator";
+import { ProductRow, ProductsHeader, useProductColumns } from "../shared/products";
+import DetailsConditionFooter from "./details-condition-footer";
 
 const DetailsProductConditionSelector = ({ onClose }: AddConditionSelectorProps) => {
   const params = useQueryFilters(defaultQueryProps);
@@ -44,9 +44,9 @@ const DetailsProductConditionSelector = ({ onClose }: AddConditionSelectorProps)
           options={{
             enableSearch: true,
             immediateSearchFocus: true,
-            searchPlaceholder: 'Search products...',
+            searchPlaceholder: "Vyhledávání produktů...",
           }}
-          resourceName='Products'
+          resourceName='Produkty'
           totalCount={count || 0}
           selectedIds={items.map((i) => i.id)}
           data={products}

@@ -1,15 +1,15 @@
-import { useAdminProductTypes } from 'medusa-react';
-import React, { useState } from 'react';
-import Spinner from '../../../../../../components/atoms/spinner';
-import Modal from '../../../../../../components/molecules/modal';
-import { SelectableTable } from '../../../../../../components/templates/selectable-table';
-import useQueryFilters from '../../../../../../hooks/use-query-filters';
-import { AddConditionSelectorProps, DiscountConditionOperator } from '../../../../types';
-import { useDiscountForm } from '../../form/discount-form-context';
-import { defaultQueryProps } from '../shared/common';
-import ConditionOperator from '../shared/condition-operator';
-import { TypeRow, TypesHeader, useTypesColumns } from '../shared/types';
-import AddConditionFooter from './add-condition-footer';
+import { useAdminProductTypes } from "medusa-react";
+import React, { useState } from "react";
+import Spinner from "../../../../../../components/atoms/spinner";
+import Modal from "../../../../../../components/molecules/modal";
+import { SelectableTable } from "../../../../../../components/templates/selectable-table";
+import useQueryFilters from "../../../../../../hooks/use-query-filters";
+import { AddConditionSelectorProps, DiscountConditionOperator } from "../../../../types";
+import { useDiscountForm } from "../../form/discount-form-context";
+import { defaultQueryProps } from "../shared/common";
+import ConditionOperator from "../shared/condition-operator";
+import { TypeRow, TypesHeader, useTypesColumns } from "../shared/types";
+import AddConditionFooter from "./add-condition-footer";
 
 const AddTypeConditionSelector = ({ onClose }: AddConditionSelectorProps) => {
   const params = useQueryFilters(defaultQueryProps);
@@ -40,9 +40,9 @@ const AddTypeConditionSelector = ({ onClose }: AddConditionSelectorProps) => {
           options={{
             enableSearch: true,
             immediateSearchFocus: true,
-            searchPlaceholder: 'Search by type...',
+            searchPlaceholder: "Vyhledávání podle typu...",
           }}
-          resourceName='Types'
+          resourceName='Typy'
           totalCount={count || 0}
           selectedIds={items?.map((c) => c.id)}
           data={product_types}

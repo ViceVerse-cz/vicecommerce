@@ -1,16 +1,16 @@
-import { useAdminCustomerGroups } from 'medusa-react';
-import React, { useEffect, useState } from 'react';
-import Modal from '../../../../../../../components/molecules/modal';
-import { SelectableTable } from '../../../../../../../components/templates/selectable-table';
-import useQueryFilters from '../../../../../../../hooks/use-query-filters';
-import { defaultQueryProps } from '../../../../../new/discount-form/condition-tables/shared/common';
+import { useAdminCustomerGroups } from "medusa-react";
+import React, { useEffect, useState } from "react";
+import Modal from "../../../../../../../components/molecules/modal";
+import { SelectableTable } from "../../../../../../../components/templates/selectable-table";
+import useQueryFilters from "../../../../../../../hooks/use-query-filters";
+import { defaultQueryProps } from "../../../../../new/discount-form/condition-tables/shared/common";
 import {
   CustomerGroupsHeader,
   CustomerGroupsRow,
   useGroupColumns,
-} from '../../../../../new/discount-form/condition-tables/shared/groups';
-import { useEditConditionContext } from '../../edit-condition-provider';
-import ExistingConditionTableActions from '../../condition-table-actions';
+} from "../../../../../new/discount-form/condition-tables/shared/groups";
+import { useEditConditionContext } from "../../edit-condition-provider";
+import ExistingConditionTableActions from "../../condition-table-actions";
 
 const CustomerGroupsConditionsTable = () => {
   const params = useQueryFilters(defaultQueryProps);
@@ -63,7 +63,7 @@ const CustomerGroupsConditionsTable = () => {
             />
           ),
         }}
-        resourceName='Groups'
+        resourceName='Skupiny'
         totalCount={count ?? 0}
         selectedIds={selectedRowIds}
         data={customer_groups || []}

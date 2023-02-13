@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
-import Button from '../../../../components/fundamentals/button';
-import ChevronRightIcon from '../../../../components/fundamentals/icons/chevron-right-icon';
-import IconTooltip from '../../../../components/molecules/icon-tooltip';
-import Modal from '../../../../components/molecules/modal';
-import LayeredModal, { LayeredModalContext } from '../../../../components/molecules/modal/layered-modal';
-import { AddConditionSelectorProps, ConditionMap } from '../../types';
-import useConditionModalItems, { ConditionItem } from './use-condition-modal-items';
+import React, { useContext, useEffect, useState } from "react";
+import Button from "../../../../components/fundamentals/button";
+import ChevronRightIcon from "../../../../components/fundamentals/icons/chevron-right-icon";
+import IconTooltip from "../../../../components/molecules/icon-tooltip";
+import Modal from "../../../../components/molecules/modal";
+import LayeredModal, { LayeredModalContext } from "../../../../components/molecules/modal/layered-modal";
+import { AddConditionSelectorProps, ConditionMap } from "../../types";
+import useConditionModalItems, { ConditionItem } from "./use-condition-modal-items";
 
 type AddConditionsModalProps = AddConditionSelectorProps & {
   isDetails?: boolean;
@@ -38,9 +38,9 @@ const AddConditionsModal = ({ onClose, conditions, save, isDetails = false }: Ad
     <LayeredModal context={layeredModalContext} handleClose={onClose}>
       <Modal.Body className='h-[calc(100vh-134px)] flex flex-col'>
         <Modal.Header handleClose={onClose}>
-          <span className='inter-xlarge-semibold'>Add Conditions</span>
+          <span className='inter-xlarge-semibold'>Přidat podmínky</span>
           <span className='font-semibold text-grey-90 mt-6 flex items-center gap-1'>
-            Choose a condition type <IconTooltip content='You can only add one of each type of condition' />
+            Výběr typu podmínky <IconTooltip content='Každý typ podmínky můžete přidat pouze jednou.' />
           </span>
         </Modal.Header>
 
@@ -49,20 +49,15 @@ const AddConditionsModal = ({ onClose, conditions, save, isDetails = false }: Ad
             items.map((t) => <ConditionTypeItem key={t.value} {...t} />)
           ) : (
             <div className='flex flex-col items-center justify-center flex-1 h-full'>
-              <span className='inter-base-regular text-grey-40'>Can't add anymore conditions</span>
+              <span className='inter-base-regular text-grey-40'>Nelze přidat další podmínky</span>
             </div>
           )}
         </Modal.Content>
 
         <Modal.Footer>
           <div className='flex w-full h-8 justify-end'>
-            <Button
-              variant='ghost'
-              className='mr-2 w-32 text-small justify-center'
-              size='small'
-              onClick={onClose}
-            >
-              Cancel
+            <Button variant='ghost' className='mr-2 w-32 text-small justify-center' size='small' onClick={onClose}>
+              Zrušit
             </Button>
             <Button
               onClick={() => {
@@ -75,7 +70,7 @@ const AddConditionsModal = ({ onClose, conditions, save, isDetails = false }: Ad
               className='w-32 text-small justify-center'
               variant='primary'
             >
-              Save
+              Uložit
             </Button>
           </div>
         </Modal.Footer>

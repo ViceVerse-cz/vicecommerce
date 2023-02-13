@@ -1,15 +1,15 @@
-import { useAdminCustomerGroups } from 'medusa-react';
-import React, { useState } from 'react';
-import Spinner from '../../../../../../components/atoms/spinner';
-import Modal from '../../../../../../components/molecules/modal';
-import { SelectableTable } from '../../../../../../components/templates/selectable-table';
-import useQueryFilters from '../../../../../../hooks/use-query-filters';
-import { useConditions } from '../../../../details/conditions/add-condition/conditions-provider';
-import { AddConditionSelectorProps, DiscountConditionOperator } from '../../../../types';
-import { defaultQueryProps } from '../shared/common';
-import ConditionOperator from '../shared/condition-operator';
-import { CustomerGroupsHeader, CustomerGroupsRow, useGroupColumns } from '../shared/groups';
-import DetailsConditionFooter from './details-condition-footer';
+import { useAdminCustomerGroups } from "medusa-react";
+import React, { useState } from "react";
+import Spinner from "../../../../../../components/atoms/spinner";
+import Modal from "../../../../../../components/molecules/modal";
+import { SelectableTable } from "../../../../../../components/templates/selectable-table";
+import useQueryFilters from "../../../../../../hooks/use-query-filters";
+import { useConditions } from "../../../../details/conditions/add-condition/conditions-provider";
+import { AddConditionSelectorProps, DiscountConditionOperator } from "../../../../types";
+import { defaultQueryProps } from "../shared/common";
+import ConditionOperator from "../shared/condition-operator";
+import { CustomerGroupsHeader, CustomerGroupsRow, useGroupColumns } from "../shared/groups";
+import DetailsConditionFooter from "./details-condition-footer";
 
 const DetailsCustomerGroupConditionSelector = ({ onClose }: AddConditionSelectorProps) => {
   const params = useQueryFilters(defaultQueryProps);
@@ -45,9 +45,9 @@ const DetailsCustomerGroupConditionSelector = ({ onClose }: AddConditionSelector
           options={{
             enableSearch: true,
             immediateSearchFocus: true,
-            searchPlaceholder: 'Search groups...',
+            searchPlaceholder: "Vyhledávání skupin...",
           }}
-          resourceName='Customer groups'
+          resourceName='Skupiny zákazníků'
           totalCount={count || 0}
           selectedIds={items.map((i) => i.id)}
           data={customer_groups}

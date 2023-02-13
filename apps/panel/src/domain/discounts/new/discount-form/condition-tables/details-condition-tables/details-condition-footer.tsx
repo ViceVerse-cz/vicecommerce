@@ -18,7 +18,7 @@ const DetailsConditionFooter: React.FC<AddConditionFooterProps> = ({ type, items
   return (
     <div className='w-full flex justify-end gap-x-xsmall'>
       <Button variant='ghost' size='small' onClick={onClose}>
-        Cancel
+        Zrušit
       </Button>
       <Button
         variant='primary'
@@ -32,7 +32,7 @@ const DetailsConditionFooter: React.FC<AddConditionFooterProps> = ({ type, items
           pop();
         }}
       >
-        Save and add more
+        Uložit a přidat další
       </Button>
       <Button
         variant='primary'

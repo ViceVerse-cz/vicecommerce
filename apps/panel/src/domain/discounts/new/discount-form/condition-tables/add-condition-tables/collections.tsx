@@ -1,14 +1,14 @@
-import { useAdminCollections } from 'medusa-react';
-import React, { useState } from 'react';
-import Modal from '../../../../../../components/molecules/modal';
-import { SelectableTable } from '../../../../../../components/templates/selectable-table';
-import useQueryFilters from '../../../../../../hooks/use-query-filters';
-import { AddConditionSelectorProps, DiscountConditionOperator } from '../../../../types';
-import { useDiscountForm } from '../../form/discount-form-context';
-import { CollectionRow, CollectionsHeader, useCollectionColumns } from '../shared/collection';
-import { defaultQueryProps } from '../shared/common';
-import ConditionOperator from '../shared/condition-operator';
-import AddConditionFooter from './add-condition-footer';
+import { useAdminCollections } from "medusa-react";
+import React, { useState } from "react";
+import Modal from "../../../../../../components/molecules/modal";
+import { SelectableTable } from "../../../../../../components/templates/selectable-table";
+import useQueryFilters from "../../../../../../hooks/use-query-filters";
+import { AddConditionSelectorProps, DiscountConditionOperator } from "../../../../types";
+import { useDiscountForm } from "../../form/discount-form-context";
+import { CollectionRow, CollectionsHeader, useCollectionColumns } from "../shared/collection";
+import { defaultQueryProps } from "../shared/common";
+import ConditionOperator from "../shared/condition-operator";
+import AddConditionFooter from "./add-condition-footer";
 
 const AddCollectionConditionSelector = ({ onClose }: AddConditionSelectorProps) => {
   const params = useQueryFilters(defaultQueryProps);
@@ -16,9 +16,7 @@ const AddCollectionConditionSelector = ({ onClose }: AddConditionSelectorProps) 
   const { conditions } = useDiscountForm();
 
   const [items, setItems] = useState(conditions.product_collections?.items || []);
-  const [operator, setOperator] = useState<DiscountConditionOperator>(
-    conditions.product_collections.operator,
-  );
+  const [operator, setOperator] = useState<DiscountConditionOperator>(conditions.product_collections.operator);
 
   const { isLoading, count, collections } = useAdminCollections(params.queryObject, {
     // avoid UI flickering by keeping previous data
@@ -46,9 +44,9 @@ const AddCollectionConditionSelector = ({ onClose }: AddConditionSelectorProps) 
           options={{
             enableSearch: true,
             immediateSearchFocus: true,
-            searchPlaceholder: 'Search by title...',
+            searchPlaceholder: "Vyhledávání podle názvu...",
           }}
-          resourceName='Collections'
+          resourceName='Sbírky'
           totalCount={count || 0}
           selectedIds={items?.map((c) => c.id)}
           data={collections}

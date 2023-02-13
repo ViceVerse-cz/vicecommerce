@@ -36,9 +36,9 @@ const AddProductConditionsScreen = () => {
           options={{
             enableSearch: true,
             immediateSearchFocus: true,
-            searchPlaceholder: "Search...",
+            searchPlaceholder: "Vyhledávání...",
           }}
-          resourceName='Products'
+          resourceName='Produkty'
           totalCount={count ?? 0}
           selectedIds={selectedResources}
           data={products || []}
@@ -53,7 +53,7 @@ const AddProductConditionsScreen = () => {
       <Modal.Footer>
         <div className='flex justify-end w-full space-x-xsmall'>
           <Button variant='secondary' size='small' onClick={pop}>
-            Cancel
+            Zrušit
           </Button>
           <Button variant='primary' size='small' onClick={() => saveAndGoBack(selectedResources)}>
             Uložit a vrátit se zpět

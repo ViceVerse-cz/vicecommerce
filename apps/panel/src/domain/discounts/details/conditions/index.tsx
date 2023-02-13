@@ -1,12 +1,12 @@
-import { Discount } from '@medusajs/medusa';
-import React, { useState } from 'react';
-import PlusIcon from '../../../../components/fundamentals/icons/plus-icon';
-import NumberedItem from '../../../../components/molecules/numbered-item';
-import BodyCard from '../../../../components/organisms/body-card';
-import AddCondition from './add-condition';
-import { ConditionsProvider } from './add-condition/conditions-provider';
-import EditConditionsModal from './edit-condition/edit-condition-modal';
-import { useDiscountConditions } from './use-discount-conditions';
+import { Discount } from "@medusajs/medusa";
+import React, { useState } from "react";
+import PlusIcon from "../../../../components/fundamentals/icons/plus-icon";
+import NumberedItem from "../../../../components/molecules/numbered-item";
+import BodyCard from "../../../../components/organisms/body-card";
+import AddCondition from "./add-condition";
+import { ConditionsProvider } from "./add-condition/conditions-provider";
+import EditConditionsModal from "./edit-condition/edit-condition-modal";
+import { useDiscountConditions } from "./use-discount-conditions";
 
 type DiscountDetailsConditionsProps = {
   discount: Discount;
@@ -20,12 +20,12 @@ const DiscountDetailsConditions: React.FC<DiscountDetailsConditionsProps> = ({ d
   return (
     <ConditionsProvider discount={discount}>
       <BodyCard
-        title='Conditions'
+        title='Podmínky'
         className='min-h-[200px]'
         forceDropdown
         actionables={[
           {
-            label: 'Add condition',
+            label: "Přidat podmínku",
             icon: <PlusIcon size={16} />,
             onClick: () => setShow(true),
           },
@@ -50,7 +50,7 @@ const DiscountDetailsConditions: React.FC<DiscountDetailsConditionsProps> = ({ d
           </div>
         ) : (
           <div className='flex flex-col justify-center items-center flex-1 gap-y-small'>
-            <span className='inter-base-regular text-grey-50'>This discount has no conditions</span>
+            <span className='inter-base-regular text-grey-50'>Tato sleva nemá žádné podmínky</span>
           </div>
         )}
       </BodyCard>

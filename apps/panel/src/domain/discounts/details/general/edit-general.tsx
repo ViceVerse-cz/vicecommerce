@@ -1,16 +1,16 @@
-import { Discount } from '@medusajs/medusa';
-import { useAdminRegions, useAdminUpdateDiscount } from 'medusa-react';
-import React, { useEffect, useMemo } from 'react';
-import { Controller, useForm, useWatch } from 'react-hook-form';
-import Button from '../../../../components/fundamentals/button';
-import InputField from '../../../../components/molecules/input';
-import Modal from '../../../../components/molecules/modal';
-import { NextSelect } from '../../../../components/molecules/select/next-select';
-import TextArea from '../../../../components/molecules/textarea';
-import CurrencyInput from '../../../../components/organisms/currency-input';
-import useNotification from '../../../../hooks/use-notification';
-import { Option } from '../../../../types/shared';
-import { getErrorMessage } from '../../../../utils/error-messages';
+import { Discount } from "@medusajs/medusa";
+import { useAdminRegions, useAdminUpdateDiscount } from "medusa-react";
+import React, { useEffect, useMemo } from "react";
+import { Controller, useForm, useWatch } from "react-hook-form";
+import Button from "../../../../components/fundamentals/button";
+import InputField from "../../../../components/molecules/input";
+import Modal from "../../../../components/molecules/modal";
+import { NextSelect } from "../../../../components/molecules/select/next-select";
+import TextArea from "../../../../components/molecules/textarea";
+import CurrencyInput from "../../../../components/organisms/currency-input";
+import useNotification from "../../../../hooks/use-notification";
+import { Option } from "../../../../types/shared";
+import { getErrorMessage } from "../../../../utils/error-messages";
 
 type EditGeneralProps = {
   discount: Discount;
@@ -46,12 +46,12 @@ const EditGeneral: React.FC<EditGeneralProps> = ({ discount, onClose }) => {
       },
       {
         onSuccess: ({ discount }) => {
-          notification('Success', 'Discount updated successfully', 'success');
+          notification("Úspěch", "Sleva byla úspěšně aktualizována", "success");
           reset(mapGeneral(discount));
           onClose();
         },
         onError: (error) => {
-          notification('Error', getErrorMessage(error), 'error');
+          notification("Chyba", getErrorMessage(error), "error");
         },
       },
     );
@@ -76,11 +76,11 @@ const EditGeneral: React.FC<EditGeneralProps> = ({ discount, onClose }) => {
 
   const selectedRegions = useWatch({
     control,
-    name: 'regions',
+    name: "regions",
   });
 
   const fixedCurrency = useMemo(() => {
-    if (type === 'fixed' && selectedRegions?.length) {
+    if (type === "fixed" && selectedRegions?.length) {
       return regions?.find((r) => r.id === selectedRegions[0].value)?.currency_code;
     }
   }, [selectedRegions, type, regions]);
@@ -90,14 +90,14 @@ const EditGeneral: React.FC<EditGeneralProps> = ({ discount, onClose }) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Modal.Body>
           <Modal.Header handleClose={onClose}>
-            <h1 className='inter-xlarge-semibold'>Edit general information</h1>
+            <h1 className='inter-xlarge-semibold'>Upravit obecné informace</h1>
           </Modal.Header>
           <Modal.Content>
             <Controller
               name='regions'
               control={control}
               rules={{
-                required: 'Atleast one region is required',
+                required: "Je vyžadován alespoň jeden region",
                 validate: (value) => (Array.isArray(value) ? value.length > 0 : !!value),
               }}
               render={({ field: { value, onChange } }) => {
@@ -105,11 +105,11 @@ const EditGeneral: React.FC<EditGeneralProps> = ({ discount, onClose }) => {
                   <NextSelect
                     value={value}
                     onChange={(value) => {
-                      onChange(type === 'fixed' ? [value] : value);
+                      onChange(type === "fixed" ? [value] : value);
                     }}
-                    label='Choose valid regions'
-                    isMulti={type !== 'fixed'}
-                    selectAll={type !== 'fixed'}
+                    label='Výběr platných oblastí'
+                    isMulti={type !== "fixed"}
+                    selectAll={type !== "fixed"}
                     isSearchable
                     required
                     options={regionOptions}
@@ -123,34 +123,24 @@ const EditGeneral: React.FC<EditGeneralProps> = ({ discount, onClose }) => {
                 className='flex-1'
                 placeholder='SUMMERSALE10'
                 required
-                {...register('code', { required: 'Code is required' })}
+                {...register("code", { required: "Je vyžadován kód" })}
               />
 
-              {type !== 'free_shipping' && (
+              {type !== "free_shipping" && (
                 <>
-                  {type === 'fixed' ? (
+                  {type === "fixed" ? (
                     <div className='flex-1'>
-                      <CurrencyInput.Root
-                        size='small'
-                        currentCurrency={fixedCurrency ?? 'USD'}
-                        readOnly
-                        hideCurrency
-                      >
+                      <CurrencyInput.Root size='small' currentCurrency={fixedCurrency ?? "USD"} readOnly hideCurrency>
                         <Controller
                           name='value'
                           control={control}
                           rules={{
-                            required: 'Amount is required',
+                            required: "Požaduje se částka",
                             min: 1,
                           }}
                           render={({ field: { value, onChange } }) => {
                             return (
-                              <CurrencyInput.Amount
-                                label={'Amount'}
-                                required
-                                amount={value}
-                                onChange={onChange}
-                              />
+                              <CurrencyInput.Amount label={"Částka"} required amount={value} onChange={onChange} />
                             );
                           }}
                         />
@@ -159,14 +149,14 @@ const EditGeneral: React.FC<EditGeneralProps> = ({ discount, onClose }) => {
                   ) : (
                     <div className='flex-1'>
                       <InputField
-                        label='Percentage'
+                        label='Procento'
                         min={0}
                         required
                         type='number'
                         placeholder='10'
-                        prefix={'%'}
-                        {...register('value', {
-                          required: 'Percentage is required',
+                        prefix={"%"}
+                        {...register("value", {
+                          required: "Vyžaduje se procento",
                           valueAsNumber: true,
                         })}
                       />
@@ -177,19 +167,16 @@ const EditGeneral: React.FC<EditGeneralProps> = ({ discount, onClose }) => {
             </div>
 
             <div className='text-grey-50 inter-small-regular flex flex-col mb-6'>
-              <span>
-                The code your customers will enter during checkout. This will appear on your customer’s
-                invoice.
-              </span>
-              <span>Uppercase letters and numbers only.</span>
+              <span>Kód, který vaši zákazníci zadají při placení. Zobrazí se na stránce vašeho zákazníka faktuře.</span>
+              <span>Pouze velká písmena a číslice.</span>
             </div>
             <TextArea
-              label='Description'
+              label='Popis'
               required
-              placeholder='Summer Sale 2022'
+              placeholder='Letní výprodej 2022'
               rows={1}
-              {...register('description', {
-                required: 'Description is required',
+              {...register("description", {
+                required: "Je vyžadován popis",
               })}
             />
           </Modal.Content>
@@ -206,7 +193,7 @@ const EditGeneral: React.FC<EditGeneralProps> = ({ discount, onClose }) => {
                 disabled={isLoading}
                 loading={isLoading}
               >
-                Save
+                Uložit
               </Button>
             </div>
           </Modal.Footer>

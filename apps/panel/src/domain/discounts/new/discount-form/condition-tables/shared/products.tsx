@@ -1,22 +1,22 @@
-import { Product } from '@medusajs/medusa';
-import React, { useMemo } from 'react';
-import { Column, HeaderGroup, Row } from 'react-table';
-import SortingIcon from '../../../../../../components/fundamentals/icons/sorting-icon';
-import ImagePlaceholder from '../../../../../../components/fundamentals/image-placeholder';
-import StatusIndicator from '../../../../../../components/fundamentals/status-indicator';
-import Table from '../../../../../../components/molecules/table';
+import { Product } from "@medusajs/medusa";
+import React, { useMemo } from "react";
+import { Column, HeaderGroup, Row } from "react-table";
+import SortingIcon from "../../../../../../components/fundamentals/icons/sorting-icon";
+import ImagePlaceholder from "../../../../../../components/fundamentals/image-placeholder";
+import StatusIndicator from "../../../../../../components/fundamentals/status-indicator";
+import Table from "../../../../../../components/molecules/table";
 
 const getProductStatusVariant = (status: string) => {
   switch (status) {
-    case 'proposed':
-      return 'warning';
-    case 'published':
-      return 'success';
-    case 'rejected':
-      return 'danger';
-    case 'draft':
+    case "proposed":
+      return "warning";
+    case "published":
+      return "success";
+    case "rejected":
+      return "danger";
+    case "draft":
     default:
-      return 'default';
+      return "default";
   }
 };
 
@@ -24,7 +24,7 @@ export const ProductRow = ({ row }: { row: Row<Product> }) => {
   return (
     <Table.Row {...row.getRowProps()}>
       {row.cells.map((cell) => {
-        return <Table.Cell {...cell.getCellProps()}>{cell.render('Cell')}</Table.Cell>;
+        return <Table.Cell {...cell.getCellProps()}>{cell.render("Cell")}</Table.Cell>;
       })}
     </Table.Row>
   );
@@ -35,7 +35,7 @@ export const ProductsHeader = ({ headerGroup }: { headerGroup: HeaderGroup<Produ
     <Table.HeadRow {...headerGroup.getHeaderGroupProps()}>
       {headerGroup.headers.map((col) => (
         <Table.HeadCell className='w-[100px]' {...col.getHeaderProps(col.getSortByToggleProps())}>
-          {col.render('Header')}
+          {col.render("Header")}
         </Table.HeadCell>
       ))}
     </Table.HeadRow>
@@ -48,10 +48,10 @@ export const useProductColumns = () => {
       {
         Header: () => (
           <div className='flex items-center gap-1 min-w-[443px]'>
-            Title <SortingIcon size={16} />
+            Název <SortingIcon size={16} />
           </div>
         ),
-        accessor: 'title',
+        accessor: "title",
         Cell: ({ row: { original } }) => {
           return (
             <div className='flex items-center'>
@@ -72,10 +72,10 @@ export const useProductColumns = () => {
       {
         Header: () => (
           <div className='flex items-center gap-1'>
-            Status <SortingIcon size={16} />
+            Stav <SortingIcon size={16} />
           </div>
         ),
-        accessor: 'status',
+        accessor: "status",
         Cell: ({ row: { original } }) => (
           <StatusIndicator
             title={`${original.status.charAt(0).toUpperCase()}${original.status.slice(1)}`}
@@ -86,10 +86,10 @@ export const useProductColumns = () => {
       {
         Header: () => (
           <div className='flex justify-end items-center gap-1'>
-            Variants <SortingIcon size={16} />
+            Varianty <SortingIcon size={16} />
           </div>
         ),
-        id: 'variants',
+        id: "variants",
         accessor: (row) => row.variants.length,
         Cell: ({ cell: { value } }) => {
           return <div className='text-right'>{value}</div>;

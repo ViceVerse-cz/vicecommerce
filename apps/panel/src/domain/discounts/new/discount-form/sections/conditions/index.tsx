@@ -1,10 +1,10 @@
-import { Discount } from '@medusajs/medusa';
-import React, { useEffect, useMemo, useState } from 'react';
-import Button from '../../../../../../components/fundamentals/button';
-import PlusIcon from '../../../../../../components/fundamentals/icons/plus-icon';
-import AddConditionsModal from '../../add-conditions-modal';
-import { useDiscountForm } from '../../form/discount-form-context';
-import ConditionItem from './condition-item';
+import { Discount } from "@medusajs/medusa";
+import React, { useEffect, useMemo, useState } from "react";
+import Button from "../../../../../../components/fundamentals/button";
+import PlusIcon from "../../../../../../components/fundamentals/icons/plus-icon";
+import AddConditionsModal from "../../add-conditions-modal";
+import { useDiscountForm } from "../../form/discount-form-context";
+import ConditionItem from "./condition-item";
 
 type DiscountNewConditionsProps = {
   discount?: Discount;
@@ -66,7 +66,7 @@ const DiscountNewConditions: React.FC<DiscountNewConditionsProps> = ({ discount 
           className='mt-4 p-2 w-full rounded-rounded border'
         >
           <PlusIcon size={18} />
-          <span>Add Condition</span>
+          <span>Přidat podmínku</span>
         </Button>
       )}
       {showConditionsModal && (

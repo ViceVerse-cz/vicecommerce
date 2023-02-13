@@ -1,14 +1,14 @@
-import { useAdminProductTypes } from 'medusa-react';
-import React, { useState } from 'react';
-import Modal from '../../../../../../components/molecules/modal';
-import { SelectableTable } from '../../../../../../components/templates/selectable-table';
-import useQueryFilters from '../../../../../../hooks/use-query-filters';
-import { DiscountConditionOperator } from '../../../../types';
-import { useDiscountForm } from '../../form/discount-form-context';
-import { defaultQueryProps } from '../shared/common';
-import ConditionOperator from '../shared/condition-operator';
-import { TypeRow, TypesHeader, useTypesColumns } from '../shared/types';
-import EditConditionFooter from './edit-condition-footer';
+import { useAdminProductTypes } from "medusa-react";
+import React, { useState } from "react";
+import Modal from "../../../../../../components/molecules/modal";
+import { SelectableTable } from "../../../../../../components/templates/selectable-table";
+import useQueryFilters from "../../../../../../hooks/use-query-filters";
+import { DiscountConditionOperator } from "../../../../types";
+import { useDiscountForm } from "../../form/discount-form-context";
+import { defaultQueryProps } from "../shared/common";
+import ConditionOperator from "../shared/condition-operator";
+import { TypeRow, TypesHeader, useTypesColumns } from "../shared/types";
+import EditConditionFooter from "./edit-condition-footer";
 
 const EditTypeConditionSelector = ({ onClose }) => {
   const params = useQueryFilters(defaultQueryProps);
@@ -37,9 +37,9 @@ const EditTypeConditionSelector = ({ onClose }) => {
           options={{
             enableSearch: true,
             immediateSearchFocus: true,
-            searchPlaceholder: 'Search by type...',
+            searchPlaceholder: "Vyhledávání podle typu...",
           }}
-          resourceName='Types'
+          resourceName='Typy'
           totalCount={count || 0}
           selectedIds={items?.map((c) => c.id)}
           data={product_types}

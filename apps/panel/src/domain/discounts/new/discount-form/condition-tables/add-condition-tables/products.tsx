@@ -1,14 +1,14 @@
-import { useAdminProducts } from 'medusa-react';
-import { useState } from 'react';
-import Modal from '../../../../../../components/molecules/modal';
-import { SelectableTable } from '../../../../../../components/templates/selectable-table';
-import useQueryFilters from '../../../../../../hooks/use-query-filters';
-import { AddConditionSelectorProps, DiscountConditionOperator } from '../../../../types';
-import { useDiscountForm } from '../../form/discount-form-context';
-import { defaultQueryProps } from '../shared/common';
-import ConditionOperator from '../shared/condition-operator';
-import { ProductRow, ProductsHeader, useProductColumns } from '../shared/products';
-import AddConditionFooter from './add-condition-footer';
+import { useAdminProducts } from "medusa-react";
+import { useState } from "react";
+import Modal from "../../../../../../components/molecules/modal";
+import { SelectableTable } from "../../../../../../components/templates/selectable-table";
+import useQueryFilters from "../../../../../../hooks/use-query-filters";
+import { AddConditionSelectorProps, DiscountConditionOperator } from "../../../../types";
+import { useDiscountForm } from "../../form/discount-form-context";
+import { defaultQueryProps } from "../shared/common";
+import ConditionOperator from "../shared/condition-operator";
+import { ProductRow, ProductsHeader, useProductColumns } from "../shared/products";
+import AddConditionFooter from "./add-condition-footer";
 
 const AddProductConditionSelector = ({ onClose }: AddConditionSelectorProps) => {
   const params = useQueryFilters(defaultQueryProps);
@@ -43,9 +43,9 @@ const AddProductConditionSelector = ({ onClose }: AddConditionSelectorProps) => 
           options={{
             enableSearch: true,
             immediateSearchFocus: true,
-            searchPlaceholder: 'Search products...',
+            searchPlaceholder: "Vyhledávání produktů...",
           }}
-          resourceName='Products'
+          resourceName='Produkty'
           totalCount={count || 0}
           selectedIds={items.map((i) => i.id)}
           data={products}

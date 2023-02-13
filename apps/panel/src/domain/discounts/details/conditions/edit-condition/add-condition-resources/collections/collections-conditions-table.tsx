@@ -1,16 +1,16 @@
-import { useAdminCollections } from 'medusa-react';
-import React, { useEffect, useState } from 'react';
-import Modal from '../../../../../../../components/molecules/modal';
-import { SelectableTable } from '../../../../../../../components/templates/selectable-table';
-import useQueryFilters from '../../../../../../../hooks/use-query-filters';
+import { useAdminCollections } from "medusa-react";
+import React, { useEffect, useState } from "react";
+import Modal from "../../../../../../../components/molecules/modal";
+import { SelectableTable } from "../../../../../../../components/templates/selectable-table";
+import useQueryFilters from "../../../../../../../hooks/use-query-filters";
 import {
   CollectionRow,
   CollectionsHeader,
   useCollectionColumns,
-} from '../../../../../new/discount-form/condition-tables/shared/collection';
-import { defaultQueryProps } from '../../../../../new/discount-form/condition-tables/shared/common';
-import { useEditConditionContext } from '../../edit-condition-provider';
-import ExistingConditionTableActions from '../../condition-table-actions';
+} from "../../../../../new/discount-form/condition-tables/shared/collection";
+import { defaultQueryProps } from "../../../../../new/discount-form/condition-tables/shared/common";
+import { useEditConditionContext } from "../../edit-condition-provider";
+import ExistingConditionTableActions from "../../condition-table-actions";
 
 const ProductCollectionsConditionsTable = () => {
   const params = useQueryFilters(defaultQueryProps);
@@ -63,7 +63,7 @@ const ProductCollectionsConditionsTable = () => {
             />
           ),
         }}
-        resourceName='Collections'
+        resourceName='Sbírky'
         totalCount={count ?? 0}
         selectedIds={selectedResources}
         data={collections || []}

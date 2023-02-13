@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
-import Fade from '../../components/atoms/fade-wrapper';
-import PlusIcon from '../../components/fundamentals/icons/plus-icon';
-import BodyCard from '../../components/organisms/body-card';
-import TableViewHeader from '../../components/organisms/custom-table-header';
-import DiscountTable from '../../components/templates/discount-table';
-import Details from './details';
-import New from './new';
-import DiscountForm from './new/discount-form';
-import { DiscountFormProvider } from './new/discount-form/form/discount-form-context';
+import React, { useState } from "react";
+import { Route, Routes } from "react-router-dom";
+import Fade from "../../components/atoms/fade-wrapper";
+import PlusIcon from "../../components/fundamentals/icons/plus-icon";
+import BodyCard from "../../components/organisms/body-card";
+import TableViewHeader from "../../components/organisms/custom-table-header";
+import DiscountTable from "../../components/templates/discount-table";
+import Details from "./details";
+import New from "./new";
+import DiscountForm from "./new/discount-form";
+import { DiscountFormProvider } from "./new/discount-form/form/discount-form-context";
 
 const DiscountIndex = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const actionables = [
     {
-      label: 'Add Discount',
+      label: "Přidat slevu",
       onClick: () => setIsOpen(true),
       icon: <PlusIcon size={20} />,
     },
@@ -24,11 +24,7 @@ const DiscountIndex = () => {
   return (
     <div className='h-full flex flex-col'>
       <div className='w-full flex flex-col grow'>
-        <BodyCard
-          actionables={actionables}
-          customHeader={<TableViewHeader views={['discounts']} />}
-          className='h-fit'
-        >
+        <BodyCard actionables={actionables} customHeader={<TableViewHeader views={["discounts"]} />} className='h-fit'>
           <DiscountTable />
         </BodyCard>
       </div>

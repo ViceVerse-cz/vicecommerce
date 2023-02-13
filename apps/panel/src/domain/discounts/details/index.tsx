@@ -1,23 +1,23 @@
-import { useAdminDeleteDiscount, useAdminDiscount } from 'medusa-react';
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import Spinner from '../../../components/atoms/spinner';
-import Breadcrumb from '../../../components/molecules/breadcrumb';
-import DeletePrompt from '../../../components/organisms/delete-prompt';
-import RawJSON from '../../../components/organisms/raw-json';
-import useNotification from '../../../hooks/use-notification';
-import { getErrorMessage } from '../../../utils/error-messages';
-import { DiscountFormProvider } from '../new/discount-form/form/discount-form-context';
-import DiscountDetailsConditions from './conditions';
-import Configurations from './configurations';
-import General from './general';
+import { useAdminDeleteDiscount, useAdminDiscount } from "medusa-react";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+import Spinner from "../../../components/atoms/spinner";
+import Breadcrumb from "../../../components/molecules/breadcrumb";
+import DeletePrompt from "../../../components/organisms/delete-prompt";
+import RawJSON from "../../../components/organisms/raw-json";
+import useNotification from "../../../hooks/use-notification";
+import { getErrorMessage } from "../../../utils/error-messages";
+import { DiscountFormProvider } from "../new/discount-form/form/discount-form-context";
+import DiscountDetailsConditions from "./conditions";
+import Configurations from "./configurations";
+import General from "./general";
 
 const Edit = () => {
   const { id } = useParams();
 
   const { discount, isLoading } = useAdminDiscount(
     id!,
-    { expand: 'rule,rule.conditions' },
+    { expand: "rule,rule.conditions" },
     {
       enabled: !!id,
     },
@@ -29,10 +29,10 @@ const Edit = () => {
   const handleDelete = () => {
     deleteDiscount.mutate(undefined, {
       onSuccess: () => {
-        notification('Success', 'Discount deleted', 'success');
+        notification("Úspěch", "Sleva odstraněna", "success");
       },
       onError: (error) => {
-        notification('Error', getErrorMessage(error), 'error');
+        notification("Chyba", getErrorMessage(error), "error");
       },
     });
   };
@@ -43,14 +43,14 @@ const Edit = () => {
         <DeletePrompt
           handleClose={() => setShowDelete(!showDelete)}
           onDelete={async () => handleDelete()}
-          successText='Discount deleted'
-          confirmText='Yes, delete'
-          text='Are you sure you want to delete this discount?'
-          heading='Delete discount'
+          successText='Sleva odstraněna'
+          confirmText='Ano, vymazat'
+          text='Opravdu chcete tuto slevu odstranit?'
+          heading='Smazat slevu'
         />
       )}
 
-      <Breadcrumb currentPage='Add Discount' previousBreadcrumb='Discount' previousRoute='/a/discounts' />
+      <Breadcrumb currentPage='Přidat slevu' previousBreadcrumb='Sleva' previousRoute='/a/discounts' />
       {isLoading || !discount ? (
         <div className='h-full flex items-center justify-center'>
           <Spinner variant='secondary' />
@@ -61,7 +61,7 @@ const Edit = () => {
             <General discount={discount} />
             <Configurations discount={discount} />
             <DiscountDetailsConditions discount={discount} />
-            <RawJSON data={discount} title='Raw discount' rootName='discount' />
+            <RawJSON data={discount} title='Surová sleva' rootName='discount' />
           </DiscountFormProvider>
         </div>
       )}

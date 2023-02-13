@@ -1,16 +1,16 @@
-import React, { useContext, useMemo } from 'react';
-import { LayeredModalContext } from '../../../../components/molecules/modal/layered-modal';
-import { DiscountConditionType } from '../../types';
-import AddCollectionConditionSelector from './condition-tables/add-condition-tables/collections';
-import AddCustomerGroupConditionSelector from './condition-tables/add-condition-tables/customer-groups';
-import AddProductConditionSelector from './condition-tables/add-condition-tables/products';
-import AddTagConditionSelector from './condition-tables/add-condition-tables/tags';
-import AddTypeConditionSelector from './condition-tables/add-condition-tables/types';
-import DetailsCollectionConditionSelector from './condition-tables/details-condition-tables/collections';
-import DetailsCustomerGroupConditionSelector from './condition-tables/details-condition-tables/customer-groups';
-import DetailsProductConditionSelector from './condition-tables/details-condition-tables/products';
-import DetailsTagConditionSelector from './condition-tables/details-condition-tables/tags';
-import DetailsTypeConditionSelector from './condition-tables/details-condition-tables/types';
+import React, { useContext, useMemo } from "react";
+import { LayeredModalContext } from "../../../../components/molecules/modal/layered-modal";
+import { DiscountConditionType } from "../../types";
+import AddCollectionConditionSelector from "./condition-tables/add-condition-tables/collections";
+import AddCustomerGroupConditionSelector from "./condition-tables/add-condition-tables/customer-groups";
+import AddProductConditionSelector from "./condition-tables/add-condition-tables/products";
+import AddTagConditionSelector from "./condition-tables/add-condition-tables/tags";
+import AddTypeConditionSelector from "./condition-tables/add-condition-tables/types";
+import DetailsCollectionConditionSelector from "./condition-tables/details-condition-tables/collections";
+import DetailsCustomerGroupConditionSelector from "./condition-tables/details-condition-tables/customer-groups";
+import DetailsProductConditionSelector from "./condition-tables/details-condition-tables/products";
+import DetailsTagConditionSelector from "./condition-tables/details-condition-tables/tags";
+import DetailsTypeConditionSelector from "./condition-tables/details-condition-tables/types";
 
 export type ConditionItem = {
   label: string;
@@ -30,12 +30,12 @@ const useConditionModalItems = ({ isDetails, onClose }: UseConditionModalItemsPr
   const items: ConditionItem[] = useMemo(
     () => [
       {
-        label: 'Product',
+        label: "Produkt",
         value: DiscountConditionType.PRODUCTS,
-        description: 'Only for specific products',
+        description: "Pouze pro konkrétní produkty",
         onClick: () =>
           layeredModalContext.push({
-            title: 'Choose products',
+            title: "Výběr produktů",
             onBack: () => layeredModalContext.pop(),
             view: isDetails ? (
               <DetailsProductConditionSelector onClose={onClose} />
@@ -45,12 +45,12 @@ const useConditionModalItems = ({ isDetails, onClose }: UseConditionModalItemsPr
           }),
       },
       {
-        label: 'Customer group',
+        label: "Skupina zákazníků",
         value: DiscountConditionType.CUSTOMER_GROUPS,
-        description: 'Only for specific customer groups',
+        description: "Pouze pro určité skupiny zákazníků",
         onClick: () => {
           layeredModalContext.push({
-            title: 'Choose groups',
+            title: "Výběr skupin",
             onBack: () => layeredModalContext.pop(),
             view: isDetails ? (
               <DetailsCustomerGroupConditionSelector onClose={onClose} />
@@ -61,12 +61,12 @@ const useConditionModalItems = ({ isDetails, onClose }: UseConditionModalItemsPr
         },
       },
       {
-        label: 'Tag',
+        label: "Štítek",
         value: DiscountConditionType.PRODUCT_TAGS,
-        description: 'Only for specific tags',
+        description: "Pouze pro konkrétní značky",
         onClick: () =>
           layeredModalContext.push({
-            title: 'Choose tags',
+            title: "Výběr značek",
             onBack: () => layeredModalContext.pop(),
             view: isDetails ? (
               <DetailsTagConditionSelector onClose={onClose} />
@@ -76,12 +76,12 @@ const useConditionModalItems = ({ isDetails, onClose }: UseConditionModalItemsPr
           }),
       },
       {
-        label: 'Collection',
+        label: "Sbírka",
         value: DiscountConditionType.PRODUCT_COLLECTIONS,
-        description: 'Only for specific product collections',
+        description: "Pouze pro konkrétní kolekce produktů",
         onClick: () =>
           layeredModalContext.push({
-            title: 'Choose collections',
+            title: "Vyberte si sbírky",
             onBack: () => layeredModalContext.pop(),
             view: isDetails ? (
               <DetailsCollectionConditionSelector onClose={onClose} />
@@ -91,12 +91,12 @@ const useConditionModalItems = ({ isDetails, onClose }: UseConditionModalItemsPr
           }),
       },
       {
-        label: 'Type',
+        label: "Typ",
         value: DiscountConditionType.PRODUCT_TYPES,
-        description: 'Only for specific product types',
+        description: "Pouze pro určité typy výrobků",
         onClick: () =>
           layeredModalContext.push({
-            title: 'Choose types',
+            title: "Vyberte si typy",
             onBack: () => layeredModalContext.pop(),
             view: isDetails ? (
               <DetailsTypeConditionSelector onClose={onClose} />
