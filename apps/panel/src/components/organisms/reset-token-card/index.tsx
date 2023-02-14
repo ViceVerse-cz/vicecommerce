@@ -1,8 +1,8 @@
-import { useAdminSendResetPasswordToken } from 'medusa-react';
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import CheckCircleIcon from '../../fundamentals/icons/check-circle-icon';
-import SigninInput from '../../molecules/input-signin';
+import { useAdminSendResetPasswordToken } from "medusa-react";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import CheckCircleIcon from "../../fundamentals/icons/check-circle-icon";
+import SigninInput from "../../molecules/input-signin";
 
 type ResetTokenCardProps = {
   goBack: () => void;
@@ -49,36 +49,36 @@ const ResetTokenCard: React.FC<ResetTokenCardProps> = ({ goBack }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className='flex flex-col items-center'>
-        <span className='inter-2xlarge-semibold mt-base text-grey-90'>Reset your password</span>
+        <span className='inter-2xlarge-semibold mt-base text-grey-90'>Obnovení hesla</span>
         <span className='inter-base-regular text-grey-50 mt-xsmall text-center'>
-          Enter your email address below, and we'll send you
+          Zadejte níže svou e-mailovou adresu a my vám zašleme
           <br />
-          instructions on how to reset your password.
+          pokyny k obnovení hesla.
         </span>
         {!mailSent ? (
           <>
             <SigninInput
               placeholder='lebron@james.com...'
-              {...register('email', { required: true })}
+              {...register("email", { required: true })}
               className='mb-0 mt-xlarge'
             />
             {unrecognizedEmail && (
               <div className='mt-xsmall w-[318px]'>
                 <span className='inter-small-regular text-rose-50 text-left'>
-                  We can't find a user with that email address
+                  Nemůžeme najít uživatele s touto e-mailovou adresou.
                 </span>
               </div>
             )}
             {invalidEmail && (
               <div className='mt-xsmall w-[318px]'>
-                <span className='inter-small-regular text-rose-50 text-left'>Not a valid email address</span>
+                <span className='inter-small-regular text-rose-50 text-left'>Neplatná e-mailová adresa</span>
               </div>
             )}
             <button
               className='text-grey-0 w-[320px] h-[48px] border rounded-rounded mt-4 bg-violet-50 inter-base-regular py-3 px-4'
               type='submit'
             >
-              Send reset instructions
+              Odeslání pokynů k obnovení
             </button>
           </>
         ) : (
@@ -87,16 +87,18 @@ const ResetTokenCard: React.FC<ResetTokenCardProps> = ({ goBack }) => {
               <CheckCircleIcon size={20} />
             </div>
             <div className='flex flex-col gap-y-2xsmall'>
-              <span className='inter-small-semibold'>Succesfully sent you an email</span>
+              <span className='inter-small-semibold'>Úspěšně vám poslal e-mail</span>
               <span className='inter-small-regular'>
-                We've sent you an email which you can use to reset your password. Check your spam folder if
-                you haven't received it after a few minutes.
+                Zaslali jsme vám e-mail, který můžete použít k obnovení hesla. Zkontrolujte složku spamu, pokud jste jej
+                po několika minutách neobdrželi.
               </span>
             </div>
           </div>
         )}
+
+        {/* rome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
         <span className='inter-small-regular text-grey-50 mt-8 cursor-pointer' onClick={goBack}>
-          Go back to sign in
+          Vraťte se k přihlášení
         </span>
       </div>
     </form>

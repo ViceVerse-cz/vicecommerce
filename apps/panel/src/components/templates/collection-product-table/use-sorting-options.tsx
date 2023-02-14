@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { FilteringOptionProps } from '../../molecules/table/filtering-option';
-import { SimpleProductType } from './utils';
+import { useEffect, useState } from "react";
+import { FilteringOptionProps } from "../../molecules/table/filtering-option";
+import { SimpleProductType } from "./utils";
 
 // TODO: Redo this with server side sorting
 
@@ -41,16 +41,16 @@ const useSortingOptions = (products: SimpleProductType[]) => {
   useEffect(() => {
     setOptions([
       {
-        title: 'Sort by',
+        title: "Seřadit podle",
         options: [
           {
-            title: 'All',
+            title: "Všechny",
             onClick: () => {
               setSortedProducts(products);
             },
           },
           {
-            title: 'Newest',
+            title: "Nejnovější",
             onClick: () => {
               const sorted = products.sort(sortByNewest);
               console.log(sorted);
@@ -58,7 +58,7 @@ const useSortingOptions = (products: SimpleProductType[]) => {
             },
           },
           {
-            title: 'Oldest',
+            title: "Nejstarší",
             onClick: () => {
               const sorted = products.sort(sortByOldest);
               console.log(sorted);
@@ -66,7 +66,7 @@ const useSortingOptions = (products: SimpleProductType[]) => {
             },
           },
           {
-            title: 'Title',
+            title: "Název",
             onClick: () => {
               const sorted = products.sort(sortByTitle);
               console.log(sorted);

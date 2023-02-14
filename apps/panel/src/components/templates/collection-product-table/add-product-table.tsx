@@ -1,13 +1,13 @@
-import { useAdminProducts } from 'medusa-react';
-import React, { useEffect, useState } from 'react';
-import { usePagination, useRowSelect, useTable } from 'react-table';
-import { useDebounce } from '../../../hooks/use-debounce';
-import Button from '../../fundamentals/button';
-import IndeterminateCheckbox from '../../molecules/indeterminate-checkbox';
-import Modal from '../../molecules/modal';
-import Table from '../../molecules/table';
-import TableContainer from '../../organisms/table-container';
-import useCollectionProductColumns from './use-collection-product-columns';
+import { useAdminProducts } from "medusa-react";
+import React, { useEffect, useState } from "react";
+import { usePagination, useRowSelect, useTable } from "react-table";
+import { useDebounce } from "../../../hooks/use-debounce";
+import Button from "../../fundamentals/button";
+import IndeterminateCheckbox from "../../molecules/indeterminate-checkbox";
+import Modal from "../../molecules/modal";
+import Table from "../../molecules/table";
+import TableContainer from "../../organisms/table-container";
+import useCollectionProductColumns from "./use-collection-product-columns";
 
 type AddProductsTableProps = {
   existingRelations: any[];
@@ -17,7 +17,7 @@ type AddProductsTableProps = {
 
 const AddProductsTable: React.FC<AddProductsTableProps> = ({ existingRelations, onSubmit, onClose }) => {
   const PAGE_SIZE = 10;
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [offset, setOffset] = useState(0);
   const [numPages, setNumPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
@@ -69,7 +69,7 @@ const AddProductsTable: React.FC<AddProductsTableProps> = ({ existingRelations, 
     (hooks) => {
       hooks.visibleColumns.push((columns) => [
         {
-          id: 'selection',
+          id: "selection",
           Cell: ({ row }) => {
             return (
               <Table.Cell className='w-[5%] pl-base'>
@@ -148,7 +148,7 @@ const AddProductsTable: React.FC<AddProductsTableProps> = ({ existingRelations, 
     <Modal handleClose={onClose}>
       <Modal.Body>
         <Modal.Header handleClose={onClose}>
-          <h3 className='inter-xlarge-semibold'>Add Products</h3>
+          <h3 className='inter-xlarge-semibold'>Přidat produkty</h3>
         </Modal.Header>
         <Modal.Content>
           <TableContainer
@@ -159,7 +159,7 @@ const AddProductsTable: React.FC<AddProductsTableProps> = ({ existingRelations, 
               count: count!,
               offset: offset,
               pageSize: offset + rows.length,
-              title: 'Products',
+              title: "Produkty",
               currentPage: pageIndex + 1,
               pageCount: pageCount,
               nextPage: handleNext,
@@ -172,7 +172,7 @@ const AddProductsTable: React.FC<AddProductsTableProps> = ({ existingRelations, 
               enableSearch
               handleSearch={handleSearch}
               searchValue={query}
-              searchPlaceholder='Search Products'
+              searchPlaceholder='Vyhledávání produktů'
               {...getTableProps()}
               className='flex-grow'
             >
@@ -180,9 +180,9 @@ const AddProductsTable: React.FC<AddProductsTableProps> = ({ existingRelations, 
                 {rows.map((row) => {
                   prepareRow(row);
                   return (
-                    <Table.Row color={'inherit'} {...row.getRowProps()} className='px-base'>
+                    <Table.Row color={"inherit"} {...row.getRowProps()} className='px-base'>
                       {row.cells.map((cell, index) => {
-                        return cell.render('Cell', { index });
+                        return cell.render("Cell", { index });
                       })}
                     </Table.Row>
                   );
@@ -194,16 +194,10 @@ const AddProductsTable: React.FC<AddProductsTableProps> = ({ existingRelations, 
         <Modal.Footer>
           <div className='flex items-center justify-end gap-x-xsmall w-full'>
             <Button variant='ghost' size='small' className='w-eventButton' onClick={onClose}>
-              Cancel
+              Zrušit
             </Button>
-            <Button
-              variant='primary'
-              size='small'
-              className='w-eventButton'
-              onClick={handleSubmit}
-              disabled={disabled}
-            >
-              Save
+            <Button variant='primary' size='small' className='w-eventButton' onClick={handleSubmit} disabled={disabled}>
+              Uložit
             </Button>
           </div>
         </Modal.Footer>

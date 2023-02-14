@@ -1,12 +1,12 @@
-import { useAdminProducts } from 'medusa-react';
-import React, { useEffect, useState } from 'react';
-import { Column, usePagination, useRowSelect, useTable } from 'react-table';
-import { useDebounce } from '../../../hooks/use-debounce';
-import IndeterminateCheckbox from '../../molecules/indeterminate-checkbox';
-import Table from '../../molecules/table';
-import { FilteringOptionProps } from '../../molecules/table/filtering-option';
-import TableContainer from '../../organisms/table-container';
-import useCollectionProductColumns from './use-collection-product-columns';
+import { useAdminProducts } from "medusa-react";
+import React, { useEffect, useState } from "react";
+import { Column, usePagination, useRowSelect, useTable } from "react-table";
+import { useDebounce } from "../../../hooks/use-debounce";
+import IndeterminateCheckbox from "../../molecules/indeterminate-checkbox";
+import Table from "../../molecules/table";
+import { FilteringOptionProps } from "../../molecules/table/filtering-option";
+import TableContainer from "../../organisms/table-container";
+import useCollectionProductColumns from "./use-collection-product-columns";
 
 type CollectionProductTableProps = {
   addedProducts: any[];
@@ -14,7 +14,7 @@ type CollectionProductTableProps = {
 };
 
 const CollectionProductTable: React.FC<CollectionProductTableProps> = ({ addedProducts, setProducts }) => {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [limit, setLimit] = useState(10);
   const [offset, setOffset] = useState(0);
   const [numPages, setNumPages] = useState(0);
@@ -34,18 +34,18 @@ const CollectionProductTable: React.FC<CollectionProductTableProps> = ({ addedPr
   useEffect(() => {
     setFilteringOptions([
       {
-        title: 'Sort by',
+        title: "Seřadit podle",
         options: [
           {
-            title: 'All',
+            title: "Všechny",
             onClick: () => {},
           },
           {
-            title: 'Newest',
+            title: "Nejnovější",
             onClick: () => {},
           },
           {
-            title: 'Oldest',
+            title: "Nejstarší",
             onClick: () => {},
           },
         ],
@@ -90,7 +90,7 @@ const CollectionProductTable: React.FC<CollectionProductTableProps> = ({ addedPr
     (hooks) => {
       hooks.visibleColumns.push((columns) => [
         {
-          id: 'selection',
+          id: "selection",
           Cell: ({ row }) => {
             return (
               <Table.Cell className='w-[5%] pl-base'>
@@ -145,7 +145,7 @@ const CollectionProductTable: React.FC<CollectionProductTableProps> = ({ addedPr
         count: count!,
         offset: offset,
         pageSize: offset + rows.length,
-        title: 'Products',
+        title: "Produkty",
         currentPage: pageIndex + 1,
         pageCount: pageCount,
         nextPage: handleNext,
@@ -157,7 +157,7 @@ const CollectionProductTable: React.FC<CollectionProductTableProps> = ({ addedPr
       <Table
         enableSearch
         handleSearch={handleSearch}
-        searchPlaceholder='Search Products'
+        searchPlaceholder='Vyhledávání produktů'
         filteringOptions={filteringOptions}
         {...getTableProps()}
         className='h-full'
@@ -166,9 +166,9 @@ const CollectionProductTable: React.FC<CollectionProductTableProps> = ({ addedPr
           {rows.map((row) => {
             prepareRow(row);
             return (
-              <Table.Row color={'inherit'} {...row.getRowProps()} className='px-base'>
+              <Table.Row color={"inherit"} {...row.getRowProps()} className='px-base'>
                 {row.cells.map((cell, index) => {
-                  return cell.render('Cell', { index });
+                  return cell.render("Cell", { index });
                 })}
               </Table.Row>
             );

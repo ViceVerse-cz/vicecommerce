@@ -1,14 +1,14 @@
-import clsx from 'clsx';
-import { useEffect, useState } from 'react';
-import FilterDropdownContainer from '../../../components/molecules/filter-dropdown/container';
-import FilterDropdownItem from '../../../components/molecules/filter-dropdown/item';
-import SaveFilterItem from '../../../components/molecules/filter-dropdown/save-field';
-import TabFilter from '../../../components/molecules/filter-tab';
-import PlusIcon from '../../fundamentals/icons/plus-icon';
+import clsx from "clsx";
+import { useEffect, useState } from "react";
+import FilterDropdownContainer from "../../../components/molecules/filter-dropdown/container";
+import FilterDropdownItem from "../../../components/molecules/filter-dropdown/item";
+import SaveFilterItem from "../../../components/molecules/filter-dropdown/save-field";
+import TabFilter from "../../../components/molecules/filter-tab";
+import PlusIcon from "../../fundamentals/icons/plus-icon";
 
-const dynamicFilters = ['normal', 'dynamic'];
+const dynamicFilters = ["normal", "dynamic"];
 
-const dateFilters = ['is in the last', 'is older than', 'is after', 'is before', 'is equal to'];
+const dateFilters = ["is in the last", "is older than", "is after", "is before", "is equal to"];
 
 const DiscountFilters = ({
   tabs,
@@ -21,7 +21,7 @@ const DiscountFilters = ({
   clearFilters,
 }) => {
   const [tempState, setTempState] = useState(filters);
-  const [name, setName] = useState('');
+  const [name, setName] = useState("");
 
   const handleRemoveTab = (val) => {
     if (onRemoveTab) {
@@ -75,15 +75,13 @@ const DiscountFilters = ({
         triggerElement={
           <button
             className={clsx(
-              'flex rounded-rounded items-center space-x-1 focus-visible:outline-none focus-visible:shadow-input focus-visible:border-violet-60',
+              "flex rounded-rounded items-center space-x-1 focus-visible:outline-none focus-visible:shadow-input focus-visible:border-violet-60",
             )}
           >
             <div className='flex rounded-rounded items-center bg-grey-5 border border-grey-20 inter-small-semibold px-2 h-6'>
-              Filters
+              Filtry
               <div className='text-grey-40 ml-1 flex items-center rounded'>
-                <span className='text-violet-60 inter-small-semibold'>
-                  {numberOfFilters ? numberOfFilters : '0'}
-                </span>
+                <span className='text-violet-60 inter-small-semibold'>{numberOfFilters ? numberOfFilters : "0"}</span>
               </div>
             </div>
             <div className='flex items-center rounded-rounded bg-grey-5 border border-grey-20 inter-small-semibold p-1'>
@@ -93,11 +91,11 @@ const DiscountFilters = ({
         }
       >
         <FilterDropdownItem
-          filterTitle='Types'
+          filterTitle='Typy'
           options={dynamicFilters}
           filters={tempState.isDynamic.filter}
           open={tempState.isDynamic.open}
-          setFilter={(val) => setSingleFilter('isDynamic', val)}
+          setFilter={(val) => setSingleFilter("isDynamic", val)}
         />
         {/* Backend support missing
         <FilterDropdownItem
@@ -109,8 +107,7 @@ const DiscountFilters = ({
       /> */}
         <SaveFilterItem saveFilter={handleSaveTab} name={name} setName={setName} />
       </FilterDropdownContainer>
-      {tabs &&
-        tabs.map((t) => (
+      {tabs?.map((t) => (
           <TabFilter
             key={t.value}
             onClick={() => handleTabClick(t.value)}

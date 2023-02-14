@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import useNotification from '../../hooks/use-notification';
-import { getErrorMessage } from '../../utils/error-messages';
-import Button from '../fundamentals/button';
-import Modal from '../molecules/modal';
+import React, { useState } from "react";
+import useNotification from "../../hooks/use-notification";
+import { getErrorMessage } from "../../utils/error-messages";
+import Button from "../fundamentals/button";
+import Modal from "../molecules/modal";
 
 type DeletePromptProps = {
   heading?: string;
@@ -15,11 +15,11 @@ type DeletePromptProps = {
 };
 
 const DeletePrompt: React.FC<DeletePromptProps> = ({
-  heading = 'Are you sure you want to delete?',
-  text = '',
-  successText = 'Delete successful',
-  cancelText = 'No, cancel',
-  confirmText = 'Yes, remove',
+  heading = "Jste si jisti, že chcete odstranit?",
+  text = "",
+  successText = "Úspěšné smazání",
+  cancelText = "Ne, zrušit",
+  confirmText = "Ano, odstraňte",
   handleClose,
   onDelete,
 }) => {
@@ -31,8 +31,8 @@ const DeletePrompt: React.FC<DeletePromptProps> = ({
 
     setIsLoading(true);
     onDelete()
-      .then(() => notification('Success', successText, 'success'))
-      .catch((err) => notification('Error', getErrorMessage(err), 'error'))
+      .then(() => notification("Úspěch", successText, "success"))
+      .catch((err) => notification("Chyba", getErrorMessage(err), "error"))
       .finally(() => {
         setIsLoading(false);
         handleClose();
@@ -50,12 +50,7 @@ const DeletePrompt: React.FC<DeletePromptProps> = ({
         </Modal.Content>
         <Modal.Footer>
           <div className='flex w-full h-8 justify-end'>
-            <Button
-              variant='ghost'
-              className='mr-2 w-24 text-small justify-center'
-              size='small'
-              onClick={handleClose}
-            >
+            <Button variant='ghost' className='mr-2 w-24 text-small justify-center' size='small' onClick={handleClose}>
               {cancelText}
             </Button>
             <Button

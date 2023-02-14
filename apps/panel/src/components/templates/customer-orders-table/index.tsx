@@ -1,12 +1,12 @@
-import { Order } from '@medusajs/medusa';
-import { useAdminOrders } from 'medusa-react';
-import { useState } from 'react';
-import { useTable, usePagination } from 'react-table';
-import RefreshIcon from '../../fundamentals/icons/refresh-icon';
-import Table from '../../molecules/table';
-import TableContainer from '../../organisms/table-container';
-import TransferOrdersModal from '../transfer-orders-modal';
-import { useCustomerOrdersColumns } from './use-customer-orders-columns';
+import { Order } from "@medusajs/medusa";
+import { useAdminOrders } from "medusa-react";
+import { useState } from "react";
+import { useTable, usePagination } from "react-table";
+import RefreshIcon from "../../fundamentals/icons/refresh-icon";
+import Table from "../../molecules/table";
+import TableContainer from "../../organisms/table-container";
+import TransferOrdersModal from "../transfer-orders-modal";
+import { useCustomerOrdersColumns } from "./use-customer-orders-columns";
 
 const LIMIT = 15;
 
@@ -84,7 +84,7 @@ const CustomerOrdersTable = ({ id }: Props) => {
           count: count!,
           offset,
           pageSize: offset + rows.length,
-          title: 'Orders',
+          title: "Objednávky",
           currentPage: pageIndex + 1,
           pageCount: pageCount,
           nextPage: handleNext,
@@ -99,9 +99,7 @@ const CustomerOrdersTable = ({ id }: Props) => {
               return (
                 <Table.HeadRow {...headerGroup.getHeaderGroupProps()}>
                   {headerGroup.headers.map((column) => {
-                    return (
-                      <Table.HeadCell {...column.getHeaderProps()}>{column.render('Header')}</Table.HeadCell>
-                    );
+                    return <Table.HeadCell {...column.getHeaderProps()}>{column.render("Header")}</Table.HeadCell>;
                   })}
                 </Table.HeadRow>
               );
@@ -115,8 +113,8 @@ const CustomerOrdersTable = ({ id }: Props) => {
                   forceDropdown
                   actions={[
                     {
-                      label: 'Transfer order',
-                      icon: <RefreshIcon size={'20'} />,
+                      label: "Převodní příkaz",
+                      icon: <RefreshIcon size={"20"} />,
                       onClick: () => {
                         setSelectedOrderForTransfer(row.original as Order);
                       },
@@ -126,7 +124,7 @@ const CustomerOrdersTable = ({ id }: Props) => {
                   linkTo={`/a/orders/${row.original.id}`}
                 >
                   {row.cells.map((cell) => {
-                    return <Table.Cell {...cell.getCellProps()}>{cell.render('Cell')}</Table.Cell>;
+                    return <Table.Cell {...cell.getCellProps()}>{cell.render("Cell")}</Table.Cell>;
                   })}
                 </Table.Row>
               );
@@ -135,10 +133,7 @@ const CustomerOrdersTable = ({ id }: Props) => {
         </Table>
       </TableContainer>
       {selectedOrderForTransfer && (
-        <TransferOrdersModal
-          onDismiss={() => setSelectedOrderForTransfer(null)}
-          order={selectedOrderForTransfer}
-        />
+        <TransferOrdersModal onDismiss={() => setSelectedOrderForTransfer(null)} order={selectedOrderForTransfer} />
       )}
     </>
   );

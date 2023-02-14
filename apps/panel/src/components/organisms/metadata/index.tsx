@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import Button from '../../fundamentals/button';
-import PlusIcon from '../../fundamentals/icons/plus-icon';
-import TrashIcon from '../../fundamentals/icons/trash-icon';
-import InputField from '../../molecules/input';
+import React, { useEffect, useState } from "react";
+import Button from "../../fundamentals/button";
+import PlusIcon from "../../fundamentals/icons/plus-icon";
+import TrashIcon from "../../fundamentals/icons/trash-icon";
+import InputField from "../../molecules/input";
 
 type AddMetadataProps = {
   metadata: MetadataField[];
@@ -15,7 +15,7 @@ export type MetadataField = {
   value: string;
 };
 
-const Metadata: React.FC<AddMetadataProps> = ({ metadata, setMetadata, heading = 'Metadata' }) => {
+const Metadata: React.FC<AddMetadataProps> = ({ metadata, setMetadata, heading = "Metadata" }) => {
   const [localData, setLocalData] = useState<MetadataField[]>([]);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const Metadata: React.FC<AddMetadataProps> = ({ metadata, setMetadata, heading =
   }, [metadata]);
 
   const addKeyPair = () => {
-    setMetadata([...metadata, { key: ``, value: `` }]);
+    setMetadata([...metadata, { key: "", value: "" }]);
   };
 
   const onKeyChange = (index: number) => {
@@ -65,7 +65,7 @@ const Metadata: React.FC<AddMetadataProps> = ({ metadata, setMetadata, heading =
         <div>
           <Button variant='secondary' size='small' type='button' className='w-full' onClick={addKeyPair}>
             <PlusIcon size={20} />
-            Add Metadata
+            Přidání metadat
           </Button>
         </div>
       </div>
@@ -84,8 +84,8 @@ const Field: React.FC<FieldProps> = ({ field, updateKey, updateValue }) => {
     <div className='flex items-center w-full gap-x-xsmall'>
       <div className='maw-w-[200px]'>
         <InputField
-          label='Key'
-          placeholder='Some key'
+          label='Klíč'
+          placeholder='Nějaký klíč'
           defaultValue={field.key}
           onChange={(e) => {
             updateKey(e.currentTarget.value);
@@ -94,8 +94,8 @@ const Field: React.FC<FieldProps> = ({ field, updateKey, updateValue }) => {
       </div>
       <div className='flex-grow'>
         <InputField
-          label='Value'
-          placeholder='Some value'
+          label='Hodnota'
+          placeholder='Určitá hodnota'
           defaultValue={field.value}
           onChange={(e) => {
             updateValue(e.currentTarget.value);
@@ -115,13 +115,7 @@ const DeletableElement: React.FC<DeletableElementProps> = ({ onDelete, children 
   return (
     <div className='flex items-end gap-x-xlarge'>
       <div className='flex-grow'>{children}</div>
-      <Button
-        variant='ghost'
-        size='small'
-        className='text-grey-40 w-10 h-10'
-        type='button'
-        onClick={onDelete}
-      >
+      <Button variant='ghost' size='small' className='text-grey-40 w-10 h-10' type='button' onClick={onDelete}>
         <TrashIcon size={20} />
       </Button>
     </div>

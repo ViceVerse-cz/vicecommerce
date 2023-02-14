@@ -1,37 +1,37 @@
-import clsx from 'clsx';
-import { useAdminRegions } from 'medusa-react';
-import { useEffect, useState } from 'react';
-import FilterDropdownContainer from '../../../components/molecules/filter-dropdown/container';
-import FilterDropdownItem from '../../../components/molecules/filter-dropdown/item';
-import SaveFilterItem from '../../../components/molecules/filter-dropdown/save-field';
-import TabFilter from '../../../components/molecules/filter-tab';
-import PlusIcon from '../../fundamentals/icons/plus-icon';
+import clsx from "clsx";
+import { useAdminRegions } from "medusa-react";
+import { useEffect, useState } from "react";
+import FilterDropdownContainer from "../../../components/molecules/filter-dropdown/container";
+import FilterDropdownItem from "../../../components/molecules/filter-dropdown/item";
+import SaveFilterItem from "../../../components/molecules/filter-dropdown/save-field";
+import TabFilter from "../../../components/molecules/filter-tab";
+import PlusIcon from "../../fundamentals/icons/plus-icon";
 
 const REGION_PAGE_SIZE = 10;
 
-const statusFilters = ['completed', 'pending', 'canceled', 'archived', 'requires_action'];
+const statusFilters = ["completed", "pending", "canceled", "archived", "requires_action"];
 const paymentFilters = [
-  'awaiting',
-  'captured',
-  'refunded',
-  'canceled',
-  'partially_refunded',
-  'requires_action',
-  'not_paid',
+  "awaiting",
+  "captured",
+  "refunded",
+  "canceled",
+  "partially_refunded",
+  "requires_action",
+  "not_paid",
 ];
 const fulfillmentFilters = [
-  'fulfilled',
-  'not_fulfilled',
-  'partially_fulfilled',
-  'returned',
-  'partially_returned',
-  'shipped',
-  'partially_shipped',
-  'requires_action',
-  'canceled',
+  "fulfilled",
+  "not_fulfilled",
+  "partially_fulfilled",
+  "returned",
+  "partially_returned",
+  "shipped",
+  "partially_shipped",
+  "requires_action",
+  "canceled",
 ];
 
-const dateFilters = ['is in the last', 'is older than', 'is after', 'is before', 'is equal to'];
+const dateFilters = ["is in the last", "is older than", "is after", "is before", "is equal to"];
 
 const OrderFilters = ({
   tabs,
@@ -44,7 +44,7 @@ const OrderFilters = ({
   clearFilters,
 }) => {
   const [tempState, setTempState] = useState(filters);
-  const [name, setName] = useState('');
+  const [name, setName] = useState("");
 
   const handleRemoveTab = (val) => {
     if (onRemoveTab) {
@@ -119,15 +119,13 @@ const OrderFilters = ({
         triggerElement={
           <button
             className={clsx(
-              'flex rounded-rounded items-center space-x-1 focus-visible:outline-none focus-visible:shadow-input focus-visible:border-violet-60',
+              "flex rounded-rounded items-center space-x-1 focus-visible:outline-none focus-visible:shadow-input focus-visible:border-violet-60",
             )}
           >
             <div className='flex rounded-rounded items-center bg-grey-5 border border-grey-20 inter-small-semibold px-2 h-6'>
               Filters
               <div className='text-grey-40 ml-1 flex items-center rounded'>
-                <span className='text-violet-60 inter-small-semibold'>
-                  {numberOfFilters ? numberOfFilters : '0'}
-                </span>
+                <span className='text-violet-60 inter-small-semibold'>{numberOfFilters ? numberOfFilters : "0"}</span>
               </div>
             </div>
             <div className='flex items-center rounded-rounded bg-grey-5 border border-grey-20 inter-small-semibold p-1'>
@@ -137,28 +135,28 @@ const OrderFilters = ({
         }
       >
         <FilterDropdownItem
-          filterTitle='Status'
+          filterTitle='Stav'
           options={statusFilters}
           filters={tempState.status.filter}
           open={tempState.status.open}
-          setFilter={(val) => setSingleFilter('status', val)}
+          setFilter={(val) => setSingleFilter("status", val)}
         />
         <FilterDropdownItem
-          filterTitle='Payment Status'
+          filterTitle='Stav platby'
           options={paymentFilters}
           filters={tempState.payment.filter}
           open={tempState.payment.open}
-          setFilter={(val) => setSingleFilter('payment', val)}
+          setFilter={(val) => setSingleFilter("payment", val)}
         />
         <FilterDropdownItem
-          filterTitle='Fulfillment Status'
+          filterTitle='Stav naplnění'
           options={fulfillmentFilters}
           filters={tempState.fulfillment.filter}
           open={tempState.fulfillment.open}
-          setFilter={(val) => setSingleFilter('fulfillment', val)}
+          setFilter={(val) => setSingleFilter("fulfillment", val)}
         />
         <FilterDropdownItem
-          filterTitle='Regions'
+          filterTitle='Regiony'
           options={
             regions?.map((region) => ({
               value: region.id,
@@ -172,19 +170,18 @@ const OrderFilters = ({
           onShowNext={() => handlePaginateRegions(1)}
           filters={tempState.region.filter}
           open={tempState.region.open}
-          setFilter={(v) => setSingleFilter('region', v)}
+          setFilter={(v) => setSingleFilter("region", v)}
         />
         <FilterDropdownItem
-          filterTitle='Date'
+          filterTitle='Datum'
           options={dateFilters}
           filters={tempState.date.filter}
           open={tempState.date.open}
-          setFilter={(val) => setSingleFilter('date', val)}
+          setFilter={(val) => setSingleFilter("date", val)}
         />
         <SaveFilterItem saveFilter={handleSaveTab} name={name} setName={setName} />
       </FilterDropdownContainer>
-      {tabs &&
-        tabs.map((t) => (
+      {tabs?.map((t) => (
           <TabFilter
             key={t.value}
             onClick={() => handleTabClick(t.value)}

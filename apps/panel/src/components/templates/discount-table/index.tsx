@@ -1,15 +1,15 @@
-import { isEmpty } from 'lodash';
-import { useAdminDiscounts } from 'medusa-react';
-import qs from 'qs';
-import React, { useEffect, useState } from 'react';
-import { usePagination, useTable } from 'react-table';
-import { useAnalytics } from '../../../context/analytics';
-import Table from '../../molecules/table';
-import TableContainer from '../../organisms/table-container';
-import DiscountFilters from '../discount-filter-dropdown';
-import { usePromotionTableColumns } from './use-promotion-columns';
-import { usePromotionFilters } from './use-promotion-filters';
-import usePromotionActions from './use-promotion-row-actions';
+import { isEmpty } from "lodash";
+import { useAdminDiscounts } from "medusa-react";
+import qs from "qs";
+import React, { useEffect, useState } from "react";
+import { usePagination, useTable } from "react-table";
+import { useAnalytics } from "../../../context/analytics";
+import Table from "../../molecules/table";
+import TableContainer from "../../organisms/table-container";
+import DiscountFilters from "../discount-filter-dropdown";
+import { usePromotionTableColumns } from "./use-promotion-columns";
+import { usePromotionFilters } from "./use-promotion-filters";
+import usePromotionActions from "./use-promotion-row-actions";
 
 const DEFAULT_PAGE_SIZE = 15;
 
@@ -39,7 +39,7 @@ const DiscountTable: React.FC = () => {
   const { discounts, isLoading, count } = useAdminDiscounts(
     {
       is_dynamic: false,
-      expand: 'rule,rule.conditions,rule.conditions.products,regions',
+      expand: "rule,rule.conditions,rule.conditions.products,regions",
       ...queryObject,
     },
     {
@@ -52,7 +52,7 @@ const DiscountTable: React.FC = () => {
     },
   );
 
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [numPages, setNumPages] = useState(0);
 
   useEffect(() => {
@@ -126,7 +126,7 @@ const DiscountTable: React.FC = () => {
 
   const updateUrlFromFilter = (obj = {}) => {
     const stringified = qs.stringify(obj);
-    window.history.replaceState(`/a/discounts`, '', `${`?${stringified}`}`);
+    window.history.replaceState("/a/discounts", "", `${`?${stringified}`}`);
   };
 
   const refreshWithFilters = () => {
@@ -141,7 +141,7 @@ const DiscountTable: React.FC = () => {
 
   const clearFilters = () => {
     reset();
-    setQuery('');
+    setQuery("");
   };
 
   useEffect(() => {
@@ -157,7 +157,7 @@ const DiscountTable: React.FC = () => {
         count: count!,
         offset: queryObject.offset,
         pageSize: queryObject.offset + rows.length,
-        title: 'Discounts',
+        title: "Slevy",
         currentPage: pageIndex + 1,
         pageCount: pageCount,
         nextPage: handleNext,
@@ -181,7 +181,7 @@ const DiscountTable: React.FC = () => {
         }
         enableSearch
         handleSearch={setQuery}
-        searchPlaceholder='Search by code or description...'
+        searchPlaceholder='Vyhledávání podle kódu nebo popisu...'
         searchValue={query}
         {...getTableProps()}
       >
@@ -189,7 +189,7 @@ const DiscountTable: React.FC = () => {
           {headerGroups?.map((headerGroup) => (
             <Table.HeadRow {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((col) => (
-                <Table.HeadCell {...col.getHeaderProps()}>{col.render('Header')}</Table.HeadCell>
+                <Table.HeadCell {...col.getHeaderProps()}>{col.render("Header")}</Table.HeadCell>
               ))}
             </Table.HeadRow>
           ))}
@@ -212,14 +212,14 @@ const PromotionRow = ({ row }) => {
 
   return (
     <Table.Row
-      color={'inherit'}
+      color={"inherit"}
       linkTo={row.original.id}
       {...row.getRowProps()}
       actions={getRowActions()}
       className='group'
     >
       {row.cells.map((cell) => {
-        return <Table.Cell {...cell.getCellProps()}>{cell.render('Cell')}</Table.Cell>;
+        return <Table.Cell {...cell.getCellProps()}>{cell.render("Cell")}</Table.Cell>;
       })}
     </Table.Row>
   );

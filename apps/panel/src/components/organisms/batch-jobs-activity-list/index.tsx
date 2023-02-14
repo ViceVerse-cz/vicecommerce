@@ -1,24 +1,24 @@
-import { BatchJob } from '@medusajs/medusa/dist';
-import clsx from 'clsx';
+import { BatchJob } from "@medusajs/medusa/dist";
+import clsx from "clsx";
 import {
   useAdminBatchJob,
   useAdminCancelBatchJob,
   useAdminCreatePresignedDownloadUrl,
   useAdminDeleteFile,
   useAdminStore,
-} from 'medusa-react';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import useNotification from '../../../hooks/use-notification';
-import { bytesConverter } from '../../../utils/bytes-converter';
-import { getErrorMessage } from '../../../utils/error-messages';
-import getRelativeTime from '../../../utils/get-relative-time';
-import Spinner from '../../atoms/spinner';
-import Button, { ButtonProps } from '../../fundamentals/button';
-import FileIcon from '../../fundamentals/icons/file-icon';
-import MedusaIcon from '../../fundamentals/icons/medusa-icon';
-import { ActivityCard } from '../../molecules/activity-card';
-import BatchJobFileCard from '../../molecules/batch-job-file-card';
-import { batchJobDescriptionBuilder, BatchJobOperation } from './utils';
+} from "medusa-react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import useNotification from "../../../hooks/use-notification";
+import { bytesConverter } from "../../../utils/bytes-converter";
+import { getErrorMessage } from "../../../utils/error-messages";
+import getRelativeTime from "../../../utils/get-relative-time";
+import Spinner from "../../atoms/spinner";
+import Button, { ButtonProps } from "../../fundamentals/button";
+import FileIcon from "../../fundamentals/icons/file-icon";
+import MedusaIcon from "../../fundamentals/icons/medusa-icon";
+import { ActivityCard } from "../../molecules/activity-card";
+import BatchJobFileCard from "../../molecules/batch-job-file-card";
+import { batchJobDescriptionBuilder, BatchJobOperation } from "./utils";
 
 /**
  * Retrieve a batch job and refresh the data depending on the last batch job status
@@ -29,13 +29,13 @@ function useBatchJob(initialData: BatchJob): BatchJob {
   const status = batchJob?.status || initialData.status;
 
   const refetchInterval = {
-    ['created']: 2000,
-    ['pre_processed']: 2000,
-    ['confirmed']: 2000,
-    ['processing']: 5000,
-    ['completed']: false,
-    ['canceled']: false,
-    ['failed']: false,
+    ["created"]: 2000,
+    ["pre_processed"]: 2000,
+    ["confirmed"]: 2000,
+    ["processing"]: 5000,
+    ["completed"]: false,
+    ["canceled"]: false,
+    ["failed"]: false,
   }[status];
 
   const { batch_job } = useAdminBatchJob(initialData.id, {
@@ -78,26 +78,21 @@ const BatchJobActivityCard = (props: { batchJob: BatchJob }) => {
   });
 
   const operation = {
-    'product-import': BatchJobOperation.Import,
-    'price-list-import': BatchJobOperation.Import,
-    'product-export': BatchJobOperation.Export,
-    'order-export': BatchJobOperation.Export,
+    "product-import": BatchJobOperation.Import,
+    "price-list-import": BatchJobOperation.Import,
+    "product-export": BatchJobOperation.Export,
+    "order-export": BatchJobOperation.Export,
   }[batchJob.type];
 
-  const batchJobActivityDescription = batchJobDescriptionBuilder(
-    batchJob,
-    operation,
-    relativeTimeElapsed.raw,
-  );
+  const batchJobActivityDescription = batchJobDescriptionBuilder(batchJob, operation, relativeTimeElapsed.raw);
 
-  const canCancel =
-    batchJob.status !== 'completed' && batchJob.status !== 'failed' && batchJob.status !== 'canceled';
+  const canCancel = batchJob.status !== "completed" && batchJob.status !== "failed" && batchJob.status !== "canceled";
 
-  const canDownload = batchJob.status === 'completed' && batchJob.result?.file_key;
+  const canDownload = batchJob.status === "completed" && batchJob.result?.file_key;
 
   useEffect(() => {
     if (cancelBatchJobError) {
-      notification('Error canceling the batch job', getErrorMessage(cancelBatchJobError), 'error');
+      notification("Chyba při zrušení dávkové úlohy", getErrorMessage(cancelBatchJobError), "error");
     }
   }, [cancelBatchJobError]);
 
@@ -110,19 +105,15 @@ const BatchJobActivityCard = (props: { batchJob: BatchJob }) => {
       const { download_url } = await createPresignedUrl({
         file_key: batchJob.result?.file_key,
       });
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = download_url;
-      link.setAttribute('download', `${batchJob.result?.file_key}`);
+      link.setAttribute("download", `${batchJob.result?.file_key}`);
       activityCardRef.current?.appendChild(link);
       link.click();
 
       activityCardRef.current?.removeChild(link);
     } catch (e) {
-      notification(
-        'Error',
-        `Something went wrong while downloading the ${operation.toLowerCase()} file`,
-        'error',
-      );
+      notification("Chyba", `Při stahování souboru ${operation?.toLowerCase()} se něco pokazilo.`, "error");
     }
   };
 
@@ -133,13 +124,9 @@ const BatchJobActivityCard = (props: { batchJob: BatchJob }) => {
 
     try {
       await deleteFile({ file_key: batchJob.result?.file_key });
-      notification('Success', `${operation} file has been removed`, 'success');
+      notification("Úspěch", `${operace} soubor byl odstraněn`, "success");
     } catch (e) {
-      notification(
-        'Error',
-        `Something went wrong while deleting the ${operation.toLowerCase()} file`,
-        'error',
-      );
+      notification("Chyba", `Při mazání souboru ${operation.toLowerCase()} se něco pokazilo.`, "error");
     }
   };
 
@@ -147,12 +134,12 @@ const BatchJobActivityCard = (props: { batchJob: BatchJob }) => {
     const twentyfourHoursInMs = 24 * 60 * 60 * 1000;
 
     const icon =
-      batchJob.status !== 'completed' && batchJob.status !== 'canceled' ? (
-        <Spinner size={'medium'} variant={'secondary'} />
+      batchJob.status !== "completed" && batchJob.status !== "canceled" ? (
+        <Spinner size={"medium"} variant={"secondary"} />
       ) : (
         <FileIcon
           className={clsx({
-            'text-grey-40': Math.abs(relativeTimeElapsed.raw) > twentyfourHoursInMs,
+            "text-grey-40": Math.abs(relativeTimeElapsed.raw) > twentyfourHoursInMs,
           })}
           size={20}
         />
@@ -161,12 +148,12 @@ const BatchJobActivityCard = (props: { batchJob: BatchJob }) => {
     const fileSize = batchJob.result?.file_key
       ? bytesConverter(batchJob.result?.file_size ?? 0)
       : {
-          confirmed: `Preparing ${operation.toLowerCase()}...`,
-          preprocessing: `Preparing ${operation.toLowerCase()}...`,
-          processing: `Processing ${operation.toLowerCase()}...`,
-          completed: `Successful ${operation.toLowerCase()}`,
-          failed: `Failed batch ${operation.toLowerCase()} job`,
-          canceled: `Canceled batch ${operation.toLowerCase()} job`,
+          confirmed: `Příprava ${operace.toLowerCase()}...`,
+          preprocessing: `Příprava ${operace.toLowerCase()}...`,
+          processing: `Zpracování ${operace.toLowerCase()}...`,
+          completed: `Úspěšně ${operace.toLowerCase()}`,
+          failed: `Neúspěšná dávková úloha ${operation.toLowerCase()}`,
+          canceled: `Zrušená dávková úloha ${operation.toLowerCase()}`,
         }[batchJob.status];
 
     return <BatchJobFileCard onClick={onDownloadFile} fileName={fileName} icon={icon} fileSize={fileSize} />;
@@ -174,16 +161,16 @@ const BatchJobActivityCard = (props: { batchJob: BatchJob }) => {
 
   const getFooterActions = () => {
     const buildButton = (
-      onClick: ButtonProps['onClick'],
-      variant: ButtonProps['variant'],
+      onClick: ButtonProps["onClick"],
+      variant: ButtonProps["variant"],
       text: string,
       className?: string,
     ) => {
       return (
         <Button
           onClick={onClick}
-          size={'small'}
-          className={clsx('flex justify-start inter-small-regular', className)}
+          size={"small"}
+          className={clsx("flex justify-start inter-small-regular", className)}
           variant={variant}
         >
           {text}
@@ -195,11 +182,11 @@ const BatchJobActivityCard = (props: { batchJob: BatchJob }) => {
         <div className='flex mt-6'>
           {canDownload && (
             <div className='flex'>
-              {buildButton(onDeleteFile, 'danger', 'Delete')}
-              {buildButton(onDownloadFile, 'ghost', 'Download', 'ml-2')}
+              {buildButton(onDeleteFile, "danger", "Odstranit")}
+              {buildButton(onDownloadFile, "ghost", "Stáhnout", "ml-2")}
             </div>
           )}
-          {canCancel && buildButton(() => cancelBatchJob(), 'danger', 'Cancel')}
+          {canCancel && buildButton(() => cancelBatchJob(), "danger", "Cancel")}
         </div>
       )
     );
@@ -207,7 +194,7 @@ const BatchJobActivityCard = (props: { batchJob: BatchJob }) => {
 
   return (
     <ActivityCard
-      title={store?.name ?? 'Medusa Team'}
+      title={store?.name ?? "Vicecommerce"}
       icon={<MedusaIcon className='mr-3' size={20} />}
       relativeTimeElapsed={relativeTimeElapsed.rtf}
       date={batchJob.created_at}

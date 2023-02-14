@@ -1,19 +1,19 @@
-import { Customer } from '@medusajs/medusa';
-import { useAdminCustomerGroups, useAdminCustomers } from 'medusa-react';
-import React, { useEffect, useState } from 'react';
-import { HeaderGroup, Row, usePagination, useRowSelect, useTable } from 'react-table';
-import useQueryFilters from '../../../hooks/use-query-filters';
-import Button from '../../fundamentals/button';
-import Modal from '../../molecules/modal';
-import Table from '../../molecules/table';
-import TableContainer from '../../organisms/table-container';
-import { CUSTOMER_GROUPS_CUSTOMERS_TABLE_COLUMNS } from './config';
+import { Customer } from "@medusajs/medusa";
+import { useAdminCustomerGroups, useAdminCustomers } from "medusa-react";
+import React, { useEffect, useState } from "react";
+import { HeaderGroup, Row, usePagination, useRowSelect, useTable } from "react-table";
+import useQueryFilters from "../../../hooks/use-query-filters";
+import Button from "../../fundamentals/button";
+import Modal from "../../molecules/modal";
+import Table from "../../molecules/table";
+import TableContainer from "../../organisms/table-container";
+import { CUSTOMER_GROUPS_CUSTOMERS_TABLE_COLUMNS } from "./config";
 
 /**
  * Default filtering config for querying customers endpoint.
  */
 const defaultQueryProps = {
-  additionalFilters: { expand: 'groups' },
+  additionalFilters: { expand: "groups" },
   limit: 15,
 };
 
@@ -29,7 +29,7 @@ function EditCustomersTableHeaderRow(props: EditCustomersTableHeaderRowProps) {
     <Table.HeadRow {...headerGroup.getHeaderGroupProps()}>
       {headerGroup.headers.map((col, index) => (
         <Table.HeadCell className='w-[100px]' {...col.getHeaderProps()}>
-          {col.render('Header')}
+          {col.render("Header")}
         </Table.HeadCell>
       ))}
     </Table.HeadRow>
@@ -43,13 +43,9 @@ type EditCustomersTableRowProps = { row: Row<Customer> };
  */
 function EditCustomersTableRow(props: EditCustomersTableRowProps) {
   return (
-    <Table.Row
-      color={'inherit'}
-      linkTo={`/a/customers/${props.row.original.id}`}
-      {...props.row.getRowProps()}
-    >
+    <Table.Row color={"inherit"} linkTo={`/a/customers/${props.row.original.id}`} {...props.row.getRowProps()}>
       {props.row.cells.map((cell, index) => (
-        <Table.Cell {...cell.getCellProps()}>{cell.render('Cell', { index })}</Table.Cell>
+        <Table.Cell {...cell.getCellProps()}>{cell.render("Cell", { index })}</Table.Cell>
       ))}
     </Table.Row>
   );
@@ -73,7 +69,7 @@ function EditCustomersTable(props: EditCustomersTableProps) {
   const [numPages, setNumPages] = useState(0);
   const [activeGroupId, setActiveGroupId] = useState();
 
-  const { customer_groups } = useAdminCustomerGroups({ expand: 'customers' });
+  const { customer_groups } = useAdminCustomerGroups({ expand: "customers" });
   const {
     customers = [],
     count = 0,
@@ -84,7 +80,7 @@ function EditCustomersTable(props: EditCustomersTableProps) {
   });
 
   useEffect(() => {
-    if (typeof count !== 'undefined') {
+    if (typeof count !== "undefined") {
       const controlledPageCount = Math.ceil(count / queryObject.limit);
       setNumPages(controlledPageCount);
     }
@@ -115,16 +111,16 @@ function EditCustomersTable(props: EditCustomersTableProps) {
   }, [table.state.selectedRowIds]);
 
   useEffect(() => {
-    setFilters('offset', 0);
+    setFilters("offset", 0);
     table.gotoPage(0);
   }, [activeGroupId]);
 
   const filteringOptions = [
     {
-      title: 'Groups',
+      title: "Skupiny",
       options: [
         {
-          title: 'All',
+          title: "Všechny",
           onClick: () => setActiveGroupId(null),
         },
         ...(customer_groups || []).map((g) => ({
@@ -166,7 +162,7 @@ function EditCustomersTable(props: EditCustomersTableProps) {
     <Modal handleClose={onClose}>
       <Modal.Body>
         <Modal.Header handleClose={onClose}>
-          <h3 className='inter-xlarge-semibold'>Edit Customers</h3>
+          <h3 className='inter-xlarge-semibold'>Upravit zákazníky</h3>
         </Modal.Header>
 
         <Modal.Content>
@@ -178,7 +174,7 @@ function EditCustomersTable(props: EditCustomersTableProps) {
               count: count!,
               offset: queryObject.offset,
               pageSize: queryObject.offset + table.rows.length,
-              title: 'Customers',
+              title: "Zákazníci",
               currentPage: table.state.pageIndex + 1,
               pageCount: table.pageCount,
               nextPage: handleNext,
@@ -213,10 +209,10 @@ function EditCustomersTable(props: EditCustomersTableProps) {
         <Modal.Footer>
           <div className='flex items-center justify-end gap-x-xsmall w-full'>
             <Button variant='ghost' size='small' className='w-eventButton' onClick={onClose}>
-              Cancel
+              Zrušit
             </Button>
             <Button variant='primary' size='small' className='w-eventButton' onClick={handleSubmit}>
-              Save
+              Uložit
             </Button>
           </div>
         </Modal.Footer>

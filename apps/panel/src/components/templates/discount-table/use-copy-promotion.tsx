@@ -1,8 +1,8 @@
-import { useAdminCreateDiscount } from 'medusa-react';
-import { useNavigate } from 'react-router-dom';
-import useNotification from '../../../hooks/use-notification';
-import { getErrorMessage } from '../../../utils/error-messages';
-import { removeNullish } from '../../../utils/remove-nullish';
+import { useAdminCreateDiscount } from "medusa-react";
+import { useNavigate } from "react-router-dom";
+import useNotification from "../../../hooks/use-notification";
+import { getErrorMessage } from "../../../utils/error-messages";
+import { removeNullish } from "../../../utils/remove-nullish";
 
 const useCopyPromotion = () => {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ const useCopyPromotion = () => {
       copy.valid_duration = promotion.valid_duration;
     }
 
-    if (typeof promotion.usage_limit === 'number') {
+    if (typeof promotion.usage_limit === "number") {
       copy.usage_limit = promotion.usage_limit;
     }
 
@@ -60,10 +60,10 @@ const useCopyPromotion = () => {
     await createPromotion.mutate(copy, {
       onSuccess: (result) => {
         navigate(`/a/discounts/${result.discount.id}`);
-        notification('Success', 'Successfully copied discount', 'success');
+        notification("Úspěch", "Úspěšně zkopírovaná sleva", "success");
       },
       onError: (err) => {
-        notification('Error', getErrorMessage(err), 'error');
+        notification("Chyba", getErrorMessage(err), "error");
       },
     });
   };

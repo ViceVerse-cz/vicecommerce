@@ -1,14 +1,14 @@
-import { useAdminReturnReasons } from 'medusa-react';
-import React, { useState } from 'react';
-import Spinner from '../../../components/atoms/spinner';
-import PlusIcon from '../../../components/fundamentals/icons/plus-icon';
-import BreadCrumb from '../../../components/molecules/breadcrumb';
-import BodyCard from '../../../components/organisms/body-card';
-import RadioGroup from '../../../components/organisms/radio-group';
-import TwoSplitPane from '../../../components/templates/two-split-pane';
-import useModal from '../../../hooks/use-toggle-state';
-import CreateReturnReasonModal from './create-reason-modal';
-import ReturnReasonDetail from './detail';
+import { useAdminReturnReasons } from "medusa-react";
+import React, { useState } from "react";
+import Spinner from "../../../components/atoms/spinner";
+import PlusIcon from "../../../components/fundamentals/icons/plus-icon";
+import BreadCrumb from "../../../components/molecules/breadcrumb";
+import BodyCard from "../../../components/organisms/body-card";
+import RadioGroup from "../../../components/organisms/radio-group";
+import TwoSplitPane from "../../../components/templates/two-split-pane";
+import useModal from "../../../hooks/use-toggle-state";
+import CreateReturnReasonModal from "./create-reason-modal";
+import ReturnReasonDetail from "./detail";
 
 const ReturnReasons = () => {
   const { state: isOpen, open, close } = useModal();
@@ -30,13 +30,13 @@ const ReturnReasons = () => {
 
   return (
     <div>
-      <BreadCrumb previousRoute='/a/settings' previousBreadcrumb='Settings' currentPage='Return Reasons' />
+      <BreadCrumb previousRoute='/a/settings' previousBreadcrumb='Nastavení' currentPage='Důvody návratu' />
       <TwoSplitPane>
         <BodyCard
-          title='Return Reasons'
+          title='Důvody návratu'
           actionables={[
             {
-              label: 'Add reason',
+              label: "Přidat důvod",
               icon: (
                 <span className='text-grey-90'>
                   <PlusIcon size={20} />
@@ -45,7 +45,7 @@ const ReturnReasons = () => {
               onClick: open,
             },
           ]}
-          subtitle='Manage reasons for returned items'
+          subtitle='Správa důvodů vrácených položek'
         >
           <div className='mt-large'>
             {isLoading ? (

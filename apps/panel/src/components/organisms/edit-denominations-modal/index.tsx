@@ -1,12 +1,12 @@
-import _ from 'lodash';
-import * as React from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import Button from '../../fundamentals/button';
-import PlusIcon from '../../fundamentals/icons/plus-icon';
-import TrashIcon from '../../fundamentals/icons/trash-icon';
-import IconTooltip from '../../molecules/icon-tooltip';
-import Modal from '../../molecules/modal';
-import CurrencyInput from '../../organisms/currency-input';
+import _ from "lodash";
+import * as React from "react";
+import { v4 as uuidv4 } from "uuid";
+import Button from "../../fundamentals/button";
+import PlusIcon from "../../fundamentals/icons/plus-icon";
+import TrashIcon from "../../fundamentals/icons/trash-icon";
+import IconTooltip from "../../molecules/icon-tooltip";
+import Modal from "../../molecules/modal";
+import CurrencyInput from "../../organisms/currency-input";
 
 export type PriceType = {
   currency_code: string;
@@ -87,7 +87,7 @@ const EditDenominationsModal = ({
           <div className='pt-1'>
             <div className='flex items-center'>
               <label className='inter-base-semibold text-grey-90 mr-1.5'>Ceny</label>
-              <IconTooltip content={'Helpful denominations'} />
+              <IconTooltip content={"Helpful denominations"} />
             </div>
             {denominations.map((field, index) => {
               return (
@@ -99,11 +99,7 @@ const EditDenominationsModal = ({
                       onChange={onCurrencyChange(index)}
                       size='medium'
                     >
-                      <CurrencyInput.Amount
-                        label='Částka'
-                        onChange={onAmountChange(index)}
-                        amount={field.amount}
-                      />
+                      <CurrencyInput.Amount label='Částka' onChange={onAmountChange(index)} amount={field.amount} />
                     </CurrencyInput.Root>
                   </div>
                   <button className='ml-2xlarge'>
@@ -122,18 +118,13 @@ const EditDenominationsModal = ({
               disabled={availableCurrencies.length === 0}
             >
               <PlusIcon size={20} />
-              Add a price
+              Přidat cenu
             </Button>
           </div>
         </Modal.Content>
         <Modal.Footer>
           <div className='w-full flex justify-end'>
-            <Button
-              variant='ghost'
-              size='small'
-              onClick={handleClose}
-              className='mr-2 min-w-[130px] justify-center'
-            >
+            <Button variant='ghost' size='small' onClick={handleClose} className='mr-2 min-w-[130px] justify-center'>
               Zrušit
             </Button>
             <Button
@@ -160,5 +151,5 @@ const augmentWithIds = (list) => {
 };
 
 const stripDenominationFromIndexId = (list) => {
-  return list.map((element) => _.omit(element, 'indexId'));
+  return list.map((element) => _.omit(element, "indexId"));
 };

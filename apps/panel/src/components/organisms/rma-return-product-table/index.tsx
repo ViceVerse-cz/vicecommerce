@@ -1,11 +1,11 @@
-import clsx from 'clsx';
-import React from 'react';
-import { formatAmountWithSymbol } from '../../../utils/prices';
-import Button from '../../fundamentals/button';
-import MinusIcon from '../../fundamentals/icons/minus-icon';
-import PlusIcon from '../../fundamentals/icons/plus-icon';
-import TrashIcon from '../../fundamentals/icons/trash-icon';
-import Table from '../../molecules/table';
+import clsx from "clsx";
+import React from "react";
+import { formatAmountWithSymbol } from "../../../utils/prices";
+import Button from "../../fundamentals/button";
+import MinusIcon from "../../fundamentals/icons/minus-icon";
+import PlusIcon from "../../fundamentals/icons/plus-icon";
+import TrashIcon from "../../fundamentals/icons/trash-icon";
+import Table from "../../molecules/table";
 
 type RMAReturnProductsTableProps = {
   isAdditionalItems?: boolean;
@@ -42,17 +42,16 @@ const RMAReturnProductsTable: React.FC<RMAReturnProductsTableProps> = ({
   return (
     <Table>
       <Table.HeadRow className='text-grey-50 inter-small-semibold'>
-        <Table.HeadCell>Product Details</Table.HeadCell>
-        <Table.HeadCell className='text-right pr-8'>Quantity</Table.HeadCell>
-        <Table.HeadCell className='text-right'>
-          {isAdditionalItems ? 'Unit Price' : 'Refundable'}
-        </Table.HeadCell>
-        <Table.HeadCell></Table.HeadCell>
-        <Table.HeadCell></Table.HeadCell>
+        <Table.HeadCell>Podrobnosti o produktu</Table.HeadCell>
+        <Table.HeadCell className='text-right pr-8'>Množství</Table.HeadCell>
+        <Table.HeadCell className='text-right'>{isAdditionalItems ? "Jednotková cena" : "Vratné"}</Table.HeadCell>
+
+        <Table.HeadCell> </Table.HeadCell>
+        <Table.HeadCell> </Table.HeadCell>
       </Table.HeadRow>
       <Table.Body>
         {itemsToAdd.map((item, index) => (
-          <Table.Row className={clsx('border-b-grey-0 hover:bg-grey-0')}>
+          <Table.Row className={clsx("border-b-grey-0 hover:bg-grey-0")}>
             <Table.Cell>
               <div className='min-w-[240px] flex py-2'>
                 <div className='w-[30px] h-[40px] '>
@@ -60,7 +59,7 @@ const RMAReturnProductsTable: React.FC<RMAReturnProductsTableProps> = ({
                 </div>
                 <div className='inter-small-regular text-grey-50 flex flex-col ml-4'>
                   <span>
-                    <span className='text-grey-90'>{item.product.title}</span>{' '}
+                    <span className='text-grey-90'>{item.product.title}</span>{" "}
                   </span>
                   <span>{item.title}</span>
                 </div>
@@ -74,11 +73,11 @@ const RMAReturnProductsTable: React.FC<RMAReturnProductsTableProps> = ({
                 >
                   <MinusIcon size={16} />
                 </span>
-                <span>{item.quantity || ''}</span>
+                <span>{item.quantity || ""}</span>
                 <span
                   onClick={() => handleToAddQuantity(1, index)}
                   className={clsx(
-                    'w-5 h-5 flex items-center justify-center rounded cursor-pointer hover:bg-grey-20 ml-2',
+                    "w-5 h-5 flex items-center justify-center rounded cursor-pointer hover:bg-grey-20 ml-2",
                   )}
                 >
                   <PlusIcon size={16} />
@@ -86,9 +85,7 @@ const RMAReturnProductsTable: React.FC<RMAReturnProductsTableProps> = ({
               </div>
             </Table.Cell>
             <Table.Cell className='text-right'>{extractPrice(item.prices, order)}</Table.Cell>
-            <Table.Cell className='text-right text-grey-40 pr-1'>
-              {order.currency_code.toUpperCase()}
-            </Table.Cell>
+            <Table.Cell className='text-right text-grey-40 pr-1'>{order.currency_code.toUpperCase()}</Table.Cell>
             <Table.Cell>
               <Button
                 onClick={() => handleRemoveItem(index)}

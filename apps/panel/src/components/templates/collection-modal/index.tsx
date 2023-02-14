@@ -1,14 +1,14 @@
-import { ProductCollection } from '@medusajs/medusa';
-import { useAdminCreateCollection, useAdminUpdateCollection } from 'medusa-react';
-import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import useNotification from '../../../hooks/use-notification';
-import { getErrorMessage } from '../../../utils/error-messages';
-import Button from '../../fundamentals/button';
-import IconTooltip from '../../molecules/icon-tooltip';
-import InputField from '../../molecules/input';
-import Modal from '../../molecules/modal';
-import Metadata, { MetadataField } from '../../organisms/metadata';
+import { ProductCollection } from "@medusajs/medusa";
+import { useAdminCreateCollection, useAdminUpdateCollection } from "medusa-react";
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import useNotification from "../../../hooks/use-notification";
+import { getErrorMessage } from "../../../utils/error-messages";
+import Button from "../../fundamentals/button";
+import IconTooltip from "../../molecules/icon-tooltip";
+import InputField from "../../molecules/input";
+import Modal from "../../molecules/modal";
+import Metadata, { MetadataField } from "../../organisms/metadata";
 
 type CollectionModalProps = {
   onClose: () => void;
@@ -32,12 +32,12 @@ const CollectionModal: React.FC<CollectionModalProps> = ({ onClose, isEdit = fal
   const [metadata, setMetadata] = useState<MetadataField[]>([]);
 
   if (isEdit && !collection) {
-    throw new Error('Collection is required for edit');
+    throw new Error("Sbírka je nutná pro editaci");
   }
 
   useEffect(() => {
-    register('title', { required: true });
-    register('handle');
+    register("title", { required: true });
+    register("handle");
   }, []);
 
   useEffect(() => {
@@ -49,7 +49,7 @@ const CollectionModal: React.FC<CollectionModalProps> = ({ onClose, isEdit = fal
 
       if (collection.metadata) {
         Object.entries(collection.metadata).map(([key, value]) => {
-          if (typeof value === 'string') {
+          if (typeof value === "string") {
             const newMeta = metadata;
             newMeta.push({ key, value });
             setMetadata(newMeta);
@@ -74,11 +74,11 @@ const CollectionModal: React.FC<CollectionModalProps> = ({ onClose, isEdit = fal
         },
         {
           onSuccess: () => {
-            notification('Success', 'Successfully updated collection', 'success');
+            notification("Úspěch", "Úspěšně aktualizovaná sbírka", "success");
             onClose();
           },
           onError: (error) => {
-            notification('Error', getErrorMessage(error), 'error');
+            notification("Chyba", getErrorMessage(error), "error");
           },
         },
       );
@@ -96,11 +96,11 @@ const CollectionModal: React.FC<CollectionModalProps> = ({ onClose, isEdit = fal
         },
         {
           onSuccess: () => {
-            notification('Success', 'Successfully created collection', 'success');
+            notification("Úspěch", "Úspěšně vytvořená kolekce", "success");
             onClose();
           },
           onError: (error) => {
-            notification('Error', getErrorMessage(error), 'error');
+            notification("Chyba", getErrorMessage(error), "error");
           },
         },
       );
@@ -112,32 +112,28 @@ const CollectionModal: React.FC<CollectionModalProps> = ({ onClose, isEdit = fal
       <Modal.Body>
         <Modal.Header handleClose={onClose}>
           <div>
-            <h1 className='inter-xlarge-semibold mb-2xsmall'>
-              {isEdit ? 'Edit Collection' : 'Add Collection'}
-            </h1>
-            <p className='inter-small-regular text-grey-50'>
-              To create a collection, all you need is a title and a handle.
-            </p>
+            <h1 className='inter-xlarge-semibold mb-2xsmall'>{isEdit ? "Edit Collection" : "Add Collection"}</h1>
+            <p className='inter-small-regular text-grey-50'>K vytvoření kolekce potřebujete pouze název a handle.</p>
           </div>
         </Modal.Header>
         <form onSubmit={handleSubmit(submit)}>
           <Modal.Content>
             <div>
-              <h2 className='inter-base-semibold mb-base'>Details</h2>
+              <h2 className='inter-base-semibold mb-base'>Podrobnosti</h2>
               <div className='flex items-center gap-x-base'>
                 <InputField
-                  label='Title'
+                  label='Název'
                   required
-                  placeholder='Sunglasses'
-                  {...register('title', { required: true })}
+                  placeholder='Sluneční brýle'
+                  {...register("title", { required: true })}
                 />
                 <InputField
-                  label='Handle'
+                  label='Rukojeť'
                   placeholder='sunglasses'
-                  {...register('handle')}
+                  {...register("handle")}
                   prefix='/'
                   tooltip={
-                    <IconTooltip content='URL Slug for the collection. Will be auto generated if left blank.' />
+                    <IconTooltip content='URL Slug pro sbírku. Pokud zůstane prázdný, bude vygenerován automaticky.' />
                   }
                 />
               </div>
@@ -149,10 +145,10 @@ const CollectionModal: React.FC<CollectionModalProps> = ({ onClose, isEdit = fal
           <Modal.Footer>
             <div className='flex items-center justify-end w-full gap-x-xsmall'>
               <Button variant='secondary' size='small' type='button' onClick={onClose}>
-                Cancel
+                Zrušit
               </Button>
               <Button variant='primary' size='small' loading={isEdit ? updating : creating}>
-                {`${isEdit ? 'Save' : 'Publish'} collection`}
+                {`${isEdit ? "Uložit" : "Zveřejnit"} kolekci`}
               </Button>
             </div>
           </Modal.Footer>

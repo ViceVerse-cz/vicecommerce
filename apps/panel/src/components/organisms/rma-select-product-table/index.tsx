@@ -1,21 +1,21 @@
-import { LineItem, Order } from '@medusajs/medusa';
-import clsx from 'clsx';
-import React, { Fragment, useContext } from 'react';
-import RMAReturnReasonSubModal from '../../../domain/orders/details/rma-sub-modals/return-reasons';
-import Medusa from '../../../services/api';
-import { isLineItemCanceled } from '../../../utils/is-line-item';
-import { formatAmountWithSymbol } from '../../../utils/prices';
-import CopyToClipboard from '../../atoms/copy-to-clipboard';
-import Button from '../../fundamentals/button';
-import CheckIcon from '../../fundamentals/icons/check-icon';
-import MinusIcon from '../../fundamentals/icons/minus-icon';
-import PlusIcon from '../../fundamentals/icons/plus-icon';
-import { LayeredModalContext } from '../../molecules/modal/layered-modal';
-import Table from '../../molecules/table';
+import { LineItem, Order } from "@medusajs/medusa";
+import clsx from "clsx";
+import React, { Fragment, useContext } from "react";
+import RMAReturnReasonSubModal from "../../../domain/orders/details/rma-sub-modals/return-reasons";
+import Medusa from "../../../services/api";
+import { isLineItemCanceled } from "../../../utils/is-line-item";
+import { formatAmountWithSymbol } from "../../../utils/prices";
+import CopyToClipboard from "../../atoms/copy-to-clipboard";
+import Button from "../../fundamentals/button";
+import CheckIcon from "../../fundamentals/icons/check-icon";
+import MinusIcon from "../../fundamentals/icons/minus-icon";
+import PlusIcon from "../../fundamentals/icons/plus-icon";
+import { LayeredModalContext } from "../../molecules/modal/layered-modal";
+import Table from "../../molecules/table";
 
 type RMASelectProductTableProps = {
-  order: Omit<Order, 'beforeInsert'>;
-  allItems: Omit<LineItem, 'beforeInsert'>[];
+  order: Omit<Order, "beforeInsert">;
+  allItems: Omit<LineItem, "beforeInsert">[];
   toReturn: any;
   setToReturn: (items: any) => void;
   customReturnOptions?: any[];
@@ -59,12 +59,12 @@ const RMASelectProductTable: React.FC<RMASelectProductTableProps> = ({
     const newReturns = { ...toReturn };
 
     if (id in toReturn) {
-      delete newReturns[id];
+      newReturns[id] = undefined;
     } else {
       newReturns[id] = {
         images: imagesOnReturns ? [] : null,
         reason: null,
-        note: '',
+        note: "",
         quantity: item.quantity - item.returned_quantity,
       };
     }
@@ -109,10 +109,10 @@ const RMASelectProductTable: React.FC<RMASelectProductTableProps> = ({
     <Table>
       <Table.Head className='border-none'>
         <Table.HeadRow className='text-grey-50 inter-small-semibold'>
-          <Table.HeadCell colSpan={2}>Product Details</Table.HeadCell>
-          <Table.HeadCell className='text-right pr-8'>Quantity</Table.HeadCell>
-          <Table.HeadCell className='text-right'>Refundable</Table.HeadCell>
-          <Table.HeadCell></Table.HeadCell>
+          <Table.HeadCell colSpan={2}>Podrobnosti o produktu</Table.HeadCell>
+          <Table.HeadCell className='text-right pr-8'>Množství</Table.HeadCell>
+          <Table.HeadCell className='text-right'>Vratné</Table.HeadCell>
+          <Table.HeadCell> </Table.HeadCell>
         </Table.HeadRow>
       </Table.Head>
       <Table.Body>
@@ -125,13 +125,13 @@ const RMASelectProductTable: React.FC<RMASelectProductTableProps> = ({
           const checked = item.id in toReturn;
           return (
             <Fragment key={item.id}>
-              <Table.Row className={clsx('border-b-grey-0 hover:bg-grey-0')}>
+              <Table.Row className={clsx("border-b-grey-0 hover:bg-grey-0")}>
                 <Table.Cell>
                   <div className='items-center ml-1 h-full flex'>
                     <div
                       onClick={() => handleReturnToggle(item)}
                       className={`mr-4 w-5 h-5 flex justify-center text-grey-0 border-grey-30 border cursor-pointer rounded-base ${
-                        checked && 'bg-violet-60'
+                        checked && "bg-violet-60"
                       }`}
                     >
                       <span className='self-center'>{checked && <CheckIcon size={16} />}</span>
@@ -171,11 +171,11 @@ const RMASelectProductTable: React.FC<RMASelectProductTableProps> = ({
                       >
                         <MinusIcon size={16} />
                       </span>
-                      <span>{toReturn[item.id].quantity || ''}</span>
+                      <span>{toReturn[item.id].quantity || ""}</span>
                       <span
                         onClick={() => handleQuantity(1, item)}
                         className={clsx(
-                          'w-5 h-5 flex items-center justify-center rounded cursor-pointer hover:bg-grey-20 ml-2',
+                          "w-5 h-5 flex items-center justify-center rounded cursor-pointer hover:bg-grey-20 ml-2",
                         )}
                       >
                         <PlusIcon size={16} />
@@ -191,28 +191,24 @@ const RMASelectProductTable: React.FC<RMASelectProductTableProps> = ({
                     amount: item.refundable || 0,
                   })}
                 </Table.Cell>
-                <Table.Cell className='text-right text-grey-40 pr-1'>
-                  {order.currency_code.toUpperCase()}
-                </Table.Cell>
+                <Table.Cell className='text-right text-grey-40 pr-1'>{order.currency_code.toUpperCase()}</Table.Cell>
               </Table.Row>
               {checked && !isSwapOrClaim && (
                 <Table.Row className='last:border-b-0 hover:bg-grey-0'>
-                  <Table.Cell></Table.Cell>
+                  <Table.Cell> </Table.Cell>
                   <Table.Cell colSpan={2}>
                     <div className='max-w-[470px] truncate'>
                       {toReturn[item.id]?.reason && (
                         <span className='inter-small-regular text-grey-40'>
                           <span className='text-grey-80 mr-1'>
-                            <span className='inter-small-semibold mr-1'>
-                              {toReturn[item.id]?.reason.label}
-                            </span>
+                            <span className='inter-small-semibold mr-1'>{toReturn[item.id]?.reason.label}</span>
                           </span>
-                          {toReturn[item.id]?.note || ''}
+                          {toReturn[item.id]?.note || ""}
                           <span className='ml-2'>
                             {toReturn[item.id]?.images?.length > 0 && (
                               <>
-                                ({toReturn[item.id]?.images?.length} image{' '}
-                                {toReturn[item.id]?.images?.length > 1 ? 's' : ''})
+                                ({toReturn[item.id]?.images?.length} image{" "}
+                                {toReturn[item.id]?.images?.length > 1 ? "s" : ""})
                               </>
                             )}
                           </span>
@@ -239,7 +235,7 @@ const RMASelectProductTable: React.FC<RMASelectProductTableProps> = ({
                         size='small'
                         className='border border-grey-20'
                       >
-                        Select Reason
+                        Vyberte důvod
                       </Button>
                     </div>
                   </Table.Cell>
@@ -255,7 +251,7 @@ const RMASelectProductTable: React.FC<RMASelectProductTableProps> = ({
 
 const ReturnReasonScreen = (pop, reason, note, customReturnOptions, imagesOnReturns, setReturnReason) => {
   return {
-    title: 'Return Reasons',
+    title: "Return Reasons",
     onBack: () => pop(),
     view: (
       <RMAReturnReasonSubModal

@@ -1,13 +1,13 @@
-import { User } from '@medusajs/medusa';
-import { useAdminUpdateUser } from 'medusa-react';
-import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import useNotification from '../../../hooks/use-notification';
-import { getErrorMessage } from '../../../utils/error-messages';
-import FormValidator from '../../../utils/form-validator';
-import Button from '../../fundamentals/button';
-import InputField from '../../molecules/input';
-import Modal from '../../molecules/modal';
+import { User } from "@medusajs/medusa";
+import { useAdminUpdateUser } from "medusa-react";
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import useNotification from "../../../hooks/use-notification";
+import { getErrorMessage } from "../../../utils/error-messages";
+import FormValidator from "../../../utils/form-validator";
+import Button from "../../fundamentals/button";
+import InputField from "../../molecules/input";
+import Modal from "../../molecules/modal";
 
 type EditUserModalProps = {
   handleClose: () => void;
@@ -37,11 +37,11 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ handleClose, user, onSucc
   const onSubmit = (data: EditUserModalFormData) => {
     mutate(data, {
       onSuccess: () => {
-        notification('Úspěch', 'Uživatel byl aktualizován', 'success');
+        notification("Úspěch", "Uživatel byl aktualizován", "success");
         onSuccess();
       },
       onError: (error) => {
-        notification('Chyba', getErrorMessage(error), 'error');
+        notification("Chyba", getErrorMessage(error), "error");
       },
       onSettled: () => {
         handleClose();
@@ -59,37 +59,37 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ handleClose, user, onSucc
           <Modal.Content>
             <div className='w-full grid grid-cols-2 gap-large mb-base'>
               <InputField
-                label='First Name'
-                placeholder='First name...'
+                label='Jméno'
+                placeholder='Křestní jméno...'
                 required
-                {...register('first_name', {
-                  required: FormValidator.required('First name'),
-                  pattern: FormValidator.whiteSpaceRule('First name'),
-                  minLength: FormValidator.minOneCharRule('First name'),
+                {...register("first_name", {
+                  required: FormValidator.required("First name"),
+                  pattern: FormValidator.whiteSpaceRule("First name"),
+                  minLength: FormValidator.minOneCharRule("First name"),
                 })}
                 errors={errors}
               />
               <InputField
-                label='Last Name'
-                placeholder='Last name...'
+                label='Příjmení'
+                placeholder='Příjmení...'
                 required
-                {...register('last_name', {
-                  required: FormValidator.required('Last name'),
-                  pattern: FormValidator.whiteSpaceRule('Last name'),
-                  minLength: FormValidator.minOneCharRule('last name'),
+                {...register("last_name", {
+                  required: FormValidator.required("Last name"),
+                  pattern: FormValidator.whiteSpaceRule("Last name"),
+                  minLength: FormValidator.minOneCharRule("last name"),
                 })}
                 errors={errors}
               />
             </div>
-            <InputField label='Email' disabled value={user.email} />
+            <InputField label='E-mail' disabled value={user.email} />
           </Modal.Content>
           <Modal.Footer>
             <div className='w-full flex justify-end'>
               <Button variant='ghost' size='small' onClick={handleClose} className='mr-2'>
-                Cancel
+                Zrušit
               </Button>
               <Button loading={isLoading} disabled={isLoading} variant='primary' size='small'>
-                Save
+                Uložit
               </Button>
             </div>
           </Modal.Footer>

@@ -18,16 +18,16 @@ const useGiftCardTableColums = () => {
         ),
       },
       {
-        Header: "Order",
+        Header: "Objednávka",
         accessor: "order",
         Cell: ({ cell: { value }, index }) => (
           <Table.Cell key={index} className='text-grey-90 group-hover:text-violet-60 w-[10%] pl-2'>
-            {value && value?.display_id ? `#${value.display_id}` : <span className='text-grey-90'>-</span>}
+            {value?.display_id ? `#${value.display_id}` : <span className='text-grey-90'>-</span>}
           </Table.Cell>
         ),
       },
       {
-        Header: "Original Amount",
+        Header: "Původní částka",
         accessor: "value",
         Cell: ({ row, cell: { value }, index }) => (
           <Table.Cell key={index}>
@@ -46,7 +46,7 @@ const useGiftCardTableColums = () => {
         ),
       },
       {
-        Header: "Balance",
+        Header: "Balanc",
         accessor: "balance",
         Cell: ({ row, cell: { value }, index }) => (
           <Table.Cell key={index}>
@@ -59,7 +59,7 @@ const useGiftCardTableColums = () => {
               ) : (
                 <div className='flex items-center space-x-2'>
                   <span>N / A</span>
-                  <IconTooltip content={"Region has been deleted"} />
+                  <IconTooltip content={"Oblast byla odstraněna"} />
                 </div>
               )
             ) : (
@@ -69,7 +69,7 @@ const useGiftCardTableColums = () => {
         ),
       },
       {
-        Header: () => <div className='rounded-rounded flex w-full justify-end pr-2'>Created</div>,
+        Header: () => <div className='rounded-rounded flex w-full justify-end pr-2'>Vytvořeno</div>,
         accessor: "created_at",
         Cell: ({ cell: { value }, index }) => (
           <Table.Cell className='pr-2' key={index}>

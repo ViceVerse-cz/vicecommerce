@@ -1,16 +1,16 @@
-import { ReturnReason } from '@medusajs/medusa';
-import { useAdminDeleteReturnReason, useAdminUpdateReturnReason } from 'medusa-react';
-import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import DuplicateIcon from '../../../components/fundamentals/icons/duplicate-icon';
-import TrashIcon from '../../../components/fundamentals/icons/trash-icon';
-import Input from '../../../components/molecules/input';
-import BodyCard from '../../../components/organisms/body-card';
-import DeletePrompt from '../../../components/organisms/delete-prompt';
-import useNotification from '../../../hooks/use-notification';
-import useToggleState from '../../../hooks/use-toggle-state';
-import { getErrorMessage } from '../../../utils/error-messages';
-import CreateReturnReasonModal from './create-reason-modal';
+import { ReturnReason } from "@medusajs/medusa";
+import { useAdminDeleteReturnReason, useAdminUpdateReturnReason } from "medusa-react";
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import DuplicateIcon from "../../../components/fundamentals/icons/duplicate-icon";
+import TrashIcon from "../../../components/fundamentals/icons/trash-icon";
+import Input from "../../../components/molecules/input";
+import BodyCard from "../../../components/organisms/body-card";
+import DeletePrompt from "../../../components/organisms/delete-prompt";
+import useNotification from "../../../hooks/use-notification";
+import useToggleState from "../../../hooks/use-toggle-state";
+import { getErrorMessage } from "../../../utils/error-messages";
+import CreateReturnReasonModal from "./create-reason-modal";
 
 type ReturnReasonDetailsProps = {
   reason: ReturnReason;
@@ -45,10 +45,10 @@ const ReturnReasonDetail = ({ reason }: ReturnReasonDetailsProps) => {
       },
       {
         onSuccess: () => {
-          notification('Success', 'Successfully updated return reason', 'success');
+          notification("Úspěch", "Úspěšně aktualizovaný důvod vrácení", "success");
         },
         onError: (error) => {
-          notification('Error', getErrorMessage(error), 'error');
+          notification("Chyba", getErrorMessage(error), "error");
         },
       },
     );
@@ -75,47 +75,45 @@ const ReturnReasonDetail = ({ reason }: ReturnReasonDetailsProps) => {
       <BodyCard
         actionables={[
           {
-            label: 'Duplicate reason',
+            label: "Duplicitní důvod",
             icon: <DuplicateIcon size={20} />,
             onClick: () => handleOpenDuplicateModal(),
           },
           {
-            label: 'Delete reason',
-            variant: 'danger',
+            label: "Odstranit důvod",
+            variant: "danger",
             icon: <TrashIcon size={20} />,
             onClick: () => handleOpenPrompt(),
           },
         ]}
         events={[
           {
-            label: 'Save',
+            label: "Uložit",
             onClick: handleSubmit(onSave),
           },
           {
-            label: 'Cancel changes',
+            label: "Zrušit změny",
             onClick: handleCancel,
           },
         ]}
-        title='Details'
+        title='Podrobnosti'
         subtitle={reason?.value}
       >
         <form onSubmit={handleSubmit(onSave)}>
-          <Input {...register('label')} label='Label' />
+          <Input {...register("label")} label='Štítek' />
           <Input
-            {...register('description')}
-            label='Description'
+            {...register("description")}
+            label='Popis'
             className='mt-base'
-            placeholder='Customer received the wrong size'
+            placeholder='Zákazník obdržel špatnou velikost'
           />
         </form>
       </BodyCard>
-      {showDuplicateModal && (
-        <CreateReturnReasonModal initialReason={reason} handleClose={handleCloseDuplicateModal} />
-      )}
+      {showDuplicateModal && <CreateReturnReasonModal initialReason={reason} handleClose={handleCloseDuplicateModal} />}
       {showDanger && (
         <DeletePrompt
-          heading='Delete Return Reason'
-          text='Are you sure you want to delete this return reason?'
+          heading='Odstranit důvod vrácení'
+          text='Opravdu chcete tento důvod vrácení odstranit?'
           handleClose={handleClosePrompt}
           onDelete={handleDeletion}
         />

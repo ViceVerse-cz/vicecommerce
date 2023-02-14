@@ -1,6 +1,6 @@
-import React from 'react';
-import Button from '../../fundamentals/button';
-import Modal from '../../molecules/modal';
+import React from "react";
+import Button from "../../fundamentals/button";
+import Modal from "../../molecules/modal";
 
 type ExportModalProps = {
   handleClose: () => void;
@@ -24,12 +24,12 @@ const ExportModal: React.FC<ExportModalProps> = ({ handleClose, title, loading, 
             feature in many ways are controlled by how you filter the list
             overview.
           </div> */}
-          <div className='flex mb-4 inter-small-regular text-grey-50'>Initialize an export of your data</div>
+          <div className='flex mb-4 inter-small-regular text-grey-50'>Inicializujte export dat</div>
         </Modal.Content>
         <Modal.Footer>
           <div className='w-full flex justify-end'>
             <Button variant='ghost' size='small' onClick={handleClose} className='mr-2'>
-              Cancel
+              Zrušit
             </Button>
             <Button loading={loading} disabled={loading} variant='primary' size='small' onClick={onSubmit}>
               Export

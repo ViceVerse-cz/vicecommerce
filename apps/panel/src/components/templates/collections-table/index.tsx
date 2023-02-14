@@ -1,13 +1,13 @@
-import { useAdminCollections } from 'medusa-react';
-import React, { useEffect, useState } from 'react';
-import { usePagination, useTable } from 'react-table';
-import { useDebounce } from '../../../hooks/use-debounce';
-import Spinner from '../../atoms/spinner';
-import Table from '../../molecules/table';
-import { FilteringOptionProps } from '../../molecules/table/filtering-option';
-import TableContainer from '../../organisms/table-container';
-import useCollectionActions from './use-collection-actions';
-import useCollectionTableColumn from './use-collection-column';
+import { useAdminCollections } from "medusa-react";
+import React, { useEffect, useState } from "react";
+import { usePagination, useTable } from "react-table";
+import { useDebounce } from "../../../hooks/use-debounce";
+import Spinner from "../../atoms/spinner";
+import Table from "../../molecules/table";
+import { FilteringOptionProps } from "../../molecules/table/filtering-option";
+import TableContainer from "../../organisms/table-container";
+import useCollectionActions from "./use-collection-actions";
+import useCollectionTableColumn from "./use-collection-column";
 
 const DEFAULT_PAGE_SIZE = 15;
 
@@ -16,7 +16,7 @@ const CollectionsTable: React.FC = () => {
   const [offset, setOffset] = useState(0);
   const limit = DEFAULT_PAGE_SIZE;
 
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [numPages, setNumPages] = useState(0);
 
   const debouncedSearchTerm = useDebounce(query, 300);
@@ -32,7 +32,7 @@ const CollectionsTable: React.FC = () => {
   );
 
   useEffect(() => {
-    if (typeof count !== 'undefined') {
+    if (typeof count !== "undefined") {
       const controlledPageCount = Math.ceil(count / limit);
       setNumPages(controlledPageCount);
     }
@@ -90,12 +90,12 @@ const CollectionsTable: React.FC = () => {
   useEffect(() => {
     setFilteringOptions([
       {
-        title: 'Sort',
+        title: "Třídit",
         options: [
           {
-            title: 'All',
+            title: "Všechny",
             count: collections?.length || 0,
-            onClick: () => console.log('Not implemented yet'),
+            onClick: () => console.log("Not implemented yet"),
           },
         ],
       },
@@ -111,7 +111,7 @@ const CollectionsTable: React.FC = () => {
         count: count!,
         offset,
         pageSize: offset + rows.length,
-        title: 'Collections',
+        title: "Sbírky",
         currentPage: pageIndex + 1,
         pageCount: pageCount,
         nextPage: handleNext,
@@ -124,7 +124,7 @@ const CollectionsTable: React.FC = () => {
         enableSearch
         handleSearch={handleSearch}
         searchValue={query}
-        searchPlaceholder='Search Collections'
+        searchPlaceholder='Vyhledávání ve sbírkách'
         filteringOptions={filteringOptions}
         {...getTableProps()}
       >
@@ -133,7 +133,7 @@ const CollectionsTable: React.FC = () => {
             <Table.HeadRow {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((col) => (
                 <Table.HeadCell className='min-w-[100px]' {...col.getHeaderProps()}>
-                  {col.render('Header')}
+                  {col.render("Header")}
                 </Table.HeadCell>
               ))}
             </Table.HeadRow>
@@ -144,7 +144,7 @@ const CollectionsTable: React.FC = () => {
             <Table.Row>
               <Table.Cell colSpan={columns.length}>
                 <div className='w-full pt-2xlarge flex items-center justify-center'>
-                  <Spinner size={'large'} variant={'secondary'} />
+                  <Spinner size={"large"} variant={"secondary"} />
                 </div>
               </Table.Cell>
             </Table.Row>
@@ -168,13 +168,13 @@ const CollectionRow = ({ row }) => {
 
   return (
     <Table.Row
-      color={'inherit'}
+      color={"inherit"}
       linkTo={`/a/collections/${collection.id}`}
       actions={getActions(collection)}
       {...row.getRowProps()}
     >
       {row.cells.map((cell, index) => {
-        return <Table.Cell {...cell.getCellProps()}>{cell.render('Cell', { index })}</Table.Cell>;
+        return <Table.Cell {...cell.getCellProps()}>{cell.render("Cell", { index })}</Table.Cell>;
       })}
     </Table.Row>
   );

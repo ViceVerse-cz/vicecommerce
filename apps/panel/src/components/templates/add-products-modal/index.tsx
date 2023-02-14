@@ -1,12 +1,12 @@
-import { Product } from '@medusajs/medusa';
-import { useAdminProducts } from 'medusa-react';
-import * as React from 'react';
-import Button from '../../fundamentals/button';
-import Modal from '../../molecules/modal';
-import { SelectableTable } from '../selectable-table';
-import useQueryFilters from '../../../hooks/use-query-filters';
-import { columns, ProductHeader, ProductRow } from './product-table-config';
-import { mapIdsToItems } from './utils';
+import { Product } from "@medusajs/medusa";
+import { useAdminProducts } from "medusa-react";
+import * as React from "react";
+import Button from "../../fundamentals/button";
+import Modal from "../../molecules/modal";
+import { SelectableTable } from "../selectable-table";
+import useQueryFilters from "../../../hooks/use-query-filters";
+import { columns, ProductHeader, ProductRow } from "./product-table-config";
+import { mapIdsToItems } from "./utils";
 
 const defaultQueryProps = {
   limit: 12,
@@ -56,7 +56,7 @@ const AddProductsModal = ({ close, initialSelection, onSave }: AddProductsModalP
     <Modal open handleClose={close}>
       <Modal.Body>
         <Modal.Header handleClose={close}>
-          <h2 className='inter-xlarge-semibold'>Add Products</h2>
+          <h2 className='inter-xlarge-semibold'>Přidat produkty</h2>
         </Modal.Header>
         <Modal.Content>
           <div className='w-full flex flex-col justify-between min-h-[300px] h-full '>
@@ -72,7 +72,7 @@ const AddProductsModal = ({ close, initialSelection, onSave }: AddProductsModalP
               totalCount={count}
               options={{
                 enableSearch: true,
-                searchPlaceholder: 'Search by name or description...',
+                searchPlaceholder: "Vyhledávání podle názvu nebo popisu...",
               }}
               {...params}
             />
@@ -81,10 +81,10 @@ const AddProductsModal = ({ close, initialSelection, onSave }: AddProductsModalP
         <Modal.Footer>
           <div className='w-full flex justify-end gap-2'>
             <Button variant='ghost' className='rounded-rounded h-8 w-[128px]' onClick={close}>
-              Cancel
+              Zrušit
             </Button>
             <Button variant='primary' className='rounded-rounded h-8 w-[128px]' onClick={handleSave}>
-              Save
+              Uložit
             </Button>
           </div>
         </Modal.Footer>

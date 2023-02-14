@@ -1,7 +1,7 @@
-import { omit } from 'lodash';
-import qs from 'qs';
-import { useMemo, useReducer, useState } from 'react';
-import { relativeDateFormatToTimestamp } from '../../../utils/time';
+import { omit } from "lodash";
+import qs from "qs";
+import { useMemo, useReducer, useState } from "react";
+import { relativeDateFormatToTimestamp } from "../../../utils/time";
 
 type GiftCardDateFilter = null | {
   gt?: string;
@@ -9,15 +9,15 @@ type GiftCardDateFilter = null | {
 };
 
 type GiftCardFilterAction =
-  | { type: 'setQuery'; payload: string | null }
-  | { type: 'setFilters'; payload: GiftCardFilterState }
-  | { type: 'reset'; payload: GiftCardFilterState }
-  | { type: 'setOffset'; payload: number }
-  | { type: 'setDefaults'; payload: GiftCardDefaultFilters | null }
-  | { type: 'setDate'; payload: GiftCardDateFilter }
-  | { type: 'setStatus'; payload: null | string[] | string }
-  | { type: 'setFulfillment'; payload: null | string[] | string }
-  | { type: 'setPayment'; payload: null | string[] | string };
+  | { type: "setQuery"; payload: string | null }
+  | { type: "setFilters"; payload: GiftCardFilterState }
+  | { type: "reset"; payload: GiftCardFilterState }
+  | { type: "setOffset"; payload: number }
+  | { type: "setDefaults"; payload: GiftCardDefaultFilters | null }
+  | { type: "setDate"; payload: GiftCardDateFilter }
+  | { type: "setStatus"; payload: null | string[] | string }
+  | { type: "setFulfillment"; payload: null | string[] | string }
+  | { type: "setPayment"; payload: null | string[] | string };
 
 interface GiftCardFilterState {
   query?: string | null;
@@ -42,24 +42,16 @@ interface GiftCardFilterState {
   additionalFilters: GiftCardDefaultFilters | null;
 }
 
-const allowedFilters = [
-  'status',
-  'fulfillment_status',
-  'payment_status',
-  'created_at',
-  'q',
-  'offset',
-  'limit',
-];
+const allowedFilters = ["status", "fulfillment_status", "payment_status", "created_at", "q", "offset", "limit"];
 
 const DefaultTabs = {
   incomplete: {
-    fulfillment_status: ['not_fulfilled', 'fulfilled'],
-    payment_status: ['awaiting'],
+    fulfillment_status: ["not_fulfilled", "fulfilled"],
+    payment_status: ["awaiting"],
   },
   complete: {
-    fulfillment_status: ['shipped'],
-    payment_status: ['captured'],
+    fulfillment_status: ["shipped"],
+    payment_status: ["captured"],
   },
 };
 
@@ -69,7 +61,7 @@ const formatDateFilter = (filter: GiftCardDateFilter) => {
   }
 
   const dateFormatted = Object.entries(filter).reduce((acc, [key, value]) => {
-    if (value.includes('|')) {
+    if (value.includes("|")) {
       acc[key] = relativeDateFormatToTimestamp(value);
     } else {
       acc[key] = value;
@@ -82,7 +74,7 @@ const formatDateFilter = (filter: GiftCardDateFilter) => {
 
 const reducer = (state: GiftCardFilterState, action: GiftCardFilterAction): GiftCardFilterState => {
   switch (action.type) {
-    case 'setFilters': {
+    case "setFilters": {
       return {
         ...state,
         fulfillment: action.payload.fulfillment,
@@ -92,26 +84,26 @@ const reducer = (state: GiftCardFilterState, action: GiftCardFilterAction): Gift
         query: action?.payload?.query,
       };
     }
-    case 'setQuery': {
+    case "setQuery": {
       return {
         ...state,
         query: action.payload,
       };
     }
-    case 'setDate': {
+    case "setDate": {
       const newDateFilters = state.date;
       return {
         ...state,
         date: newDateFilters,
       };
     }
-    case 'setOffset': {
+    case "setOffset": {
       return {
         ...state,
         offset: action.payload,
       };
     }
-    case 'reset': {
+    case "reset": {
       return action.payload;
     }
     default: {
@@ -137,18 +129,15 @@ const eqSet = (as: Set<string>, bs: Set<string>) => {
   return true;
 };
 
-export const useGiftCardFilters = (
-  existing?: string,
-  defaultFilters: GiftCardDefaultFilters | null = null,
-) => {
-  if (existing && existing[0] === '?') {
+export const useGiftCardFilters = (existing?: string, defaultFilters: GiftCardDefaultFilters | null = null) => {
+  if (existing && existing[0] === "?") {
     existing = existing.substring(1);
   }
 
   const initial = useMemo(() => parseQueryString(existing, defaultFilters), [existing, defaultFilters]);
 
   const initialTabs = useMemo(() => {
-    const storageString = localStorage.getItem('GiftCards::filters');
+    const storageString = localStorage.getItem("GiftCards::filters");
     if (storageString) {
       const savedTabs = JSON.parse(storageString);
 
@@ -171,39 +160,39 @@ export const useGiftCardFilters = (
   const [tabs, setTabs] = useState(initialTabs);
 
   const setDateFilter = (filter: GiftCardDateFilter | null) => {
-    dispatch({ type: 'setDate', payload: filter });
+    dispatch({ type: "setDate", payload: filter });
   };
 
   const setFulfillmentFilter = (filter: string[] | string | null) => {
-    dispatch({ type: 'setFulfillment', payload: filter });
+    dispatch({ type: "setFulfillment", payload: filter });
   };
 
   const setPaymentFilter = (filter: string[] | string | null) => {
-    dispatch({ type: 'setPayment', payload: filter });
+    dispatch({ type: "setPayment", payload: filter });
   };
 
   const setStatusFilter = (filter: string[] | string | null) => {
-    dispatch({ type: 'setStatus', payload: filter });
+    dispatch({ type: "setStatus", payload: filter });
   };
 
   const setDefaultFilters = (filters: GiftCardDefaultFilters | null) => {
-    dispatch({ type: 'setDefaults', payload: filters });
+    dispatch({ type: "setDefaults", payload: filters });
   };
 
   const paginate = (direction: 1 | -1) => {
     if (direction > 0) {
       const nextOffset = state.offset + state.limit;
 
-      dispatch({ type: 'setOffset', payload: nextOffset });
+      dispatch({ type: "setOffset", payload: nextOffset });
     } else {
       const nextOffset = Math.max(state.offset - state.limit, 0);
-      dispatch({ type: 'setOffset', payload: nextOffset });
+      dispatch({ type: "setOffset", payload: nextOffset });
     }
   };
 
   const reset = () => {
     dispatch({
-      type: 'setFilters',
+      type: "setFilters",
       payload: {
         ...state,
         offset: 0,
@@ -229,24 +218,24 @@ export const useGiftCardFilters = (
   };
 
   const setFilters = (filters: GiftCardFilterState) => {
-    dispatch({ type: 'setFilters', payload: filters });
+    dispatch({ type: "setFilters", payload: filters });
   };
 
   const setQuery = (queryString: string | null) => {
-    dispatch({ type: 'setQuery', payload: queryString });
+    dispatch({ type: "setQuery", payload: queryString });
   };
 
   const getQueryObject = () => {
     const toQuery: any = { ...state.additionalFilters };
     for (const [key, value] of Object.entries(state)) {
-      if (key === 'query') {
-        if (value && typeof value === 'string') {
-          toQuery['q'] = value;
+      if (key === "query") {
+        if (value && typeof value === "string") {
+          toQuery["q"] = value;
         }
-      } else if (key === 'offset' || key === 'limit') {
+      } else if (key === "offset" || key === "limit") {
         toQuery[key] = value;
       } else if (value.open) {
-        if (key === 'date') {
+        if (key === "date") {
           toQuery[stateFilterMap[key]] = formatDateFilter(value.filter as GiftCardDateFilter);
         } else {
           toQuery[stateFilterMap[key]] = value.filter;
@@ -267,11 +256,11 @@ export const useGiftCardFilters = (
 
     const toQuery: any = {};
     for (const [key, value] of Object.entries(objToUse)) {
-      if (key === 'query') {
-        if (value && typeof value === 'string') {
-          toQuery['q'] = value;
+      if (key === "query") {
+        if (value && typeof value === "string") {
+          toQuery["q"] = value;
         }
-      } else if (key === 'offset' || key === 'limit') {
+      } else if (key === "offset" || key === "limit") {
         toQuery[key] = value;
       } else if (value.open) {
         toQuery[stateFilterMap[key]] = value.filter;
@@ -291,7 +280,7 @@ export const useGiftCardFilters = (
   const representationString = useMemo(() => getRepresentationString(), [state]);
 
   const activeFilterTab = useMemo(() => {
-    const clean = omit(representationObject, ['limit', 'offset']);
+    const clean = omit(representationObject, ["limit", "offset"]);
     const stringified = qs.stringify(clean);
 
     const existsInSaved = tabs.find((el) => el.representationString === stringified);
@@ -333,12 +322,12 @@ export const useGiftCardFilters = (
   const availableTabs = useMemo(() => {
     return [
       {
-        label: 'Complete',
-        value: 'complete',
+        label: "Kompletní",
+        value: "complete",
       },
       {
-        label: 'Incomplete',
-        value: 'incomplete',
+        label: "Neúplné",
+        value: "incomplete",
       },
       ...tabs,
     ];
@@ -382,16 +371,16 @@ export const useGiftCardFilters = (
           filter: val,
         };
       }
-      dispatch({ type: 'setFilters', payload: toSubmit });
+      dispatch({ type: "setFilters", payload: toSubmit });
     }
   };
 
   const saveTab = (tabName: string, filters: GiftCardFilterState) => {
     const repObj = getRepresentationObject({ ...filters });
-    const clean = omit(repObj, ['limit', 'offset']);
+    const clean = omit(repObj, ["limit", "offset"]);
     const repString = qs.stringify(clean, { skipNulls: true });
 
-    const storedString = localStorage.getItem('GiftCards::filters');
+    const storedString = localStorage.getItem("GiftCards::filters");
 
     let existing: null | object = null;
 
@@ -401,11 +390,11 @@ export const useGiftCardFilters = (
 
     if (existing) {
       existing[tabName] = repString;
-      localStorage.setItem('GiftCards::filters', JSON.stringify(existing));
+      localStorage.setItem("GiftCards::filters", JSON.stringify(existing));
     } else {
       const newFilters = {};
       newFilters[tabName] = repString;
-      localStorage.setItem('GiftCards::filters', JSON.stringify(newFilters));
+      localStorage.setItem("GiftCards::filters", JSON.stringify(newFilters));
     }
 
     setTabs((prev) => {
@@ -420,11 +409,11 @@ export const useGiftCardFilters = (
       ];
     });
 
-    dispatch({ type: 'setFilters', payload: filters });
+    dispatch({ type: "setFilters", payload: filters });
   };
 
   const removeTab = (tabValue: string) => {
-    const storedString = localStorage.getItem('GiftCards::filters');
+    const storedString = localStorage.getItem("GiftCards::filters");
 
     let existing: null | object = null;
 
@@ -433,8 +422,8 @@ export const useGiftCardFilters = (
     }
 
     if (existing) {
-      delete existing[tabValue];
-      localStorage.setItem('GiftCards::filters', JSON.stringify(existing));
+      existing[tabValue] = undefined;
+      localStorage.setItem("GiftCards::filters", JSON.stringify(existing));
     }
 
     setTabs((prev) => {
@@ -471,17 +460,17 @@ export const useGiftCardFilters = (
 };
 
 const filterStateMap = {
-  status: 'status',
-  fulfillment_status: 'fulfillment',
-  payment_status: 'payment',
-  created_at: 'date',
+  status: "status",
+  fulfillment_status: "fulfillment",
+  payment_status: "payment",
+  created_at: "date",
 };
 
 const stateFilterMap = {
-  status: 'status',
-  fulfillment: 'fulfillment_status',
-  payment: 'payment_status',
-  date: 'created_at',
+  status: "status",
+  fulfillment: "fulfillment_status",
+  payment: "payment_status",
+  date: "created_at",
 };
 
 const parseQueryString = (
@@ -515,26 +504,26 @@ const parseQueryString = (
     for (const [key, value] of Object.entries(filters)) {
       if (allowedFilters.includes(key)) {
         switch (key) {
-          case 'offset': {
-            if (typeof value === 'string') {
+          case "offset": {
+            if (typeof value === "string") {
               defaultVal.offset = parseInt(value);
             }
             break;
           }
-          case 'limit': {
-            if (typeof value === 'string') {
+          case "limit": {
+            if (typeof value === "string") {
               defaultVal.limit = parseInt(value);
             }
             break;
           }
-          case 'q': {
-            if (typeof value === 'string') {
+          case "q": {
+            if (typeof value === "string") {
               defaultVal.query = value;
             }
             break;
           }
-          case 'status': {
-            if (typeof value === 'string' || Array.isArray(value)) {
+          case "status": {
+            if (typeof value === "string" || Array.isArray(value)) {
               defaultVal.status = {
                 open: true,
                 filter: value,
@@ -542,8 +531,8 @@ const parseQueryString = (
             }
             break;
           }
-          case 'fulfillment_status': {
-            if (typeof value === 'string' || Array.isArray(value)) {
+          case "fulfillment_status": {
+            if (typeof value === "string" || Array.isArray(value)) {
               defaultVal.fulfillment = {
                 open: true,
                 filter: value,
@@ -551,8 +540,8 @@ const parseQueryString = (
             }
             break;
           }
-          case 'payment_status': {
-            if (typeof value === 'string' || Array.isArray(value)) {
+          case "payment_status": {
+            if (typeof value === "string" || Array.isArray(value)) {
               defaultVal.payment = {
                 open: true,
                 filter: value,
@@ -560,7 +549,7 @@ const parseQueryString = (
             }
             break;
           }
-          case 'created_at': {
+          case "created_at": {
             defaultVal.date = {
               open: true,
               filter: value,

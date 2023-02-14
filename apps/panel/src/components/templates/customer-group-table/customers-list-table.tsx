@@ -1,16 +1,16 @@
-import { UseMutateFunction } from '@tanstack/react-query';
-import { HeaderGroup, Row, usePagination, useSortBy, useTable } from 'react-table';
+import { UseMutateFunction } from "@tanstack/react-query";
+import { HeaderGroup, Row, usePagination, useSortBy, useTable } from "react-table";
 
-import { Customer } from '@medusajs/medusa';
+import { Customer } from "@medusajs/medusa";
 
-import { useNavigate } from 'react-router-dom';
-import useQueryFilters from '../../../hooks/use-query-filters';
-import DetailsIcon from '../../fundamentals/details-icon';
-import TrashIcon from '../../fundamentals/icons/trash-icon';
-import Table from '../../molecules/table';
-import { FilteringOptionProps } from '../../molecules/table/filtering-option';
-import TableContainer from '../../organisms/table-container';
-import { CUSTOMER_GROUPS_CUSTOMERS_LIST_TABLE_COLUMNS } from './config';
+import { useNavigate } from "react-router-dom";
+import useQueryFilters from "../../../hooks/use-query-filters";
+import DetailsIcon from "../../fundamentals/details-icon";
+import TrashIcon from "../../fundamentals/icons/trash-icon";
+import Table from "../../molecules/table";
+import { FilteringOptionProps } from "../../molecules/table/filtering-option";
+import TableContainer from "../../organisms/table-container";
+import { CUSTOMER_GROUPS_CUSTOMERS_LIST_TABLE_COLUMNS } from "./config";
 
 /* ********************************** */
 /* ************** TYPES ************* */
@@ -48,11 +48,11 @@ function CustomersListTableHeaderRow(props: CustomersListTableHeaderRowProps) {
     <Table.HeadRow {...headerGroup.getHeaderGroupProps()}>
       {props.headerGroup.headers.map((col, index) => {
         const { render, getHeaderProps, getSortByToggleProps } = col;
-        const className = index ? 'w-[100px]' : 'w-[60px]';
+        const className = index ? "w-[100px]" : "w-[60px]";
 
         return (
           <Table.HeadCell className={className} {...getHeaderProps(getSortByToggleProps())}>
-            {render('Header')}
+            {render("Header")}
           </Table.HeadCell>
         );
       })}
@@ -75,7 +75,7 @@ function CustomersListTableRow(props: CustomersListTableRowProps) {
 
   const actions = [
     {
-      label: 'Details',
+      label: "Podrobnosti",
       onClick: () => navigate(`/a/customers/${row.original.id}`),
       icon: <DetailsIcon size={20} />,
     },
@@ -85,8 +85,8 @@ function CustomersListTableRow(props: CustomersListTableRowProps) {
     //   icon: <MailIcon size={20} />,
     // },
     {
-      label: 'Delete from the group',
-      variant: 'danger',
+      label: "Odstranit ze skupiny",
+      variant: "danger",
       onClick: () =>
         removeCustomers({
           customer_ids: [{ id: row.original.id }],
@@ -97,13 +97,13 @@ function CustomersListTableRow(props: CustomersListTableRowProps) {
 
   return (
     <Table.Row
-      color={'inherit'}
+      color={"inherit"}
       actions={actions}
       linkTo={`/a/customers/${props.row.original.id}`}
       {...props.row.getRowProps()}
     >
       {props.row.cells.map((cell, index) => (
-        <Table.Cell {...cell.getCellProps()}>{cell.render('Cell', { index })}</Table.Cell>
+        <Table.Cell {...cell.getCellProps()}>{cell.render("Cell", { index })}</Table.Cell>
       ))}
     </Table.Row>
   );
@@ -113,8 +113,7 @@ function CustomersListTableRow(props: CustomersListTableRowProps) {
  * Render a list of customers that belong to a customer group.
  */
 function CustomersListTable(props: CustomersListTableProps) {
-  const { customers, removeCustomers, setQuery, paginate, filteringOptions, queryObject, count, isLoading } =
-    props;
+  const { customers, removeCustomers, setQuery, paginate, filteringOptions, queryObject, count, isLoading } = props;
 
   const tableConfig = {
     data: customers,
@@ -167,7 +166,7 @@ function CustomersListTable(props: CustomersListTableProps) {
         count: count!,
         offset: queryObject.offset,
         pageSize: queryObject.offset + table.rows.length,
-        title: 'Customer Groups',
+        title: "Skupiny zákazníků",
         currentPage: table.state.pageIndex + 1,
         pageCount: table.pageCount,
         nextPage: handleNext,

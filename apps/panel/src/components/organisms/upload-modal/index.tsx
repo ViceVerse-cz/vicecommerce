@@ -1,15 +1,15 @@
-import React, { ReactNode, useState } from 'react';
-import clsx from 'clsx';
+import React, { ReactNode, useState } from "react";
+import clsx from "clsx";
 
-import Modal from '../../molecules/modal';
-import Button from '../../fundamentals/button';
-import FileIcon from '../../fundamentals/icons/file-icon';
-import TrashIcon from '../../fundamentals/icons/trash-icon';
-import DownloadIcon from '../../fundamentals/icons/download-icon';
-import XCircleIcon from '../../fundamentals/icons/x-circle-icon';
-import CheckCircleIcon from '../../fundamentals/icons/check-circle-icon';
-import WarningCircle from '../../fundamentals/icons/warning-circle';
-import CrossIcon from '../../fundamentals/icons/cross-icon';
+import Modal from "../../molecules/modal";
+import Button from "../../fundamentals/button";
+import FileIcon from "../../fundamentals/icons/file-icon";
+import TrashIcon from "../../fundamentals/icons/trash-icon";
+import DownloadIcon from "../../fundamentals/icons/download-icon";
+import XCircleIcon from "../../fundamentals/icons/x-circle-icon";
+import CheckCircleIcon from "../../fundamentals/icons/check-circle-icon";
+import WarningCircle from "../../fundamentals/icons/warning-circle";
+import CrossIcon from "../../fundamentals/icons/cross-icon";
 
 type FileSummaryProps = {
   name: string;
@@ -36,7 +36,7 @@ function FileSummary(props: FileSummaryProps) {
       />
       <div className='relative flex items-center rounded-xl border border-1 mt-6'>
         <div className='m-4'>
-          <FileIcon size={30} fill={progress ? '#9CA3AF' : '#2DD4BF'} />
+          <FileIcon size={30} fill={progress ? "#9CA3AF" : "#2DD4BF"} />
         </div>
 
         <div className='flex-1 my-6'>
@@ -119,16 +119,16 @@ function DropArea(props: DropAreaProps) {
       onDragLeave={() => setIsDragOver(false)}
       onDragOver={onDragOver}
       onDrop={handleFileDrop}
-      className={clsx('flex flex-col justify-center items-center border border-dashed rounded-xl mt-3 p-6', {
-        'opacity-50': isDragOver,
+      className={clsx("flex flex-col justify-center items-center border border-dashed rounded-xl mt-3 p-6", {
+        "opacity-50": isDragOver,
       })}
     >
       <span className='text-grey-50 text-small'>
         Drop your file here, or
         <a className='text-violet-60'>
           <label className='cursor-pointer' htmlFor='upload-form-file'>
-            {' '}
-            click to browse.
+            {" "}
+            klikněte pro procházení.
           </label>
           <input
             type='file'
@@ -140,7 +140,7 @@ function DropArea(props: DropAreaProps) {
           />
         </a>
       </span>
-      <span className='text-grey-40 text-small'>Only .csv files are supported.</span>
+      <span className='text-grey-40 text-small'>Podporovány jsou pouze soubory .csv.</span>
     </div>
   );
 }
@@ -201,13 +201,13 @@ function UploadModal(props: UploadModalProps) {
       <Modal.Body>
         <Modal.Content>
           <div className='flex justify-between'>
-            <span className='text-2xl text-grey-90 inter-large-semibold py-4'>Import {fileTitle}</span>
+            <span className='text-2xl text-grey-90 inter-large-semibold py-4'>Importovat {fileTitle}</span>
             <button onClick={onClose} className='text-grey-50 cursor-pointer'>
               <CrossIcon size={20} />
             </button>
           </div>
 
-          <div className='text-grey-90 text-base inter-large-semibold mb-1'>Import {fileTitle}</div>
+          <div className='text-grey-90 text-base inter-large-semibold mb-1'>Importovat {fileTitle}</div>
 
           <p className='text-grey-50 mb-4 text-base'>{description1Text}</p>
 
@@ -250,23 +250,12 @@ function UploadModal(props: UploadModalProps) {
         <Modal.Footer>
           <div className='flex w-full h-8 justify-end'>
             <div className='flex gap-2'>
-              <Button
-                variant='secondary'
-                className='mr-2 text-small justify-center'
-                size='small'
-                onClick={onClose}
-              >
-                Cancel
+              <Button variant='secondary' className='mr-2 text-small justify-center' size='small' onClick={onClose}>
+                Zrušit
               </Button>
 
-              <Button
-                size='small'
-                disabled={!canImport}
-                variant='primary'
-                className='text-small'
-                onClick={onSubmit}
-              >
-                Import List
+              <Button size='small' disabled={!canImport} variant='primary' className='text-small' onClick={onSubmit}>
+                Importní seznam
               </Button>
             </div>
           </div>

@@ -46,12 +46,12 @@ const GiftCardBanner: React.FC<GiftCardBannerProps> = ({
       icon: <EditIcon size={16} />,
     },
     {
-      label: status === "published" ? "Unpublish" : "Publish",
+      label: status === "published" ? "Zrušit publikování" : "Zveřejnit",
       onClick: onUnpublish,
       icon: <UnpublishIcon size={16} />,
     },
     {
-      label: "Delete",
+      label: "Odstranit",
       onClick: onDelete,
       icon: <TrashIcon size={16} />,
       variant: "danger",
@@ -80,7 +80,7 @@ const GiftCardBanner: React.FC<GiftCardBannerProps> = ({
           <TagGrid tags={denominations} badgeVariant='default' />
           <StatusIndicator
             variant={status === "published" ? "success" : "danger"}
-            title={status === "published" ? "Published" : "Unpublished"}
+            title={status === "published" ? "Zveřejněno" : "Nepublikované"}
           />
         </div>
       </BannerCard.Footer>

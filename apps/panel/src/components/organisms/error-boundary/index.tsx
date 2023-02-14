@@ -1,8 +1,8 @@
-import { AxiosError } from 'axios';
-import { useNavigate } from 'react-router-dom';
-import React, { ErrorInfo } from 'react';
-import { analytics, getAnalyticsConfig } from '../../../services/analytics';
-import Button from '../../fundamentals/button';
+import { AxiosError } from "axios";
+import { useNavigate } from "react-router-dom";
+import React, { ErrorInfo } from "react";
+import { analytics, getAnalyticsConfig } from "../../../services/analytics";
+import Button from "../../fundamentals/button";
 
 type State = {
   hasError: boolean;
@@ -41,7 +41,7 @@ class ErrorBoundary extends React.Component<Props, State> {
     }
 
     const properties = getTrackingInfo(error, errorInfo);
-    analytics.track('error', properties);
+    analytics.track("error", properties);
   }
 
   public dismissError = () => {
@@ -65,12 +65,11 @@ class ErrorBoundary extends React.Component<Props, State> {
 
               <div className='w-full flex items-center  mt-xlarge'>
                 <Button size='small' variant='primary' onClick={this.dismissError}>
-                  Back to dashboard
+                  Zpět na ovládací panel
                 </Button>
               </div>
             </div>
           </div>
-          <div></div>
         </div>
       );
     }
@@ -80,7 +79,7 @@ class ErrorBoundary extends React.Component<Props, State> {
 }
 
 const isNetworkError = (error: Error): error is AxiosError => {
-  return error['response'] !== undefined && error['response'] !== null;
+  return error["response"] !== undefined && error["response"] !== null;
 };
 
 const shouldTrackEvent = async (error: Error) => {
@@ -105,19 +104,19 @@ const shouldTrackEvent = async (error: Error) => {
 };
 
 const errorMessage = (status?: number) => {
-  const defaultMessage = 'An unknown error occured';
+  const defaultMessage = "Došlo k neznámé chybě";
 
   if (!status) {
     return defaultMessage;
   }
 
   const message = {
-    400: 'Bad request',
-    401: 'You are not logged in',
-    403: 'You do not have permission perform this action',
-    404: 'Page was not found',
-    500: 'An unknown server error occured',
-    503: 'Server is currently unavailable',
+    400: "Špatná žádost",
+    401: "Nejste přihlášeni",
+    403: "K provedení této akce nemáte oprávnění",
+    404: "Stránka nebyla nalezena",
+    500: "Došlo k neznámé chybě serveru",
+    503: "Server je momentálně nedostupný",
   }[status];
 
   return message || defaultMessage;
@@ -125,19 +124,19 @@ const errorMessage = (status?: number) => {
 
 const errorDescription = (status?: number) => {
   const defaultDescription =
-    'An error occurred with unspecified causes, this is most likely due to a techinical issue on our end. Please try refreshing the page. If the issue keeps happening, contact your administrator.';
+    "Došlo k chybě s blíže nespecifikovanou příčinou, která je pravděpodobně způsobena technickým problémem na naší straně. Zkuste prosím stránku obnovit. Pokud problém přetrvává, obraťte se na správce.";
 
   if (!status) {
     return defaultDescription;
   }
 
   const description = {
-    400: 'The request was malformed, fix your request and please try again.',
-    401: 'You are not logged in, please log in to proceed.',
-    403: 'You do not have permission perform this action, if you think this is a mistake, contact your administrator.',
-    404: 'The page you have requested was not found, please check the URL and try again.',
-    500: 'The server was not able to handle your request, this is mostly likely due to a techinical issue on our end. Please try again. If the issue keeps happening, contact your administrator.',
-    503: 'The server is temporarily unavailable, and your request could not be processed. Please try again later. If the issue keeps happening, contact your administrator.',
+    400: "Požadavek byl chybně formulován, opravte jej a zkuste to prosím znovu.",
+    401: "Nejste přihlášeni, pro pokračování se prosím přihlaste.",
+    403: "K provedení této akce nemáte oprávnění, pokud se domníváte, že se jedná o chybu, obraťte se na správce.",
+    404: "Požadovaná stránka nebyla nalezena, zkontrolujte prosím adresu URL a zkuste to znovu.",
+    500: "Server nebyl schopen zpracovat váš požadavek, což je pravděpodobně způsobeno technickým problémem na naší straně. Zkuste to prosím znovu. Pokud se problém opakuje, obraťte se na správce.",
+    503: "Server je dočasně nedostupný a váš požadavek nemohl být zpracován. Zkuste to prosím později. Pokud se problém opakuje, obraťte se na správce.",
   }[status];
 
   return description || defaultDescription;

@@ -13,8 +13,8 @@ const useCollectionActions = (collection) => {
 
   const handleDelete = async () => {
     const shouldDelete = await dialog({
-      heading: "Delete Collection",
-      text: "Are you sure you want to delete this collection?",
+      heading: "Odstranění sbírky",
+      text: "Opravdu chcete tuto sbírku odstranit?",
     });
 
     if (shouldDelete) {
@@ -29,7 +29,7 @@ const useCollectionActions = (collection) => {
       icon: <EditIcon size={20} />,
     },
     {
-      label: "Delete",
+      label: "Odstranit",
       variant: "danger",
       onClick: handleDelete,
       icon: <TrashIcon size={20} />,

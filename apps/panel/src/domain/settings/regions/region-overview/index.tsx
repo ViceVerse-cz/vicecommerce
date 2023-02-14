@@ -1,15 +1,15 @@
-import { useAdminRegions } from 'medusa-react';
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Fade from '../../../../components/atoms/fade-wrapper';
-import Button from '../../../../components/fundamentals/button';
-import PlusIcon from '../../../../components/fundamentals/icons/plus-icon';
-import RadioGroup from '../../../../components/organisms/radio-group';
-import Section from '../../../../components/organisms/section';
-import { useAnalytics } from '../../../../context/analytics';
-import useToggleState from '../../../../hooks/use-toggle-state';
-import NewRegion from '../new';
-import RegionCard from './region-card';
+import { useAdminRegions } from "medusa-react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Fade from "../../../../components/atoms/fade-wrapper";
+import Button from "../../../../components/fundamentals/button";
+import PlusIcon from "../../../../components/fundamentals/icons/plus-icon";
+import RadioGroup from "../../../../components/organisms/radio-group";
+import Section from "../../../../components/organisms/section";
+import { useAnalytics } from "../../../../context/analytics";
+import useToggleState from "../../../../hooks/use-toggle-state";
+import NewRegion from "../new";
+import RegionCard from "./region-card";
 
 type Props = {
   id?: string;
@@ -59,7 +59,7 @@ const RegionOverview = ({ id }: Props) => {
   return (
     <>
       <Section
-        title='Regions'
+        title='Regiony'
         customActions={
           <div>
             <Button variant='ghost' size='small' className='h-xlarge w-xlarge' onClick={toggle}>
@@ -69,9 +69,7 @@ const RegionOverview = ({ id }: Props) => {
         }
         className='h-full'
       >
-        <p className='text-base-regular text-grey-50 mt-2xsmall'>
-          Spravujte trhy, na kterých budete působit.
-        </p>
+        <p className='text-base-regular text-grey-50 mt-2xsmall'>Spravujte trhy, na kterých budete působit.</p>
         <div className='mt-large'>
           <RadioGroup.Root value={selectedRegion} onValueChange={handleChange}>
             {regions?.map((region) => (

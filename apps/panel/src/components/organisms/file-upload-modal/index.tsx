@@ -1,6 +1,6 @@
-import React, { useRef, useState } from 'react';
-import FileUploadField from '../../atoms/file-upload-field';
-import Modal from '../../molecules/modal';
+import React, { useRef, useState } from "react";
+import FileUploadField from "../../atoms/file-upload-field";
+import Modal from "../../molecules/modal";
 
 type FileUploadModalProps = {
   setFiles: (files: any[]) => void;
@@ -13,7 +13,7 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({ handleClose, filetype
     <Modal handleClose={handleClose}>
       <Modal.Body>
         <Modal.Header handleClose={handleClose}>
-          <span className='inter-xlarge-semibold'>Upload a new photo</span>
+          <span className='inter-xlarge-semibold'>Nahrání nové fotografie</span>
         </Modal.Header>
         <Modal.Content>
           <div className='h-96'>

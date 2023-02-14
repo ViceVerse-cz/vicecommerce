@@ -1,13 +1,13 @@
-import { ReturnReason } from '@medusajs/medusa';
-import { useAdminCreateReturnReason } from 'medusa-react';
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import Button from '../../../components/fundamentals/button';
-import Input from '../../../components/molecules/input';
-import Modal from '../../../components/molecules/modal';
-import TextArea from '../../../components/molecules/textarea';
-import useNotification from '../../../hooks/use-notification';
-import FormValidator from '../../../utils/form-validator';
+import { ReturnReason } from "@medusajs/medusa";
+import { useAdminCreateReturnReason } from "medusa-react";
+import React from "react";
+import { useForm } from "react-hook-form";
+import Button from "../../../components/fundamentals/button";
+import Input from "../../../components/molecules/input";
+import Modal from "../../../components/molecules/modal";
+import TextArea from "../../../components/molecules/textarea";
+import useNotification from "../../../hooks/use-notification";
+import FormValidator from "../../../utils/form-validator";
 
 type CreateReturnReasonModalProps = {
   handleClose: () => void;
@@ -44,10 +44,10 @@ const CreateReturnReasonModal = ({ handleClose, initialReason }: CreateReturnRea
       },
       {
         onSuccess: () => {
-          notification('Success', 'Created a new return reason', 'success');
+          notification("Úspěch", "Vytvořil nový důvod vrácení", "success");
         },
         onError: () => {
-          notification('Error', 'Cant create a Return reason with an existing code', 'error');
+          notification("Chyba", "Nelze vytvořit důvod pro vrácení s existujícím kódem", "error");
         },
       },
     );
@@ -58,40 +58,40 @@ const CreateReturnReasonModal = ({ handleClose, initialReason }: CreateReturnRea
     <Modal handleClose={handleClose}>
       <Modal.Body>
         <Modal.Header handleClose={handleClose}>
-          <span className='inter-xlarge-semibold'>Add Reason</span>
+          <span className='inter-xlarge-semibold'>Přidat důvod</span>
         </Modal.Header>
         <form onSubmit={handleSubmit(onCreate)}>
           <Modal.Content>
             <div className='grid grid-cols-2 gap-large mb-large'>
               <Input
-                {...register('value', {
-                  required: 'Value is required',
-                  pattern: FormValidator.whiteSpaceRule('Value'),
-                  minLength: FormValidator.minOneCharRule('Value'),
+                {...register("value", {
+                  required: "Je vyžadována hodnota",
+                  pattern: FormValidator.whiteSpaceRule("Value"),
+                  minLength: FormValidator.minOneCharRule("Value"),
                 })}
-                label='Value'
+                label='Hodnota'
                 required
                 placeholder='wrong_size'
                 errors={errors}
               />
               <Input
-                {...register('label', {
-                  required: 'Label is required',
-                  pattern: FormValidator.whiteSpaceRule('Label'),
-                  minLength: FormValidator.minOneCharRule('Label'),
+                {...register("label", {
+                  required: "Je vyžadován štítek",
+                  pattern: FormValidator.whiteSpaceRule("Label"),
+                  minLength: FormValidator.minOneCharRule("Label"),
                 })}
-                label='Label'
+                label='Štítek'
                 required
-                placeholder='Wrong size'
+                placeholder='Špatná velikost'
                 errors={errors}
               />
             </div>
             <TextArea
               className='mt-large'
               rows={3}
-              {...register('description')}
-              label='Description'
-              placeholder='Customer received the wrong size'
+              {...register("description")}
+              label='Popis'
+              placeholder='Zákazník obdržel špatnou velikost'
               errors={errors}
             />
           </Modal.Content>
@@ -104,7 +104,7 @@ const CreateReturnReasonModal = ({ handleClose, initialReason }: CreateReturnRea
                 onClick={handleClose}
                 type='button'
               >
-                Cancel
+                Zrušit
               </Button>
               <Button
                 loading={isLoading}
@@ -113,7 +113,7 @@ const CreateReturnReasonModal = ({ handleClose, initialReason }: CreateReturnRea
                 className='w-32 text-small justify-center'
                 variant='primary'
               >
-                Create
+                Vytvořit
               </Button>
             </div>
           </Modal.Footer>

@@ -139,7 +139,7 @@ const CustomerTable = () => {
         count: count!,
         offset: queryObject.offset,
         pageSize: queryObject.offset + rows.length,
-        title: "Customers",
+        title: "Zákazníci",
         currentPage: pageIndex + 1,
         pageCount: pageCount,
         nextPage: handleNext,
@@ -174,7 +174,7 @@ const CustomerTable = () => {
                     icon: <EditIcon size={20} />,
                   },
                   {
-                    label: "Details",
+                    label: "Podrobnosti",
                     onClick: () => navigate(row.original.id),
                     icon: <DetailsIcon size={20} />,
                   },

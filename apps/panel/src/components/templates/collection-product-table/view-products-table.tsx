@@ -1,14 +1,14 @@
-import { useAdminProducts } from 'medusa-react';
-import React, { useEffect, useState } from 'react';
-import { usePagination, useTable } from 'react-table';
-import { useDebounce } from '../../../hooks/use-debounce';
-import Medusa from '../../../services/api';
-import Button from '../../fundamentals/button';
-import TrashIcon from '../../fundamentals/icons/trash-icon';
-import Table from '../../molecules/table';
-import DeletePrompt from '../../organisms/delete-prompt';
-import TableContainer from '../../organisms/table-container';
-import useViewProductColumns from './use-view-product-columns';
+import { useAdminProducts } from "medusa-react";
+import React, { useEffect, useState } from "react";
+import { usePagination, useTable } from "react-table";
+import { useDebounce } from "../../../hooks/use-debounce";
+import Medusa from "../../../services/api";
+import Button from "../../fundamentals/button";
+import TrashIcon from "../../fundamentals/icons/trash-icon";
+import Table from "../../molecules/table";
+import DeletePrompt from "../../organisms/delete-prompt";
+import TableContainer from "../../organisms/table-container";
+import useViewProductColumns from "./use-view-product-columns";
 
 type ViewProductsTableProps = {
   collectionId: string;
@@ -17,7 +17,7 @@ type ViewProductsTableProps = {
 
 const ViewProductsTable: React.FC<ViewProductsTableProps> = ({ collectionId, refetchCollection }) => {
   const limit = 10;
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [offset, setOffset] = useState(0);
   const [numPages, setNumPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
@@ -83,7 +83,7 @@ const ViewProductsTable: React.FC<ViewProductsTableProps> = ({ collectionId, ref
       hooks.visibleColumns.push((columns) => [
         ...columns,
         {
-          id: 'actions',
+          id: "actions",
           Cell: ({ row }) => {
             return (
               <Table.Cell className='w-[0%] pr-2xsmall'>
@@ -142,7 +142,7 @@ const ViewProductsTable: React.FC<ViewProductsTableProps> = ({ collectionId, ref
           count: count!,
           offset: offset,
           pageSize: offset + rows.length,
-          title: 'Products',
+          title: "Produkty",
           currentPage: pageIndex + 1,
           pageCount: pageCount,
           nextPage: handleNext,
@@ -154,7 +154,7 @@ const ViewProductsTable: React.FC<ViewProductsTableProps> = ({ collectionId, ref
         <Table
           enableSearch
           handleSearch={handleSearch}
-          searchPlaceholder='Search Products'
+          searchPlaceholder='Vyhledávání produktů'
           {...getTableProps()}
           className='h-full'
         >
@@ -162,9 +162,9 @@ const ViewProductsTable: React.FC<ViewProductsTableProps> = ({ collectionId, ref
             {rows.map((row) => {
               prepareRow(row);
               return (
-                <Table.Row color={'inherit'} {...row.getRowProps()} className='px-base'>
+                <Table.Row color={"inherit"} {...row.getRowProps()} className='px-base'>
                   {row.cells.map((cell, index) => {
-                    return cell.render('Cell', { index });
+                    return cell.render("Cell", { index });
                   })}
                 </Table.Row>
               );
@@ -176,8 +176,8 @@ const ViewProductsTable: React.FC<ViewProductsTableProps> = ({ collectionId, ref
         <DeletePrompt
           onDelete={async () => handleRemoveProduct()}
           handleClose={() => setShowDelete(!showDelete)}
-          heading='Remove product from collection'
-          successText='Product removed from collection'
+          heading='Odstranění produktu z kolekce'
+          successText='Výrobek vyřazený ze sbírky'
         />
       )}
     </>

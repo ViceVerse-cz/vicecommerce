@@ -1,14 +1,14 @@
-import { end, parse } from 'iso8601-duration';
-import React, { useMemo } from 'react';
-import { formatAmountWithSymbol } from '../../../utils/prices';
-import Badge from '../../fundamentals/badge';
-import StatusDot from '../../fundamentals/status-indicator';
+import { end, parse } from "iso8601-duration";
+import React, { useMemo } from "react";
+import { formatAmountWithSymbol } from "../../../utils/prices";
+import Badge from "../../fundamentals/badge";
+import StatusDot from "../../fundamentals/status-indicator";
 
 enum PromotionStatus {
-  SCHEDULED = 'SCHEDULED',
-  EXPIRED = 'EXPIRED',
-  ACTIVE = 'ACTIVE',
-  DISABLED = 'DISABLED',
+  SCHEDULED = "SCHEDULED",
+  EXPIRED = "EXPIRED",
+  ACTIVE = "ACTIVE",
+  DISABLED = "DISABLED",
 }
 
 const getPromotionStatus = (promotion) => {
@@ -18,8 +18,7 @@ const getPromotionStatus = (promotion) => {
       return PromotionStatus.SCHEDULED;
     } else if (
       (promotion.ends_at && new Date(promotion.ends_at) < date) ||
-      (promotion.valid_duration &&
-        date > end(parse(promotion.valid_duration), new Date(promotion.starts_at))) ||
+      (promotion.valid_duration && date > end(parse(promotion.valid_duration), new Date(promotion.starts_at))) ||
       promotion.usage_count === promotion.usage_limit
     ) {
       return PromotionStatus.EXPIRED;
@@ -34,44 +33,44 @@ const getPromotionStatusDot = (promotion) => {
   const status = getPromotionStatus(promotion);
   switch (status) {
     case PromotionStatus.SCHEDULED:
-      return <StatusDot title='Scheduled' variant='warning' />;
+      return <StatusDot title='Plánované' variant='warning' />;
     case PromotionStatus.EXPIRED:
-      return <StatusDot title='Expired' variant='danger' />;
+      return <StatusDot title='Vypršela platnost' variant='danger' />;
     case PromotionStatus.ACTIVE:
-      return <StatusDot title='Active' variant='success' />;
+      return <StatusDot title='Aktivní' variant='success' />;
     case PromotionStatus.DISABLED:
-      return <StatusDot title='Disabled' variant='default' />;
+      return <StatusDot title='Vypnuté' variant='default' />;
     default:
-      return <StatusDot title='Disabled' variant='default' />;
+      return <StatusDot title='Vypnuté' variant='default' />;
   }
 };
 
 const getCurrencySymbol = (promotion) => {
-  if (promotion.rule.type === 'fixed') {
+  if (promotion.rule.type === "fixed") {
     if (!promotion.regions?.length) {
-      return '';
+      return "";
     }
     return promotion.regions[0].currency_code.toUpperCase();
   }
-  return '';
+  return "";
 };
 
 const getPromotionAmount = (promotion) => {
   switch (promotion.rule.type) {
-    case 'fixed':
+    case "fixed":
       if (!promotion.regions?.length) {
-        return '';
+        return "";
       }
       return formatAmountWithSymbol({
         currency: promotion.regions[0].currency_code,
         amount: promotion.rule.value,
       });
-    case 'percentage':
+    case "percentage":
       return `${promotion.rule.value}%`;
-    case 'free_shipping':
-      return 'Free Shipping';
+    case "free_shipping":
+      return "Doprava zdarma";
     default:
-      return '';
+      return "";
   }
 };
 
@@ -80,7 +79,7 @@ export const usePromotionTableColumns = () => {
     () => [
       {
         Header: <div className='pl-2'>Code</div>,
-        accessor: 'code',
+        accessor: "code",
         Cell: ({ cell: { value } }) => (
           <div className='overflow-hidden'>
             <Badge className='rounded-rounded' variant='default'>
@@ -90,32 +89,30 @@ export const usePromotionTableColumns = () => {
         ),
       },
       {
-        Header: 'Description',
-        accessor: 'rule.description',
+        Header: "Description",
+        accessor: "rule.description",
         Cell: ({ cell: { value } }) => value,
       },
       {
-        Header: <div className='text-right'>Amount</div>,
-        id: 'amount',
+        Header: <div className='text-right'>Částka</div>,
+        id: "amount",
         Cell: ({ row: { original } }) => {
           return <div className='text-right'>{getPromotionAmount(original)}</div>;
         },
       },
       {
         Header: <div className='w-[60px]' />,
-        id: 'currency',
-        Cell: ({ row: { original } }) => (
-          <div className='px-2 text-grey-40'>{getCurrencySymbol(original)}</div>
-        ),
+        id: "currency",
+        Cell: ({ row: { original } }) => <div className='px-2 text-grey-40'>{getCurrencySymbol(original)}</div>,
       },
       {
-        Header: 'Status',
-        accessor: 'ends_at',
+        Header: "Status",
+        accessor: "ends_at",
         Cell: ({ row: { original } }) => <div>{getPromotionStatusDot(original)}</div>,
       },
       {
-        Header: () => <div className='text-right'>Redemptions</div>,
-        accessor: 'usage_count',
+        Header: () => <div className='text-right'>Výkupy</div>,
+        accessor: "usage_count",
         Cell: ({ row: { original } }) => {
           return <div className='text-right'>{getUsageCount(original.usage_count)}</div>;
         },

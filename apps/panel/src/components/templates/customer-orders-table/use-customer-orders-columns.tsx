@@ -1,42 +1,42 @@
-import { Order } from '@medusajs/medusa';
-import moment from 'moment';
-import { useMemo, useRef } from 'react';
-import { Column } from 'react-table';
-import { useObserveWidth } from '../../../hooks/use-observe-width';
-import { stringDisplayPrice } from '../../../utils/prices';
-import Tooltip from '../../atoms/tooltip';
-import ImagePlaceholder from '../../fundamentals/image-placeholder';
-import StatusIndicator from '../../fundamentals/status-indicator';
+import { Order } from "@medusajs/medusa";
+import moment from "moment";
+import { useMemo, useRef } from "react";
+import { Column } from "react-table";
+import { useObserveWidth } from "../../../hooks/use-observe-width";
+import { stringDisplayPrice } from "../../../utils/prices";
+import Tooltip from "../../atoms/tooltip";
+import ImagePlaceholder from "../../fundamentals/image-placeholder";
+import StatusIndicator from "../../fundamentals/status-indicator";
 
 const decidePaymentStatus = (status: string) => {
   switch (status) {
-    case 'captured':
-      return <StatusIndicator variant='success' title={'Paid'} />;
-    case 'awaiting':
-      return <StatusIndicator variant='warning' title={'Awaiting'} />;
-    case 'requires':
-      return <StatusIndicator variant='danger' title={'Requires action'} />;
+    case "captured":
+      return <StatusIndicator variant='success' title={"Placené"} />;
+    case "awaiting":
+      return <StatusIndicator variant='warning' title={"Čeká se na"} />;
+    case "requires":
+      return <StatusIndicator variant='danger' title={"Vyžaduje akci"} />;
     default:
-      return <StatusIndicator variant='primary' title={'N/A'} />;
+      return <StatusIndicator variant='primary' title={"N/A"} />;
   }
 };
 
 const decideFulfillmentStatus = (status: string) => {
   switch (status) {
-    case 'fulfilled':
-      return <StatusIndicator variant='success' title={'Fulfilled'} />;
-    case 'shipped':
-      return <StatusIndicator variant='success' title={'Shipped'} />;
-    case 'not_fulfilled':
-      return <StatusIndicator variant='default' title={'Not fulfilled'} />;
-    case 'partially_fulfilled':
-      return <StatusIndicator variant='warning' title={'Partially fulfilled'} />;
-    case 'partially_shipped':
-      return <StatusIndicator variant='warning' title={'Partially shipped'} />;
-    case 'requires':
-      return <StatusIndicator variant='danger' title={'Requires action'} />;
+    case "fulfilled":
+      return <StatusIndicator variant='success' title={"Splněno"} />;
+    case "shipped":
+      return <StatusIndicator variant='success' title={"Odesláno"} />;
+    case "not_fulfilled":
+      return <StatusIndicator variant='default' title={"Nebylo splněno"} />;
+    case "partially_fulfilled":
+      return <StatusIndicator variant='warning' title={"Částečně splněno"} />;
+    case "partially_shipped":
+      return <StatusIndicator variant='warning' title={"Částečně odesláno"} />;
+    case "requires":
+      return <StatusIndicator variant='danger' title={"Vyžaduje akci"} />;
     default:
-      return <StatusIndicator variant='primary' title={'N/A'} />;
+      return <StatusIndicator variant='primary' title={"N/A"} />;
   }
 };
 
@@ -44,14 +44,14 @@ export const useCustomerOrdersColumns = (): Column<Order>[] => {
   const columns = useMemo(() => {
     return [
       {
-        Header: 'Order',
-        accessor: 'display_id',
+        Header: "Objednávka",
+        accessor: "display_id",
         Cell: ({ value }) => {
           return <span className='text-grey-90'>#{value}</span>;
         },
       },
       {
-        accessor: 'items',
+        accessor: "items",
         Cell: ({ value }) => {
           const containerRef = useRef<HTMLDivElement>(null);
           const width = useObserveWidth(containerRef);
@@ -89,41 +89,36 @@ export const useCustomerOrdersColumns = (): Column<Order>[] => {
                   );
                 })}
               </div>
-              {remainder > 0 && <span className='text-grey-40 inter-small-regular'>+ {remainder} more</span>}
+              {remainder > 0 && <span className='text-grey-40 inter-small-regular'>+ {remainder} více</span>}
             </div>
           );
         },
       },
       {
-        Header: 'Date',
-        accessor: 'created_at',
+        Header: "Datum",
+        accessor: "created_at",
         Cell: ({ value }) => {
-          return moment(value).format('DD MMM YYYY hh:mm');
+          return moment(value).format("DD MMM YYYY hh:mm");
         },
       },
       {
-        Header: 'Fulfillment',
-        accessor: 'fulfillment_status',
+        Header: "Plnění",
+        accessor: "fulfillment_status",
         Cell: ({ value }) => {
           return decideFulfillmentStatus(value);
         },
       },
       {
-        Header: 'Status',
-        accessor: 'payment_status',
+        Header: "Stav",
+        accessor: "payment_status",
         Cell: ({ value }) => {
           return decidePaymentStatus(value);
         },
       },
       {
-        Header: () => <div className='text-right'>Total</div>,
-        accessor: 'total',
-        Cell: ({
-          value,
-          row: {
-            original: { currency_code },
-          },
-        }) => {
+        Header: () => <div className='text-right'>Celkem</div>,
+        accessor: "total",
+        Cell: ({ value, row: { original: { currency_code } } }) => {
           return (
             <div className='text-right'>
               {stringDisplayPrice({

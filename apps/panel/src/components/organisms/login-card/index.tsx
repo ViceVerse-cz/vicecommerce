@@ -1,9 +1,9 @@
-import { useAdminLogin } from 'medusa-react';
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import Button from '../../fundamentals/button';
-import SigninInput from '../../molecules/input-signin';
+import { useAdminLogin } from "medusa-react";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import Button from "../../fundamentals/button";
+import SigninInput from "../../molecules/input-signin";
 
 type FormValues = {
   email: string;
@@ -23,7 +23,7 @@ const LoginCard: React.FC<LoginCardProps> = ({ toResetPassword }) => {
   const onSubmit = (values: FormValues) => {
     login.mutate(values, {
       onSuccess: () => {
-        navigate('/a/orders');
+        navigate("/a/orders");
       },
       onError: () => {
         setIsInvalidLogin(true);
@@ -37,11 +37,11 @@ const LoginCard: React.FC<LoginCardProps> = ({ toResetPassword }) => {
         <span className='inter-2xlarge-semibold mt-4 text-grey-90'>Vítejte zpět!</span>
         <span className='inter-base-regular text-grey-50 mt-2'>Je skvělé vás vidět 👋🏼</span>
         <span className='inter-base-regular text-grey-50 mb-xlarge'>Přihlaste se ke svému účtu níže</span>
-        <SigninInput placeholder='Email...' {...register('email', { required: true })} autoComplete='email' />
+        <SigninInput placeholder='Email...' {...register("email", { required: true })} autoComplete='email' />
         <SigninInput
           placeholder='Heslo...'
-          type={'password'}
-          {...register('password', { required: true })}
+          type={"password"}
+          {...register("password", { required: true })}
           autoComplete='current-password'
         />
         {isInvalidLogin && (
@@ -56,6 +56,7 @@ const LoginCard: React.FC<LoginCardProps> = ({ toResetPassword }) => {
         >
           Pokračovat
         </Button>
+        {/* rome-ignore lint/a11y/useKeyWithClickEvents: <Old functions> */}
         <span className='inter-small-regular text-grey-50 mt-8 cursor-pointer' onClick={toResetPassword}>
           Změnit heslo
         </span>

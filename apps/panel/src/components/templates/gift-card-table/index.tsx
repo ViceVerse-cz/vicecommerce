@@ -1,15 +1,15 @@
-import clsx from 'clsx';
-import { isEmpty } from 'lodash';
-import { useAdminGiftCards } from 'medusa-react';
-import qs from 'qs';
-import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { usePagination, useTable } from 'react-table';
-import Spinner from '../../atoms/spinner';
-import Table from '../../molecules/table';
-import TableContainer from '../../organisms/table-container';
-import useGiftCardTableColums from './use-gift-card-column';
-import { useGiftCardFilters } from './use-gift-card-filters';
+import clsx from "clsx";
+import { isEmpty } from "lodash";
+import { useAdminGiftCards } from "medusa-react";
+import qs from "qs";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { usePagination, useTable } from "react-table";
+import Spinner from "../../atoms/spinner";
+import Table from "../../molecules/table";
+import TableContainer from "../../organisms/table-container";
+import useGiftCardTableColums from "./use-gift-card-column";
+import { useGiftCardFilters } from "./use-gift-card-filters";
 
 const DEFAULT_PAGE_SIZE = 15;
 
@@ -104,7 +104,7 @@ const GiftCardTable = () => {
 
   const updateUrlFromFilter = (obj = {}) => {
     const stringified = qs.stringify(obj);
-    window.history.replaceState(`/a/gift-cards`, '', `${`?${stringified}`}`);
+    window.history.replaceState("/a/gift-cards", "", `${`?${stringified}`}`);
   };
 
   const refreshWithFilters = () => {
@@ -130,7 +130,7 @@ const GiftCardTable = () => {
         count: count!,
         offset: queryObject.offset,
         pageSize: queryObject.offset + rows.length,
-        title: 'Gift cards',
+        title: "Dárkové karty",
         currentPage: pageIndex + 1,
         pageCount: pageCount,
         nextPage: handleNext,
@@ -145,13 +145,13 @@ const GiftCardTable = () => {
         handleSearch={setQuery}
         searchValue={query}
         {...getTableProps()}
-        className={clsx({ ['relative']: isLoading })}
+        className={clsx({ ["relative"]: isLoading })}
       >
         <Table.Head>
           {headerGroups?.map((headerGroup) => (
             <Table.HeadRow {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((col) => (
-                <Table.HeadCell {...col.getHeaderProps()}>{col.render('Header')}</Table.HeadCell>
+                <Table.HeadCell {...col.getHeaderProps()}>{col.render("Header")}</Table.HeadCell>
               ))}
             </Table.HeadRow>
           ))}
@@ -162,7 +162,7 @@ const GiftCardTable = () => {
               <Table.Cell colSpan={columns.length}>
                 <div className='flex w-full h-full absolute items-center justify-center mt-10'>
                   <div className=''>
-                    <Spinner size={'large'} variant={'secondary'} />
+                    <Spinner size={"large"} variant={"secondary"} />
                   </div>
                 </div>
               </Table.Cell>
@@ -173,14 +173,9 @@ const GiftCardTable = () => {
             {rows.map((row) => {
               prepareRow(row);
               return (
-                <Table.Row
-                  color={'inherit'}
-                  linkTo={row.original.id}
-                  {...row.getRowProps()}
-                  className='group'
-                >
+                <Table.Row color={"inherit"} linkTo={row.original.id} {...row.getRowProps()} className='group'>
                   {row.cells.map((cell, index) => {
-                    return cell.render('Cell', { index });
+                    return cell.render("Cell", { index });
                   })}
                 </Table.Row>
               );

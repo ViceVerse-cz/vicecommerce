@@ -90,7 +90,7 @@ function CustomerGroupsTableRow(props: CustomerGroupsTableRowProps) {
       icon: <EditIcon size={20} />,
     },
     {
-      label: "Details",
+      label: "Podrobnosti",
       onClick: () => navigate(row.original.id),
       icon: <DetailsIcon size={20} />,
     },
@@ -174,7 +174,7 @@ function CustomerGroupsTable(props: CustomerGroupsTableProps) {
         count: count,
         offset: queryObject.offset,
         pageSize: queryObject.offset + table.rows.length,
-        title: "Customer groups",
+        title: "Skupiny zákazníků",
         currentPage: table.state.pageIndex + 1,
         pageCount: table.pageCount,
         nextPage: handleNext,
