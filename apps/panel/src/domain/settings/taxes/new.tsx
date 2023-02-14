@@ -1,16 +1,16 @@
-import { useAdminCreateTaxRate } from 'medusa-react';
-import React, { useContext } from 'react';
-import { useForm } from 'react-hook-form';
-import Button from '../../../components/fundamentals/button';
-import PlusIcon from '../../../components/fundamentals/icons/plus-icon';
-import Modal from '../../../components/molecules/modal';
-import LayeredModal, { LayeredModalContext } from '../../../components/molecules/modal/layered-modal';
-import useNotification from '../../../hooks/use-notification';
-import { getErrorMessage } from '../../../utils/error-messages';
-import { nestedForm } from '../../../utils/nested-form';
-import { EditTaxRateDetails, EditTaxRateFormType } from './edit-tax-rate-details';
-import { TaxRuleItem } from './tax-rule-item';
-import TaxRuleSelector from './tax-rule-selector';
+import { useAdminCreateTaxRate } from "medusa-react";
+import React, { useContext } from "react";
+import { useForm } from "react-hook-form";
+import Button from "../../../components/fundamentals/button";
+import PlusIcon from "../../../components/fundamentals/icons/plus-icon";
+import Modal from "../../../components/molecules/modal";
+import LayeredModal, { LayeredModalContext } from "../../../components/molecules/modal/layered-modal";
+import useNotification from "../../../hooks/use-notification";
+import { getErrorMessage } from "../../../utils/error-messages";
+import { nestedForm } from "../../../utils/nested-form";
+import { EditTaxRateDetails, EditTaxRateFormType } from "./edit-tax-rate-details";
+import { TaxRuleItem } from "./tax-rule-item";
+import TaxRuleSelector from "./tax-rule-selector";
 
 type NewTaxRateProps = {
   regionId: string;
@@ -51,32 +51,28 @@ const NewTaxRate = ({ regionId, onDismiss }: NewTaxRateProps) => {
       },
       {
         onSuccess: () => {
-          notification('Success', 'Successfully created tax rate.', 'success');
+          notification("Úspěch", "Úspěšně vytvořená sazba daně.", "success");
           onDismiss();
         },
         onError: (error) => {
-          notification('Error', getErrorMessage(error), 'error');
+          notification("Chyba", getErrorMessage(error), "error");
         },
       },
     );
   });
 
-  const [products, product_types, shipping_options] = watch([
-    'products',
-    'product_types',
-    'shipping_options',
-  ]);
+  const [products, product_types, shipping_options] = watch(["products", "product_types", "shipping_options"]);
 
   const handleOverridesSelected = (rule) => {
     switch (rule.type) {
-      case 'products':
-        setValue('products', rule.items);
+      case "products":
+        setValue("products", rule.items);
         break;
-      case 'product_types':
-        setValue('product_types', rule.items);
+      case "product_types":
+        setValue("product_types", rule.items);
         break;
-      case 'shipping_options':
-        setValue('shipping_options', rule.items);
+      case "shipping_options":
+        setValue("shipping_options", rule.items);
         break;
       default:
         break;
@@ -89,36 +85,36 @@ const NewTaxRate = ({ regionId, onDismiss }: NewTaxRateProps) => {
         <Modal.Body>
           <Modal.Header handleClose={onDismiss}>
             <div>
-              <h1 className='inter-xlarge-semibold'>Add Tax Rate</h1>
+              <h1 className='inter-xlarge-semibold'>Přidat sazbu daně</h1>
             </div>
           </Modal.Header>
           <Modal.Content>
-            <EditTaxRateDetails form={nestedForm(form, 'details')} />
+            <EditTaxRateDetails form={nestedForm(form, "details")} />
             <div>
-              <p className='inter-base-semibold mb-base'>Overrides</p>
+              <p className='inter-base-semibold mb-base'>Předvolby</p>
               {(product_types.length > 0 || products.length > 0 || shipping_options.length > 0) && (
                 <div className='flex flex-col gap-base'>
                   {products.length > 0 && (
                     <TaxRuleItem
-                      onDelete={() => handleOverridesSelected({ type: 'products', items: [] })}
+                      onDelete={() => handleOverridesSelected({ type: "products", items: [] })}
                       onEdit={() => {
                         layeredModalContext.push(
                           SelectOverridesScreen(layeredModalContext.pop, regionId, handleOverridesSelected, {
                             items: products,
-                            type: 'products',
+                            type: "products",
                           }),
                         );
                       }}
                       index={1}
-                      name='Product Rules'
-                      description={`Applies to ${products.length} product${products.length > 1 ? 's' : ''}`}
+                      name='Pravidla produktu'
+                      description={`Platí pro produkt ${products.length}${products.length > 1 ? "s" : ""}`}
                     />
                   )}
                   {product_types.length > 0 && (
                     <TaxRuleItem
                       onDelete={() =>
                         handleOverridesSelected({
-                          type: 'product_types',
+                          type: "product_types",
                           items: [],
                         })
                       }
@@ -126,14 +122,14 @@ const NewTaxRate = ({ regionId, onDismiss }: NewTaxRateProps) => {
                         layeredModalContext.push(
                           SelectOverridesScreen(layeredModalContext.pop, regionId, handleOverridesSelected, {
                             items: product_types,
-                            type: 'product_types',
+                            type: "product_types",
                           }),
                         );
                       }}
                       index={2}
-                      name='Product Type Rules'
-                      description={`Applies to ${product_types.length} product type${
-                        product_types.length > 1 ? 's' : ''
+                      name='Pravidla typu výrobku'
+                      description={`Platí pro ${product_types.length} typ produktu${
+                        product_types.length > 1 ? "s" : ""
                       }`}
                     />
                   )}
@@ -141,7 +137,7 @@ const NewTaxRate = ({ regionId, onDismiss }: NewTaxRateProps) => {
                     <TaxRuleItem
                       onDelete={() =>
                         handleOverridesSelected({
-                          type: 'shipping_options',
+                          type: "shipping_options",
                           items: [],
                         })
                       }
@@ -149,14 +145,14 @@ const NewTaxRate = ({ regionId, onDismiss }: NewTaxRateProps) => {
                         layeredModalContext.push(
                           SelectOverridesScreen(layeredModalContext.pop, regionId, handleOverridesSelected, {
                             items: shipping_options,
-                            type: 'shipping_options',
+                            type: "shipping_options",
                           }),
                         );
                       }}
                       index={3}
-                      name='Shipping Option Rules'
-                      description={`Applies to ${shipping_options.length} shipping option${
-                        shipping_options.length > 1 ? 's' : ''
+                      name='Pravidla možností přepravy'
+                      description={`Platí pro ${shipping_options.length} možnost přepravy${
+                        shipping_options.length > 1 ? "s" : ""
                       }`}
                     />
                   )}
@@ -174,7 +170,7 @@ const NewTaxRate = ({ regionId, onDismiss }: NewTaxRateProps) => {
                   size='medium'
                   variant='secondary'
                 >
-                  <PlusIcon /> Add Overrides
+                  <PlusIcon /> Přidání předvoleb
                 </Button>
               )}
             </div>
@@ -188,7 +184,7 @@ const NewTaxRate = ({ regionId, onDismiss }: NewTaxRateProps) => {
                 size='small'
                 className='w-eventButton justify-center'
               >
-                Cancel
+                Zrušit
               </Button>
               <Button
                 type='submit'
@@ -198,7 +194,7 @@ const NewTaxRate = ({ regionId, onDismiss }: NewTaxRateProps) => {
                 loading={isLoading}
                 disabled={isLoading}
               >
-                Create
+                Vytvořit
               </Button>
             </div>
           </Modal.Footer>
@@ -210,7 +206,7 @@ const NewTaxRate = ({ regionId, onDismiss }: NewTaxRateProps) => {
 
 const SelectOverridesScreen = (pop, regionId, onOverridesSelected, options = {}) => {
   return {
-    title: 'Add override',
+    title: "Add override",
     onBack: () => pop(),
     view: <TaxRuleSelector regionId={regionId} onSubmit={onOverridesSelected} {...options} />,
   };

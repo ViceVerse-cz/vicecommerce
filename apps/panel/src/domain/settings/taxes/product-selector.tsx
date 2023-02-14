@@ -1,8 +1,8 @@
-import { useAdminProducts } from 'medusa-react';
-import { useMemo, useState } from 'react';
-import ImagePlaceholder from '../../../components/fundamentals/image-placeholder';
-import { useDebounce } from '../../../hooks/use-debounce';
-import { SelectableTable } from './selectable-table';
+import { useAdminProducts } from "medusa-react";
+import { useMemo, useState } from "react";
+import ImagePlaceholder from "../../../components/fundamentals/image-placeholder";
+import { useDebounce } from "../../../hooks/use-debounce";
+import { SelectableTable } from "./selectable-table";
 
 export const ProductSelector = ({ items, onChange }) => {
   const PAGE_SIZE = 12;
@@ -11,7 +11,7 @@ export const ProductSelector = ({ items, onChange }) => {
     limit: PAGE_SIZE,
     offset: 0,
   });
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
 
   const debouncedSearchTerm = useDebounce(query, 500);
 
@@ -33,8 +33,8 @@ export const ProductSelector = ({ items, onChange }) => {
   const columns = useMemo(() => {
     return [
       {
-        Header: 'Name',
-        accessor: 'title',
+        Header: "Name",
+        accessor: "title",
         Cell: ({ row: { original } }) => {
           return (
             <div className='flex items-center'>
@@ -57,7 +57,7 @@ export const ProductSelector = ({ items, onChange }) => {
 
   return (
     <SelectableTable
-      label='Select Products'
+      label='Vybrat produkty'
       objectName='Product'
       totalCount={count}
       pagination={pagination}

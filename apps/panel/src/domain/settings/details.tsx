@@ -1,12 +1,12 @@
-import { Store } from '@medusajs/medusa';
-import { useAdminStore, useAdminUpdateStore } from 'medusa-react';
-import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import BreadCrumb from '../../components/molecules/breadcrumb';
-import Input from '../../components/molecules/input';
-import BodyCard from '../../components/organisms/body-card';
-import useNotification from '../../hooks/use-notification';
-import { getErrorMessage } from '../../utils/error-messages';
+import { Store } from "@medusajs/medusa";
+import { useAdminStore, useAdminUpdateStore } from "medusa-react";
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import BreadCrumb from "../../components/molecules/breadcrumb";
+import Input from "../../components/molecules/input";
+import BodyCard from "../../components/organisms/body-card";
+import useNotification from "../../hooks/use-notification";
+import { getErrorMessage } from "../../utils/error-messages";
 
 type AccountDetailsFormData = {
   name: string;
@@ -37,26 +37,26 @@ const AccountDetails = () => {
     const validateInviteLinkTemplate = validateUrl(data.invite_link_template);
 
     if (!validateSwapLinkTemplate) {
-      notification('Chyba', 'Špatně formulovaná url adresa swapu', 'error');
+      notification("Chyba", "Špatně formulovaná url adresa swapu", "error");
       return;
     }
 
     if (!validatePaymentLinkTemplate) {
-      notification('Chyba', 'Chybně zadaná url adresa platby', 'error');
+      notification("Chyba", "Chybně zadaná url adresa platby", "error");
       return;
     }
 
     if (!validateInviteLinkTemplate) {
-      notification('Chyba', 'Chybná url adresa pozvánky', 'error');
+      notification("Chyba", "Chybná url adresa pozvánky", "error");
       return;
     }
 
     mutate(data, {
       onSuccess: () => {
-        notification('Úspěch', 'Úspěšně aktualizovaný obchod', 'success');
+        notification("Úspěch", "Úspěšně aktualizovaný obchod", "success");
       },
       onError: (error) => {
-        notification('Chyba', getErrorMessage(error), 'error');
+        notification("Chyba", getErrorMessage(error), "error");
       },
     });
   };
@@ -64,38 +64,38 @@ const AccountDetails = () => {
   return (
     <form className='flex-col py-5'>
       <div className='max-w-[632px]'>
-        <BreadCrumb previousRoute='/a/settings/' previousBreadcrumb='Settings' currentPage='Store Details' />
+        <BreadCrumb previousRoute='/a/settings/' previousBreadcrumb='Nastavení' currentPage='Podrobnosti o obchodu' />
         <BodyCard
           events={[
             {
-              label: 'Uložit',
-              type: 'button',
+              label: "Uložit",
+              type: "button",
               onClick: handleSubmit(onSubmit),
             },
-            { label: 'Zrušit změny', type: 'button', onClick: handleCancel },
+            { label: "Zrušit změny", type: "button", onClick: handleCancel },
           ]}
           title='Podrobnosti o obchodu'
           subtitle='Správa obchodních údajů'
         >
           <h6 className='mt-large inter-base-semibold'>Obecné</h6>
-          <Input className='mt-base' label='Store name' {...register('name')} placeholder='Vicecommerce' />
+          <Input className='mt-base' label='Store name' {...register("name")} placeholder='Vicecommerce' />
           <h6 className='mt-2xlarge inter-base-semibold'>Rozšířená nastavení</h6>
           <Input
             className='mt-base'
             label='Výměna šablony odkazu'
-            {...register('swap_link_template')}
+            {...register("swap_link_template")}
             placeholder='https://acme.inc/swap={swap_id}'
           />
           <Input
             className='mt-base'
             label='Šablona odkazu na návrh objednávky'
-            {...register('payment_link_template')}
+            {...register("payment_link_template")}
             placeholder='https://acme.inc/payment={payment_id}'
           />
           <Input
             className='mt-base'
             label='Šablona odkazu na pozvánku'
-            {...register('invite_link_template')}
+            {...register("invite_link_template")}
             placeholder='https://acme-admin.inc/invite?token={invite_token}'
           />
         </BodyCard>
@@ -105,13 +105,13 @@ const AccountDetails = () => {
 };
 
 const validateUrl = (address: string | undefined) => {
-  if (!address || address === '') {
+  if (!address || address === "") {
     return true;
   }
 
   try {
     const url = new URL(address);
-    return url.protocol === 'http:' || url.protocol === 'https:';
+    return url.protocol === "http:" || url.protocol === "https:";
   } catch (_) {
     return false;
   }

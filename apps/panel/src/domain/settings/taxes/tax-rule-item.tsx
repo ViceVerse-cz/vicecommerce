@@ -27,7 +27,7 @@ export const TaxRuleItem = ({ onEdit, onDelete, index, name, description }) => {
               icon: <EditIcon size={20} />,
             },
             {
-              label: "Delete rule",
+              label: "Odstranit pravidlo",
               variant: "danger",
               onClick: () => onDelete(),
               icon: <TrashIcon size={20} />,

@@ -1,6 +1,6 @@
-import React, { useMemo, useState } from 'react';
-import { useAdminProductTypes } from 'medusa-react';
-import { SelectableTable } from './selectable-table';
+import React, { useMemo, useState } from "react";
+import { useAdminProductTypes } from "medusa-react";
+import { SelectableTable } from "./selectable-table";
 
 export const ProductTypeSelector = ({ items, onChange }) => {
   const PAGE_SIZE = 12;
@@ -15,8 +15,8 @@ export const ProductTypeSelector = ({ items, onChange }) => {
   const columns = useMemo(() => {
     return [
       {
-        Header: 'Name',
-        accessor: 'value',
+        Header: "Název",
+        accessor: "value",
         Cell: ({ row: { original } }) => {
           return <div className='w-[200px]'>{original.value}</div>;
         },
@@ -27,8 +27,8 @@ export const ProductTypeSelector = ({ items, onChange }) => {
   return (
     <SelectableTable
       showSearch={false}
-      label='Select Product Types'
-      objectName='Product Types'
+      label='Vybrat typy produktů'
+      objectName='Typy produktů'
       totalCount={count}
       pagination={pagination}
       onPaginationChange={setPagination}

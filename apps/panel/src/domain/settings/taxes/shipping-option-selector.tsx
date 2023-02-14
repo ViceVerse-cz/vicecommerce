@@ -1,6 +1,6 @@
-import React, { useMemo, useState } from 'react';
-import { useAdminShippingOptions } from 'medusa-react';
-import { SelectableTable } from './selectable-table';
+import React, { useMemo, useState } from "react";
+import { useAdminShippingOptions } from "medusa-react";
+import { SelectableTable } from "./selectable-table";
 
 export const ShippingOptionSelector = ({ regionId, items, onChange }) => {
   const PAGE_SIZE = 12;
@@ -17,8 +17,8 @@ export const ShippingOptionSelector = ({ regionId, items, onChange }) => {
   const columns = useMemo(() => {
     return [
       {
-        Header: 'Name',
-        accessor: 'name',
+        Header: "Název",
+        accessor: "name",
         Cell: ({ row: { original } }) => {
           return <div className='w-[200px]'>{original.name}</div>;
         },
@@ -29,8 +29,8 @@ export const ShippingOptionSelector = ({ regionId, items, onChange }) => {
   return (
     <SelectableTable
       showSearch={false}
-      label='Select Shipping Option'
-      objectName='Shipping Options'
+      label='Vyberte možnost přepravy'
+      objectName='Možnosti přepravy'
       totalCount={count}
       pagination={pagination}
       onPaginationChange={setPagination}

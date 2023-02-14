@@ -1,17 +1,17 @@
-import clsx from 'clsx';
-import { useAdminRegion, useAdminTaxRates } from 'medusa-react';
-import { useEffect, useState } from 'react';
-import { useTable } from 'react-table';
-import Spinner from '../../../components/atoms/spinner';
-import PlusIcon from '../../../components/fundamentals/icons/plus-icon';
-import Table from '../../../components/molecules/table';
-import BodyCard from '../../../components/organisms/body-card';
-import { PaginationProps, TaxRateType } from '../../../types/shared';
-import EditTaxRate from './edit';
-import NewTaxRate from './new';
-import { RegionTaxForm } from './region-form';
-import { TaxRateRow } from './tax-rate-row';
-import useTaxRateColumns from './use-tax-rate-columns';
+import clsx from "clsx";
+import { useAdminRegion, useAdminTaxRates } from "medusa-react";
+import { useEffect, useState } from "react";
+import { useTable } from "react-table";
+import Spinner from "../../../components/atoms/spinner";
+import PlusIcon from "../../../components/fundamentals/icons/plus-icon";
+import Table from "../../../components/molecules/table";
+import BodyCard from "../../../components/organisms/body-card";
+import { PaginationProps, TaxRateType } from "../../../types/shared";
+import EditTaxRate from "./edit";
+import NewTaxRate from "./new";
+import { RegionTaxForm } from "./region-form";
+import { TaxRateRow } from "./tax-rate-row";
+import useTaxRateColumns from "./use-tax-rate-columns";
 
 export type TaxRateTableEntries = {
   id: string;
@@ -47,10 +47,10 @@ const TaxDetails = ({ id }) => {
   });
 
   useEffect(() => {
-    if (!taxRatesLoading && !regionIsLoading && region && tax_rates) {
+    if (!(taxRatesLoading || regionIsLoading ) && region && tax_rates) {
       const regionDefaultRate = {
         id: region.id,
-        name: 'Default',
+        name: "Default",
         code: region.tax_code ?? null,
         rate: region.tax_rate ?? null,
         type: TaxRateType.REGION,
@@ -87,21 +87,21 @@ const TaxDetails = ({ id }) => {
   return (
     <>
       <BodyCard
-        title='Details'
+        title='Podrobnosti'
         actionables={[
           {
-            label: 'New Tax Rate',
+            label: "Nová sazba daně",
             onClick: () => setShowNew(true),
             icon: <PlusIcon />,
           },
         ]}
       >
-        <Table {...getTableProps()} className={clsx({ ['relative']: regionIsLoading })}>
+        <Table {...getTableProps()} className={clsx({ ["relative"]: regionIsLoading })}>
           <Table.Head>
             {headerGroups?.map((headerGroup) => (
               <Table.HeadRow {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((col) => (
-                  <Table.HeadCell {...col.getHeaderProps()}>{col.render('Header')}</Table.HeadCell>
+                  <Table.HeadCell {...col.getHeaderProps()}>{col.render("Header")}</Table.HeadCell>
                 ))}
               </Table.HeadRow>
             ))}
@@ -109,7 +109,7 @@ const TaxDetails = ({ id }) => {
           {regionIsLoading || taxRatesLoading ? (
             <div className='flex w-full h-full absolute items-center justify-center mt-10'>
               <div className=''>
-                <Spinner size={'large'} variant={'secondary'} />
+                <Spinner size={"large"} variant={"secondary"} />
               </div>
             </div>
           ) : (
@@ -121,17 +121,12 @@ const TaxDetails = ({ id }) => {
             </Table.Body>
           )}
         </Table>
-        <h3 className='inter-large-semibold mt-2xlarge mb-base'>Tax Calculation Settings</h3>
+        <h3 className='inter-large-semibold mt-2xlarge mb-base'>Nastavení výpočtu daně</h3>
         <div className='flex flex-1'>{!regionIsLoading && region && <RegionTaxForm region={region} />}</div>
       </BodyCard>
       {showNew && <NewTaxRate regionId={id} onDismiss={() => setShowNew(false)} />}
       {editRate && (
-        <EditTaxRate
-          regionId={id}
-          taxRate={editRate}
-          taxRateId={editRate.id}
-          onDismiss={() => setEditRate(null)}
-        />
+        <EditTaxRate regionId={id} taxRate={editRate} taxRateId={editRate.id} onDismiss={() => setEditRate(null)} />
       )}
     </>
   );

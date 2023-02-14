@@ -1,10 +1,10 @@
-import { Product, ProductType, ShippingOption } from '@medusajs/medusa';
-import React, { useEffect, useMemo } from 'react';
-import { ColumnInstance, usePagination, useRowSelect, useTable } from 'react-table';
-import IndeterminateCheckbox from '../../../components/molecules/indeterminate-checkbox';
-import Table from '../../../components/molecules/table';
-import TableContainer from '../../../components/organisms/table-container';
-import { PaginationProps } from '../../../types/shared';
+import { Product, ProductType, ShippingOption } from "@medusajs/medusa";
+import React, { useEffect, useMemo } from "react";
+import { ColumnInstance, usePagination, useRowSelect, useTable } from "react-table";
+import IndeterminateCheckbox from "../../../components/molecules/indeterminate-checkbox";
+import Table from "../../../components/molecules/table";
+import TableContainer from "../../../components/organisms/table-container";
+import { PaginationProps } from "../../../types/shared";
 
 type SelectableTableProps = {
   showSearch?: boolean;
@@ -88,7 +88,7 @@ export const SelectableTable: React.FC<SelectableTableProps> = ({
       hooks.visibleColumns.push((columns) => [
         // Let's make a column for selection
         {
-          id: 'selection',
+          id: "selection",
           // The header can use the table's getToggleAllRowsSelectedProps method
           // to render a checkbox
           Header: ({ getToggleAllRowsSelectedProps }) => {
@@ -160,7 +160,7 @@ export const SelectableTable: React.FC<SelectableTableProps> = ({
         <Table
           immediateSearchFocus={showSearch}
           enableSearch={showSearch}
-          searchPlaceholder='Search Products..'
+          searchPlaceholder='Vyhledávání zboží..'
           handleSearch={onSearch}
           searchValue={searchValue}
           {...getTableProps()}
@@ -171,7 +171,7 @@ export const SelectableTable: React.FC<SelectableTableProps> = ({
               return (
                 <Table.Row {...row.getRowProps()}>
                   {row.cells.map((cell) => {
-                    return <Table.Cell {...cell.getCellProps()}>{cell.render('Cell')}</Table.Cell>;
+                    return <Table.Cell {...cell.getCellProps()}>{cell.render("Cell")}</Table.Cell>;
                   })}
                 </Table.Row>
               );

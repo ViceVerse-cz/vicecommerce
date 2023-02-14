@@ -1,15 +1,15 @@
-import { useAdminRegions } from 'medusa-react';
-import { useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import Spinner from '../../../components/atoms/spinner';
-import GearIcon from '../../../components/fundamentals/icons/gear-icon';
-import BreadCrumb from '../../../components/molecules/breadcrumb';
-import BodyCard from '../../../components/organisms/body-card';
-import RadioGroup from '../../../components/organisms/radio-group';
-import TwoSplitPane from '../../../components/templates/two-split-pane';
-import TaxDetails from './details';
+import { useAdminRegions } from "medusa-react";
+import { useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import Spinner from "../../../components/atoms/spinner";
+import GearIcon from "../../../components/fundamentals/icons/gear-icon";
+import BreadCrumb from "../../../components/molecules/breadcrumb";
+import BodyCard from "../../../components/organisms/body-card";
+import RadioGroup from "../../../components/organisms/radio-group";
+import TwoSplitPane from "../../../components/templates/two-split-pane";
+import TaxDetails from "./details";
 
-const SEARCH_PARAM = 'reg_id';
+const SEARCH_PARAM = "reg_id";
 
 const Taxes = () => {
   const navigate = useNavigate();
@@ -26,17 +26,17 @@ const Taxes = () => {
   return (
     <>
       <div>
-        <BreadCrumb previousRoute='/a/settings' previousBreadcrumb='Settings' currentPage='Taxes' />
+        <BreadCrumb previousRoute='/a/settings' previousBreadcrumb='Nastavení' currentPage='Taxes' />
         <TwoSplitPane threeCols>
           <BodyCard
             forceDropdown
-            title='Regions'
-            subtitle='Select the region you wish to manage taxes for'
+            title='Regiony'
+            subtitle='Vyberte oblast, pro kterou chcete spravovat daně'
             actionables={[
               {
                 icon: <GearIcon />,
-                label: 'Go to Region settings',
-                onClick: () => navigate('/a/settings/regions'),
+                label: "Přejděte do nastavení regionu",
+                onClick: () => navigate("/a/settings/regions"),
               },
             ]}
           >
@@ -54,9 +54,7 @@ const Taxes = () => {
                     <RadioGroup.Item
                       label={r.name}
                       description={
-                        r.countries.length
-                          ? `${r.countries.map((c) => c.display_name).join(', ')}`
-                          : undefined
+                        r.countries.length ? `${r.countries.map((c) => c.display_name).join(", ")}` : undefined
                       }
                       value={r.id}
                       key={r.id}

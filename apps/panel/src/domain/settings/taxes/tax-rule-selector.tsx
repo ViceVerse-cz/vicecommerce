@@ -1,16 +1,16 @@
-import React, { useContext, useState } from 'react';
-import Button from '../../../components/fundamentals/button';
-import Modal from '../../../components/molecules/modal';
-import { LayeredModalContext } from '../../../components/molecules/modal/layered-modal';
-import RadioGroup from '../../../components/organisms/radio-group';
-import { ProductSelector } from './product-selector';
-import { ProductTypeSelector } from './product-type-selector';
-import { ShippingOptionSelector } from './shipping-option-selector';
+import React, { useContext, useState } from "react";
+import Button from "../../../components/fundamentals/button";
+import Modal from "../../../components/molecules/modal";
+import { LayeredModalContext } from "../../../components/molecules/modal/layered-modal";
+import RadioGroup from "../../../components/organisms/radio-group";
+import { ProductSelector } from "./product-selector";
+import { ProductTypeSelector } from "./product-type-selector";
+import { ShippingOptionSelector } from "./shipping-option-selector";
 
 enum TaxRuleType {
-  PRODUCTS = 'products',
-  PRODUCT_TYPES = 'product_types',
-  SHIPPING_OPTIONS = 'shipping_options',
+  PRODUCTS = "products",
+  PRODUCT_TYPES = "product_types",
+  SHIPPING_OPTIONS = "shipping_options",
 }
 
 type TaxRuleSelectorProps = {
@@ -66,28 +66,24 @@ const TaxRuleSelector: React.FC<TaxRuleSelectorProps> = ({ regionId, type, items
         <div className='min-h-[680px]'>
           {!isLocked && (
             <>
-              <div className='inter-base-semibold mb-large'>Type</div>
-              <RadioGroup.Root
-                className='flex gap-base'
-                value={selectedType}
-                onValueChange={handleTypeChange}
-              >
+              <div className='inter-base-semibold mb-large'>Typ</div>
+              <RadioGroup.Root className='flex gap-base' value={selectedType} onValueChange={handleTypeChange}>
                 <RadioGroup.Item
                   className='flex-1'
-                  label={'Products'}
-                  description={'Select individual products'}
+                  label={"Produkty"}
+                  description={"Výběr jednotlivých produktů"}
                   value={TaxRuleType.PRODUCTS}
                 />
                 <RadioGroup.Item
                   className='flex-1'
-                  label={'Product Types'}
-                  description={'Select product types'}
+                  label={"Typy produktů"}
+                  description={"Vybrat typy produktů"}
                   value={TaxRuleType.PRODUCT_TYPES}
                 />
                 <RadioGroup.Item
                   className='flex-1'
-                  label={'Shipping Options'}
-                  description={'Select shipping options'}
+                  label={"Možnosti přepravy"}
+                  description={"Vyberte možnosti přepravy"}
                   value={TaxRuleType.SHIPPING_OPTIONS}
                 />
               </RadioGroup.Root>
@@ -100,21 +96,17 @@ const TaxRuleSelector: React.FC<TaxRuleSelectorProps> = ({ regionId, type, items
             <ProductTypeSelector items={selectedRule.items} onChange={handleItemChanges} />
           )}
           {selectedType === TaxRuleType.SHIPPING_OPTIONS && (
-            <ShippingOptionSelector
-              regionId={regionId}
-              items={selectedRule.items}
-              onChange={handleItemChanges}
-            />
+            <ShippingOptionSelector regionId={regionId} items={selectedRule.items} onChange={handleItemChanges} />
           )}
         </div>
       </Modal.Content>
       <Modal.Footer>
         <div className='flex w-full justify-end gap-x-xsmall'>
           <Button variant='ghost' size='small' className='w-[112px]' onClick={() => pop()}>
-            Back
+            Zpět
           </Button>
           <Button variant='primary' className='w-[112px]' size='small' onClick={handleSubmit}>
-            Add
+            Přidat
           </Button>
         </div>
       </Modal.Footer>

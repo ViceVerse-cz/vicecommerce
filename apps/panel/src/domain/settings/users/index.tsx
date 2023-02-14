@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import BreadCrumb from '../../../components/molecules/breadcrumb';
-import Medusa from '../../../services/api';
-import BodyCard from '../../../components/organisms/body-card';
-import InviteModal from '../../../components/organisms/invite-modal';
-import PlusIcon from '../../../components/fundamentals/icons/plus-icon';
-import UserTable from '../../../components/templates/user-table';
+import React, { useEffect, useState } from "react";
+import BreadCrumb from "../../../components/molecules/breadcrumb";
+import Medusa from "../../../services/api";
+import BodyCard from "../../../components/organisms/body-card";
+import InviteModal from "../../../components/organisms/invite-modal";
+import PlusIcon from "../../../components/fundamentals/icons/plus-icon";
+import UserTable from "../../../components/templates/user-table";
 
 const Users: React.FC = () => {
   const [users, setUsers] = useState([]);
@@ -33,7 +33,7 @@ const Users: React.FC = () => {
 
   const actionables = [
     {
-      label: 'Pozvat uživatele',
+      label: "Pozvat uživatele",
       onClick: () => setShowInviteModal(true),
       icon: (
         <span className='text-grey-90'>
@@ -46,18 +46,14 @@ const Users: React.FC = () => {
   return (
     <div className='flex flex-col h-full'>
       <div className='w-full flex flex-col grow'>
-        <BreadCrumb previousRoute='/a/settings' previousBreadcrumb='Settings' currentPage='Tým' />
-        <BodyCard
-          title='Tým'
-          subtitle='Správa uživatelů vašeho obchodu Medusa Store'
-          actionables={actionables}
-        >
+        <BreadCrumb previousRoute='/a/settings' previousBreadcrumb='Nastavení' currentPage='Tým' />
+        <BodyCard title='Tým' subtitle='Správa uživatelů vašeho obchodu Medusa Store' actionables={actionables}>
           <div className='flex grow  flex-col pt-2'>
             <UserTable users={users} invites={invites} triggerRefetch={triggerRefetch} />
           </div>
           <div className='inter-small-regular text-grey-50'>
             {users.length} člen
-            {users.length === 1 ? '' : 's'}
+            {users.length === 1 ? "" : "s"}
           </div>
 
           {showInviteModal && (

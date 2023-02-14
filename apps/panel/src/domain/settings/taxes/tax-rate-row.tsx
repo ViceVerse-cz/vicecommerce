@@ -27,8 +27,8 @@ export const TaxRateRow = ({ row, onEdit }) => {
     }
 
     const shouldDelete = await dialog({
-      heading: "Delete tax rate",
-      text: "Are you sure you want to delete this tax rate?",
+      heading: "Vymazat sazbu daně",
+      text: "Opravdu chcete tuto sazbu daně odstranit?",
     });
 
     if (!shouldDelete) {
@@ -38,10 +38,10 @@ export const TaxRateRow = ({ row, onEdit }) => {
     return deleteTaxRate
       .mutateAsync()
       .then(() => {
-        notification("Success", "Tax rate was deleted.", "success");
+        notification("Úspěch", "Sazba daně byla zrušena.", "success");
       })
       .catch((err) => {
-        notification("Error", getErrorMessage(err), "error");
+        notification("Chyba", getErrorMessage(err), "error");
       });
   };
 
@@ -55,7 +55,7 @@ export const TaxRateRow = ({ row, onEdit }) => {
 
   if (row.original.type === TaxRateType.RATE) {
     actions.push({
-      label: "Delete Tax Rate",
+      label: "Smazat sazbu daně",
       variant: "danger",
       onClick: () => handleDelete(row.original),
       icon: <TrashIcon size={20} />,

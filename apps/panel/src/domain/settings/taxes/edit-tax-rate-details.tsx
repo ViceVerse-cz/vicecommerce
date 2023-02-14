@@ -1,8 +1,8 @@
-import React from 'react';
-import LockIcon from '../../../components/fundamentals/icons/lock-icon';
-import Input from '../../../components/molecules/input';
-import FormValidator from '../../../utils/form-validator';
-import { NestedForm } from '../../../utils/nested-form';
+import React from "react";
+import LockIcon from "../../../components/fundamentals/icons/lock-icon";
+import Input from "../../../components/molecules/input";
+import FormValidator from "../../../utils/form-validator";
+import { NestedForm } from "../../../utils/nested-form";
 
 export type EditTaxRateFormType = {
   name: string;
@@ -24,14 +24,14 @@ export const EditTaxRateDetails = ({ lockName = false, form }: EditTaxRateProps)
 
   return (
     <div>
-      <p className='inter-base-semibold mb-base'>Details</p>
+      <p className='inter-base-semibold mb-base'>Podrobnosti</p>
       <Input
         disabled={lockName}
-        label='Name'
+        label='Název'
         prefix={lockName ? <LockIcon size={16} className='text-grey-40' /> : undefined}
-        placeholder={lockName ? 'Default' : 'Rate name'}
-        {...register(path('name'), {
-          required: !lockName ? FormValidator.required('Name') : undefined,
+        placeholder={lockName ? "Výchozí" : "Název sazby"}
+        {...register(path("name"), {
+          required: !lockName ? FormValidator.required("Name") : undefined,
         })}
         required={!lockName}
         className='mb-base min-w-[335px] w-full'
@@ -43,13 +43,13 @@ export const EditTaxRateDetails = ({ lockName = false, form }: EditTaxRateProps)
         max={100}
         step={0.01}
         formNoValidate
-        label='Tax Rate'
+        label='Sazba daně'
         prefix='%'
         placeholder='12'
-        {...register(path('rate'), {
-          min: FormValidator.min('Tax Rate', 0),
-          max: FormValidator.max('Tax Rate', 100),
-          required: FormValidator.required('Tax Rate'),
+        {...register(path("rate"), {
+          min: FormValidator.min("Tax Rate", 0),
+          max: FormValidator.max("Tax Rate", 100),
+          required: FormValidator.required("Tax Rate"),
           valueAsNumber: true,
         })}
         required
@@ -58,9 +58,9 @@ export const EditTaxRateDetails = ({ lockName = false, form }: EditTaxRateProps)
       />
       <Input
         placeholder='1000'
-        label='Tax Code'
-        {...register(path('code'), {
-          required: FormValidator.required('Tax Code'),
+        label='Daňový kód'
+        {...register(path("code"), {
+          required: FormValidator.required("Tax Code"),
         })}
         required
         className='mb-base min-w-[335px] w-full'
