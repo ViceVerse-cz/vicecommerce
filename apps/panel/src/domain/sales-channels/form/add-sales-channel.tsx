@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { useAdminCreateSalesChannel } from 'medusa-react';
+import React, { useState } from "react";
+import { useAdminCreateSalesChannel } from "medusa-react";
 
-import Button from '../../../components/fundamentals/button';
+import Button from "../../../components/fundamentals/button";
 
-import FocusModal from '../../../components/molecules/modal/focus-modal';
-import CrossIcon from '../../../components/fundamentals/icons/cross-icon';
-import Accordion from '../../../components/organisms/accordion';
-import InputField from '../../../components/molecules/input';
-import useNotification from '../../../hooks/use-notification';
-import PlusIcon from '../../../components/fundamentals/icons/plus-icon';
+import FocusModal from "../../../components/molecules/modal/focus-modal";
+import CrossIcon from "../../../components/fundamentals/icons/cross-icon";
+import Accordion from "../../../components/organisms/accordion";
+import InputField from "../../../components/molecules/input";
+import useNotification from "../../../hooks/use-notification";
+import PlusIcon from "../../../components/fundamentals/icons/plus-icon";
 
 type GeneralProps = {
   name: string;
@@ -27,20 +27,20 @@ function General(props: GeneralProps) {
     <div className='flex flex-col gap-y-base my-base'>
       <div className='flex-1'>
         <InputField
-          label='Title'
+          label='Název'
           type='string'
           name='name'
-          placeholder='Website, app, Amazon, physical store POS, facebook product feed...'
+          placeholder='Webové stránky, aplikace, Amazon, prodejní místa v kamenných obchodech, produktový feed na Facebooku...'
           value={name}
           onChange={(ev) => setName(ev.target.value)}
         />
       </div>
       <div className='flex-1'>
         <InputField
-          label='Description'
+          label='Popis'
           type='string'
           name='description'
-          placeholder='Available products at our website, app...'
+          placeholder='Dostupné produkty na našich webových stránkách, aplikace...'
           value={description}
           onChange={(ev) => setDescription(ev.target.value)}
         />
@@ -55,7 +55,8 @@ function AddProducts() {
   return (
     <div>
       <sapn className='text-gray-500'>
-        Select products that will be available via this channel. You can assign products to multiple channels.
+        Vyberte produkty, které budou k dispozici prostřednictvím tohoto kanálu. Produkty můžete přiřadit k více
+        kanálům.
       </sapn>
       <Button
         size='small'
@@ -96,10 +97,10 @@ const AddSalesChannelModal = ({ onClose }: AddSalesChannelModalProps) => {
       { name, description },
       {
         onSuccess: ({ sales_channel }) => {
-          notification('Success', 'The sales channel is successfully created', 'success');
+          notification("Úspěch", "Prodejní kanál je úspěšně vytvořen", "success");
           onClose(sales_channel.id);
         },
-        onError: () => notification('Error', 'Failed to create the sales channel', 'error'),
+        onError: () => notification("Chyba", "Nepodařilo se vytvořit prodejní kanál", "error"),
       },
     );
   }
@@ -113,10 +114,10 @@ const AddSalesChannelModal = ({ onClose }: AddSalesChannelModalProps) => {
       },
       {
         onSuccess: ({ sales_channel }) => {
-          notification('Success', 'The sales channel is successfully created', 'success');
+          notification("Úspěch", "Prodejní kanál je úspěšně vytvořen", "success");
           onClose(sales_channel.id);
         },
-        onError: () => notification('Error', 'Failed to create the sales channel', 'error'),
+        onError: () => notification("Chyba", "Nepodařilo se vytvořit prodejní kanál", "error"),
       },
     );
   }
@@ -136,17 +137,11 @@ const AddSalesChannelModal = ({ onClose }: AddSalesChannelModalProps) => {
               disabled={!name}
               className='rounded-rounded'
             >
-              Save as draft
+              Uložit jako návrh
             </Button>
 
-            <Button
-              size='small'
-              variant='primary'
-              onClick={() => save()}
-              disabled={!name}
-              className='rounded-rounded'
-            >
-              Publish channel
+            <Button size='small' variant='primary' onClick={() => save()} disabled={!name} className='rounded-rounded'>
+              Zveřejnit kanál
             </Button>
           </div>
         </div>
@@ -154,15 +149,10 @@ const AddSalesChannelModal = ({ onClose }: AddSalesChannelModalProps) => {
       <FocusModal.Main>
         <div className='flex justify-center mb-[25%]'>
           <div className='medium:w-7/12 large:w-6/12 small:w-4/5 w-full pt-16'>
-            <h1 className='inter-xlarge-semibold'>Create new sales channel</h1>
-            <Accordion className='pt-7 text-grey-90' defaultValue={['general']} type='multiple'>
-              <Accordion.Item title='General info' value='general' forceMountContent>
-                <General
-                  name={name}
-                  description={description}
-                  setName={setName}
-                  setDescription={setDescription}
-                />
+            <h1 className='inter-xlarge-semibold'>Vytvoření nového prodejního kanálu</h1>
+            <Accordion className='pt-7 text-grey-90' defaultValue={["general"]} type='multiple'>
+              <Accordion.Item title='Obecné informace' value='general' forceMountContent>
+                <General name={name} description={description} setName={setName} setDescription={setDescription} />
               </Accordion.Item>
               {/*TODO: add a modal for initially selecting products*/}
               {/*<Accordion.Item title="Products" value="products">*/}

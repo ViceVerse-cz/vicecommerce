@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
-import IndeterminateCheckbox from '../../../components/molecules/indeterminate-checkbox';
-import ImagePlaceholder from '../../../components/fundamentals/image-placeholder';
+import IndeterminateCheckbox from "../../../components/molecules/indeterminate-checkbox";
+import ImagePlaceholder from "../../../components/fundamentals/image-placeholder";
 
 export const SALES_CHANNEL_PRODUCTS_TABLE_COLUMNS = [
   {
     width: 30,
-    id: 'selection',
+    id: "selection",
     Header: ({ getToggleAllPageRowsSelectedProps }) => (
       <span className='flex justify-center'>
         <IndeterminateCheckbox {...getToggleAllPageRowsSelectedProps()} />
@@ -21,8 +21,8 @@ export const SALES_CHANNEL_PRODUCTS_TABLE_COLUMNS = [
     },
   },
   {
-    Header: 'Name',
-    accessor: 'title',
+    Header: "Název",
+    accessor: "title",
     Cell: ({ row: { original } }) => {
       return (
         <div className='flex items-center'>
@@ -41,10 +41,10 @@ export const SALES_CHANNEL_PRODUCTS_TABLE_COLUMNS = [
     },
   },
   {
-    Header: 'Collection',
-    accessor: 'collection',
+    Header: "Sbírka",
+    accessor: "collection",
     Cell: ({ cell: { value } }) => {
-      return <div>{value?.title || '-'}</div>;
+      return <div>{value?.title || "-"}</div>;
     },
   },
 ];

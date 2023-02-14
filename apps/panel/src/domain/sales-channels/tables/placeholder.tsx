@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
-import Button from '../../../components/fundamentals/button';
-import SidedMouthFaceIcon from '../../../components/fundamentals/icons/sided-mouth-face';
+import Button from "../../../components/fundamentals/button";
+import SidedMouthFaceIcon from "../../../components/fundamentals/icons/sided-mouth-face";
 
 function Placeholder({ showAddModal }) {
   return (
@@ -10,13 +10,13 @@ function Placeholder({ showAddModal }) {
         <SidedMouthFaceIcon width='48' height='48' />
       </span>
 
-      <h3 className='font-semibold text-large text-gray-90 mt-6'>Start building your channels setup...</h3>
+      <h3 className='font-semibold text-large text-gray-90 mt-6'>Začněte vytvářet nastavení kanálů...</h3>
       <p className='mt-2 mb-8 text-grey-50 w-[358px] text-center'>
-        You haven’t added any products to this channels yet, but once you do they will live here.
+        Zatím jste do těchto kanálů nepřidali žádné produkty, ale jakmile tak učiníte, budou se zde zobrazovat.
       </p>
 
       <Button onClick={showAddModal} variant='primary' size='small'>
-        Add products
+        Přidat produkty
       </Button>
     </div>
   );

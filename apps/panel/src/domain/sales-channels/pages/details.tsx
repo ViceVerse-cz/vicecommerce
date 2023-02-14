@@ -1,30 +1,30 @@
-import clsx from 'clsx';
-import { useEffect, useRef, useState, useMemo } from 'react';
+import clsx from "clsx";
+import { useEffect, useRef, useState, useMemo } from "react";
 
-import { SalesChannel } from '@medusajs/medusa';
+import { SalesChannel } from "@medusajs/medusa";
 import {
   useAdminDeleteSalesChannel,
   useAdminSalesChannels,
   useAdminStore,
   useAdminUpdateSalesChannel,
-} from 'medusa-react';
+} from "medusa-react";
 
-import EditSalesChannel from '../form/edit-sales-channel';
-import AddSalesChannelModal from '../form/add-sales-channel';
-import Actionables, { ActionType } from '../../../components/molecules/actionables';
-import PlusIcon from '../../../components/fundamentals/icons/plus-icon';
-import EditIcon from '../../../components/fundamentals/icons/edit-icon';
-import TrashIcon from '../../../components/fundamentals/icons/trash-icon';
-import SearchIcon from '../../../components/fundamentals/icons/search-icon';
-import { SalesChannelProductsSelectModal, SalesChannelProductsTable } from '../tables/product';
-import CrossIcon from '../../../components/fundamentals/icons/cross-icon';
-import StatusSelector from '../../../components/molecules/status-selector';
-import TwoSplitPane from '../../../components/templates/two-split-pane';
-import Fade from '../../../components/atoms/fade-wrapper';
-import Breadcrumb from '../../../components/molecules/breadcrumb';
-import useToggleState from '../../../hooks/use-toggle-state';
-import { useNavigate, useParams } from 'react-router-dom';
-import useImperativeDialog from '../../../hooks/use-imperative-dialog';
+import EditSalesChannel from "../form/edit-sales-channel";
+import AddSalesChannelModal from "../form/add-sales-channel";
+import Actionables, { ActionType } from "../../../components/molecules/actionables";
+import PlusIcon from "../../../components/fundamentals/icons/plus-icon";
+import EditIcon from "../../../components/fundamentals/icons/edit-icon";
+import TrashIcon from "../../../components/fundamentals/icons/trash-icon";
+import SearchIcon from "../../../components/fundamentals/icons/search-icon";
+import { SalesChannelProductsSelectModal, SalesChannelProductsTable } from "../tables/product";
+import CrossIcon from "../../../components/fundamentals/icons/cross-icon";
+import StatusSelector from "../../../components/molecules/status-selector";
+import TwoSplitPane from "../../../components/templates/two-split-pane";
+import Fade from "../../../components/atoms/fade-wrapper";
+import Breadcrumb from "../../../components/molecules/breadcrumb";
+import useToggleState from "../../../hooks/use-toggle-state";
+import { useNavigate, useParams } from "react-router-dom";
+import useImperativeDialog from "../../../hooks/use-imperative-dialog";
 
 type ListIndicatorProps = { isActive: boolean };
 
@@ -36,9 +36,9 @@ function ListIndicator(props: ListIndicatorProps) {
   return (
     <div
       className={clsx(
-        'flex justify-center items-center flex-shrink-0 w-[18px] h-[18px] bg-white border rounded-circle',
+        "flex justify-center items-center flex-shrink-0 w-[18px] h-[18px] bg-white border rounded-circle",
         {
-          'border-2 border-violet-60': isActive,
+          "border-2 border-violet-60": isActive,
         },
       )}
     >
@@ -60,7 +60,7 @@ function DisabledLabel() {
       flex items-center justify-center
       text-grey-50 text-small font-semibold'
     >
-      Draft
+      Návrh
     </div>
   );
 }
@@ -81,8 +81,8 @@ function SalesChannelTile(props: SalesChannelTileProps) {
   return (
     <div
       onClick={onClick}
-      className={clsx('mb-2 p-4 cursor-pointer rounded-lg border flex justify-between h-[83px]', {
-        'border-2 border-violet-60': isSelected,
+      className={clsx("mb-2 p-4 cursor-pointer rounded-lg border flex justify-between h-[83px]", {
+        "border-2 border-violet-60": isSelected,
       })}
     >
       <div className='flex gap-2 overflow-hidden'>
@@ -119,28 +119,28 @@ function SalesChannelsHeader(props: SalesChannelsHeaderProps) {
   const inputRef = useRef();
 
   const classes = {
-    'translate-y-[-50px]': showFilter,
-    'translate-y-[0px]': !showFilter,
+    "translate-y-[-50px]": showFilter,
+    "translate-y-[0px]": !showFilter,
   };
 
   const hideFilter = () => {
     setShowFilter(false);
-    setFilterText('');
+    setFilterText("");
   };
 
   return (
     <div className='h-[55px] mb-6 overflow-hidden'>
-      <div className={clsx('transition-all duration-200', classes)}>
+      <div className={clsx("transition-all duration-200", classes)}>
         <div className='h-[55px]'>
           <div className='flex items-center justify-between mb-1'>
-            <h2 className='font-semibold text-xlarge text-grey-90'>Sales channels</h2>
+            <h2 className='font-semibold text-xlarge text-grey-90'>Prodejní kanály</h2>
             <div className='flex items-center justify-between gap-4'>
               <SearchIcon size={15} onClick={() => setShowFilter(true)} className='cursor-pointer' />
               <PlusIcon size={15} onClick={openCreateModal} className='cursor-pointer' />
             </div>
           </div>
           <div className='text-grey-50 text-small mb-6 block overflow-hidden truncate max-w-[100%]'>
-            Control which products are available in which channels
+            Řídit, které produkty jsou dostupné v jakých kanálech
           </div>
         </div>
 
@@ -150,7 +150,7 @@ function SalesChannelsHeader(props: SalesChannelsHeaderProps) {
             ref={inputRef}
             value={filterText}
             onChange={(e) => setFilterText(e.target.value)}
-            placeholder='Search by title or description'
+            placeholder='Vyhledávání podle názvu nebo popisu'
             className='w-full font-normal outline-none bg-inherit outline-0 remove-number-spinner leading-base text-grey-90 caret-violet-60 placeholder-grey-40'
             onBlur={() => setShowFilter(!!filterText)}
             autoComplete='off'
@@ -175,22 +175,11 @@ type SalesChannelsListProps = {
  * Sales channels list.
  */
 function SalesChannelsList(props: SalesChannelsListProps) {
-  const {
-    activeChannelId,
-    openCreateModal,
-    setActiveSalesChannelId,
-    salesChannels,
-    filterText,
-    setFilterText,
-  } = props;
+  const { activeChannelId, openCreateModal, setActiveSalesChannelId, salesChannels, filterText, setFilterText } = props;
 
   return (
     <div className='col-span-1 rounded-lg border bg-grey-0 border-grey-20 px-8 py-6 h-[968px]'>
-      <SalesChannelsHeader
-        filterText={filterText}
-        setFilterText={setFilterText}
-        openCreateModal={openCreateModal}
-      />
+      <SalesChannelsHeader filterText={filterText} setFilterText={setFilterText} openCreateModal={openCreateModal} />
       <div>
         {salesChannels?.map((s) => (
           <SalesChannelTile
@@ -227,8 +216,8 @@ function SalesChannelDetailsHeader(props: SalesChannelDetailsHeaderProps) {
 
   const onDelete = async () => {
     const confirmed = await confirmation({
-      text: 'Are you sure you want to delete this sales channel? The setup you made will be gone forever.',
-      heading: 'Delete Channel',
+      text: "Opravdu chcete tento prodejní kanál odstranit? Nastavení, které jste provedli, navždy zmizí.",
+      heading: "Odstranit kanáll",
       extraConfirmation: true,
       entityName: salesChannel.name,
     });
@@ -242,12 +231,12 @@ function SalesChannelDetailsHeader(props: SalesChannelDetailsHeaderProps) {
   const actions = useMemo(() => {
     const _actions: ActionType[] = [
       {
-        label: 'Edit general info',
+        label: "Upravit obecné informace",
         icon: <EditIcon size='20' />,
         onClick: openUpdateModal,
       },
       {
-        label: 'Add products',
+        label: "Přidat produkty",
         icon: <PlusIcon />,
         onClick: () => showProductsAdd(),
       },
@@ -255,9 +244,9 @@ function SalesChannelDetailsHeader(props: SalesChannelDetailsHeaderProps) {
 
     if (!isDefault) {
       _actions.push({
-        label: 'Delete channel',
+        label: "Odstranit kanál",
         icon: <TrashIcon size={20} />,
-        variant: 'danger',
+        variant: "danger",
         onClick: onDelete,
       });
     }
@@ -272,8 +261,8 @@ function SalesChannelDetailsHeader(props: SalesChannelDetailsHeaderProps) {
         <StatusSelector
           onChange={() => updateSalesChannel({ is_disabled: !salesChannel.is_disabled })}
           isDraft={salesChannel.is_disabled}
-          draftState='Disabled'
-          activeState='Enabled'
+          draftState='Vypnuto'
+          activeState='Zapnuto'
         />
         <Actionables forceDropdown={true} actions={actions} />
       </div>
@@ -310,9 +299,7 @@ function SalesChannelDetails(props: SalesChannelDetailsProps) {
 
       {showUpdateModal && <EditSalesChannel handleClose={closeUpdateModal} salesChannel={salesChannel} />}
 
-      {showAddProducts && (
-        <SalesChannelProductsSelectModal salesChannel={salesChannel} handleClose={hideProductsAdd} />
-      )}
+      {showAddProducts && <SalesChannelProductsSelectModal salesChannel={salesChannel} handleClose={hideProductsAdd} />}
     </div>
   );
 }
@@ -385,17 +372,13 @@ function Details() {
     });
   }
 
-  if (!sales_channels || !activeSalesChannel) {
+  if (!(sales_channels && activeSalesChannel)) {
     return null;
   }
 
   return (
     <div>
-      <Breadcrumb
-        currentPage={'Sales channels'}
-        previousBreadcrumb={'Settings'}
-        previousRoute='/a/settings'
-      />
+      <Breadcrumb currentPage={"Prodejní kanály"} previousBreadcrumb={"Settings"} previousRoute='/a/settings' />
 
       <TwoSplitPane threeCols>
         <SalesChannelsList

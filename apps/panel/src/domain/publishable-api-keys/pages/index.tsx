@@ -1,27 +1,27 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import { PublishableApiKey, SalesChannel } from '@medusajs/medusa';
+import { PublishableApiKey, SalesChannel } from "@medusajs/medusa";
 import {
   useAdminAddPublishableKeySalesChannelsBatch,
   useAdminCreatePublishableApiKey,
   useAdminPublishableApiKeySalesChannels,
-} from 'medusa-react';
+} from "medusa-react";
 
-import Breadcrumb from '../../../components/molecules/breadcrumb';
-import BodyCard from '../../../components/organisms/body-card';
-import FocusModal from '../../../components/molecules/modal/focus-modal';
-import Fade from '../../../components/atoms/fade-wrapper';
-import useToggleState from '../../../hooks/use-toggle-state';
-import Button from '../../../components/fundamentals/button';
-import CrossIcon from '../../../components/fundamentals/icons/cross-icon';
-import InputField from '../../../components/molecules/input';
-import useNotification from '../../../hooks/use-notification';
-import PublishableApiKeysTable from '../tables/publishable-api-keys-table';
-import DetailsModal from '../modals/details';
-import ManageSalesChannelsSideModal from '../modals/manage-sales-channels';
-import ChannelsIcon from '../../../components/fundamentals/icons/channels-icon';
-import SalesChannelsSummary from '../../../components/molecules/sales-channels-summary';
-import AddSalesChannelsSideModal from '../modals/add-sales-channels';
+import Breadcrumb from "../../../components/molecules/breadcrumb";
+import BodyCard from "../../../components/organisms/body-card";
+import FocusModal from "../../../components/molecules/modal/focus-modal";
+import Fade from "../../../components/atoms/fade-wrapper";
+import useToggleState from "../../../hooks/use-toggle-state";
+import Button from "../../../components/fundamentals/button";
+import CrossIcon from "../../../components/fundamentals/icons/cross-icon";
+import InputField from "../../../components/molecules/input";
+import useNotification from "../../../hooks/use-notification";
+import PublishableApiKeysTable from "../tables/publishable-api-keys-table";
+import DetailsModal from "../modals/details";
+import ManageSalesChannelsSideModal from "../modals/manage-sales-channels";
+import ChannelsIcon from "../../../components/fundamentals/icons/channels-icon";
+import SalesChannelsSummary from "../../../components/molecules/sales-channels-summary";
+import AddSalesChannelsSideModal from "../modals/add-sales-channels";
 
 type AddSalesChannelsSectionProps = {
   setSelectedChannels: (arg: any) => void;
@@ -42,12 +42,12 @@ function AddSalesChannelsSection(props: AddSalesChannelsSectionProps) {
     <div>
       <div className='flex justify-between items-center'>
         <div>
-          <h5 className='inter-base-semibold text-grey-90 pb-1'>Sales channels</h5>
-          <p className='text-grey-50'>Connect as many sales channels to your API key as you need.</p>
+          <h5 className='inter-base-semibold text-grey-90 pb-1'>Prodejní kanály</h5>
+          <p className='text-grey-50'>Připojte ke svému klíči API tolik prodejních kanálů, kolik potřebujete.</p>
         </div>
         {!hasSelectedChannels && (
           <Button size='small' variant='secondary' className='h-[40px]' onClick={showModal}>
-            Add sales channels
+            Přidání prodejních kanálů
           </Button>
         )}
       </div>
@@ -62,7 +62,7 @@ function AddSalesChannelsSection(props: AddSalesChannelsSectionProps) {
             <SalesChannelsSummary channels={Object.values(selectedChannels)} showCount={2} />
           </div>
           <Button size='small' variant='secondary' className='h-[40px]' onClick={showModal}>
-            Edit sales channels
+            Úprava prodejních kanálů
           </Button>
         </div>
       )}
@@ -88,8 +88,8 @@ function CreatePublishableKey(props: CreatePublishableKeyProps) {
   const { closeModal } = props;
   const notification = useNotification();
 
-  const [name, setName] = useState('');
-  const [keyId, setKeyId] = useState('');
+  const [name, setName] = useState("");
+  const [keyId, setKeyId] = useState("");
   const [selectedChannels, setSelectedChannels] = useState({});
 
   const { mutateAsync: createPublishableApiKey } = useAdminCreatePublishableApiKey();
@@ -100,9 +100,9 @@ function CreatePublishableKey(props: CreatePublishableKeyProps) {
     try {
       const res = await createPublishableApiKey({ title: name });
       setKeyId(res.publishable_api_key.id);
-      notification('Success', 'Created a new API key', 'success');
+      notification("Úspěch", "Vytvoření nového klíče API", "success");
     } catch (e) {
-      notification('Error', 'Failed to create a new API key', 'error');
+      notification("Chyba", "Nepodařilo se vytvořit nový klíč API", "error");
     }
   };
 
@@ -112,14 +112,10 @@ function CreatePublishableKey(props: CreatePublishableKeyProps) {
         sales_channel_ids: Object.keys(selectedChannels).map((id) => ({ id })),
       })
         .then(() => {
-          notification('Success', 'Sales channels added to the scope', 'success');
+          notification("Úspěch", "Prodejní kanály přidané do oblasti působnosti", "success");
         })
         .catch(() => {
-          notification(
-            'Error',
-            'Error occurred while adding sales channels to the scope of the key',
-            'success',
-          );
+          notification("Chyba", "Při přidávání prodejních kanálů do oboru klíče došlo k chybě.", "success");
         })
         .finally(closeModal);
     }
@@ -133,14 +129,8 @@ function CreatePublishableKey(props: CreatePublishableKeyProps) {
             <CrossIcon size={20} />
           </Button>
           <div className='gap-x-small flex'>
-            <Button
-              size='small'
-              variant='primary'
-              onClick={onSubmit}
-              disabled={!name}
-              className='rounded-rounded'
-            >
-              Publish API key
+            <Button size='small' variant='primary' onClick={onSubmit} disabled={!name} className='rounded-rounded'>
+              Zveřejnění klíče API
             </Button>
           </div>
         </div>
@@ -148,11 +138,9 @@ function CreatePublishableKey(props: CreatePublishableKeyProps) {
 
       <FocusModal.Main className='w-full no-scrollbar flex justify-center'>
         <div className='medium:w-7/12 large:w-6/12 small:w-4/5 max-w-[700px] my-16'>
-          <h1 className='inter-xlarge-semibold text-grey-90 pb-8'>Create API Key</h1>
-          <h5 className='inter-base-semibold text-grey-90 pb-1'>General Information</h5>
-          <p className='text-grey-50 pb-8'>
-            Create and manage API keys. Right now this is only related to sales channels.
-          </p>
+          <h1 className='inter-xlarge-semibold text-grey-90 pb-8'>Vytvoření klíče API</h1>
+          <h5 className='inter-base-semibold text-grey-90 pb-1'>Obecné informace</h5>
+          <p className='text-grey-50 pb-8'>Vytváření a správa klíčů API. Nyní se to týká pouze prodejních kanálů.</p>
           <InputField
             label='Title'
             type='string'
@@ -165,10 +153,7 @@ function CreatePublishableKey(props: CreatePublishableKeyProps) {
 
           <div className='w-[100%] h-[1px] bg-gray-200 mt-16 mb-8' />
 
-          <AddSalesChannelsSection
-            selectedChannels={selectedChannels}
-            setSelectedChannels={setSelectedChannels}
-          />
+          <AddSalesChannelsSection selectedChannels={selectedChannels} setSelectedChannels={setSelectedChannels} />
         </div>
       </FocusModal.Main>
     </FocusModal>
@@ -186,7 +171,7 @@ function Index() {
 
   const actions = [
     {
-      label: 'Create API key',
+      label: "Vytvoření klíče API",
       onClick: openCreateModal,
     },
   ];
@@ -201,14 +186,10 @@ function Index() {
 
   return (
     <div>
-      <Breadcrumb
-        currentPage='Publishable API Keys'
-        previousBreadcrumb='Settings'
-        previousRoute='/a/settings'
-      />
+      <Breadcrumb currentPage='Publikovatelné klíče API' previousBreadcrumb='Nastavení' previousRoute='/a/settings' />
       <BodyCard
-        title='Publishable API keys'
-        subtitle='These publishable keys will allow you to authenticate API requests.'
+        title='Publikovatelné klíče API'
+        subtitle='Tyto publikovatelné klíče vám umožní ověřovat požadavky API.'
         actionables={actions}
       >
         <PublishableApiKeysTable showDetailsModal={setSelectedKey} showChannelsModal={_openChannelsModal} />

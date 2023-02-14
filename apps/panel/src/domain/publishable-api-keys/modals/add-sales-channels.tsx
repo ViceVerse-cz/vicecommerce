@@ -66,7 +66,9 @@ function AddSalesChannelsSideModal(props: AddSalesChannelsSideModalProps) {
         {/* === HEADER === */}
 
         <div className='flex items-center justify-between'>
-          <h3 className='inter-large-semibold text-xl text-gray-900 flex items-center gap-2'>Add sales channels</h3>
+          <h3 className='inter-large-semibold text-xl text-gray-900 flex items-center gap-2'>
+            Přidání prodejních kanálů
+          </h3>
           <Button variant='secondary' className='w-8 h-8 p-2' onClick={props.close}>
             <CrossIcon size={20} className='text-grey-50' />
           </Button>
@@ -81,7 +83,7 @@ function AddSalesChannelsSideModal(props: AddSalesChannelsSideModalProps) {
               type='string'
               value={search}
               className='h-[32px]'
-              placeholder='Find channels'
+              placeholder='Vyhledávání kanálů'
               prefix={<SearchIcon size={16} />}
               onChange={(ev) => setSearch(ev.target.value)}
             />
@@ -106,7 +108,7 @@ function AddSalesChannelsSideModal(props: AddSalesChannelsSideModalProps) {
 
         <div className='flex justify-end gap-2'>
           <Button size='small' variant='ghost' onClick={onClose}>
-            Cancel
+            Zrušit
           </Button>
           <Button
             size='small'

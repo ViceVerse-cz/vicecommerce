@@ -1,21 +1,21 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { motion } from "framer-motion";
 
 import {
   useAdminAddPublishableKeySalesChannelsBatch,
   useAdminRemovePublishableKeySalesChannelsBatch,
   useAdminPublishableApiKeySalesChannels,
   useAdminSalesChannels,
-} from 'medusa-react';
+} from "medusa-react";
 
-import Button from '../../../components/fundamentals/button';
-import SideModal from '../../../components/molecules/modal/side-modal';
-import CrossIcon from '../../../components/fundamentals/icons/cross-icon';
-import useNotification from '../../../hooks/use-notification';
-import InputField from '../../../components/molecules/input';
-import SearchIcon from '../../../components/fundamentals/icons/search-icon';
-import SalesChannelTable from '../tables/sales-channels-table';
-import UTurnIcon from '../../../components/fundamentals/icons/u-turn-icon';
+import Button from "../../../components/fundamentals/button";
+import SideModal from "../../../components/molecules/modal/side-modal";
+import CrossIcon from "../../../components/fundamentals/icons/cross-icon";
+import useNotification from "../../../hooks/use-notification";
+import InputField from "../../../components/molecules/input";
+import SearchIcon from "../../../components/fundamentals/icons/search-icon";
+import SalesChannelTable from "../tables/sales-channels-table";
+import UTurnIcon from "../../../components/fundamentals/icons/u-turn-icon";
 
 const LIMIT = 12;
 
@@ -30,25 +30,20 @@ function AddScreen(props: { keyId: string; close: () => void; goBack: () => void
   const notification = useNotification();
 
   const [offset, setOffset] = useState(0);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
 
   const {
     sales_channels: data = [],
     isLoading,
     count,
-  } = useAdminSalesChannels(
-    { q: search, limit: LIMIT, offset },
-    { keepPreviousData: true, enabled: !!props.keyId },
-  );
+  } = useAdminSalesChannels({ q: search, limit: LIMIT, offset }, { keepPreviousData: true, enabled: !!props.keyId });
 
-  const { mutateAsync: addSalesChannelsToKeyScope } = useAdminAddPublishableKeySalesChannelsBatch(
-    props.keyId,
-  );
+  const { mutateAsync: addSalesChannelsToKeyScope } = useAdminAddPublishableKeySalesChannelsBatch(props.keyId);
 
   useEffect(() => {
     if (!props.isVisible) {
       setOffset(0);
-      setSearch('');
+      setSearch("");
       setSelectedChannels({});
       tableRef.current?.toggleAllRowsSelected(false);
     }
@@ -61,14 +56,10 @@ function AddScreen(props: { keyId: string; close: () => void; goBack: () => void
       })),
     })
       .then(() => {
-        notification('Success', 'Sales channels added to the scope', 'success');
+        notification("Úspěch", "Prodejní kanály přidané do oblasti působnosti", "success");
       })
       .catch(() => {
-        notification(
-          'Error',
-          'Error occurred while adding sales channels to the scope of the key',
-          'success',
-        );
+        notification("Chyba", "Při přidávání prodejních kanálů do oboru klíče došlo k chybě.", "error");
       })
       .finally(callback);
   };
@@ -82,7 +73,7 @@ function AddScreen(props: { keyId: string; close: () => void; goBack: () => void
           <Button variant='secondary' className='w-8 h-8 p-2 text-grey-50' onClick={props.goBack}>
             <UTurnIcon size={18} />
           </Button>
-          Add sales channels
+          Přidání prodejních kanálů
         </h3>
         <Button variant='secondary' className='w-8 h-8 p-2' onClick={props.close}>
           <CrossIcon size={20} className='text-grey-50' />
@@ -98,7 +89,7 @@ function AddScreen(props: { keyId: string; close: () => void; goBack: () => void
             type='string'
             value={search}
             className='h-[32px]'
-            placeholder='Find channels'
+            placeholder='Vyhledávání kanálů'
             prefix={<SearchIcon size={16} />}
             onChange={(ev) => setSearch(ev.target.value)}
           />
@@ -118,12 +109,12 @@ function AddScreen(props: { keyId: string; close: () => void; goBack: () => void
       </div>
       {/* === DIVIDER === */}
 
-      <div className='h-[1px] bg-gray-200 block' style={{ margin: '24px -24px' }} />
+      <div className='h-[1px] bg-gray-200 block' style={{ margin: "24px -24px" }} />
       {/* === FOOTER === */}
 
       <div className='flex justify-end gap-2'>
         <Button size='small' variant='ghost' onClick={props.close}>
-          Cancel
+          Zrušit
         </Button>
         <Button
           size='small'
@@ -131,7 +122,7 @@ function AddScreen(props: { keyId: string; close: () => void; goBack: () => void
           onClick={onSave(props.goBack)}
           disabled={!Object.keys(selectedSalesChannels).length}
         >
-          Add and go back
+          Přidat a vrátit se zpět
         </Button>
         <Button
           size='small'
@@ -139,7 +130,7 @@ function AddScreen(props: { keyId: string; close: () => void; goBack: () => void
           onClick={onSave(props.close)}
           disabled={!Object.keys(selectedSalesChannels).length}
         >
-          Add and close
+          Přidat a zavřít
         </Button>
       </div>
     </div>
@@ -164,7 +155,7 @@ function EditScreen(props: { keyId: string; close: () => void; goAdd: () => void
   const notification = useNotification();
 
   const [offset, setOffset] = useState(0);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
 
   const { sales_channels: data = [], isLoading } = useAdminPublishableApiKeySalesChannels(
     props.keyId,
@@ -175,9 +166,7 @@ function EditScreen(props: { keyId: string; close: () => void; goAdd: () => void
     },
   );
 
-  const { mutateAsync: removeSalesChannelsToKeyScope } = useAdminRemovePublishableKeySalesChannelsBatch(
-    props.keyId,
-  );
+  const { mutateAsync: removeSalesChannelsToKeyScope } = useAdminRemovePublishableKeySalesChannelsBatch(props.keyId);
 
   const onDeselect = () => {
     setSelectedChannels({});
@@ -191,23 +180,19 @@ function EditScreen(props: { keyId: string; close: () => void; goAdd: () => void
       })),
     })
       .then(() => {
-        notification('Success', 'Sales channels removed from the scope', 'success');
+        notification("Success", "Sales channels removed from the scope", "success");
         setSelectedChannels({});
         tableRef.current?.toggleAllRowsSelected(false);
       })
       .catch(() => {
-        notification(
-          'Error',
-          'Error occurred while removing sales channels from the scope of the key',
-          'success',
-        );
+        notification("Error", "Error occurred while removing sales channels from the scope of the key", "success");
       });
   };
 
   useEffect(() => {
     if (!props.isVisible) {
       setOffset(0);
-      setSearch('');
+      setSearch("");
       setSelectedChannels({});
       tableRef.current?.toggleAllRowsSelected(false);
     }
@@ -221,9 +206,7 @@ function EditScreen(props: { keyId: string; close: () => void; goAdd: () => void
       {/* === HEADER === */}
 
       <div className='flex items-center justify-between'>
-        <h3 className='inter-large-semibold text-xl text-gray-900 flex items-center gap-2'>
-          Edit sales channels
-        </h3>
+        <h3 className='inter-large-semibold text-xl text-gray-900 flex items-center gap-2'>Edit sales channels</h3>
         <Button variant='secondary' className='w-8 h-8 p-2' onClick={props.close}>
           <CrossIcon size={20} className='text-grey-50' />
         </Button>
@@ -246,12 +229,7 @@ function EditScreen(props: { keyId: string; close: () => void; goAdd: () => void
           {selectedCount ? (
             <div className='flex gap-2 justify-between items-center h-[32px]'>
               <span className='whitespace-nowrap text-small text-grey-50 px-2'>{selectedCount} selected</span>
-              <Button
-                size='small'
-                className='flex-shrink-0 h-[32px]'
-                variant='secondary'
-                onClick={onDeselect}
-              >
+              <Button size='small' className='flex-shrink-0 h-[32px]' variant='secondary' onClick={onDeselect}>
                 Deselect
               </Button>
               <Button
@@ -284,7 +262,7 @@ function EditScreen(props: { keyId: string; close: () => void; goAdd: () => void
       </div>
       {/* === DIVIDER === */}
 
-      <div className='h-[1px] bg-gray-200 block' style={{ margin: '24px -24px' }} />
+      <div className='h-[1px] bg-gray-200 block' style={{ margin: "24px -24px" }} />
       {/* === FOOTER === */}
 
       <div className='flex justify-end gap-2'>
@@ -324,29 +302,19 @@ function ManageSalesChannelsSideModal(props: ManageSalesChannelsSideModalProps) 
   return (
     <SideModal close={close} isVisible={!!isVisible}>
       <motion.div
-        style={{ width: 560 * 2, display: 'flex', height: '100%' }}
+        style={{ width: 560 * 2, display: "flex", height: "100%" }}
         animate={{ x: isAddNew ? -560 : 0 }}
-        transition={{ ease: 'easeInOut' }}
+        transition={{ ease: "easeInOut" }}
       >
         {/* EDIT PANEL */}
 
-        <motion.div style={{ height: '100%', width: 560 }} animate={{ opacity: isAddNew ? 0 : 1 }}>
-          <EditScreen
-            close={close}
-            keyId={keyId!}
-            isVisible={isVisible && !isAddNew}
-            goAdd={() => setIsAddNew(true)}
-          />
+        <motion.div style={{ height: "100%", width: 560 }} animate={{ opacity: isAddNew ? 0 : 1 }}>
+          <EditScreen close={close} keyId={keyId!} isVisible={isVisible && !isAddNew} goAdd={() => setIsAddNew(true)} />
         </motion.div>
         {/* ADD PANEL */}
 
-        <motion.div style={{ height: '100%', width: 560 }} animate={{ opacity: !isAddNew ? 0 : 1 }}>
-          <AddScreen
-            close={close}
-            keyId={keyId!}
-            isVisible={isVisible && isAddNew}
-            goBack={() => setIsAddNew(false)}
-          />
+        <motion.div style={{ height: "100%", width: 560 }} animate={{ opacity: !isAddNew ? 0 : 1 }}>
+          <AddScreen close={close} keyId={keyId!} isVisible={isVisible && isAddNew} goBack={() => setIsAddNew(false)} />
         </motion.div>
       </motion.div>
     </SideModal>

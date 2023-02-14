@@ -1,39 +1,39 @@
-import { useEffect, useState } from 'react';
-import moment from 'moment';
-import { debounce } from 'lodash';
-import { Column, Row, usePagination, useTable } from 'react-table';
+import { useEffect, useState } from "react";
+import moment from "moment";
+import { debounce } from "lodash";
+import { Column, Row, usePagination, useTable } from "react-table";
 
 import {
   useAdminDeletePublishableApiKey,
   useAdminPublishableApiKeys,
   useAdminRevokePublishableApiKey,
-} from 'medusa-react';
-import { PublishableApiKey } from '@medusajs/medusa';
+} from "medusa-react";
+import { PublishableApiKey } from "@medusajs/medusa";
 
-import TableContainer from '../../../components/organisms/table-container';
-import Table from '../../../components/molecules/table';
-import { ActionType } from '../../../components/molecules/actionables';
-import TrashIcon from '../../../components/fundamentals/icons/trash-icon';
-import ClipboardCopyIcon from '../../../components/fundamentals/icons/clipboard-copy-icon';
-import EditIcon from '../../../components/fundamentals/icons/edit-icon';
-import StatusIndicator from '../../../components/fundamentals/status-indicator';
-import StopIcon from '../../../components/fundamentals/icons/stop-icon';
-import Tooltip from '../../../components/atoms/tooltip';
-import CheckIcon from '../../../components/fundamentals/icons/check-icon';
-import DeletePrompt from '../../../components/organisms/delete-prompt';
+import TableContainer from "../../../components/organisms/table-container";
+import Table from "../../../components/molecules/table";
+import { ActionType } from "../../../components/molecules/actionables";
+import TrashIcon from "../../../components/fundamentals/icons/trash-icon";
+import ClipboardCopyIcon from "../../../components/fundamentals/icons/clipboard-copy-icon";
+import EditIcon from "../../../components/fundamentals/icons/edit-icon";
+import StatusIndicator from "../../../components/fundamentals/status-indicator";
+import StopIcon from "../../../components/fundamentals/icons/stop-icon";
+import Tooltip from "../../../components/atoms/tooltip";
+import CheckIcon from "../../../components/fundamentals/icons/check-icon";
+import DeletePrompt from "../../../components/organisms/delete-prompt";
 
 const PAGE_SIZE = 12;
 
 const COLUMNS: Column<PublishableApiKey>[] = [
   {
-    accessor: 'title',
-    Header: <div className='text-gray-500 text-small font-semibold'>Name</div>,
+    accessor: "title",
+    Header: <div className='text-gray-500 text-small font-semibold'>Název</div>,
     Cell: ({ row: { original } }) => {
       return <span className='text-gray-900'>{original.title}</span>;
     },
   },
   {
-    accessor: 'id',
+    accessor: "id",
     Header: <div className='text-gray-500 text-small font-semibold'>Token</div>,
     Cell: ({ row: { original } }) => {
       const [copied, setCopied] = useState(false);
@@ -50,11 +50,11 @@ const COLUMNS: Column<PublishableApiKey>[] = [
           content={
             copied ? (
               <span className='flex flex-row gap-1 justify-between items-center'>
-                <CheckIcon size={16} className='text-green-700' /> done
+                <CheckIcon size={16} className='text-green-700' /> hotovo
               </span>
             ) : (
               <span onClick={onClick} className='cursor-pointer'>
-                Copy to clipboard
+                Kopírování do schránky
               </span>
             )
           }
@@ -65,24 +65,22 @@ const COLUMNS: Column<PublishableApiKey>[] = [
     },
   },
   {
-    accessor: 'created_at',
-    Header: <div className='text-gray-500 text-small font-semibold'>Created</div>,
+    accessor: "created_at",
+    Header: <div className='text-gray-500 text-small font-semibold'>Vytvořeno</div>,
     Cell: ({ row: { original } }) => {
-      return (
-        <span className='text-gray-900'>{moment(original.created_at).format('MMM Do YYYY, h:mm:ss')}</span>
-      );
+      return <span className='text-gray-900'>{moment(original.created_at).format("MMM Do YYYY, h:mm:ss")}</span>;
     },
   },
   {
-    accessor: 'revoked_at',
-    Header: <div className='text-gray-500 text-small font-semibold'>Status</div>,
+    accessor: "revoked_at",
+    Header: <div className='text-gray-500 text-small font-semibold'>Stav</div>,
     Cell: ({ row: { original } }) => {
       return (
         <span className='text-gray-900 min-w-[50px]'>
           {original.revoked_at ? (
-            <StatusIndicator title='Revoked' variant='danger' />
+            <StatusIndicator title='Odvoláno' variant='danger' />
           ) : (
-            <StatusIndicator title='Live' variant='success' />
+            <StatusIndicator title='Živě' variant='success' />
           )}
         </span>
       );
@@ -113,31 +111,31 @@ function PublishableKeyTableRow(props: PublishableKeyTableRowProps) {
 
   const actions: ActionType[] = [
     {
-      label: 'Edit API key details',
+      label: "Úprava údajů o klíči API",
       onClick: showDetails,
       icon: <EditIcon size={16} />,
     },
     {
-      label: 'Edit sales channels',
+      label: "Úprava prodejních kanálů",
       onClick: showChannelsModal,
       icon: <EditIcon size={16} />,
     },
     {
-      label: 'Copy token',
+      label: "Kopírovat token",
       onClick: () => navigator.clipboard.writeText(pubKeyId),
       icon: <ClipboardCopyIcon size={16} />,
     },
     {
-      label: 'Revoke token',
+      label: "Zrušení tokenu",
       onClick: () => setShowRevoke(true),
       icon: <StopIcon size={16} />,
       disabled: isRevoked,
     },
     {
-      label: 'Delete API key',
+      label: "Odstranění klíče API",
       onClick: () => setShowDelete(true),
       icon: <TrashIcon size={16} />,
-      variant: 'danger',
+      variant: "danger",
     },
   ];
 
@@ -145,7 +143,7 @@ function PublishableKeyTableRow(props: PublishableKeyTableRowProps) {
     <>
       <Table.Row {...props.row.getRowProps()} actions={actions}>
         {props.row.cells.map((cell) => (
-          <Table.Cell {...cell.getCellProps()}>{cell.render('Cell')}</Table.Cell>
+          <Table.Cell {...cell.getCellProps()}>{cell.render("Cell")}</Table.Cell>
         ))}
       </Table.Row>
 
@@ -155,7 +153,7 @@ function PublishableKeyTableRow(props: PublishableKeyTableRowProps) {
           onDelete={async () => deletePublicKey()}
           confirmText='Yes, delete'
           successText='API key deleted'
-          text={`Are you sure you want to delete this public key?`}
+          text={"Are you sure you want to delete this public key?"}
           heading='Delete key'
         />
       )}
@@ -164,10 +162,10 @@ function PublishableKeyTableRow(props: PublishableKeyTableRowProps) {
         <DeletePrompt
           handleClose={() => setShowRevoke(false)}
           onDelete={async () => revokePublicKey()}
-          confirmText='Yes, revoke'
-          successText='API key revoked'
-          text={`Are you sure you want to revoke this public key?`}
-          heading='Revoke key'
+          confirmText='Ano, vymazat'
+          successText='Zrušení klíče API'
+          text={"Jste si jisti, že chcete tento veřejný klíč odstranit?"}
+          heading='Odvolání klíče'
         />
       )}
     </>
@@ -187,11 +185,7 @@ function PublishableApiKeysTable(props: PublishableApiKeysTableProps) {
   const [numPages, setNumPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
 
-  const {
-    publishable_api_keys: keys,
-    count,
-    isLoading,
-  } = useAdminPublishableApiKeys({ offset, limit: PAGE_SIZE });
+  const { publishable_api_keys: keys, count, isLoading } = useAdminPublishableApiKeys({ offset, limit: PAGE_SIZE });
 
   const table = useTable(
     {
@@ -212,7 +206,7 @@ function PublishableApiKeysTable(props: PublishableApiKeysTableProps) {
   );
 
   useEffect(() => {
-    if (typeof count !== 'undefined') {
+    if (typeof count !== "undefined") {
       setNumPages(Math.ceil(count / PAGE_SIZE));
     }
   }, [count]);
@@ -241,7 +235,7 @@ function PublishableApiKeysTable(props: PublishableApiKeysTableProps) {
       pagingState={{
         count,
         offset,
-        title: 'API Keys',
+        title: "Klíče API",
         pageCount: table.pageCount,
         pageSize: offset + table.rows.length,
         currentPage: table.state.pageIndex + 1,
@@ -256,7 +250,7 @@ function PublishableApiKeysTable(props: PublishableApiKeysTableProps) {
         {table.headerGroups.map((headerGroup) => (
           <Table.HeadRow {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((col) => (
-              <Table.HeadCell {...col.getHeaderProps()}>{col.render('Header')}</Table.HeadCell>
+              <Table.HeadCell {...col.getHeaderProps()}>{col.render("Header")}</Table.HeadCell>
             ))}
           </Table.HeadRow>
         ))}
@@ -279,10 +273,10 @@ function PublishableApiKeysTable(props: PublishableApiKeysTableProps) {
       </Table>
 
       {/* === PLACEHOLDER === */}
-      {!keys?.length && !isLoading && (
+      {!(keys?.length || isLoading ) && (
         <div className='flex justify-center items-center h-[480px] w-[100%]'>
           <span className='text-gray-400'>
-            No keys yet, use the above button to create your first publishable key
+            Zatím nemáte žádné klíče, pro vytvoření prvního publikovatelného klíče použijte výše uvedené tlačítko.
           </span>
         </div>
       )}

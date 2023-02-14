@@ -1,12 +1,12 @@
-import { useAdminUpdateSalesChannel } from 'medusa-react';
-import React, { useState } from 'react';
+import { useAdminUpdateSalesChannel } from "medusa-react";
+import React, { useState } from "react";
 
-import { SalesChannel } from '@medusajs/medusa';
+import { SalesChannel } from "@medusajs/medusa";
 
-import Button from '../../../components/fundamentals/button';
-import InputField from '../../../components/molecules/input';
-import Modal from '../../../components/molecules/modal';
-import useNotification from '../../../hooks/use-notification';
+import Button from "../../../components/fundamentals/button";
+import InputField from "../../../components/molecules/input";
+import Modal from "../../../components/molecules/modal";
+import useNotification from "../../../hooks/use-notification";
 
 type EditSalesChannelProps = {
   salesChannel: SalesChannel;
@@ -31,10 +31,10 @@ function EditSalesChannel(props: EditSalesChannelProps) {
       { name, description },
       {
         onSuccess: () => {
-          notification('Success', 'The sales channel is successfully updated', 'success');
+          notification("Úspěch", "Prodejní kanál je úspěšně aktualizován", "success");
           handleClose();
         },
-        onError: () => notification('Error', 'Failed to update the sales channel', 'error'),
+        onError: () => notification("Chyba", "Nepodařilo se aktualizovat prodejní kanál", "error"),
       },
     );
   };
@@ -43,15 +43,15 @@ function EditSalesChannel(props: EditSalesChannelProps) {
     <Modal handleClose={handleClose}>
       <Modal.Body>
         <Modal.Header handleClose={handleClose}>
-          <span className='inter-xlarge-semibold'>Sales channel details</span>
+          <span className='inter-xlarge-semibold'>Podrobnosti o prodejním kanálu</span>
         </Modal.Header>
         <Modal.Content>
-          <div className='inter-base-semibold text-grey-90 mb-4'>General info</div>
+          <div className='inter-base-semibold text-grey-90 mb-4'>Obecné informace</div>
 
           <div className='w-full flex flex-col gap-3'>
-            <InputField label='Name' name='name' value={name} onChange={(e) => setName(e.target.value)} />
+            <InputField label='Název' name='name' value={name} onChange={(e) => setName(e.target.value)} />
             <InputField
-              label='Description'
+              label='Popis'
               name='description'
               value={description!}
               onChange={(e) => setDescription(e.target.value)}
@@ -61,7 +61,7 @@ function EditSalesChannel(props: EditSalesChannelProps) {
         <Modal.Footer>
           <div className='w-full flex justify-end'>
             <Button variant='ghost' size='small' onClick={handleClose} className='mr-2'>
-              Close
+              Zavřít
             </Button>
             <Button
               disabled={!name.length || isLoading}
@@ -71,7 +71,7 @@ function EditSalesChannel(props: EditSalesChannelProps) {
               onClick={handleSubmit}
               loading={isLoading}
             >
-              Save
+              Uložit
             </Button>
           </div>
         </Modal.Footer>

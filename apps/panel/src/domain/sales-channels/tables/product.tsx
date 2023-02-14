@@ -1,27 +1,27 @@
-import { Product, SalesChannel } from '@medusajs/medusa';
-import clsx from 'clsx';
+import { Product, SalesChannel } from "@medusajs/medusa";
+import clsx from "clsx";
 import {
   useAdminAddProductsToSalesChannel,
   useAdminDeleteProductsFromSalesChannel,
   useAdminProducts,
-} from 'medusa-react';
-import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { usePagination, useRowSelect, useTable } from 'react-table';
+} from "medusa-react";
+import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { usePagination, useRowSelect, useTable } from "react-table";
 
-import Button from '../../../components/fundamentals/button';
-import DetailsIcon from '../../../components/fundamentals/details-icon';
-import CrossIcon from '../../../components/fundamentals/icons/cross-icon';
-import TrashIcon from '../../../components/fundamentals/icons/trash-icon';
-import Modal from '../../../components/molecules/modal';
-import Table from '../../../components/molecules/table';
-import TableContainer from '../../../components/organisms/table-container';
-import { useProductFilters } from '../../../components/templates/product-table/use-filter-tabs';
-import ProductsFilter from '../../../domain/products/filter-dropdown';
-import useNotification from '../../../hooks/use-notification';
-import useQueryFilters from '../../../hooks/use-query-filters';
-import { SALES_CHANNEL_PRODUCTS_TABLE_COLUMNS } from './config';
-import Placeholder from './placeholder';
+import Button from "../../../components/fundamentals/button";
+import DetailsIcon from "../../../components/fundamentals/details-icon";
+import CrossIcon from "../../../components/fundamentals/icons/cross-icon";
+import TrashIcon from "../../../components/fundamentals/icons/trash-icon";
+import Modal from "../../../components/molecules/modal";
+import Table from "../../../components/molecules/table";
+import TableContainer from "../../../components/organisms/table-container";
+import { useProductFilters } from "../../../components/templates/product-table/use-filter-tabs";
+import ProductsFilter from "../../../domain/products/filter-dropdown";
+import useNotification from "../../../hooks/use-notification";
+import useQueryFilters from "../../../hooks/use-query-filters";
+import { SALES_CHANNEL_PRODUCTS_TABLE_COLUMNS } from "./config";
+import Placeholder from "./placeholder";
 
 /* ****************************************** */
 /* ************** TABLE CONFIG ************** */
@@ -34,8 +34,8 @@ const DEFAULT_PAGE_SIZE = 7;
  */
 const defaultQueryProps = {
   additionalFilters: {
-    expand: 'collection,type,sales_channels',
-    fields: 'id,title,thumbnail,status',
+    expand: "collection,type,sales_channels",
+    fields: "id,title,thumbnail,status",
   },
   limit: DEFAULT_PAGE_SIZE,
   offset: 0,
@@ -97,11 +97,11 @@ export const ProductTable = forwardRef((props: ProductTableProps, ref: React.Ref
 
   const clearFilters = () => {
     reset();
-    setQuery('');
+    setQuery("");
   };
 
   useEffect(() => {
-    if (typeof count !== 'undefined') {
+    if (typeof count !== "undefined") {
       const controlledPageCount = Math.ceil(count / limit);
       setNumPages(controlledPageCount);
     }
@@ -138,7 +138,7 @@ export const ProductTable = forwardRef((props: ProductTableProps, ref: React.Ref
       getRowId: (row) => row.id,
       stateReducer: (newState, action) => {
         switch (action.type) {
-          case 'toggleAllRowsSelected':
+          case "toggleAllRowsSelected":
             return {
               ...newState,
               selectedRowIds: {},
@@ -167,9 +167,9 @@ export const ProductTable = forwardRef((props: ProductTableProps, ref: React.Ref
         setFreeText(query);
         gotoPage(0);
       } else {
-        if (typeof query !== 'undefined') {
+        if (typeof query !== "undefined") {
           // if we delete query string, we reset the table view
-          setFreeText('');
+          setFreeText("");
         }
       }
     }, 400);
@@ -193,13 +193,13 @@ export const ProductTable = forwardRef((props: ProductTableProps, ref: React.Ref
 
   const getActions = (id: string) => [
     {
-      label: 'Details',
+      label: "Podrobnosti",
       onClick: () => navigate(`/a/products/${id}`),
       icon: <DetailsIcon size={20} />,
     },
     {
-      label: 'Remove from the channel',
-      variant: 'danger',
+      label: "Odstranění z kanálu",
+      variant: "danger",
       onClick: () => removeProductFromSalesChannel(id),
       icon: <TrashIcon size={20} />,
     },
@@ -214,7 +214,7 @@ export const ProductTable = forwardRef((props: ProductTableProps, ref: React.Ref
         count: count!,
         offset: offs,
         pageSize: offs + rows.length,
-        title: 'Products',
+        title: "Produkty",
         currentPage: pageIndex + 1,
         pageCount: pageCount,
         nextPage: handleNext,
@@ -248,7 +248,7 @@ export const ProductTable = forwardRef((props: ProductTableProps, ref: React.Ref
           {headerGroups?.map((headerGroup) => (
             <Table.HeadRow {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((col) => (
-                <Table.HeadCell {...col.getHeaderProps()}>{col.render('Header')}</Table.HeadCell>
+                <Table.HeadCell {...col.getHeaderProps()}>{col.render("Header")}</Table.HeadCell>
               ))}
             </Table.HeadRow>
           ))}
@@ -278,16 +278,16 @@ const ProductRow = ({ row, actions, onClick, disabled }) => {
   return (
     <Table.Row
       onClick={!disabled && onClick}
-      color={'inherit'}
-      className={clsx('cursor-pointer', {
-        'bg-grey-5': row.isSelected,
-        'opacity-40 cursor-not-allowed pointer-events-none': disabled,
+      color={"inherit"}
+      className={clsx("cursor-pointer", {
+        "bg-grey-5": row.isSelected,
+        "opacity-40 cursor-not-allowed pointer-events-none": disabled,
       })}
       actions={actions}
       {...row.getRowProps()}
     >
       {row.cells.map((cell, index) => {
-        return <Table.Cell {...cell.getCellProps()}>{cell.render('Cell', { index })}</Table.Cell>;
+        return <Table.Cell {...cell.getCellProps()}>{cell.render("Cell", { index })}</Table.Cell>;
       })}
     </Table.Row>
   );
@@ -304,22 +304,22 @@ type RemoveProductsPopupProps = {
  */
 function RemoveProductsPopup({ onClose, onRemove, total }: RemoveProductsPopupProps) {
   const classes = {
-    'translate-y-1 opacity-0': !total,
-    'translate-y-0 opacity-100': total,
+    "translate-y-1 opacity-0": !total,
+    "translate-y-0 opacity-100": total,
   };
 
   return (
     <div
       className={clsx(
-        'absolute w-full bottom-1 flex justify-center transition-all duration-200 pointer-events-none',
+        "absolute w-full bottom-1 flex justify-center transition-all duration-200 pointer-events-none",
         classes,
       )}
     >
       <div className='h-[48px] min-w-[224px] rounded-lg border shadow-toaster flex items-center justify-around gap-3 px-4 py-3 pointer-events-auto'>
-        <span className='text-small text-grey-50'>{total} selected</span>
+        <span className='text-small text-grey-50'>{total} vybraných</span>
         <div className='w-[1px] h-[20px] bg-grey-20' />
         <Button variant='danger' size='small' onClick={onRemove}>
-          Remove
+          Odstraněnit
         </Button>
         <button onClick={onClose} className='text-grey-50 cursor-pointer'>
           <CrossIcon size={20} />
@@ -371,7 +371,7 @@ function SalesChannelProductsTable(props: SalesChannelProductsTableProps) {
   const removeProductFromSalesChannel = (id: string) => {
     deleteProductsFromSalesChannel({ product_ids: [{ id }] });
 
-    notification('Success', 'Product successfully removed', 'success');
+    notification("Úspěch", "Produkt byl úspěšně odstraněn", "success");
   };
 
   const removeSelectedProducts = async () => {
@@ -379,14 +379,14 @@ function SalesChannelProductsTable(props: SalesChannelProductsTableProps) {
       product_ids: selectedRowIds.map((id) => ({ id })),
     });
 
-    notification('Success', 'Products successfully removed from the sales channel', 'success');
+    notification("Úspěch", "Výrobky úspěšně stažené z prodejního kanálu", "success");
     resetSelection();
   };
 
   const isFilterOn = Object.keys(filters.queryObject).length;
   const hasSearchTerm = params.queryObject.q;
 
-  if (!products?.length && !isLoading && !isFilterOn && !hasSearchTerm) {
+  if (!(((products?.length || isLoading ) || isFilterOn ) || hasSearchTerm)) {
     return <Placeholder showAddModal={showAddModal} />;
   }
 
@@ -404,11 +404,7 @@ function SalesChannelProductsTable(props: SalesChannelProductsTableProps) {
         productFilters={filters}
         {...params}
       />
-      <RemoveProductsPopup
-        total={toBeRemoveCount}
-        onRemove={removeSelectedProducts}
-        onClose={resetSelection}
-      />
+      <RemoveProductsPopup total={toBeRemoveCount} onRemove={removeSelectedProducts} onClose={resetSelection} />
     </div>
   );
 }
@@ -435,24 +431,22 @@ function SalesChannelProductsSelectModal(props: SalesChannelProductsSelectModalP
   const { products, count, isLoading } = useAdminProducts({
     ...params.queryObject,
     ...filters.queryObject,
-    expand: 'sales_channels',
+    expand: "sales_channels",
   });
 
-  const { mutate: addProductsBatch, isLoading: isMutating } = useAdminAddProductsToSalesChannel(
-    salesChannel.id,
-  );
+  const { mutate: addProductsBatch, isLoading: isMutating } = useAdminAddProductsToSalesChannel(salesChannel.id);
 
   const handleSubmit = () => {
     addProductsBatch({ product_ids: selectedRowIds.map((i) => ({ id: i })) });
     handleClose();
-    notification('Success', 'Products successfully added to the sales channel', 'success');
+    notification("Úspěch", "Úspěšně přidané produkty do prodejního kanálu", "success");
   };
 
   return (
     <Modal handleClose={handleClose}>
       <Modal.Body>
         <Modal.Header handleClose={handleClose}>
-          <span className='inter-xlarge-semibold'>Add products</span>
+          <span className='inter-xlarge-semibold'>Přidat produkty</span>
         </Modal.Header>
         <Modal.Content>
           <ProductTable
@@ -469,7 +463,7 @@ function SalesChannelProductsSelectModal(props: SalesChannelProductsSelectModalP
         <Modal.Footer>
           <div className='w-full flex justify-end'>
             <Button variant='ghost' size='small' onClick={handleClose} className='mr-2'>
-              Close
+              Zavřít
             </Button>
             <Button
               variant='primary'
@@ -479,7 +473,7 @@ function SalesChannelProductsSelectModal(props: SalesChannelProductsSelectModalP
               loading={isMutating}
               disabled={isMutating}
             >
-              Save
+              Uložit
             </Button>
           </div>
         </Modal.Footer>

@@ -35,9 +35,9 @@ function DetailsModal(props: DetailsModalProps) {
     try {
       await updateKey({ title: name });
       close();
-      notification("Success", "Updated the API key", "success");
+      notification("Úspěch", "Aktualizace klíče API", "success");
     } catch (e) {
-      notification("Error", "Failed to update the API key", "error");
+      notification("Chyba", "Nepodařilo se aktualizovat klíč API", "error");
     }
   };
 
@@ -47,7 +47,7 @@ function DetailsModal(props: DetailsModalProps) {
         {/* === HEADER === */}
 
         <div className='flex items-center justify-between'>
-          <h3 className='inter-large-semibold text-xl text-gray-900'>Edit API key details</h3>
+          <h3 className='inter-large-semibold text-xl text-gray-900'>Úprava údajů o klíči API</h3>
           <Button variant='ghost' onClick={close}>
             <CrossIcon size={20} className='text-grey-40' />
           </Button>
@@ -59,11 +59,11 @@ function DetailsModal(props: DetailsModalProps) {
 
         <div className='flex-grow'>
           <InputField
-            label='Title'
+            label='Název'
             type='string'
             name='name'
             value={name}
-            placeholder='Name your key'
+            placeholder='Pojmenujte svůj klíč'
             onChange={({ target: { value } }) => setName(value)}
           />
         </div>
@@ -74,7 +74,7 @@ function DetailsModal(props: DetailsModalProps) {
 
         <div className='flex justify-end gap-2'>
           <Button size='small' variant='ghost' onClick={close}>
-            Cancel
+            Zrušit
           </Button>
           <Button size='small' variant='primary' onClick={onSave} disabled={name === props.selectedKey?.title}>
             Uložit a zavřít
