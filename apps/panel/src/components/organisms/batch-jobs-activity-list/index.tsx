@@ -124,7 +124,7 @@ const BatchJobActivityCard = (props: { batchJob: BatchJob }) => {
 
     try {
       await deleteFile({ file_key: batchJob.result?.file_key });
-      notification("Úspěch", `${operace} soubor byl odstraněn`, "success");
+      notification("Úspěch", `${operation} soubor byl odstraněn`, "success");
     } catch (e) {
       notification("Chyba", `Při mazání souboru ${operation.toLowerCase()} se něco pokazilo.`, "error");
     }
@@ -148,10 +148,10 @@ const BatchJobActivityCard = (props: { batchJob: BatchJob }) => {
     const fileSize = batchJob.result?.file_key
       ? bytesConverter(batchJob.result?.file_size ?? 0)
       : {
-          confirmed: `Příprava ${operace.toLowerCase()}...`,
-          preprocessing: `Příprava ${operace.toLowerCase()}...`,
-          processing: `Zpracování ${operace.toLowerCase()}...`,
-          completed: `Úspěšně ${operace.toLowerCase()}`,
+          confirmed: `Příprava ${operation.toLowerCase()}...`,
+          preprocessing: `Příprava ${operation.toLowerCase()}...`,
+          processing: `Zpracování ${operation.toLowerCase()}...`,
+          completed: `Úspěšně ${operation.toLowerCase()}`,
           failed: `Neúspěšná dávková úloha ${operation.toLowerCase()}`,
           canceled: `Zrušená dávková úloha ${operation.toLowerCase()}`,
         }[batchJob.status];
