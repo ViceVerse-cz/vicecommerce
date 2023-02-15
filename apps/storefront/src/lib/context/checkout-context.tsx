@@ -54,12 +54,12 @@ interface CheckoutContext {
 const CheckoutContext = createContext<CheckoutContext | null>(null);
 
 interface CheckoutProviderProps {
-  children?: React.ReactNode;
+  children: React.ReactNode;
 }
 
 const IDEMPOTENCY_KEY = "create_payment_session_key";
 
-export const CheckoutProvider = ({ children }: CheckoutProviderProps) => {
+export const CheckoutProvider: React.FC<CheckoutProviderProps> = (props) => {
   const {
     cart,
     setCart,
@@ -311,7 +311,7 @@ export const CheckoutProvider = ({ children }: CheckoutProviderProps) => {
           onPaymentCompleted,
         }}
       >
-        <Wrapper paymentSession={cart?.payment_session}>{children}</Wrapper>
+        <Wrapper paymentSession={cart?.payment_session}>{props.children}</Wrapper>
       </CheckoutContext.Provider>
     </FormProvider>
   );

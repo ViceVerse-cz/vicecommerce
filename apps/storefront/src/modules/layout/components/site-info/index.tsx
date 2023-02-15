@@ -2,7 +2,12 @@ import { Disclosure } from "@headlessui/react";
 import clsx from "clsx";
 import React from "react";
 
-const InfoContainer: React.FC<{ label: string }> = ({ label, children }) => {
+interface ChildExtendProps {
+  children: React.ReactNode;
+  label: string;
+}
+
+const InfoContainer: React.FC<ChildExtendProps> = ({ label, children }) => {
   return (
     <div>
       <div className="hidden lg:flex lg:flex-col lg:gap-y-2">
@@ -16,7 +21,7 @@ const InfoContainer: React.FC<{ label: string }> = ({ label, children }) => {
   );
 };
 
-const Collapsible: React.FC<{ label: string }> = ({ label, children }) => {
+const Collapsible: React.FC<ChildExtendProps> = ({ label, children }) => {
   return (
     <div className="pb-4">
       <Disclosure>

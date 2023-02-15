@@ -2,10 +2,12 @@ import React from "react";
 
 type DetailProps = {
   title: string;
+  children: React.ReactNode;
 };
 
 type SubDetailProps = {
   title?: string;
+  children: React.ReactNode;
 };
 
 const Detail: React.FC<DetailProps> & {
