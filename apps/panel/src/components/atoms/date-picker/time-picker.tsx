@@ -1,19 +1,19 @@
-import * as PopoverPrimitive from '@radix-ui/react-popover';
-import clsx from 'clsx';
-import { isNil } from 'lodash';
-import moment from 'moment';
-import React, { useEffect, useState } from 'react';
-import ArrowDownIcon from '../../fundamentals/icons/arrow-down-icon';
-import ClockIcon from '../../fundamentals/icons/clock-icon';
-import InputContainer from '../../fundamentals/input-container';
-import InputHeader from '../../fundamentals/input-header';
-import NumberScroller from '../number-scroller';
-import { DateTimePickerProps } from './types';
+import * as PopoverPrimitive from "@radix-ui/react-popover";
+import clsx from "clsx";
+import { isNil } from "lodash";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
+import ArrowDownIcon from "../../fundamentals/icons/arrow-down-icon";
+import ClockIcon from "../../fundamentals/icons/clock-icon";
+import InputContainer from "../../fundamentals/input-container";
+import InputHeader from "../../fundamentals/input-header";
+import NumberScroller from "../number-scroller";
+import { DateTimePickerProps } from "./types";
 
 const TimePicker: React.FC<DateTimePickerProps> = ({
   date,
   onSubmitDate,
-  label = 'start date',
+  label = "datum zahájení",
   required = false,
   tooltipContent,
   tooltip,
@@ -45,9 +45,9 @@ const TimePicker: React.FC<DateTimePickerProps> = ({
       <PopoverPrimitive.Root open={isOpen} onOpenChange={setIsOpen}>
         <PopoverPrimitive.Trigger asChild>
           <button
-            className={clsx('w-full rounded-rounded border ', {
-              'shadow-input border-violet-60': isOpen,
-              'border-grey-20': !isOpen,
+            className={clsx("w-full rounded-rounded border ", {
+              "shadow-input border-violet-60": isOpen,
+              "border-grey-20": !isOpen,
             })}
           >
             <InputContainer className='border-0 shadown-none focus-within:shadow-none'>
@@ -65,7 +65,7 @@ const TimePicker: React.FC<DateTimePickerProps> = ({
               <div className='w-full items-center flex text-left text-grey-40'>
                 <ClockIcon size={16} />
                 <span className='mx-1'>UTC</span>
-                <span className='text-grey-90'>{moment.utc(date).format('HH:mm')}</span>
+                <span className='text-grey-90'>{moment.utc(date).format("HH:mm")}</span>
               </div>
             </InputContainer>
           </button>
@@ -81,11 +81,7 @@ const TimePicker: React.FC<DateTimePickerProps> = ({
             onSelect={(n) => setSelectedHour(n)}
             className='pr-4'
           />
-          <NumberScroller
-            numbers={minuteNumbers}
-            selected={selectedMinute}
-            onSelect={(n) => setSelectedMinute(n)}
-          />
+          <NumberScroller numbers={minuteNumbers} selected={selectedMinute} onSelect={(n) => setSelectedMinute(n)} />
           <div className='absolute bottom-4 left-0 right-0 bg-gradient-to-b from-transparent to-grey-0 h-xlarge z-10' />
         </PopoverPrimitive.Content>
       </PopoverPrimitive.Root>

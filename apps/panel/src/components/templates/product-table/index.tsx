@@ -1,25 +1,25 @@
-import { isEmpty } from 'lodash';
-import { useAdminProducts } from 'medusa-react';
-import qs from 'qs';
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { usePagination, useTable } from 'react-table';
-import { useAnalytics } from '../../../context/analytics';
-import { useFeatureFlag } from '../../../context/feature-flag';
-import ProductsFilter from '../../../domain/products/filter-dropdown';
-import Table from '../../molecules/table';
-import TableContainer from '../../organisms/table-container';
-import ProductOverview from './overview';
-import useProductActions from './use-product-actions';
-import useProductTableColumn from './use-product-column';
-import { useProductFilters } from './use-product-filters';
+import { isEmpty } from "lodash";
+import { useAdminProducts } from "medusa-react";
+import qs from "qs";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { usePagination, useTable } from "react-table";
+import { useAnalytics } from "../../../context/analytics";
+import { useFeatureFlag } from "../../../context/feature-flag";
+import ProductsFilter from "../../../domain/products/filter-dropdown";
+import Table from "../../molecules/table";
+import TableContainer from "../../organisms/table-container";
+import ProductOverview from "./overview";
+import useProductActions from "./use-product-actions";
+import useProductTableColumn from "./use-product-column";
+import { useProductFilters } from "./use-product-filters";
 
 const DEFAULT_PAGE_SIZE = 15;
 const DEFAULT_PAGE_SIZE_TILE_VIEW = 18;
 
 const defaultQueryProps = {
-  fields: 'id,title,thumbnail,status,handle,collection_id',
-  expand: 'variants,options,variants.prices,variants.options,collection,tags,type,images',
+  fields: "id,title,thumbnail,status,handle,collection_id",
+  expand: "variants,options,variants.prices,variants.options,collection,tags,type,images",
   is_giftcard: false,
 };
 
@@ -29,10 +29,10 @@ const ProductTable = () => {
   const { isFeatureEnabled } = useFeatureFlag();
   const { trackNumberOfProducts } = useAnalytics();
 
-  let hiddenColumns = ['sales_channel'];
-  if (isFeatureEnabled('sales_channels')) {
+  let hiddenColumns = ["sales_channel"];
+  if (isFeatureEnabled("sales_channels")) {
     defaultQueryProps.expand =
-      'variants,options,variants.prices,variants.options,collection,tags,type,images,sales_channels';
+      "variants,options,variants.prices,variants.options,collection,tags,type,images,sales_channels";
     hiddenColumns = [];
   }
 
@@ -60,7 +60,7 @@ const ProductTable = () => {
 
   const clearFilters = () => {
     reset();
-    setQuery('');
+    setQuery("");
   };
 
   const { products, isLoading, count } = useAdminProducts(
@@ -74,7 +74,7 @@ const ProductTable = () => {
   );
 
   useEffect(() => {
-    if (typeof count !== 'undefined') {
+    if (typeof count !== "undefined") {
       const controlledPageCount = Math.ceil(count / limit);
       setNumPages(controlledPageCount);
     }
@@ -82,7 +82,7 @@ const ProductTable = () => {
 
   const updateUrlFromFilter = (obj = {}) => {
     const stringified = qs.stringify(obj);
-    window.history.replaceState(`/a/products`, '', `${`?${stringified}`}`);
+    window.history.replaceState("/a/products", "", `${`?${stringified}`}`);
   };
 
   const refreshWithFilters = () => {
@@ -152,7 +152,7 @@ const ProductTable = () => {
         setFreeText(query);
         gotoPage(0);
       } else {
-        if (typeof query !== 'undefined') {
+        if (typeof query !== "undefined") {
           // if we delete query string, we reset the table view
           reset();
         }
@@ -184,7 +184,7 @@ const ProductTable = () => {
         count: count!,
         offset: offs,
         pageSize: offs + rows.length,
-        title: 'Products',
+        title: "Produkty",
         currentPage: pageIndex + 1,
         pageCount: pageCount,
         nextPage: handleNext,
@@ -219,7 +219,7 @@ const ProductTable = () => {
                 <Table.HeadRow {...headerGroup.getHeaderGroupProps()}>
                   {headerGroup.headers.map((col) => (
                     <Table.HeadCell className='min-w-[100px]' {...col.getHeaderProps()}>
-                      {col.render('Header')}
+                      {col.render("Header")}
                     </Table.HeadCell>
                   ))}
                 </Table.HeadRow>
@@ -246,9 +246,9 @@ const ProductRow = ({ row, ...rest }) => {
   const { getActions } = useProductActions(product);
 
   return (
-    <Table.Row color={'inherit'} linkTo={`/a/products/${product.id}`} actions={getActions()} {...rest}>
+    <Table.Row color={"inherit"} linkTo={`/a/products/${product.id}`} actions={getActions()} {...rest}>
       {row.cells.map((cell, index) => {
-        return <Table.Cell {...cell.getCellProps()}>{cell.render('Cell', { index })}</Table.Cell>;
+        return <Table.Cell {...cell.getCellProps()}>{cell.render("Cell", { index })}</Table.Cell>;
       })}
     </Table.Row>
   );
