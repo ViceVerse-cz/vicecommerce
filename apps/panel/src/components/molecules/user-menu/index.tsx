@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import Avatar from '../../atoms/avatar';
-import Button from '../../fundamentals/button';
-import GearIcon from '../../fundamentals/icons/gear-icon';
-import SignOutIcon from '../../fundamentals/icons/log-out-icon';
-import { useNavigate } from 'react-router-dom';
-import { AccountContext } from '../../../context/account';
+import React, { useContext } from "react";
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import Avatar from "../../atoms/avatar";
+import Button from "../../fundamentals/button";
+import GearIcon from "../../fundamentals/icons/gear-icon";
+import SignOutIcon from "../../fundamentals/icons/log-out-icon";
+import { useNavigate } from "react-router-dom";
+import { AccountContext } from "../../../context/account";
 
 const UserMenu: React.FC = () => {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ const UserMenu: React.FC = () => {
 
   const logOut = () => {
     handleLogout();
-    navigate('/login');
+    navigate("/login");
   };
   return (
     <div className='w-large h-large'>
@@ -31,20 +31,20 @@ const UserMenu: React.FC = () => {
             <Button
               variant='ghost'
               size='small'
-              className={'w-full justify-start'}
-              onClick={() => navigate('/a/settings')}
+              className={"w-full justify-start"}
+              onClick={() => navigate("/a/settings")}
             >
               <GearIcon />
-              Settings
+              Nastavení
             </Button>
             <Button
               variant='ghost'
               size='small'
-              className={'w-full justify-start text-rose-50'}
+              className={"w-full justify-start text-rose-50"}
               onClick={() => logOut()}
             >
               <SignOutIcon size={20} />
-              Sign out
+              Odhlásit se
             </Button>
           </DropdownMenu.Item>
         </DropdownMenu.Content>

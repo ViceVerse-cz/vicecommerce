@@ -1,6 +1,6 @@
-import clsx from 'clsx';
-import React, { useEffect, useRef } from 'react';
-import SearchIcon from '../../fundamentals/icons/search-icon';
+import clsx from "clsx";
+import React, { useEffect, useRef } from "react";
+import SearchIcon from "../../fundamentals/icons/search-icon";
 
 type TableSearchProps = {
   autoFocus?: boolean;
@@ -12,8 +12,8 @@ type TableSearchProps = {
 const TableSearch: React.FC<TableSearchProps> = ({
   autoFocus,
   onSearch,
-  placeholder = 'Search',
-  searchValue = '',
+  placeholder = "Hledat...",
+  searchValue = "",
   className,
   ...props
 }) => {
@@ -21,15 +21,15 @@ const TableSearch: React.FC<TableSearchProps> = ({
   const inputRef: React.RefObject<HTMLInputElement> = useRef(null);
 
   useEffect(() => {
-    if (inputRef && inputRef.current) {
-      inputRef.current.size = inputRef?.current?.placeholder?.replace(/\s+/g, '').length || 20;
+    if (inputRef?.current) {
+      inputRef.current.size = inputRef?.current?.placeholder?.replace(/\s+/g, "").length || 20;
     }
   }, []);
 
   return (
     <div
       className={clsx(
-        'inter-small-regular mt-1 transition-color transition-width duration-150 ease-in-out flex text-grey-50 flex items-center mb-1 pl-1 py-1.5 rounded-rounded border border-grey-0 min-w-content focus-within:mr-1 focus-within:w-60 focus-within:shadow-input focus-within:border-violet-60 focus-within:bg-grey-5',
+        "inter-small-regular mt-1 transition-color transition-width duration-150 ease-in-out flex text-grey-50 flex items-center mb-1 pl-1 py-1.5 rounded-rounded border border-grey-0 min-w-content focus-within:mr-1 focus-within:w-60 focus-within:shadow-input focus-within:border-violet-60 focus-within:bg-grey-5",
         className,
       )}
       {...props}
@@ -41,12 +41,11 @@ const TableSearch: React.FC<TableSearchProps> = ({
         {placeholder}
       </span>
       <input
-        autoFocus={autoFocus}
         type='text'
         ref={inputRef}
         value={searchValue}
         className={clsx(
-          'focus:outline-none focus:border-none inter-small-regular w-full focus:w-50 focus:bg-grey-5 focus:text-grey-90 caret-violet-60',
+          "focus:outline-none focus:border-none inter-small-regular w-full focus:w-50 focus:bg-grey-5 focus:text-grey-90 caret-violet-60",
         )}
         placeholder={placeholder}
         onChange={(e) => {

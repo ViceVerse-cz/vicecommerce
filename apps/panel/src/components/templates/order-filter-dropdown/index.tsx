@@ -31,7 +31,7 @@ const fulfillmentFilters = [
   "canceled",
 ];
 
-const dateFilters = ["is in the last", "is older than", "is after", "is before", "is equal to"];
+const dateFilters = ["je na konci", "je starší než", "je po", "je před", "je roven"];
 
 const OrderFilters = ({
   tabs,
@@ -123,7 +123,7 @@ const OrderFilters = ({
             )}
           >
             <div className='flex rounded-rounded items-center bg-grey-5 border border-grey-20 inter-small-semibold px-2 h-6'>
-              Filters
+              Filtry
               <div className='text-grey-40 ml-1 flex items-center rounded'>
                 <span className='text-violet-60 inter-small-semibold'>{numberOfFilters ? numberOfFilters : "0"}</span>
               </div>
@@ -182,15 +182,15 @@ const OrderFilters = ({
         <SaveFilterItem saveFilter={handleSaveTab} name={name} setName={setName} />
       </FilterDropdownContainer>
       {tabs?.map((t) => (
-          <TabFilter
-            key={t.value}
-            onClick={() => handleTabClick(t.value)}
-            label={t.label}
-            isActive={activeTab === t.value}
-            removable={!!t.removable}
-            onRemove={() => handleRemoveTab(t.value)}
-          />
-        ))}
+        <TabFilter
+          key={t.value}
+          onClick={() => handleTabClick(t.value)}
+          label={t.label}
+          isActive={activeTab === t.value}
+          removable={!!t.removable}
+          onRemove={() => handleRemoveTab(t.value)}
+        />
+      ))}
     </div>
   );
 };

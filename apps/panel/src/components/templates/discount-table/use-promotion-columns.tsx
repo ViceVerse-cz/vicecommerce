@@ -78,7 +78,7 @@ export const usePromotionTableColumns = () => {
   const columns = useMemo(
     () => [
       {
-        Header: <div className='pl-2'>Code</div>,
+        Header: <div className='pl-2'>Kód</div>,
         accessor: "code",
         Cell: ({ cell: { value } }) => (
           <div className='overflow-hidden'>
@@ -89,7 +89,7 @@ export const usePromotionTableColumns = () => {
         ),
       },
       {
-        Header: "Description",
+        Header: "Popis",
         accessor: "rule.description",
         Cell: ({ cell: { value } }) => value,
       },
