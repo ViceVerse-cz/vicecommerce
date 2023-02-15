@@ -74,7 +74,7 @@ const Overview = () => {
   return (
     <>
       <div className='flex flex-col grow h-full pb-xlarge'>
-        <PageDescription title='Gift Cards' subtitle='Správa dárkových karet vašeho obchodu Medusa' />
+        <PageDescription title='Dárkové karty' subtitle='Správa dárkových karet vašeho obchodu Medusa' />
         {!isLoading ? (
           <>
             <div className='mb-base'>

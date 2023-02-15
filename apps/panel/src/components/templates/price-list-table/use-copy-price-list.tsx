@@ -1,7 +1,7 @@
-import { useAdminCreatePriceList } from 'medusa-react';
-import { useNavigate } from 'react-router-dom';
-import useNotification from '../../../hooks/use-notification';
-import { getErrorMessage } from '../../../utils/error-messages';
+import { useAdminCreatePriceList } from "medusa-react";
+import { useNavigate } from "react-router-dom";
+import useNotification from "../../../hooks/use-notification";
+import { getErrorMessage } from "../../../utils/error-messages";
 
 const useCopyPriceList = () => {
   const navigate = useNavigate();
@@ -44,9 +44,9 @@ const useCopyPriceList = () => {
     try {
       const data = await createPriceList.mutateAsync(copy);
       navigate(`/a/pricing/${data.price_list.id}`);
-      notification('Success', 'Successfully copied price list', 'success');
+      notification("Úspěch", "Úspěšně zkopírovaný ceník", "success");
     } catch (err) {
-      notification('Error', getErrorMessage(err), 'error');
+      notification("Chyba", getErrorMessage(err), "error");
     }
   };
 

@@ -209,7 +209,7 @@ const AddVariantsForm = ({ form, productCustoms, productDimensions }: Props) => 
     if (exists) {
       newVariantForm.setError("options", {
         type: "deps",
-        message: "A variant with these options already exists.",
+        message: "Varianta s těmito možnostmi již existuje.",
       });
       return;
     }
@@ -245,21 +245,21 @@ const AddVariantsForm = ({ form, productCustoms, productDimensions }: Props) => 
     <>
       <div>
         <div className='flex items-center gap-x-2xsmall'>
-          <h3 className='inter-base-semibold'>Product options</h3>
-          <IconTooltip type='info' content='Options are used to define the color, size, etc. of the product.' />
+          <h3 className='inter-base-semibold'>Možnosti produktu</h3>
+          <IconTooltip type='info' content='Možnosti slouží k určení barvy, velikosti atd. produktu.' />
         </div>
         <div>
           {options.length > 0 && (
             <div className='mt-small'>
               <div className='grid grid-cols-[230px_1fr_40px] gap-x-xsmall inter-small-semibold text-grey-50 mb-small'>
-                <span>Option title</span>
-                <span>Variations (comma separated)</span>
+                <span>Název možnosti</span>
+                <span>Varianty (oddělené čárkou)</span>
               </div>
               <div className='grid grid-cols-1 gap-y-xsmall'>
                 {options.map((field, index) => {
                   return (
                     <div key={field.fieldId} className='grid grid-cols-[230px_1fr_40px] gap-x-xsmall'>
-                      <InputField placeholder='Color...' {...register(path(`options.${index}.title`))} />
+                      <InputField placeholder='Barva...' {...register(path(`options.${index}.title`))} />
                       <Controller
                         control={control}
                         name={path(`options.${index}.values`)}
@@ -273,11 +273,11 @@ const AddVariantsForm = ({ form, productCustoms, productDimensions }: Props) => 
 
                                 return newVal;
                               }}
-                              invalidMessage='already exists'
+                              invalidMessage='již existuje'
                               showLabel={false}
                               values={value}
                               onChange={onChange}
-                              placeholder='Blue, Red, Black...'
+                              placeholder='Modrá, červená, černá...'
                             />
                           );
                         }}
@@ -305,7 +305,7 @@ const AddVariantsForm = ({ form, productCustoms, productDimensions }: Props) => 
             onClick={appendNewOption}
           >
             <PlusIcon size={20} />
-            <span>Add an option</span>
+            <span>Přidání možnosti</span>
           </Button>
           <div className='mt-xlarge'>
             <div className='flex items-center gap-x-2xsmall'>
@@ -319,16 +319,16 @@ const AddVariantsForm = ({ form, productCustoms, productDimensions }: Props) => 
               {!enableVariants && (
                 <IconTooltip
                   type='info'
-                  content='You must add at least one product option before you can begin adding product variants.'
+                  content='Než začnete přidávat varianty produktu, musíte přidat alespoň jednu možnost produktu.'
                 />
               )}
             </div>
             {variants?.length > 0 && (
               <div className='mt-small'>
                 <div className='grid grid-cols-[1fr_90px_100px_48px] inter-small-semibold text-grey-50 pr-base'>
-                  <p>Variant</p>
+                  <p>Varianta</p>
                   <div className='flex justify-end mr-xlarge'>
-                    <p>Inventory</p>
+                    <p>Zásoby</p>
                   </div>
                 </div>
                 <div>
@@ -361,7 +361,7 @@ const AddVariantsForm = ({ form, productCustoms, productDimensions }: Props) => 
               onClick={onToggleForm}
             >
               <PlusIcon size={20} />
-              <span>Add a variant</span>
+              <span>Přidání varianty</span>
             </Button>
           </div>
         </div>
@@ -370,7 +370,7 @@ const AddVariantsForm = ({ form, productCustoms, productDimensions }: Props) => 
       <Modal open={state} handleClose={onToggleForm}>
         <Modal.Body>
           <Modal.Header handleClose={onToggleForm}>
-            <h1 className='inter-xlarge-semibold'>Create Variant</h1>
+            <h1 className='inter-xlarge-semibold'>Vytvořit variantu</h1>
           </Modal.Header>
           <Modal.Content>
             <CreateFlowVariantForm
@@ -382,7 +382,7 @@ const AddVariantsForm = ({ form, productCustoms, productDimensions }: Props) => 
           <Modal.Footer>
             <div className='flex items-center gap-x-xsmall justify-end w-full'>
               <Button variant='secondary' size='small' type='button' onClick={onToggleForm}>
-                Cancel
+                Zrušit
               </Button>
               <Button variant='primary' size='small' type='button' onClick={onAppendVariant}>
                 Uložit a zavřít

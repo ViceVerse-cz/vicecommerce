@@ -21,7 +21,7 @@ const PriceAmount = ({ value, onChange }) => {
             <Button variant='secondary' size='small' className='rounded-rounded h-[32px]' onClick={toggle}>
               <div className='flex items-center gap-2'>
                 {showRegions ? <EyeOffIcon size={20} /> : <EyeIcon size={20} />}
-                <span>Show regions</span>
+                <span>Zobrazit regiony</span>
               </div>
             </Button>
           ) : null}

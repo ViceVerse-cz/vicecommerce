@@ -1,5 +1,5 @@
-import clsx from 'clsx';
-import React, { useRef, useState } from 'react';
+import clsx from "clsx";
+import React, { useRef, useState } from "react";
 
 type FileUploadFieldProps = {
   onFileChosen: (files: File[]) => void;
@@ -13,7 +13,7 @@ type FileUploadFieldProps = {
 
 const defaultText = (
   <span>
-    Drop your images here, or <span className='text-violet-60'>click to browse</span>
+    Drop your images here, or <span className='text-violet-60'>klikněte pro procházení</span>
   </span>
 );
 
@@ -23,7 +23,7 @@ const FileUploadField: React.FC<FileUploadFieldProps> = ({
   errorMessage,
   className,
   text = defaultText,
-  placeholder = '',
+  placeholder = "",
   multiple = false,
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -48,7 +48,7 @@ const FileUploadField: React.FC<FileUploadFieldProps> = ({
       // Use DataTransferItemList interface to access the file(s)
       for (let i = 0; i < e.dataTransfer.items.length; i++) {
         // If dropped items aren't files, reject them
-        if (e.dataTransfer.items[i].kind === 'file') {
+        if (e.dataTransfer.items[i].kind === "file") {
           const file = e.dataTransfer.items[i].getAsFile();
           if (file && filetypes.indexOf(file.type) > -1) {
             files.push(file);
@@ -76,7 +76,7 @@ const FileUploadField: React.FC<FileUploadFieldProps> = ({
       onDrop={handleFileDrop}
       onDragOver={(e) => e.preventDefault()}
       className={clsx(
-        'flex flex-col select-none inter-base-regular text-grey-50 cursor-pointer items-center justify-center w-full h-full rounded-rounded border-2 border-dashed border-grey-20 transition-colors hover:border-violet-60 hover:text-grey-40',
+        "flex flex-col select-none inter-base-regular text-grey-50 cursor-pointer items-center justify-center w-full h-full rounded-rounded border-2 border-dashed border-grey-20 transition-colors hover:border-violet-60 hover:text-grey-40",
         className,
       )}
     >
@@ -84,12 +84,10 @@ const FileUploadField: React.FC<FileUploadFieldProps> = ({
         <p>{text}</p>
         {placeholder}
       </div>
-      {fileUploadError && (
-        <span className='text-rose-60'>{errorMessage || 'Please upload an image file'}</span>
-      )}
+      {fileUploadError && <span className='text-rose-60'>{errorMessage || "Nahrajte prosím soubor s obrázkem"}</span>}
       <input
         ref={inputRef}
-        accept={filetypes.join(', ')}
+        accept={filetypes.join(", ")}
         multiple={multiple}
         type='file'
         onChange={handleFileUpload}

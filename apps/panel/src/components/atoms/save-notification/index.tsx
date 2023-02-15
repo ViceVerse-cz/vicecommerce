@@ -1,11 +1,11 @@
-import React, { ReactNode } from 'react';
-import type { Toast } from 'react-hot-toast';
-import { toast as globalToast } from 'react-hot-toast';
-import RefreshIcon from '../../fundamentals/icons/refresh-icon';
-import ToasterContainer from '../toaster-container';
-import ErrorState from './error-state';
-import SavingState from './saving-state';
-import SuccessState from './success-state';
+import React, { ReactNode } from "react";
+import type { Toast } from "react-hot-toast";
+import { toast as globalToast } from "react-hot-toast";
+import RefreshIcon from "../../fundamentals/icons/refresh-icon";
+import ToasterContainer from "../toaster-container";
+import ErrorState from "./error-state";
+import SavingState from "./saving-state";
+import SuccessState from "./success-state";
 
 type SaveNotificationProps = {
   toast: Toast;
@@ -19,8 +19,8 @@ type SaveNotificationProps = {
 const SaveNotification: React.FC<SaveNotificationProps> = ({
   toast,
   icon,
-  title = 'Unsaved changes',
-  message = 'You have unsaved changes. Do you want to save and publish or discard them?',
+  title = "Neuložené změny",
+  message = "Máte neuložené změny. Chcete je uložit a publikovat, nebo zahodit?",
   onSave,
   reset,
 }) => {
@@ -59,13 +59,10 @@ const SaveNotification: React.FC<SaveNotificationProps> = ({
           onClick={handleSave}
           className='inter-small-semibold flex items-center justify-center h-1/2 border-b border-grey-20 px-base text-violet-60'
         >
-          Publish
+          Zveřejnit
         </button>
-        <button
-          className='inter-small-semibold flex items-center justify-center h-1/2 px-base'
-          onClick={onDismiss}
-        >
-          Discard
+        <button className='inter-small-semibold flex items-center justify-center h-1/2 px-base' onClick={onDismiss}>
+          Zahodit
         </button>
       </div>
     </ToasterContainer>
@@ -78,7 +75,7 @@ function getIcon(icon?: any) {
   if (icon) {
     return React.cloneElement(icon, {
       size: ICON_SIZE,
-      className: 'text-grey-90',
+      className: "text-grey-90",
     });
   } else {
     return <RefreshIcon size={20} className='text-grey-90' />;

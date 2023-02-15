@@ -1,9 +1,9 @@
-import clsx from 'clsx';
-import React, { useEffect } from 'react';
-import useClipboard from '../../../hooks/use-clipboard';
-import useNotification from '../../../hooks/use-notification';
-import Button from '../../fundamentals/button';
-import ClipboardCopyIcon from '../../fundamentals/icons/clipboard-copy-icon';
+import clsx from "clsx";
+import React, { useEffect } from "react";
+import useClipboard from "../../../hooks/use-clipboard";
+import useNotification from "../../../hooks/use-notification";
+import Button from "../../fundamentals/button";
+import ClipboardCopyIcon from "../../fundamentals/icons/clipboard-copy-icon";
 
 type CopyToClipboardProps = {
   value: string;
@@ -30,7 +30,7 @@ const CopyToClipboard: React.FC<CopyToClipboardProps> = ({
 
   useEffect(() => {
     if (isCopied) {
-      notification('Success', 'Copied!', 'success');
+      notification("Úspěch", "Zkopírováno!", "success");
     }
   }, [isCopied]);
 
@@ -39,8 +39,8 @@ const CopyToClipboard: React.FC<CopyToClipboardProps> = ({
       <Button
         variant='ghost'
         size='small'
-        className={clsx('p-0 text-grey-50', {
-          ['text-violet-60']: isCopied,
+        className={clsx("p-0 text-grey-50", {
+          ["text-violet-60"]: isCopied,
         })}
         onClick={handleCopy}
       >

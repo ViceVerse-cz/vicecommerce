@@ -1,6 +1,6 @@
-import { PriceList } from '@medusajs/medusa';
-import { debounce } from 'lodash';
-import React, { useCallback, useEffect, useState } from 'react';
+import { PriceList } from "@medusajs/medusa";
+import { debounce } from "lodash";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Column,
   HeaderGroup,
@@ -11,11 +11,11 @@ import {
   useSortBy,
   UseSortByColumnProps,
   useTable,
-} from 'react-table';
-import { useDebounce } from '../../../hooks/use-debounce';
-import Table, { TableProps } from '../../molecules/table';
-import TableContainer from '../../organisms/table-container';
-import { usePriceListFilters } from './use-price-list-filters';
+} from "react-table";
+import { useDebounce } from "../../../hooks/use-debounce";
+import Table, { TableProps } from "../../molecules/table";
+import TableContainer from "../../organisms/table-container";
+import { usePriceListFilters } from "./use-price-list-filters";
 
 /* ******************************************** */
 /* ************** TABLE ELEMENTS ************** */
@@ -31,7 +31,7 @@ type HeaderCellProps = {
 function PriceListTableHeaderCell(props: HeaderCellProps) {
   return (
     <Table.HeadCell className='w-[100px]' {...props.col.getHeaderProps(props.col.getSortByToggleProps())}>
-      {props.col.render('Header')}
+      {props.col.render("Header")}
     </Table.HeadCell>
   );
 }
@@ -64,14 +64,8 @@ function PriceListTableRow(props: PriceListTableRowProps) {
   const { row } = props;
 
   return (
-    <Table.Row
-      color={'inherit'}
-      linkTo={row.original.id}
-      id={row.original.id}
-      className='group'
-      {...row.getRowProps()}
-    >
-      {row.cells.map((cell, index) => cell.render('Cell', { index }))}
+    <Table.Row color={"inherit"} linkTo={row.original.id} id={row.original.id} className='group' {...row.getRowProps()}>
+      {row.cells.map((cell, index) => cell.render("Cell", { index }))}
     </Table.Row>
   );
 }
@@ -85,8 +79,8 @@ type PriceListTableProps = ReturnType<typeof usePriceListFilters> & {
   priceLists: PriceList[];
   columns: Array<Column<PriceList>>;
   count: number;
-  options: Omit<TableProps, 'filteringOptions'> & {
-    filter: Pick<TableProps, 'filteringOptions'>;
+  options: Omit<TableProps, "filteringOptions"> & {
+    filter: Pick<TableProps, "filteringOptions">;
   };
 };
 
@@ -94,18 +88,9 @@ type PriceListTableProps = ReturnType<typeof usePriceListFilters> & {
  * Root component of the price lists table.
  */
 export function PriceListTable(props: PriceListTableProps) {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
 
-  const {
-    priceLists,
-    queryObject,
-    count,
-    paginate,
-    setQuery: setFreeText,
-    columns,
-    options,
-    isLoading,
-  } = props;
+  const { priceLists, queryObject, count, paginate, setQuery: setFreeText, columns, options, isLoading } = props;
 
   const tableConfig: TableOptions<PriceList> = {
     columns: columns,
@@ -162,7 +147,7 @@ export function PriceListTable(props: PriceListTableProps) {
         count: count!,
         offset: queryObject.offset,
         pageSize: queryObject.offset + table.rows.length,
-        title: 'Price Lists',
+        title: "Ceníky",
         currentPage: table.state.pageIndex + 1,
         pageCount: table.pageCount,
         nextPage: handleNext,

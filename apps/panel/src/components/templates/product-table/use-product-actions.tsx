@@ -23,8 +23,8 @@ const useProductActions = (product: Product) => {
 
   const handleDelete = async () => {
     const shouldDelete = await dialog({
-      heading: "Delete Product",
-      text: "Are you sure you want to delete this product?",
+      heading: "Odstranit produkt",
+      text: "Opravdu chcete tento produkt odstranit?",
     });
 
     if (shouldDelete) {
@@ -39,9 +39,9 @@ const useProductActions = (product: Product) => {
       icon: <EditIcon size={20} />,
     },
     {
-      label: product.status === "published" ? "Unpublish" : "Publish",
+      label: product.status === "published" ? "Zrušení publikování" : "Zveřejnit",
       onClick: () => {
-        const newStatus = product.status === "published" ? "draft" : "published";
+        const newStatus = product.status === "published" ? "návrh" : "zveřejněno";
         updateProduct.mutate(
           {
             status: newStatus,
@@ -49,24 +49,24 @@ const useProductActions = (product: Product) => {
           {
             onSuccess: () => {
               notification(
-                "Success",
-                `Successfully ${product.status === "published" ? "unpublished" : "published"} product`,
+                "Úspěch",
+                `Úspěšně ${product.status === "published" ? "unpublished" : "published"} produkt`,
                 "success",
               );
             },
-            onError: (err) => notification("Error", getErrorMessage(err), "error"),
+            onError: (err) => notification("Chyba", getErrorMessage(err), "error"),
           },
         );
       },
       icon: product.status === "published" ? <UnpublishIcon size={20} /> : <PublishIcon size={20} />,
     },
     {
-      label: "Duplicate",
+      label: "Duplikovat",
       onClick: () => copyProduct(product),
       icon: <DuplicateIcon size={20} />,
     },
     {
-      label: "Delete",
+      label: "Odstranit",
       variant: "danger",
       onClick: handleDelete,
       icon: <TrashIcon size={20} />,

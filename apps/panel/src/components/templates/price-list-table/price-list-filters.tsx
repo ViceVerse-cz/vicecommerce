@@ -1,13 +1,13 @@
-import clsx from 'clsx';
-import React, { useEffect, useMemo, useState } from 'react';
-import PlusIcon from '../../../components/fundamentals/icons/plus-icon';
-import FilterDropdownContainer from '../../../components/molecules/filter-dropdown/container';
-import FilterDropdownItem from '../../../components/molecules/filter-dropdown/item';
-import SaveFilterItem from '../../../components/molecules/filter-dropdown/save-field';
-import TabFilter from '../../../components/molecules/filter-tab';
+import clsx from "clsx";
+import React, { useEffect, useMemo, useState } from "react";
+import PlusIcon from "../../../components/fundamentals/icons/plus-icon";
+import FilterDropdownContainer from "../../../components/molecules/filter-dropdown/container";
+import FilterDropdownItem from "../../../components/molecules/filter-dropdown/item";
+import SaveFilterItem from "../../../components/molecules/filter-dropdown/save-field";
+import TabFilter from "../../../components/molecules/filter-tab";
 
-const statusFilters = ['active', 'draft'];
-const typeFilters = ['sale', 'override'];
+const statusFilters = ["active", "draft"];
+const typeFilters = ["sale", "override"];
 
 const PriceListsFilter = ({
   filters,
@@ -20,7 +20,7 @@ const PriceListsFilter = ({
   onSaveTab,
 }) => {
   const [tempState, setTempState] = useState(filters);
-  const [name, setName] = useState('');
+  const [name, setName] = useState("");
 
   const handleRemoveTab = (val) => {
     if (onRemoveTab) {
@@ -78,15 +78,13 @@ const PriceListsFilter = ({
         triggerElement={
           <button
             className={clsx(
-              'flex rounded-rounded items-center space-x-1 focus-visible:outline-none focus-visible:shadow-input focus-visible:border-violet-60',
+              "flex rounded-rounded items-center space-x-1 focus-visible:outline-none focus-visible:shadow-input focus-visible:border-violet-60",
             )}
           >
             <div className='flex rounded-rounded items-center bg-grey-5 border border-grey-20 inter-small-semibold px-2 h-6'>
               Filters
               <div className='text-grey-40 ml-1 flex items-center rounded'>
-                <span className='text-violet-60 inter-small-semibold'>
-                  {numberOfFilters ? numberOfFilters : '0'}
-                </span>
+                <span className='text-violet-60 inter-small-semibold'>{numberOfFilters ? numberOfFilters : "0"}</span>
               </div>
             </div>
             <div className='flex items-center rounded-rounded bg-grey-5 border border-grey-20 inter-small-semibold p-1'>
@@ -96,23 +94,22 @@ const PriceListsFilter = ({
         }
       >
         <FilterDropdownItem
-          filterTitle='Status'
+          filterTitle='Stav'
           options={statusFilters}
           filters={tempState.status.filter}
           open={tempState.status.open}
-          setFilter={(v) => setSingleFilter('status', v)}
+          setFilter={(v) => setSingleFilter("status", v)}
         />
         <FilterDropdownItem
-          filterTitle='Type'
+          filterTitle='Typ'
           options={typeFilters}
           filters={tempState.type.filter}
           open={tempState.type.open}
-          setFilter={(v) => setSingleFilter('type', v)}
+          setFilter={(v) => setSingleFilter("type", v)}
         />
         <SaveFilterItem saveFilter={handleSaveTab} name={name} setName={setName} />
       </FilterDropdownContainer>
-      {tabs &&
-        tabs.map((t) => (
+      {tabs?.map((t) => (
           <TabFilter
             key={t.value}
             onClick={() => handleTabClick(t.value)}

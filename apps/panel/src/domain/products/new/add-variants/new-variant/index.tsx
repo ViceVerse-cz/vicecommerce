@@ -79,7 +79,7 @@ const NewVariant = ({
     if (!saved) {
       localForm.setError("options", {
         type: "deps",
-        message: "A variant with these options already exists.",
+        message: "Varianta s těmito možnostmi již existuje.",
       });
       return;
     }
@@ -91,8 +91,8 @@ const NewVariant = ({
 
   const onDelete = async () => {
     const confirmed = await warning({
-      text: "Are you sure you want to delete this variant?",
-      heading: "Delete Variant",
+      text: "Opravdu chcete tuto variantu odstranit?",
+      heading: "Odstranit variantu",
     });
 
     if (confirmed) {
@@ -185,12 +185,12 @@ const NewVariant = ({
             forceDropdown
             actions={[
               {
-                label: "Edit",
+                label: "Upravit",
                 icon: <EditIcon size={20} />,
                 onClick: toggle,
               },
               {
-                label: "Delete",
+                label: "Odstranit",
                 icon: <TrashIcon size={20} />,
                 onClick: onDelete,
                 variant: "danger",
@@ -209,7 +209,7 @@ const NewVariant = ({
         <Modal.Body>
           <Modal.Header handleClose={closeAndReset}>
             <h1 className='inter-xlarge-semibold'>
-              Edit Variant
+              Upravit variantu
               {source.general.title && (
                 <span className='ml-xsmall inter-xlarge-regular text-grey-50'>({source.general.title})</span>
               )}
@@ -221,7 +221,7 @@ const NewVariant = ({
           <Modal.Footer>
             <div className='flex items-center gap-x-xsmall justify-end w-full'>
               <Button variant='secondary' size='small' type='button' onClick={closeAndReset}>
-                Cancel
+                Zrušit
               </Button>
               <Button variant='primary' size='small' type='button' onClick={onUpdate}>
                 Uložit a zavřít
@@ -248,13 +248,13 @@ const VariantValidity = ({
     general: { title },
   } = source;
 
-  if (!(options?.length)) {
+  if (!options?.length) {
     return (
       <IconTooltip
         type='error'
         content={
           <div className='text-rose-50 flex flex-col gap-y-2xsmall'>
-            <p>This variant has no options.</p>
+            <p>Tato varianta nemá žádné možnosti.</p>
           </div>
         }
       />
@@ -269,7 +269,7 @@ const VariantValidity = ({
         type='error'
         content={
           <div className='text-rose-50 flex flex-col gap-y-2xsmall'>
-            <p>You are missing options values for the following options:</p>
+            <p>Chybí hodnoty možností pro následující možnosti:</p>
             <ul className='list-disc list-inside'>
               {invalidOptions.map((io, index) => {
                 return <li key={index}>{io.title || `Option ${index + 1}`}</li>;
@@ -290,14 +290,14 @@ const VariantValidity = ({
 
   const barcodeValidity = !!barcode || !!upc || !!ean;
 
-  if (!((((sku && validCustoms ) && validDimensions ) && barcodeValidity ) && validPrices)) {
+  if (!(sku && validCustoms && validDimensions && barcodeValidity && validPrices)) {
     return (
       <IconTooltip
         type='warning'
         side='right'
         content={
           <div className='text-orange-50 flex flex-col gap-y-2xsmall'>
-            <p>Your variant is createable, but it's missing some important fields:</p>
+            <p>Vaši variantu lze vytvořit, ale chybí v ní některá důležitá pole:</p>
             <ul className='list-disc list-inside'>
               {!validPrices && <li>Pricing</li>}
               {!validDimensions && <li>Dimensions</li>}
@@ -313,7 +313,7 @@ const VariantValidity = ({
   }
 
   return (
-    <Tooltip content={title ? `${title} is valid` : "Variant is valid"} side='top'>
+    <Tooltip content={title ? `${title} is valid` : "Varianta je platná"} side='top'>
       <CheckCircleFillIcon size={20} className='text-emerald-40' />
     </Tooltip>
   );

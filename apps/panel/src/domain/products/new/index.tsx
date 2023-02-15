@@ -1,29 +1,29 @@
-import { AdminPostProductsReq } from '@medusajs/medusa';
-import { useAdminCreateProduct } from 'medusa-react';
-import { useEffect } from 'react';
-import { useForm, useWatch } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import Button from '../../../components/fundamentals/button';
-import FeatureToggle from '../../../components/fundamentals/feature-toggle';
-import CrossIcon from '../../../components/fundamentals/icons/cross-icon';
-import FocusModal from '../../../components/molecules/modal/focus-modal';
-import Accordion from '../../../components/organisms/accordion';
-import { useFeatureFlag } from '../../../context/feature-flag';
-import useNotification from '../../../hooks/use-notification';
-import { FormImage, ProductStatus } from '../../../types/shared';
-import { getErrorMessage } from '../../../utils/error-messages';
-import { prepareImages } from '../../../utils/images';
-import { nestedForm } from '../../../utils/nested-form';
-import CustomsForm, { CustomsFormType } from '../components/customs-form';
-import DimensionsForm, { DimensionsFormType } from '../components/dimensions-form';
-import DiscountableForm, { DiscountableFormType } from '../components/discountable-form';
-import GeneralForm, { GeneralFormType } from '../components/general-form';
-import MediaForm, { MediaFormType } from '../components/media-form';
-import OrganizeForm, { OrganizeFormType } from '../components/organize-form';
-import { PricesFormType } from '../components/prices-form';
-import ThumbnailForm, { ThumbnailFormType } from '../components/thumbnail-form';
-import AddSalesChannelsForm, { AddSalesChannelsFormType } from './add-sales-channels';
-import AddVariantsForm, { AddVariantsFormType } from './add-variants';
+import { AdminPostProductsReq } from "@medusajs/medusa";
+import { useAdminCreateProduct } from "medusa-react";
+import { useEffect } from "react";
+import { useForm, useWatch } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import Button from "../../../components/fundamentals/button";
+import FeatureToggle from "../../../components/fundamentals/feature-toggle";
+import CrossIcon from "../../../components/fundamentals/icons/cross-icon";
+import FocusModal from "../../../components/molecules/modal/focus-modal";
+import Accordion from "../../../components/organisms/accordion";
+import { useFeatureFlag } from "../../../context/feature-flag";
+import useNotification from "../../../hooks/use-notification";
+import { FormImage, ProductStatus } from "../../../types/shared";
+import { getErrorMessage } from "../../../utils/error-messages";
+import { prepareImages } from "../../../utils/images";
+import { nestedForm } from "../../../utils/nested-form";
+import CustomsForm, { CustomsFormType } from "../components/customs-form";
+import DimensionsForm, { DimensionsFormType } from "../components/dimensions-form";
+import DiscountableForm, { DiscountableFormType } from "../components/discountable-form";
+import GeneralForm, { GeneralFormType } from "../components/general-form";
+import MediaForm, { MediaFormType } from "../components/media-form";
+import OrganizeForm, { OrganizeFormType } from "../components/organize-form";
+import { PricesFormType } from "../components/prices-form";
+import ThumbnailForm, { ThumbnailFormType } from "../components/thumbnail-form";
+import AddSalesChannelsForm, { AddSalesChannelsFormType } from "./add-sales-channels";
+import AddVariantsForm, { AddVariantsFormType } from "./add-variants";
 
 type NewProductForm = {
   general: GeneralFormType;
@@ -51,12 +51,12 @@ const NewProduct = ({ onClose }: Props) => {
 
   const watchedCustoms = useWatch({
     control: form.control,
-    name: 'customs',
+    name: "customs",
   });
 
   const watchedDimensions = useWatch({
     control: form.control,
-    name: 'dimensions',
+    name: "dimensions",
   });
 
   const {
@@ -78,7 +78,7 @@ const NewProduct = ({ onClose }: Props) => {
 
   const onSubmit = (publish = true) =>
     handleSubmit(async (data) => {
-      const payload = createPayload(data, publish, isFeatureEnabled('sales_channels'));
+      const payload = createPayload(data, publish, isFeatureEnabled("sales_channels"));
 
       if (data.media?.images?.length) {
         let preppedImages: FormImage[] = [];
@@ -86,17 +86,15 @@ const NewProduct = ({ onClose }: Props) => {
         try {
           preppedImages = await prepareImages(data.media.images);
         } catch (error) {
-          let errorMessage = 'Při pokusu o nahrání obrázků se něco pokazilo.';
+          let errorMessage = "Při pokusu o nahrání obrázků se něco pokazilo.";
           const response = (error as any).response as Response;
 
           if (response.status === 500) {
             errorMessage =
-              errorMessage +
-              ' ' +
-              'Možná nemáte nakonfigurovanou souborovou službu. Obraťte se na svého správce';
+              `${errorMessage} Možná nemáte nakonfigurovanou souborovou službu. Obraťte se na svého správce`;
           }
 
-          notification('Chyby', errorMessage, 'error');
+          notification("Chyby", errorMessage, "error");
           return;
         }
         const urls = preppedImages.map((image) => image.url);
@@ -110,17 +108,15 @@ const NewProduct = ({ onClose }: Props) => {
         try {
           preppedImages = await prepareImages(data.thumbnail.images);
         } catch (error) {
-          let errorMessage = 'Při pokusu o nahrání miniatury se něco pokazilo.';
+          let errorMessage = "Při pokusu o nahrání miniatury se něco pokazilo.";
           const response = (error as any).response as Response;
 
           if (response.status === 500) {
             errorMessage =
-              errorMessage +
-              ' ' +
-              'Možná nemáte nakonfigurovanou souborovou službu. Obraťte se na svého správce';
+              `${errorMessage} Možná nemáte nakonfigurovanou souborovou službu. Obraťte se na svého správce`;
           }
 
-          notification('Chyby', errorMessage, 'error');
+          notification("Chyby", errorMessage, "error");
           return;
         }
         const urls = preppedImages.map((image) => image.url);
@@ -134,7 +130,7 @@ const NewProduct = ({ onClose }: Props) => {
           navigate(`/a/products/${product.id}`);
         },
         onError: (err) => {
-          notification('Chyby', getErrorMessage(err), 'error');
+          notification("Chyby", getErrorMessage(err), "error");
         },
       });
     });
@@ -148,22 +144,10 @@ const NewProduct = ({ onClose }: Props) => {
               <CrossIcon size={20} />
             </Button>
             <div className='gap-x-small flex'>
-              <Button
-                size='small'
-                variant='secondary'
-                type='button'
-                disabled={!isDirty}
-                onClick={onSubmit(false)}
-              >
+              <Button size='small' variant='secondary' type='button' disabled={!isDirty} onClick={onSubmit(false)}>
                 Uložit jako koncept
               </Button>
-              <Button
-                size='small'
-                variant='primary'
-                type='button'
-                disabled={!isDirty}
-                onClick={onSubmit(true)}
-              >
+              <Button size='small' variant='primary' type='button' disabled={!isDirty} onClick={onSubmit(true)}>
                 Zveřejnit produkt
               </Button>
             </div>
@@ -171,33 +155,33 @@ const NewProduct = ({ onClose }: Props) => {
         </FocusModal.Header>
         <FocusModal.Main className='w-full no-scrollbar flex justify-center'>
           <div className='medium:w-7/12 large:w-6/12 small:w-4/5 max-w-[700px] my-16'>
-            <Accordion defaultValue={['general']} type='multiple'>
-              <Accordion.Item value={'general'} title='General information' required>
+            <Accordion defaultValue={["general"]} type='multiple'>
+              <Accordion.Item value={"general"} title='Obecné informace' required>
                 <p className='inter-base-regular text-grey-50'>
                   Chcete-li začít prodávat, potřebujete pouze název a cenu.
                 </p>
                 <div className='mt-xlarge flex flex-col gap-y-xlarge'>
-                  <GeneralForm form={nestedForm(form, 'general')} requireHandle={false} />
-                  <DiscountableForm form={nestedForm(form, 'discounted')} />
+                  <GeneralForm form={nestedForm(form, "general")} requireHandle={false} />
+                  <DiscountableForm form={nestedForm(form, "discounted")} />
                 </div>
               </Accordion.Item>
-              <Accordion.Item title='Organize' value='organize'>
+              <Accordion.Item title='Organizujte' value='organize'>
                 <p className='inter-base-regular text-grey-50'>
                   Chcete-li začít prodávat, potřebujete pouze název a cenu.
                 </p>
                 <div className='mt-xlarge flex flex-col gap-y-xlarge pb-xsmall'>
                   <div>
                     <h3 className='inter-base-semibold mb-base'>Uspořádat produkt</h3>
-                    <OrganizeForm form={nestedForm(form, 'organize')} />
+                    <OrganizeForm form={nestedForm(form, "organize")} />
                     <FeatureToggle featureFlag='sales_channels'>
                       <div className='mt-xlarge'>
-                        <AddSalesChannelsForm form={nestedForm(form, 'salesChannels')} />
+                        <AddSalesChannelsForm form={nestedForm(form, "salesChannels")} />
                       </div>
                     </FeatureToggle>
                   </div>
                 </div>
               </Accordion.Item>
-              <Accordion.Item title='Variants' value='variants'>
+              <Accordion.Item title='Varianty' value='variants'>
                 <p className='text-grey-50 inter-base-regular'>
                   Přidejte varianty tohoto produktu.
                   <br />
@@ -205,32 +189,32 @@ const NewProduct = ({ onClose }: Props) => {
                 </p>
                 <div className='mt-large'>
                   <AddVariantsForm
-                    form={nestedForm(form, 'variants')}
+                    form={nestedForm(form, "variants")}
                     productCustoms={watchedCustoms}
                     productDimensions={watchedDimensions}
                   />
                 </div>
               </Accordion.Item>
-              <Accordion.Item title='Attributes' value='attributes'>
+              <Accordion.Item title='Atributy' value='attributes'>
                 <p className='inter-base-regular text-grey-50'>Používá se pro přepravní a celní účely.</p>
                 <div className='my-xlarge'>
                   <h3 className='inter-base-semibold mb-base'>Rozměry</h3>
-                  <DimensionsForm form={nestedForm(form, 'dimensions')} />
+                  <DimensionsForm form={nestedForm(form, "dimensions")} />
                 </div>
                 <div>
                   <h3 className='inter-base-semibold mb-base'>Celní úřad</h3>
-                  <CustomsForm form={nestedForm(form, 'customs')} />
+                  <CustomsForm form={nestedForm(form, "customs")} />
                 </div>
               </Accordion.Item>
-              <Accordion.Item title='Thumbnail' value='thumbnail'>
+              <Accordion.Item title='Miniatura' value='thumbnail'>
                 <p className='inter-base-regular text-grey-50 mb-large'>
                   Slouží k reprezentaci vašeho produktu při placení, sdílení na sociálních sítích a podobně.
                 </p>
-                <ThumbnailForm form={nestedForm(form, 'thumbnail')} />
+                <ThumbnailForm form={nestedForm(form, "thumbnail")} />
               </Accordion.Item>
-              <Accordion.Item title='Media' value='media'>
+              <Accordion.Item title='Média' value='media'>
                 <p className='inter-base-regular text-grey-50 mb-large'>Přidejte k produktu obrázky.</p>
-                <MediaForm form={nestedForm(form, 'media')} />
+                <MediaForm form={nestedForm(form, "media")} />
               </Accordion.Item>
             </Accordion>
           </div>
@@ -240,11 +224,7 @@ const NewProduct = ({ onClose }: Props) => {
   );
 };
 
-const createPayload = (
-  data: NewProductForm,
-  publish = true,
-  salesChannelsEnabled = false,
-): AdminPostProductsReq => {
+const createPayload = (data: NewProductForm, publish = true, salesChannelsEnabled = false): AdminPostProductsReq => {
   const payload: AdminPostProductsReq = {
     title: data.general.title,
     subtitle: data.general.subtitle || undefined,
@@ -312,11 +292,11 @@ const createPayload = (
 const createBlank = (): NewProductForm => {
   return {
     general: {
-      title: '',
+      title: "",
       material: null,
       subtitle: null,
       description: null,
-      handle: '',
+      handle: "",
     },
     customs: {
       hs_code: null,
@@ -355,7 +335,7 @@ const createBlank = (): NewProductForm => {
 
 const getVariantPrices = (prices: PricesFormType) => {
   const priceArray = prices.prices
-    .filter((price) => typeof price.amount === 'number')
+    .filter((price) => typeof price.amount === "number")
     .map((price) => {
       return {
         amount: price.amount as number,

@@ -1,26 +1,26 @@
-import * as PopoverPrimitive from '@radix-ui/react-popover';
-import clsx from 'clsx';
-import moment from 'moment';
-import React, { useEffect, useState } from 'react';
-import ReactDatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import Button from '../../fundamentals/button';
-import ArrowDownIcon from '../../fundamentals/icons/arrow-down-icon';
-import InputContainer from '../../fundamentals/input-container';
-import InputHeader from '../../fundamentals/input-header';
-import CustomHeader from './custom-header';
-import { DateTimePickerProps } from './types';
+import * as PopoverPrimitive from "@radix-ui/react-popover";
+import clsx from "clsx";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
+import ReactDatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import Button from "../../fundamentals/button";
+import ArrowDownIcon from "../../fundamentals/icons/arrow-down-icon";
+import InputContainer from "../../fundamentals/input-container";
+import InputHeader from "../../fundamentals/input-header";
+import CustomHeader from "./custom-header";
+import { DateTimePickerProps } from "./types";
 
 const getDateClassname = (d, tempDate) => {
-  return moment(d).format('YY,MM,DD') === moment(tempDate).format('YY,MM,DD')
-    ? 'date chosen'
-    : `date ${moment(d).format('YY,MM,DD') < moment(new Date()).format('YY,MM,DD') ? 'past' : ''}`;
+  return moment(d).format("YY,MM,DD") === moment(tempDate).format("YY,MM,DD")
+    ? "date chosen"
+    : `date ${moment(d).format("YY,MM,DD") < moment(new Date()).format("YY,MM,DD") ? "past" : ""}`;
 };
 
 const DatePicker: React.FC<DateTimePickerProps> = ({
   date,
   onSubmitDate,
-  label = 'start date',
+  label = "start date",
   required = false,
   tooltipContent,
   tooltip,
@@ -46,9 +46,9 @@ const DatePicker: React.FC<DateTimePickerProps> = ({
       <PopoverPrimitive.Root open={isOpen} onOpenChange={setIsOpen}>
         <PopoverPrimitive.Trigger asChild>
           <button
-            className={clsx('w-full rounded-rounded border ', {
-              'shadow-input border-violet-60': isOpen,
-              'border-grey-20': !isOpen,
+            className={clsx("w-full rounded-rounded border ", {
+              "shadow-input border-violet-60": isOpen,
+              "border-grey-20": !isOpen,
             })}
           >
             <InputContainer className='border-0 shadown-none focus-within:shadow-none'>
@@ -63,7 +63,7 @@ const DatePicker: React.FC<DateTimePickerProps> = ({
                 />
                 <ArrowDownIcon size={16} />
               </div>
-              <label className='w-full text-left'>{moment(date).format('ddd, DD MMM YYYY')}</label>
+              <label className='w-full text-left'>{moment(date).format("ddd, DD MMM YYYY")}</label>
             </InputContainer>
           </button>
         </PopoverPrimitive.Trigger>
@@ -80,14 +80,14 @@ const DatePicker: React.FC<DateTimePickerProps> = ({
               onClick={() => setIsOpen(false)}
               className='mr-2 w-1/3 flex justify-center border border-grey-20'
             >
-              Cancel
+              Zrušit
             </Button>
             <Button
               size='medium'
               variant='primary'
               onClick={() => submitDate()}
               className='w-2/3 flex justify-center'
-            >{`Set ${label}`}</Button>
+            >{`Nastavit ${label}`}</Button>
           </div>
         </PopoverPrimitive.Content>
       </PopoverPrimitive.Root>

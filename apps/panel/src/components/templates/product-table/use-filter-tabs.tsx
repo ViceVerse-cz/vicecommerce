@@ -1,6 +1,6 @@
-import { omit } from 'lodash';
-import qs from 'qs';
-import { useMemo, useReducer, useState } from 'react';
+import { omit } from "lodash";
+import qs from "qs";
+import { useMemo, useReducer, useState } from "react";
 
 type ProductDateFilter = null | {
   gt?: string;
@@ -8,12 +8,12 @@ type ProductDateFilter = null | {
 };
 
 type ProductFilterAction =
-  | { type: 'setFilters'; payload: ProductFilterState }
-  | { type: 'reset'; payload: ProductFilterState }
-  | { type: 'setDefaults'; payload: ProductDefaultFilters | null }
-  | { type: 'setFulfillment'; payload: null | string[] | string }
-  | { type: 'setPayment'; payload: null | string[] | string }
-  | { type: 'setLimit'; payload: number };
+  | { type: "setFilters"; payload: ProductFilterState }
+  | { type: "reset"; payload: ProductFilterState }
+  | { type: "setDefaults"; payload: ProductDefaultFilters | null }
+  | { type: "setFulfillment"; payload: null | string[] | string }
+  | { type: "setPayment"; payload: null | string[] | string }
+  | { type: "setLimit"; payload: number };
 
 interface ProductFilterState {
   status: {
@@ -35,20 +35,20 @@ interface ProductFilterState {
   additionalFilters: ProductDefaultFilters | null;
 }
 
-const allowedFilters = ['status', 'collection_id', 'payment_status', 'created_at'];
+const allowedFilters = ["status", "collection_id", "payment_status", "created_at"];
 
 const DefaultTabs = {
   drafts: {
-    status: ['draft'],
+    status: ["draft"],
   },
   proposed: {
-    status: ['proposed'],
+    status: ["proposed"],
   },
 };
 
 const reducer = (state: ProductFilterState, action: ProductFilterAction): ProductFilterState => {
   switch (action.type) {
-    case 'setFilters': {
+    case "setFilters": {
       return {
         ...state,
         status: action.payload.status,
@@ -58,7 +58,7 @@ const reducer = (state: ProductFilterState, action: ProductFilterAction): Produc
       };
     }
 
-    case 'reset': {
+    case "reset": {
       return action.payload;
     }
     default: {
@@ -85,14 +85,14 @@ const eqSet = (as: Set<string>, bs: Set<string>) => {
 };
 
 export const useProductFilters = (existing?: string, defaultFilters: ProductDefaultFilters | null = null) => {
-  if (existing && existing[0] === '?') {
+  if (existing && existing[0] === "?") {
     existing = existing.substring(1);
   }
 
   const initial = useMemo(() => parseQueryString(existing, defaultFilters), [existing, defaultFilters]);
 
   const initialTabs = useMemo(() => {
-    const storageString = localStorage.getItem('products::filters');
+    const storageString = localStorage.getItem("products::filters");
     if (storageString) {
       const savedTabs = JSON.parse(storageString);
 
@@ -115,28 +115,28 @@ export const useProductFilters = (existing?: string, defaultFilters: ProductDefa
   const [tabs, setTabs] = useState(initialTabs);
 
   const setDateFilter = (filter: ProductDateFilter | null) => {
-    dispatch({ type: 'setDate', payload: filter });
+    dispatch({ type: "setDate", payload: filter });
   };
 
   const setFulfillmentFilter = (filter: string[] | string | null) => {
-    dispatch({ type: 'setFulfillment', payload: filter });
+    dispatch({ type: "setFulfillment", payload: filter });
   };
 
   const setPaymentFilter = (filter: string[] | string | null) => {
-    dispatch({ type: 'setPayment', payload: filter });
+    dispatch({ type: "setPayment", payload: filter });
   };
 
   const setStatusFilter = (filter: string[] | string | null) => {
-    dispatch({ type: 'setStatus', payload: filter });
+    dispatch({ type: "setStatus", payload: filter });
   };
 
   const setDefaultFilters = (filters: ProductDefaultFilters | null) => {
-    dispatch({ type: 'setDefaults', payload: filters });
+    dispatch({ type: "setDefaults", payload: filters });
   };
 
   const reset = () => {
     dispatch({
-      type: 'setFilters',
+      type: "setFilters",
       payload: {
         ...state,
         status: {
@@ -160,7 +160,7 @@ export const useProductFilters = (existing?: string, defaultFilters: ProductDefa
   };
 
   const setFilters = (filters: ProductFilterState) => {
-    dispatch({ type: 'setFilters', payload: filters });
+    dispatch({ type: "setFilters", payload: filters });
   };
 
   const getQueryObject = () => {
@@ -179,11 +179,11 @@ export const useProductFilters = (existing?: string, defaultFilters: ProductDefa
 
     const toQuery: any = {};
     for (const [key, value] of Object.entries(objToUse)) {
-      if (key === 'query') {
-        if (value && typeof value === 'string') {
-          toQuery['q'] = value;
+      if (key === "query") {
+        if (value && typeof value === "string") {
+          toQuery["q"] = value;
         }
-      } else if (key === 'offset' || key === 'limit') {
+      } else if (key === "offset" || key === "limit") {
         toQuery[key] = value;
       } else if (value?.open) {
         toQuery[stateFilterMap[key]] = value.filter;
@@ -203,7 +203,7 @@ export const useProductFilters = (existing?: string, defaultFilters: ProductDefa
   const representationString = useMemo(() => getRepresentationString(), [state]);
 
   const activeFilterTab = useMemo(() => {
-    const clean = omit(representationObject, ['limit', 'offset']);
+    const clean = omit(representationObject, ["limit", "offset"]);
     const stringified = qs.stringify(clean);
 
     const existsInSaved = tabs.find((el) => el.representationString === stringified);
@@ -245,8 +245,8 @@ export const useProductFilters = (existing?: string, defaultFilters: ProductDefa
   const availableTabs = useMemo(() => {
     return [
       {
-        label: 'Unpublished',
-        value: 'drafts',
+        label: "Nepublikované",
+        value: "drafts",
       },
       ...tabs,
     ];
@@ -290,16 +290,16 @@ export const useProductFilters = (existing?: string, defaultFilters: ProductDefa
           filter: val,
         };
       }
-      dispatch({ type: 'setFilters', payload: toSubmit });
+      dispatch({ type: "setFilters", payload: toSubmit });
     }
   };
 
   const saveTab = (tabName: string, filters: ProductFilterState) => {
     const repObj = getRepresentationObject({ ...filters });
-    const clean = omit(repObj, ['limit', 'offset']);
+    const clean = omit(repObj, ["limit", "offset"]);
     const repString = qs.stringify(clean, { skipNulls: true });
 
-    const storedString = localStorage.getItem('products::filters');
+    const storedString = localStorage.getItem("products::filters");
 
     let existing: null | object = null;
 
@@ -309,11 +309,11 @@ export const useProductFilters = (existing?: string, defaultFilters: ProductDefa
 
     if (existing) {
       existing[tabName] = repString;
-      localStorage.setItem('products::filters', JSON.stringify(existing));
+      localStorage.setItem("products::filters", JSON.stringify(existing));
     } else {
       const newFilters = {};
       newFilters[tabName] = repString;
-      localStorage.setItem('products::filters', JSON.stringify(newFilters));
+      localStorage.setItem("products::filters", JSON.stringify(newFilters));
     }
 
     setTabs((prev) => {
@@ -332,11 +332,11 @@ export const useProductFilters = (existing?: string, defaultFilters: ProductDefa
       ];
     });
 
-    dispatch({ type: 'setFilters', payload: filters });
+    dispatch({ type: "setFilters", payload: filters });
   };
 
   const removeTab = (tabValue: string) => {
-    const storedString = localStorage.getItem('products::filters');
+    const storedString = localStorage.getItem("products::filters");
 
     let existing: null | object = null;
 
@@ -345,8 +345,8 @@ export const useProductFilters = (existing?: string, defaultFilters: ProductDefa
     }
 
     if (existing) {
-      delete existing[tabValue];
-      localStorage.setItem('products::filters', JSON.stringify(existing));
+      existing[tabValue] = undefined;
+      localStorage.setItem("products::filters", JSON.stringify(existing));
     }
 
     setTabs((prev) => {
@@ -379,17 +379,17 @@ export const useProductFilters = (existing?: string, defaultFilters: ProductDefa
 };
 
 const filterStateMap = {
-  status: 'status',
-  collection_id: 'collection',
-  tags: 'tags',
-  created_at: 'date',
+  status: "status",
+  collection_id: "collection",
+  tags: "tags",
+  created_at: "date",
 };
 
 const stateFilterMap = {
-  status: 'status',
-  collection: 'collection_id',
-  tags: 'tags',
-  date: 'created_at',
+  status: "status",
+  collection: "collection_id",
+  tags: "tags",
+  date: "created_at",
 };
 
 const parseQueryString = (
@@ -421,8 +421,8 @@ const parseQueryString = (
     for (const [key, value] of Object.entries(filters)) {
       if (allowedFilters.includes(key)) {
         switch (key) {
-          case 'status': {
-            if (typeof value === 'string' || Array.isArray(value)) {
+          case "status": {
+            if (typeof value === "string" || Array.isArray(value)) {
               defaultVal.status = {
                 open: true,
                 filter: value,
@@ -430,8 +430,8 @@ const parseQueryString = (
             }
             break;
           }
-          case 'collection_id': {
-            if (typeof value === 'string' || Array.isArray(value)) {
+          case "collection_id": {
+            if (typeof value === "string" || Array.isArray(value)) {
               defaultVal.collection = {
                 open: true,
                 filter: value,
@@ -439,8 +439,8 @@ const parseQueryString = (
             }
             break;
           }
-          case 'payment_status': {
-            if (typeof value === 'string' || Array.isArray(value)) {
+          case "payment_status": {
+            if (typeof value === "string" || Array.isArray(value)) {
               defaultVal.payment = {
                 open: true,
                 filter: value,
@@ -448,7 +448,7 @@ const parseQueryString = (
             }
             break;
           }
-          case 'created_at': {
+          case "created_at": {
             defaultVal.date = {
               open: true,
               filter: value,

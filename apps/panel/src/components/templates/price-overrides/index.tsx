@@ -82,8 +82,8 @@ const PriceOverrides = ({
       <Modal.Content>
         {!isEdit && (
           <RadioGroup.Root value={mode} onValueChange={(value) => setMode(value)} className='pt-2 flex items-center'>
-            <RadioGroup.SimpleItem value={MODES.SELECTED_ONLY} label='Apply overrides on selected variants' />
-            <RadioGroup.SimpleItem value={MODES.APPLY_ALL} label='Apply on all variants' />
+            <RadioGroup.SimpleItem value={MODES.SELECTED_ONLY} label='Použití přepisů na vybrané varianty' />
+            <RadioGroup.SimpleItem value={MODES.APPLY_ALL} label='Platí pro všechny varianty' />
           </RadioGroup.Root>
         )}
         {mode === MODES.SELECTED_ONLY && !isEdit && (
@@ -137,7 +137,7 @@ const PriceOverrides = ({
             size='large'
             onClick={onClose}
           >
-            Cancel
+            Zrušit
           </Button>
           <Button
             size='large'

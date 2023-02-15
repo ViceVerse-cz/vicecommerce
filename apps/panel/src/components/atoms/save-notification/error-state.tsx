@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import type { Toast } from 'react-hot-toast';
-import CrossIcon from '../../fundamentals/icons/cross-icon';
-import XCircleIcon from '../../fundamentals/icons/x-circle-icon';
-import ToasterContainer from '../toaster-container';
+import React, { useEffect } from "react";
+import type { Toast } from "react-hot-toast";
+import CrossIcon from "../../fundamentals/icons/cross-icon";
+import XCircleIcon from "../../fundamentals/icons/x-circle-icon";
+import ToasterContainer from "../toaster-container";
 
 type SavingStateProps = {
   toast: Toast;
@@ -13,8 +13,8 @@ type SavingStateProps = {
 
 const ErrorState: React.FC<SavingStateProps> = ({
   toast,
-  title = 'Error',
-  message = 'An error occured while trying to save your changes. Please try again.',
+  title = "Chyba",
+  message = "Při pokusu o uložení změn došlo k chybě. Zkuste to prosím znovu.",
   onDismiss,
 }) => {
   useEffect(() => {
@@ -40,7 +40,7 @@ const ErrorState: React.FC<SavingStateProps> = ({
         <button onClick={onDismiss}>
           <CrossIcon size={20} className='text-grey-40' />
         </button>
-        <span className='sr-only'>Close</span>
+        <span className='sr-only'>Zavřít</span>
       </div>
     </ToasterContainer>
   );
