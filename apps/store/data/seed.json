@@ -25,18 +25,8 @@
       "region_id": "test-region-eu",
       "provider_id": "zasilkovna",
       "data": {
-        "id": "zasilkovna-box"
-      },
-      "price_type": "flat_rate",
-      "is_return": false,
-      "amount": 1000
-    },
-    {
-      "name": "Zasilkovna - Doručení na adresu",
-      "region_id": "test-region-eu",
-      "provider_id": "zasilkovna",
-      "data": {
-        "id": "zasilkovna-delivery"
+        "id": "zasilkovna-box",
+        "dropPoint": 79
       },
       "price_type": "flat_rate",
       "is_return": false,

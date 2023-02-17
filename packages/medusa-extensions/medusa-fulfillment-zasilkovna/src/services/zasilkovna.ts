@@ -15,12 +15,6 @@ class ZasilkovnaService extends FulfillmentService {
   async getFulfillmentOptions() {
     return [
       {
-        id: "zasilkovna-delivery",
-        name: "Zásilkovna - Doručení na adresu",
-        require_drop_point: false,
-        is_return: false,
-      },
-      {
         id: "zasilkovna-box",
         name: "Zásilkovna - Box",
         require_drop_point: true,
@@ -29,38 +23,12 @@ class ZasilkovnaService extends FulfillmentService {
     ];
   }
 
-  validateFulfillmentData(_, data, cart) {
-    console.log("validate_fulfillment");
-    return data;
+  validateFulfillmentData(_, data) {
+    return this.checkData(data);
   }
 
-  validateOption(data) {
-    console.log("validate_option");
-    return true;
-  }
-
-  canCalculate() {
-    console.log("can_calculate");
-    return false;
-  }
-
-  calculatePrice() {
-    console.log("calculate_price");
-    throw Error("Manual Fulfillment service cannot calculatePrice");
-  }
-
-  createOrder() {
-    // No data is being sent anywhere
-
-    console.log("create order");
-    return Promise.resolve({});
-  }
-
-  createReturn() {
-    // No data is being sent anywhere
-
-    console.log("create return");
-    return Promise.resolve({});
+  validateOption(data: Data) {
+    return this.checkData(data);
   }
 
   async createFulfillment(data: Data, items: LineItem[], order: Order, fulfillment: Fulfillment): Promise<void> {
@@ -72,13 +40,13 @@ class ZasilkovnaService extends FulfillmentService {
         surname: order.shipping_address.last_name,
         email: order.email,
         phone: order.shipping_address.phone,
-        addressId: 79,
+        addressId: parseInt(data.dropPoint as string),
         value: order.paid_total,
         eshop: "vasky.cz",
       },
     };
 
-    const response = await fetch("https://www.zasilkovna.cz/api/rest", {
+    const { status } = await fetch("https://www.zasilkovna.cz/api/rest", {
       method: "POST",
       headers: {
         "Content-Type": "application/xml",
@@ -86,10 +54,7 @@ class ZasilkovnaService extends FulfillmentService {
       body: JSON.stringify(parse("createPacket", reqData)),
     });
 
-    console.log(response.status);
-    console.log(response.body);
-
-    if (response.status === 200) {
+    if (status === 200) {
       return Promise.resolve();
     } else {
       return Promise.reject({
@@ -98,9 +63,25 @@ class ZasilkovnaService extends FulfillmentService {
     }
   }
 
-  cancelFulfillment() {
-    console.log("cancel fulfillment");
-    return Promise.resolve({});
+  checkData(data: Data) {
+    switch (data.id) {
+      case "zasilkovna-box":
+        if (!data.dropPoint) {
+          throw new Error("Musíte vybrat místo vyzvednutí");
+        }
+
+        return {
+          ...data,
+        };
+
+      case "zasilkovna-delivery":
+        return {
+          ...data,
+        };
+
+      default:
+        throw new Error("Neplatný způsob doručení");
+    }
   }
 }
 

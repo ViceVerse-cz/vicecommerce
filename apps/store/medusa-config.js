@@ -26,7 +26,7 @@ const plugins = [
   {
     resolve: "medusa-fulfillment-zasilkovna",
     options: {
-      apiKey: "sdfsdfdsfdsf",
+      apiKey: "f910e4054249ee9661659584c5ea9d15",
     },
   },
 
