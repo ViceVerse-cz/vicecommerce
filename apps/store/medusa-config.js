@@ -18,17 +18,17 @@ const plugins = [
     resolve: "medusa-fulfillment-manual",
   },
 
-  // {
-  //   resolve: "medusa-payment-manual",
-  // },
+  {
+    resolve: "medusa-payment-manual",
+  },
 
-  // // Docs: WIP
-  // {
-  //   resolve: "medusa-fulfillment-zasilkovna",
-  //   options: {
-  //     apiKey: "sdfsdfdsfdsf",
-  //   },
-  // },
+  // Docs: WIP
+  {
+    resolve: "medusa-fulfillment-zasilkovna",
+    options: {
+      apiKey: "sdfsdfdsfdsf",
+    },
+  },
 
   // Docs: WIP
   {

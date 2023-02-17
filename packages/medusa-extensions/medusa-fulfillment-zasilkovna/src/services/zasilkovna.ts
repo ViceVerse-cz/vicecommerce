@@ -78,7 +78,7 @@ class ZasilkovnaService extends FulfillmentService {
       },
     };
 
-    const { status } = await fetch("https://www.zasilkovna.cz/api/rest", {
+    const response = await fetch("https://www.zasilkovna.cz/api/rest", {
       method: "POST",
       headers: {
         "Content-Type": "application/xml",
@@ -86,7 +86,10 @@ class ZasilkovnaService extends FulfillmentService {
       body: JSON.stringify(parse("createPacket", reqData)),
     });
 
-    if (status === 200) {
+    console.log(response.status);
+    console.log(response.body);
+
+    if (response.status === 200) {
       return Promise.resolve();
     } else {
       return Promise.reject({
