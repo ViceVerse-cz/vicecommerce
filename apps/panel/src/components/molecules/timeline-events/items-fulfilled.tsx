@@ -1,8 +1,8 @@
-import React from 'react';
-import { ItemsFulfilledEvent } from '../../../hooks/use-build-timeline';
-import PackageIcon from '../../fundamentals/icons/package-icon';
-import EventContainer from './event-container';
-import EventItemContainer from './event-item-container';
+import React from "react";
+import { ItemsFulfilledEvent } from "../../../hooks/use-build-timeline";
+import PackageIcon from "../../fundamentals/icons/package-icon";
+import EventContainer from "./event-container";
+import EventItemContainer from "./event-item-container";
 
 type ItemsFulfilledProps = {
   event: ItemsFulfilledEvent;
@@ -10,11 +10,11 @@ type ItemsFulfilledProps = {
 
 const ItemsFulfilled: React.FC<ItemsFulfilledProps> = ({ event }) => {
   const title =
-    event.sourceType === 'claim'
-      ? 'Claim Items Fulfilled'
-      : event.sourceType === 'exchange'
-      ? 'Exchange Items Fulfilled'
-      : 'Items Fulfilled';
+    event.sourceType === "claim"
+      ? "Splněné položky reklamace"
+      : event.sourceType === "exchange"
+      ? "Splněné výměnné položky"
+      : "Splněné předměty";
 
   const args = {
     icon: <PackageIcon size={20} />,

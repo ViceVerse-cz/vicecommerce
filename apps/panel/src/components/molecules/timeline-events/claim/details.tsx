@@ -1,17 +1,17 @@
-import clsx from 'clsx';
-import React, { useContext } from 'react';
-import Button from '../../../../components/fundamentals/button';
-import InputField from '../../../../components/molecules/input';
-import Modal from '../../../../components/molecules/modal';
-import LayeredModal, { LayeredModalContext } from '../../../../components/molecules/modal/layered-modal';
-import Table from '../../../../components/molecules/table';
-import { formatAmountWithSymbol } from '../../../../utils/prices';
+import clsx from "clsx";
+import React, { useContext } from "react";
+import Button from "../../../../components/fundamentals/button";
+import InputField from "../../../../components/molecules/input";
+import Modal from "../../../../components/molecules/modal";
+import LayeredModal, { LayeredModalContext } from "../../../../components/molecules/modal/layered-modal";
+import Table from "../../../../components/molecules/table";
+import { formatAmountWithSymbol } from "../../../../utils/prices";
 
 const reasonOptions = {
-  missing_item: 'Missing Item',
-  wrong_item: 'Wrong Item',
-  production_failure: 'Production Failure',
-  other: 'Other',
+  missing_item: "Chybějící položka",
+  wrong_item: "Špatná položka",
+  production_failure: "Selhání výroby",
+  other: "Další",
 };
 
 const ClaimDetails = ({ claim, order, onDismiss }) => {
@@ -21,24 +21,23 @@ const ClaimDetails = ({ claim, order, onDismiss }) => {
     <LayeredModal context={layeredModalContext} handleClose={onDismiss} isLargeModal>
       <Modal.Body>
         <Modal.Header handleClose={onDismiss}>
-          <h2 className='inter-xlarge-semibold'>Claim Details</h2>
+          <h2 className='inter-xlarge-semibold'>Detaily reklamace</h2>
         </Modal.Header>
         <Modal.Content>
           <div>
-            <h3 className='inter-base-semibold'>Claimed Items</h3>
+            <h3 className='inter-base-semibold'>Reklamované položky</h3>
             <Table>
               <Table.HeadRow className='text-grey-50 inter-small-semibold'>
                 <Table.HeadCell>Product Details</Table.HeadCell>
-                <Table.HeadCell className='text-right pr-8'>Quantity</Table.HeadCell>
-                <Table.HeadCell className='text-right'>Unit Price</Table.HeadCell>
-                <Table.HeadCell></Table.HeadCell>
+                <Table.HeadCell className='text-right pr-8'>Množství</Table.HeadCell>
+                <Table.HeadCell className='text-right'>Jednotková cena</Table.HeadCell>
               </Table.HeadRow>
               <Table.Body>
                 {claim.claim_items?.map((claimItem) => {
                   const { item } = claimItem;
                   return (
                     <>
-                      <Table.Row className={clsx('border-b-grey-0 hover:bg-grey-0')}>
+                      <Table.Row className={clsx("border-b-grey-0 hover:bg-grey-0")}>
                         <Table.Cell>
                           <div className='min-w-[240px] flex py-2'>
                             <div className='w-[30px] h-[40px] '>
@@ -46,9 +45,9 @@ const ClaimDetails = ({ claim, order, onDismiss }) => {
                             </div>
                             <div className='inter-small-regular text-grey-50 flex flex-col ml-4'>
                               <span>
-                                <span className='text-grey-90'>{item.title}</span>{' '}
+                                <span className='text-grey-90'>{item.title}</span>{" "}
                               </span>
-                              <span>{item?.variant?.title || ''}</span>
+                              <span>{item?.variant?.title || ""}</span>
                             </div>
                           </div>
                         </Table.Cell>
@@ -72,16 +71,14 @@ const ClaimDetails = ({ claim, order, onDismiss }) => {
                             {claimItem.reason && (
                               <span className='inter-small-regular text-grey-40'>
                                 <span className='text-grey-80 mr-1'>
-                                  <span className='inter-small-semibold mr-1'>
-                                    {reasonOptions[claimItem.reason]}
-                                  </span>
+                                  <span className='inter-small-semibold mr-1'>{reasonOptions[claimItem.reason]}</span>
                                 </span>
-                                {claimItem.note || ''}
+                                {claimItem.note || ""}
                                 <span className='ml-2'>
                                   {claimItem.images?.length > 0 && (
                                     <>
                                       ({claimItem.images?.length} image
-                                      {claimItem.images?.length > 1 ? 's' : ''})
+                                      {claimItem.images?.length > 1 ? "s" : ""})
                                     </>
                                   )}
                                 </span>
@@ -99,7 +96,7 @@ const ClaimDetails = ({ claim, order, onDismiss }) => {
                               size='small'
                               className='border border-grey-20'
                             >
-                              View
+                              Zobrazit
                             </Button>
                           </div>
                         </Table.Cell>
@@ -115,7 +112,7 @@ const ClaimDetails = ({ claim, order, onDismiss }) => {
           <div className='flex w-full justify-end'>
             <div className='flex gap-x-xsmall'>
               <Button onClick={() => onDismiss()} className='w-[112px]' size='small' variant='primary'>
-                Done
+                Hotovo
               </Button>
             </div>
           </div>
@@ -129,19 +126,16 @@ export default ClaimDetails;
 
 const ReasonDetails = (pop, claimItem) => {
   return {
-    title: 'Claim Item',
+    title: "Reklamace položky",
     onBack: () => pop(),
     view: (
       <>
         <Modal.Content>
           <div className='h-full'>
-            <h2 className='inter-base-semibold mb-4'>Claim Reason</h2>
+            <h2 className='inter-base-semibold mb-4'>Důvod reklamace</h2>
             <div className='mb-8 text-grey-50 inter-small-semibold'>{reasonOptions[claimItem.reason]}</div>
-            <InputField disabled={true} label={'Note'} value={claimItem.note} className='my-4' />
-            {claimItem.images &&
-              claimItem.images.map((i) => (
-                <ImageRow url={i.url} name={i.url.split('//').pop()} size={undefined} />
-              ))}
+            <InputField disabled={true} label={"Note"} value={claimItem.note} className='my-4' />
+            {claimItem.images?.map((i) => <ImageRow url={i.url} name={i.url.split("//").pop()} size={undefined} />)}
           </div>
         </Modal.Content>
         <Modal.Footer>
@@ -154,7 +148,7 @@ const ReasonDetails = (pop, claimItem) => {
                 pop();
               }}
             >
-              Back
+              Zpět
             </Button>
           </div>
         </Modal.Footer>

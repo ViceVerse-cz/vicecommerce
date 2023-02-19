@@ -4,29 +4,29 @@ import {
   useAdminOrder,
   useAdminReceiveReturn,
   useAdminStore,
-} from 'medusa-react';
-import { ReturnItem } from '@medusajs/medusa';
-import React, { useEffect, useState } from 'react';
+} from "medusa-react";
+import { ReturnItem } from "@medusajs/medusa";
+import React, { useEffect, useState } from "react";
 
-import CreateFulfillmentModal from '../../../domain/orders/details/create-fulfillment';
-import ReceiveMenu from '../../../domain/orders/details/returns/receive-menu';
-import { ExchangeEvent } from '../../../hooks/use-build-timeline';
-import useNotification from '../../../hooks/use-notification';
-import Medusa from '../../../services/api';
-import { getErrorMessage } from '../../../utils/error-messages';
-import CopyToClipboard from '../../atoms/copy-to-clipboard';
-import Button from '../../fundamentals/button';
-import CancelIcon from '../../fundamentals/icons/cancel-icon';
-import DollarSignIcon from '../../fundamentals/icons/dollar-sign-icon';
-import RefreshIcon from '../../fundamentals/icons/refresh-icon';
-import TruckIcon from '../../fundamentals/icons/truck-icon';
-import DeletePrompt from '../../organisms/delete-prompt';
-import { ActionType } from '../actionables';
-import IconTooltip from '../icon-tooltip';
-import { FulfillmentStatus, PaymentStatus, ReturnStatus } from '../order-status';
-import EventActionables from './event-actionables';
-import EventContainer, { EventIconColor } from './event-container';
-import EventItemContainer from './event-item-container';
+import CreateFulfillmentModal from "../../../domain/orders/details/create-fulfillment";
+import ReceiveMenu from "../../../domain/orders/details/returns/receive-menu";
+import { ExchangeEvent } from "../../../hooks/use-build-timeline";
+import useNotification from "../../../hooks/use-notification";
+import Medusa from "../../../services/api";
+import { getErrorMessage } from "../../../utils/error-messages";
+import CopyToClipboard from "../../atoms/copy-to-clipboard";
+import Button from "../../fundamentals/button";
+import CancelIcon from "../../fundamentals/icons/cancel-icon";
+import DollarSignIcon from "../../fundamentals/icons/dollar-sign-icon";
+import RefreshIcon from "../../fundamentals/icons/refresh-icon";
+import TruckIcon from "../../fundamentals/icons/truck-icon";
+import DeletePrompt from "../../organisms/delete-prompt";
+import { ActionType } from "../actionables";
+import IconTooltip from "../icon-tooltip";
+import { FulfillmentStatus, PaymentStatus, ReturnStatus } from "../order-status";
+import EventActionables from "./event-actionables";
+import EventContainer, { EventIconColor } from "./event-container";
+import EventItemContainer from "./event-item-container";
 
 type ExchangeProps = {
   event: ExchangeEvent;
@@ -43,17 +43,17 @@ const ExchangeStatus: React.FC<ExchangeStatusProps> = ({ event }) => {
   return (
     <div className='flex items-center inter-small-regular gap-x-base'>
       <div className='flex flex-col gap-y-2xsmall'>
-        <span className='text-grey-50'>Payment:</span>
+        <span className='text-grey-50'>Platba:</span>
         <PaymentStatus paymentStatus={event.paymentStatus} />
       </div>
       {divider}
       <div className='flex flex-col gap-y-2xsmall'>
-        <span className='text-grey-50'>Return:</span>
+        <span className='text-grey-50'>Návrat:</span>
         <ReturnStatus returnStatus={event.returnStatus} />
       </div>
       {divider}
       <div className='flex flex-col gap-y-2xsmall'>
-        <span className='text-grey-50'>Fulfillment:</span>
+        <span className='text-grey-50'>Doprava:</span>
         <FulfillmentStatus fulfillmentStatus={event.fulfillmentStatus} />
       </div>
     </div>
@@ -82,19 +82,21 @@ const Exchange: React.FC<ExchangeProps> = ({ event, refetch }) => {
       return;
     }
 
-    if (event.paymentStatus !== 'not_paid') {
+    if (event.paymentStatus !== "not_paid") {
       setPayable(false);
       return;
     }
 
-    if (store.swap_link_template?.indexOf('{cart_id}') === -1) {
+    if (store.swap_link_template?.indexOf("{cart_id}") === -1) {
       setPaymentFormatWarning(
-        "Store payment link does not have the default format, as it does not contain '{cart_id}'. Either update the payment link to include '{cart_id}' or update this method to reflect the format of your payment link.",
+        "Odkaz na platbu obchodu nemá výchozí formát, protože neobsahuje '{cart_id}'. Buď aktualizujte platební odkaz tak, aby obsahoval '{cart_id}', nebo aktualizujte tuto metodu tak, aby odrážela formát vašeho platebního odkazu.",
       );
     }
 
     if (!store.swap_link_template) {
-      setPaymentFormatWarning('No payment link has been set for this store. Please update store settings.');
+      setPaymentFormatWarning(
+        "Pro tento obchod nebyl nastaven žádný platební odkaz. Aktualizujte prosím nastavení obchodu.",
+      );
     }
 
     if (event.exchangeCartId) {
@@ -129,11 +131,11 @@ const Exchange: React.FC<ExchangeProps> = ({ event, refetch }) => {
     Medusa.orders
       .processSwapPayment(event.orderId, event.id)
       .then((_res) => {
-        notification('Success', 'Payment processed successfully', 'success');
+        notification("Úspěch", "Platba byla úspěšně zpracována", "success");
         refetch();
       })
       .catch((err) => {
-        notification('Error', getErrorMessage(err), 'error');
+        notification("Chyba", getErrorMessage(err), "error");
       });
   };
 
@@ -142,38 +144,37 @@ const Exchange: React.FC<ExchangeProps> = ({ event, refetch }) => {
 
   const actions: ActionType[] = [];
 
-  if (event.paymentStatus === 'awaiting') {
+  if (event.paymentStatus === "awaiting") {
     actions.push({
-      label: 'Capture payment',
+      label: "Zachycení platby",
       icon: <DollarSignIcon size={20} />,
       onClick: handleProcessSwapPayment,
     });
   }
 
-  if (event.returnStatus === 'requested') {
+  if (event.returnStatus === "requested") {
     actions.push({
-      label: 'Cancel return',
+      label: "Zrušit vrácení",
       icon: <TruckIcon size={20} />,
       onClick: () => setShowCancelReturn(!showCancelReturn),
     });
   }
 
   if (
-    !event.isCanceled &&
-    !event.canceledAt &&
-    event.fulfillmentStatus !== 'fulfilled' &&
-    event.fulfillmentStatus !== 'shipped'
+    !(event.isCanceled ||event.canceledAt ) &&
+    event.fulfillmentStatus !== "fulfilled" &&
+    event.fulfillmentStatus !== "shipped"
   ) {
     actions.push({
-      label: 'Cancel exchange',
+      label: "Zrušit výměnu",
       icon: <CancelIcon size={20} />,
       onClick: () => setShowCancel(!showCancel),
-      variant: 'danger',
+      variant: "danger",
     });
   }
 
   const args = {
-    title: event.canceledAt ? 'Exchange Cancelled' : 'Exchange Requested',
+    title: event.canceledAt ? "Výměna zrušena" : "Požadovaná výměna",
     icon: event.canceledAt ? <CancelIcon size={20} /> : <RefreshIcon size={20} />,
     expandable: !!event.canceledAt,
     iconColor: event.canceledAt ? EventIconColor.DEFAULT : EventIconColor.ORANGE,
@@ -184,7 +185,7 @@ const Exchange: React.FC<ExchangeProps> = ({ event, refetch }) => {
       <div className='flex flex-col gap-y-base'>
         {event.canceledAt && (
           <div>
-            <span className='mr-2 inter-small-semibold'>Requested on:</span>
+            <span className='mr-2 inter-small-semibold'>Vyžádáno dne:</span>
             <span className='text-grey-50'>{new Date(event.time).toUTCString()}</span>
           </div>
         )}
@@ -193,14 +194,14 @@ const Exchange: React.FC<ExchangeProps> = ({ event, refetch }) => {
         {returnItems}
         {newItems}
         <div className='flex items-center gap-x-xsmall'>
-          {event.returnStatus === 'requested' && (
+          {event.returnStatus === "requested" && (
             <Button variant='secondary' size='small' onClick={() => setShowReceiveReturn(true)}>
-              Receive Return
+              Přijmout návrat
             </Button>
           )}
-          {event.fulfillmentStatus === 'not_fulfilled' && (
+          {event.fulfillmentStatus === "not_fulfilled" && (
             <Button variant='secondary' size='small' onClick={() => setShowCreateFulfillment(true)}>
-              Fulfill Exchange
+              Plnit výměnu
             </Button>
           )}
         </div>
@@ -214,20 +215,20 @@ const Exchange: React.FC<ExchangeProps> = ({ event, refetch }) => {
         <DeletePrompt
           handleClose={() => setShowCancel(!showCancel)}
           onDelete={handleCancelExchange}
-          confirmText='Yes, cancel'
-          heading='Cancel exchange'
-          text='Are you sure you want to cancel this exchange?'
-          successText='Exchange cancelled'
+          confirmText='Ano, zrušit'
+          heading='Zrušit výměnu'
+          text='Opravdu chcete tuto výměnu zrušit?'
+          successText='Výměna zrušena'
         />
       )}
       {showCancelReturn && (
         <DeletePrompt
           handleClose={() => setShowCancelReturn(!showCancelReturn)}
           onDelete={handleCancelReturn}
-          confirmText='Yes, cancel'
-          heading='Cancel return'
-          text='Are you sure you want to cancel this return?'
-          successText='Return cancelled'
+          confirmText='Ano, zrušit'
+          heading='Zrušit vrácení'
+          text='Jste si jisti, že chcete toto vrácení zrušit?'
+          successText='Zrušení návratu'
         />
       )}
       {showReceiveReturn && order && (
@@ -252,7 +253,7 @@ const Exchange: React.FC<ExchangeProps> = ({ event, refetch }) => {
 function getNewItems(event: ExchangeEvent) {
   return (
     <div className='flex flex-col gap-y-small'>
-      <span className='inter-small-regular text-grey-50'>New Items</span>
+      <span className='inter-small-regular text-grey-50'>Nové položky</span>
       <div>
         {event.newItems.map((i) => (
           <EventItemContainer item={i} />
@@ -272,7 +273,7 @@ function getPaymentLink(
     <div className='inter-small-regular text-grey-50 flex flex-col gap-y-xsmall'>
       <div className='flex items-center gap-x-xsmall'>
         {paymentFormatWarning && <IconTooltip content={paymentFormatWarning} />}
-        <span>Payment link:</span>
+        <span>Odkaz pro platbu:</span>
       </div>
       {differenceCardId && <CopyToClipboard value={differenceCardId} displayValue={exchangeCartId} />}
     </div>
@@ -282,7 +283,7 @@ function getPaymentLink(
 function getReturnItems(event: ExchangeEvent) {
   return (
     <div className='flex flex-col gap-y-small'>
-      <span className='inter-small-regular text-grey-50'>Return Items</span>
+      <span className='inter-small-regular text-grey-50'>Vrácení položek</span>
       <div>
         {event.returnItems
           .filter((i) => !!i)

@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
-import { NotificationEvent } from '../../../../hooks/use-build-timeline';
-import ArrowRightIcon from '../../../fundamentals/icons/arrow-right-icon';
-import MailIcon from '../../../fundamentals/icons/mail-icon';
-import SendIcon from '../../../fundamentals/icons/send-icon';
-import EventActionables from '../event-actionables';
-import EventContainer from '../event-container';
-import ResendModal from './resend-modal';
+import React, { useState } from "react";
+import { NotificationEvent } from "../../../../hooks/use-build-timeline";
+import ArrowRightIcon from "../../../fundamentals/icons/arrow-right-icon";
+import MailIcon from "../../../fundamentals/icons/mail-icon";
+import SendIcon from "../../../fundamentals/icons/send-icon";
+import EventActionables from "../event-actionables";
+import EventContainer from "../event-container";
+import ResendModal from "./resend-modal";
 
 type NotificationProps = {
   event: NotificationEvent;
 };
 
 const notificationTitleMap = {
-  'order.items_returned': 'Return Received Notice Sent',
-  'order.return_requested': 'Return Request Confirmation Sent',
-  'order.placed': 'Order Confirmation Sent',
-  'order.shipment_created': 'Shipment Confirmation Sent',
+  "order.items_returned": "Vrácené přijaté oznámení Odeslané",
+  "order.return_requested": "Potvrzení o odeslání žádosti o vrácení",
+  "order.placed": "Odeslání potvrzení objednávky",
+  "order.shipment_created": "Potvrzení o odeslání zásilky",
 };
 
 const Notification: React.FC<NotificationProps> = ({ event }) => {
@@ -25,7 +25,7 @@ const Notification: React.FC<NotificationProps> = ({ event }) => {
     <EventActionables
       actions={[
         {
-          label: 'Re-Send Mail',
+          label: "Opětovné odeslání e-mailu",
           icon: <SendIcon size={20} />,
           onClick: () => setShowResend(true),
         },

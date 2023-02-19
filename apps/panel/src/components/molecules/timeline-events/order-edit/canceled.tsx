@@ -1,9 +1,9 @@
-import { useAdminUser } from 'medusa-react';
-import React from 'react';
-import { ByLine } from '.';
-import { OrderEditEvent } from '../../../../hooks/use-build-timeline';
-import XCircleIcon from '../../../fundamentals/icons/x-circle-icon';
-import EventContainer from '../event-container';
+import { useAdminUser } from "medusa-react";
+import React from "react";
+import { ByLine } from ".";
+import { OrderEditEvent } from "../../../../hooks/use-build-timeline";
+import XCircleIcon from "../../../fundamentals/icons/x-circle-icon";
+import EventContainer from "../event-container";
 
 type EditCanceledProps = {
   event: OrderEditEvent;
@@ -14,7 +14,7 @@ const EditCanceled: React.FC<EditCanceledProps> = ({ event }) => {
 
   return (
     <EventContainer
-      title={'Order Edit canceled'}
+      title={"Úprava objednávky zrušena"}
       icon={<XCircleIcon size={20} />}
       time={event.time}
       isFirst={event.first}
