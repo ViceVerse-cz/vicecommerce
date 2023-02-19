@@ -140,7 +140,7 @@ const ProductSalesChannels = ({ product }: Props) => {
   return (
     <FeatureToggle featureFlag='sales_channels'>
       <div className='mt-xlarge'>
-        <h2 className='inter-base-semibold mb-xsmall'>Sales channels</h2>
+        <h2 className='inter-base-semibold mb-xsmall'>Prodejní kanály</h2>
         <SalesChannelsDisplay channels={product.sales_channels} />
       </div>
     </FeatureToggle>

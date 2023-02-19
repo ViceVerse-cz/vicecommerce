@@ -68,7 +68,7 @@ const VariantsSection = ({ product }: Props) => {
         <ProductOptions />
         <div className='mt-xlarge'>
           <h2 className='inter-large-semibold mb-base'>
-            Product variants <span className='inter-large-regular text-grey-50'>({product.variants.length})</span>
+            Varianty produktů <span className='inter-large-regular text-grey-50'>({product.variants.length})</span>
           </h2>
           <VariantsTable
             variants={product.variants}

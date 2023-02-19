@@ -1,8 +1,8 @@
-import { SalesChannel } from '@medusajs/medusa';
-import { useAdminSalesChannels } from 'medusa-react';
-import React from 'react';
-import Tooltip from '../../atoms/tooltip';
-import Badge from '../../fundamentals/badge';
+import { SalesChannel } from "@medusajs/medusa";
+import { useAdminSalesChannels } from "medusa-react";
+import React from "react";
+import Tooltip from "../../atoms/tooltip";
+import Badge from "../../fundamentals/badge";
 
 type Props = {
   channels?: SalesChannel[];
@@ -32,18 +32,15 @@ const SalesChannelsDisplay = ({ channels = [] }: Props) => {
               }
             >
               <Badge variant='ghost' className='px-3 py-1.5'>
-                <div className='flex items-center h-full inter-small-regular text-grey-50'>
-                  + {remainder} more
-                </div>
+                <div className='flex items-center h-full inter-small-regular text-grey-50'>+ {remainder} dalších</div>
               </Badge>
             </Tooltip>
           )}
         </div>
       )}
       <p className='inter-base-regular text-grey-50'>
-        Available in{' '}
-        <span className='inter-base-semibold text-grey-90'>{channels.length ? channels.length : 0}</span> out
-        of <span className='inter-base-semibold text-grey-90'>{count || 0}</span> Sales Channels
+        Dostupné v <span className='inter-base-semibold text-grey-90'>{channels.length ? channels.length : 0}</span> z{" "}
+        <span className='inter-base-semibold text-grey-90'>{count || 0}</span> prodejních kanálů
       </p>
     </div>
   );
