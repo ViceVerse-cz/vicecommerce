@@ -1,8 +1,8 @@
-import React from 'react';
-import { ItemsShippedEvent } from '../../../hooks/use-build-timeline';
-import TruckIcon from '../../fundamentals/icons/truck-icon';
-import EventContainer from './event-container';
-import EventItemContainer from './event-item-container';
+import React from "react";
+import { ItemsShippedEvent } from "../../../hooks/use-build-timeline";
+import TruckIcon from "../../fundamentals/icons/truck-icon";
+import EventContainer from "./event-container";
+import EventItemContainer from "./event-item-container";
 
 type ItemsShippedProps = {
   event: ItemsShippedEvent;
@@ -10,11 +10,11 @@ type ItemsShippedProps = {
 
 const ItemsShipped: React.FC<ItemsShippedProps> = ({ event }) => {
   const title =
-    event.sourceType === 'claim'
-      ? 'Claim Items Shipped'
-      : event.sourceType === 'exchange'
-      ? 'Exchange Items Shipped'
-      : 'Items Shipped';
+    event.sourceType === "claim"
+      ? "Reklamace odeslaných položek"
+      : event.sourceType === "exchange"
+      ? "Výměna odeslaných položek"
+      : "Odeslané položky";
 
   const args = {
     icon: <TruckIcon size={20} />,

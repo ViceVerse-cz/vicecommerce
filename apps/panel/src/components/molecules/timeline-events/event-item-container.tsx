@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 type EventItemContainerProps = {
   item: {
@@ -19,11 +19,7 @@ const EventItemContainer: React.FC<EventItemContainerProps> = ({ item }) => {
     <div className='flex items-center gap-x-small mb-base last:mb-0'>
       {item.thumbnail && (
         <div className='h-10 w-[30px] rounded-base overflow-hidden'>
-          <img
-            src={item.thumbnail}
-            alt={`Thumbnail for ${item.title}`}
-            className='h-full w-full object-cover'
-          />
+          <img src={item.thumbnail} alt={`Miniatura pro ${item.title}`} className='h-full w-full object-cover' />
         </div>
       )}
       <div className='flex flex-col inter-small-regular w-full'>

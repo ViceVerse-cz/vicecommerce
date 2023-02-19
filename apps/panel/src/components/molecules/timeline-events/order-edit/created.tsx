@@ -1,45 +1,45 @@
-import { LineItem, OrderEdit, OrderItemChange } from '@medusajs/medusa';
+import { LineItem, OrderEdit, OrderItemChange } from "@medusajs/medusa";
 import {
   useAdminCancelOrderEdit,
   useAdminConfirmOrderEdit,
   useAdminDeleteOrderEdit,
   useAdminOrderEdit,
   useAdminUser,
-} from 'medusa-react';
-import React, { useContext } from 'react';
+} from "medusa-react";
+import React, { useContext } from "react";
 
-import { OrderEditEvent } from '../../../../hooks/use-build-timeline';
-import useImperativeDialog from '../../../../hooks/use-imperative-dialog';
-import useNotification from '../../../../hooks/use-notification';
-import { getErrorMessage } from '../../../../utils/error-messages';
-import TwoStepDelete from '../../../atoms/two-step-delete';
-import Button from '../../../fundamentals/button';
-import EditIcon from '../../../fundamentals/icons/edit-icon';
-import ImagePlaceholder from '../../../fundamentals/image-placeholder';
-import EventContainer from '../event-container';
-import { OrderEditContext } from '../../../../domain/orders/edit/context';
-import CopyToClipboard from '../../../atoms/copy-to-clipboard';
-import { ByLine } from '.';
+import { OrderEditEvent } from "../../../../hooks/use-build-timeline";
+import useImperativeDialog from "../../../../hooks/use-imperative-dialog";
+import useNotification from "../../../../hooks/use-notification";
+import { getErrorMessage } from "../../../../utils/error-messages";
+import TwoStepDelete from "../../../atoms/two-step-delete";
+import Button from "../../../fundamentals/button";
+import EditIcon from "../../../fundamentals/icons/edit-icon";
+import ImagePlaceholder from "../../../fundamentals/image-placeholder";
+import EventContainer from "../event-container";
+import { OrderEditContext } from "../../../../domain/orders/edit/context";
+import CopyToClipboard from "../../../atoms/copy-to-clipboard";
+import { ByLine } from ".";
 
 type EditCreatedProps = {
   event: OrderEditEvent;
 };
 
 enum OrderEditItemChangeType {
-  ITEM_ADD = 'item_add',
-  ITEM_REMOVE = 'item_remove',
-  ITEM_UPDATE = 'item_update',
+  ITEM_ADD = "item_add",
+  ITEM_REMOVE = "item_remove",
+  ITEM_UPDATE = "item_update",
 }
 
 const getInfo = (edit: OrderEdit): { type: string; user_id: string } => {
   if (edit.requested_at && edit.requested_by) {
     return {
-      type: 'requested',
+      type: "requested",
       user_id: edit.requested_by,
     };
   }
   return {
-    type: 'created',
+    type: "created",
     user_id: edit.created_by,
   };
 };
@@ -53,7 +53,7 @@ const EditCreated: React.FC<EditCreatedProps> = ({ event }) => {
 
   const notification = useNotification();
 
-  const name = `Order Edit ${type}`;
+  const name = `Úprava objednávky ${type}`;
 
   const { user } = useAdminUser(user_id);
 
@@ -66,10 +66,10 @@ const EditCreated: React.FC<EditCreatedProps> = ({ event }) => {
   const onDeleteOrderEditClicked = () => {
     deleteOrderEdit.mutate(undefined, {
       onSuccess: () => {
-        notification('Success', `Successfully deleted Order Edit`, 'success');
+        notification("Úspěch", "Úspěšně odstraněna úprava objednávky", "success");
       },
       onError: (err) => {
-        notification('Error', getErrorMessage(err), 'error');
+        notification("Chyba", getErrorMessage(err), "error");
       },
     });
   };
@@ -77,36 +77,36 @@ const EditCreated: React.FC<EditCreatedProps> = ({ event }) => {
   const onCancelOrderEditClicked = () => {
     cancelOrderEdit.mutate(undefined, {
       onSuccess: () => {
-        notification('Success', `Successfully canceled Order Edit`, 'success');
+        notification("Úspěch", "Úspěšně zrušena úprava objednávky", "success");
       },
       onError: (err) => {
-        notification('Error', getErrorMessage(err), 'error');
+        notification("Chyba", getErrorMessage(err), "error");
       },
     });
   };
 
   const onConfirmEditClicked = async () => {
     const shouldDelete = await forceConfirmDialog({
-      heading: 'Delete Confirm',
-      text: 'By force confirming you allow the order edit to be fulfilled. You will still have to reconcile payments manually after confirming.',
-      confirmText: 'Yes, Force Confirm',
-      cancelText: 'No, Cancel',
+      heading: "Odstranit Potvrzení",
+      text: "Vynuceným potvrzením povolujete provedení úpravy objednávky. I po potvrzení budete muset platby odsouhlasit ručně.",
+      confirmText: "Ano, vynutit potvrzení",
+      cancelText: "Ne, Zrušit",
     });
 
     if (shouldDelete) {
       confirmOrderEdit.mutate(undefined, {
         onSuccess: () => {
-          notification('Success', `Successfully confirmed Order Edit`, 'success');
+          notification("Úspěch", "Úspěšně potvrzená objednávka Upravit", "success");
         },
         onError: (err) => {
-          notification('Error', getErrorMessage(err), 'error');
+          notification("Chyba", getErrorMessage(err), "error");
         },
       });
     }
   };
 
   const onCopyConfirmationLinkClicked = () => {
-    console.log('TODO');
+    console.log("TODO");
   };
 
   const onContinueEdit = () => {
@@ -115,7 +115,7 @@ const EditCreated: React.FC<EditCreatedProps> = ({ event }) => {
   };
 
   // hide last created edit while editing and prevent content flashing while loading
-  if ((isModalVisible && orderEdit?.status === 'created') || isFetching) {
+  if ((isModalVisible && orderEdit?.status === "created") || isFetching) {
     return null;
   }
 
@@ -136,20 +136,15 @@ const EditCreated: React.FC<EditCreatedProps> = ({ event }) => {
         <div>
           <OrderEditChanges orderEdit={orderEdit} />
         </div>
-        {(orderEdit.status === 'created' || orderEdit.status === 'requested') && (
+        {(orderEdit.status === "created" || orderEdit.status === "requested") && (
           <div className='space-y-xsmall mt-large'>
-            {type === 'created' ? (
+            {type === "created" ? (
               <>
-                <Button
-                  className='w-full border border-grey-20'
-                  size='small'
-                  variant='ghost'
-                  onClick={onContinueEdit}
-                >
-                  Continue order edit
+                <Button className='w-full border border-grey-20' size='small' variant='ghost' onClick={onContinueEdit}>
+                  Pokračovat v úpravě objednávky
                 </Button>
                 <TwoStepDelete onDelete={onDeleteOrderEditClicked} className='w-full border border-grey-20'>
-                  Delete the order edit
+                  Odstranit úpravu objednávky
                 </TwoStepDelete>
               </>
             ) : (
@@ -160,7 +155,7 @@ const EditCreated: React.FC<EditCreatedProps> = ({ event }) => {
                   variant='ghost'
                   onClick={onCopyConfirmationLinkClicked}
                 >
-                  Copy Confirmation-Request Link
+                  Kopírování potvrzení-žádosti Odkaz
                 </Button>
                 <Button
                   className='w-full border border-grey-20'
@@ -168,11 +163,11 @@ const EditCreated: React.FC<EditCreatedProps> = ({ event }) => {
                   variant='ghost'
                   onClick={onConfirmEditClicked}
                 >
-                  Force Confirm
+                  Vynutit potvrzení
                 </Button>
 
                 <TwoStepDelete onDelete={onCancelOrderEditClicked} className='w-full border border-grey-20'>
-                  Cancel Order Edit
+                  Zrušit úpravu objednávky
                 </TwoStepDelete>
               </>
             )}
@@ -209,7 +204,7 @@ const OrderEditChanges = ({ orderEdit }) => {
     <div className='flex flex-col gap-y-base'>
       {added.length > 0 && (
         <div>
-          <span className='inter-small-regular text-grey-50'>Added</span>
+          <span className='inter-small-regular text-grey-50'>Přidáno</span>
           {added.map((change) => (
             <OrderEditChangeItem change={change} key={change.id} />
           ))}
@@ -217,7 +212,7 @@ const OrderEditChanges = ({ orderEdit }) => {
       )}
       {removed.length > 0 && (
         <div>
-          <span className='inter-small-regular text-grey-50'>Removed</span>
+          <span className='inter-small-regular text-grey-50'>Odstraněno</span>
           {removed.map((change) => (
             <OrderEditChangeItem change={change} key={change.id} />
           ))}
@@ -249,11 +244,7 @@ const OrderEditChangeItem: React.FC<OrderEditChangeItemProps> = ({ change }) => 
     <div className='flex gap-x-base mt-xsmall'>
       <div>
         <div className='flex h-[40px] w-[30px] rounded-rounded overflow-hidden'>
-          {lineItem?.thumbnail ? (
-            <img src={lineItem.thumbnail} className='object-cover' />
-          ) : (
-            <ImagePlaceholder />
-          )}
+          {lineItem?.thumbnail ? <img src={lineItem.thumbnail} className='object-cover' /> : <ImagePlaceholder />}
         </div>
       </div>
       <div className='flex flex-col'>

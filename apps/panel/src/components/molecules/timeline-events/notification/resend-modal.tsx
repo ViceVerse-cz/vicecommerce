@@ -1,11 +1,11 @@
-import { useAdminResendNotification } from 'medusa-react';
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import Button from '../../../../components/fundamentals/button';
-import Input from '../../../../components/molecules/input';
-import Modal from '../../../../components/molecules/modal';
-import useNotification from '../../../../hooks/use-notification';
-import { getErrorMessage } from '../../../../utils/error-messages';
+import { useAdminResendNotification } from "medusa-react";
+import React from "react";
+import { useForm } from "react-hook-form";
+import Button from "../../../../components/fundamentals/button";
+import Input from "../../../../components/molecules/input";
+import Modal from "../../../../components/molecules/modal";
+import useNotification from "../../../../hooks/use-notification";
+import { getErrorMessage } from "../../../../utils/error-messages";
 
 type ResendModalProps = {
   notificationId: string;
@@ -29,10 +29,10 @@ const ResendModal: React.FC<ResendModalProps> = ({ notificationId, email, handle
       },
       {
         onSuccess: () => {
-          notification('Success', `Notification re-send to ${data.to}`, 'success');
+          notification("Úspěch", `Opětovné odeslání oznámení na adresu ${data.to}`, "success");
           handleCancel();
         },
-        onError: (err) => notification('Error', getErrorMessage(err), 'error'),
+        onError: (err) => notification("Chyba", getErrorMessage(err), "error"),
       },
     );
   };
@@ -42,17 +42,17 @@ const ResendModal: React.FC<ResendModalProps> = ({ notificationId, email, handle
       <form onSubmit={handleSubmit(handleResend)}>
         <Modal.Body>
           <Modal.Header handleClose={handleCancel}>
-            <span className='inter-xlarge-semibold'>Resend notification</span>
+            <span className='inter-xlarge-semibold'>Opětovné odeslání oznámení</span>
           </Modal.Header>
           <Modal.Content>
             <div className='flex flex-col'>
               <div className='flex flex-col space-y-2'>
                 <Input
-                  label={'Email'}
+                  label={"E-mail"}
                   type='text'
-                  placeholder={'Email'}
-                  {...register(`to`, {
-                    required: 'Must be filled',
+                  placeholder={"E-mail"}
+                  {...register("to", {
+                    required: "Musí být vyplněno",
                   })}
                 />
               </div>
@@ -67,7 +67,7 @@ const ResendModal: React.FC<ResendModalProps> = ({ notificationId, email, handle
                   size='large'
                   onClick={handleCancel}
                 >
-                  Cancel
+                  Zrušit
                 </Button>
                 <Button
                   size='large'
@@ -77,7 +77,7 @@ const ResendModal: React.FC<ResendModalProps> = ({ notificationId, email, handle
                   disabled={isLoading}
                   loading={isLoading}
                 >
-                  Send
+                  Odeslat
                 </Button>
               </div>
             </div>

@@ -471,14 +471,14 @@ const OrderDetails = () => {
                 </BodyCard>
                 <BodyCard
                   className={"w-full mb-4 min-h-0 h-auto"}
-                  title='Fulfillment'
+                  title='Doprava'
                   status={<FulfillmentStatusComponent status={order.fulfillment_status} />}
                   customActionable={
                     order.fulfillment_status !== "fulfilled" &&
                     order.status !== "canceled" &&
                     order.fulfillment_status !== "shipped" && (
                       <Button variant='secondary' size='small' onClick={() => setShowFulfillment(true)}>
-                        Create Fulfillment
+                        Vytvořit dopravu
                       </Button>
                     )
                   }
@@ -507,7 +507,7 @@ const OrderDetails = () => {
                     </div>
                   </div>
                 </BodyCard>
-                <BodyCard className={"w-full mb-4 min-h-0 h-auto"} title='Customer' actionables={customerActionables}>
+                <BodyCard className={"w-full mb-4 min-h-0 h-auto"} title='Zákazník' actionables={customerActionables}>
                   <div className='mt-6'>
                     <div className='flex w-full space-x-4 items-center'>
                       <div className='flex w-[40px] h-[40px] '>
