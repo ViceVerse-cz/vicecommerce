@@ -1,15 +1,14 @@
-import clsx from 'clsx';
-import React from 'react';
+import clsx from "clsx";
 import {
   ClearIndicatorProps,
   ControlProps,
   DropdownIndicatorProps,
   GroupBase,
   LoadingIndicatorProps,
-} from 'react-select';
-import Spinner from '../../../../atoms/spinner';
-import ChevronDownIcon from '../../../../fundamentals/icons/chevron-down';
-import XCircleIcon from '../../../../fundamentals/icons/x-circle-icon';
+} from "react-select";
+import Spinner from "../../../../atoms/spinner";
+import ChevronDownIcon from "../../../../fundamentals/icons/chevron-down";
+import XCircleIcon from "../../../../fundamentals/icons/x-circle-icon";
 
 const Control = <Option, IsMulti extends boolean, Group extends GroupBase<Option>>({
   className,
@@ -20,31 +19,32 @@ const Control = <Option, IsMulti extends boolean, Group extends GroupBase<Option
   isDisabled,
   isFocused,
   menuIsOpen,
-  selectProps: { size, customStyles },
+  selectProps: { size, customStyles, name },
 }: ControlProps<Option, IsMulti, Group>) => {
   return (
     <div
       ref={innerRef}
       {...innerProps}
+      id={name}
       className={cx(
         {
           control: true,
-          'control--is-disabled': isDisabled,
-          'control--is-focused': isFocused,
-          'control--menu-is-open': menuIsOpen,
+          "control--is-disabled": isDisabled,
+          "control--is-focused": isFocused,
+          "control--menu-is-open": menuIsOpen,
         },
         clsx(
-          'flex p-0 overflow-hidden rounded-rounded border border-gray-20 bg-grey-5 focus-within:shadow-cta transition-colors focus-within:border-violet-60 box-border pl-small',
+          "flex p-0 overflow-hidden rounded-rounded border border-gray-20 bg-grey-5 focus-within:shadow-cta transition-colors focus-within:border-violet-60 box-border pl-small",
           {
-            'h-xlarge': size === 'sm',
-            'h-10': size === 'md' || !size,
+            "h-xlarge": size === "sm",
+            "h-10": size === "md" || !size,
           },
           className,
           customStyles?.control,
         ),
       )}
     >
-      <div className={clsx('flex items-center flex-1', customStyles?.inner_control)}>{children}</div>
+      <div className={clsx("flex items-center flex-1", customStyles?.inner_control)}>{children}</div>
     </div>
   );
 };
@@ -64,12 +64,12 @@ export const DropdownIndicator = <Option, IsMulti extends boolean, Group extends
       className={cx(
         {
           indicator: true,
-          'dropdown-indicator': true,
+          "dropdown-indicator": true,
         },
         clsx(
-          'transition-all',
+          "transition-all",
           {
-            'rotate-180': menuIsOpen,
+            "rotate-180": menuIsOpen,
           },
           className,
         ),
@@ -91,7 +91,7 @@ export const LoadingIndicator = <Option, IsMulti extends boolean, Group extends 
       className={cx(
         {
           indicator: true,
-          'loading-indicator': true,
+          "loading-indicator": true,
         },
         className,
       )}
@@ -115,7 +115,7 @@ export const ClearIndicator = <Option, IsMulti extends boolean, Group extends Gr
       className={cx(
         {
           indicator: true,
-          'clear-indicator': true,
+          "clear-indicator": true,
         },
         className,
       )}

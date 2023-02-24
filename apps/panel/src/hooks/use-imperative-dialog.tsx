@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { createRoot } from 'react-dom/client';
-import Button from '../components/fundamentals/button';
-import Modal from '../components/molecules/modal';
-import InputField from '../components/molecules/input';
+import React, { useState } from "react";
+import { createRoot } from "react-dom/client";
+import Button from "../components/fundamentals/button";
+import InputField from "../components/molecules/input";
+import Modal from "../components/molecules/modal";
 
 const DeleteDialog = ({
   open,
@@ -10,8 +10,8 @@ const DeleteDialog = ({
   text,
   onConfirm,
   onCancel,
-  confirmText = 'Yes, confirm',
-  cancelText = 'Cancel',
+  confirmText = "Yes, confirm",
+  cancelText = "Cancel",
   extraConfirmation = false,
   entityName,
 }) => {
@@ -20,41 +20,34 @@ const DeleteDialog = ({
   return (
     <Modal open={open} handleClose={onCancel} isLargeModal={false}>
       <Modal.Body>
-        <Modal.Content className='!py-large'>
-          <div className='flex flex-col'>
-            <span className='inter-large-semibold'>{heading}</span>
-            <span className='mt-1 inter-base-regular text-grey-50'>{text}</span>
+        <Modal.Content className="!py-large">
+          <div className="flex flex-col">
+            <span className="inter-large-semibold">{heading}</span>
+            <span className="mt-1 inter-base-regular text-grey-50">{text}</span>
           </div>
           {extraConfirmation && (
-            <div className='flex flex-col my-base'>
-              <span className='mt-1 inter-base-regular text-grey-50'>
-                Type the name <span className='font-semibold'>"{entityName}"</span> to confirm.
+            <div className="flex flex-col my-base">
+              <span className="mt-1 inter-base-regular text-grey-50">
+                Type the name <span className="font-semibold">"{entityName}"</span> to confirm.
               </span>
               <InputField
                 autoFocus={true}
                 placeholder={entityName}
-                className={'mt-base'}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  setConfirmationString(event.target.value)
-                }
+                className={"mt-base"}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => setConfirmationString(event.target.value)}
               />
             </div>
           )}
         </Modal.Content>
-        <Modal.Footer className='border-none !pt-0'>
-          <div className='flex justify-end w-full'>
-            <Button
-              variant='secondary'
-              className='justify-center mr-2 text-small'
-              size='small'
-              onClick={onCancel}
-            >
+        <Modal.Footer className="border-none !pt-0">
+          <div className="flex justify-end w-full">
+            <Button variant="secondary" className="justify-center mr-2 text-small" size="small" onClick={onCancel}>
               {cancelText}
             </Button>
             <Button
-              size='small'
-              className='justify-center text-small'
-              variant='nuclear'
+              size="small"
+              className="justify-center text-small"
+              variant="nuclear"
               onClick={onConfirm}
               disabled={extraConfirmation && entityName !== confirmationString}
             >
@@ -79,8 +72,8 @@ type ImperativeDialogProps =
           entityName: string;
         }
       | {
-          extraConfirmation: undefined;
-          entityName: undefined;
+          extraConfirmation?: false;
+          entityName?: never;
         }
     );
 
@@ -92,10 +85,10 @@ const useImperativeDialog = () => {
     cancelText,
     extraConfirmation,
     entityName,
-  }: ImperativeDialogProps) => {
+  }: ImperativeDialogProps): Promise<boolean> => {
     // We want a promise here so we can "await" the user's action (either confirm or cancel)
     return new Promise((resolve) => {
-      const mountRoot = createRoot(document.createElement('div'));
+      const mountRoot = createRoot(document.createElement("div"));
       let open = true;
 
       const onConfirm = () => {

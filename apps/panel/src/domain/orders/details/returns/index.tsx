@@ -17,7 +17,7 @@ import { Option } from "../../../../types/shared";
 import { getErrorMessage } from "../../../../utils/error-messages";
 import { displayAmount } from "../../../../utils/prices";
 import { removeNullish } from "../../../../utils/remove-nullish";
-import { filterItems } from "../utils/create-filtering";
+import { getAllReturnableItems } from "../utils/create-filtering";
 
 type ReturnMenuProps = {
   order: Order;
@@ -48,7 +48,7 @@ const ReturnMenu: React.FC<ReturnMenuProps> = ({ order, onDismiss }) => {
 
   useEffect(() => {
     if (order) {
-      setAllItems(filterItems(order, false));
+      setAllItems(getAllReturnableItems(order, false));
     }
   }, [order]);
 
@@ -110,8 +110,8 @@ const ReturnMenu: React.FC<ReturnMenuProps> = ({ order, onDismiss }) => {
     return requestReturnOrder
       .mutateAsync(data)
       .then(() => onDismiss())
-      .then(() => notification("Úspěch", "Úspěšně vrácená objednávka", "success"))
-      .catch((error) => notification("Chyba", getErrorMessage(error), "error"))
+      .then(() => notification("Success", "Successfully returned order", "success"))
+      .catch((error) => notification("Error", getErrorMessage(error), "error"))
       .finally(() => setSubmitting(false));
   };
 
@@ -263,6 +263,7 @@ const ReturnMenu: React.FC<ReturnMenuProps> = ({ order, onDismiss }) => {
                 type='submit'
                 size='small'
                 variant='primary'
+                disabled={Object.keys(toReturn).length === 0}
               >
                 Odeslat
               </Button>

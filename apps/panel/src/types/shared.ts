@@ -4,10 +4,10 @@ export type Option = {
 };
 
 export enum ProductStatus {
-  DRAFT = 'draft',
-  PROPOSED = 'proposed',
-  PUBLISHED = 'published',
-  REJECTED = 'rejected',
+  DRAFT = "draft",
+  PROPOSED = "proposed",
+  PUBLISHED = "published",
+  REJECTED = "rejected",
 }
 
 export type DateFilter = null | {
@@ -16,8 +16,8 @@ export type DateFilter = null | {
 };
 
 export enum TaxRateType {
-  REGION = 'region',
-  RATE = 'rate',
+  REGION = "region",
+  RATE = "rate",
 }
 
 export type PaginationProps = {
@@ -28,12 +28,12 @@ export type PaginationProps = {
 export type Idable = { id: string; [x: string]: any };
 
 export type Role = {
-  value: 'admin' | 'member' | 'developer';
+  value: "admin" | "member" | "developer";
   label: string;
 };
 
 export type ShippingOptionPriceType = {
-  value: 'flat_rate' | 'calculated';
+  value: "flat_rate" | "calculated";
   label: string;
 };
 
@@ -49,3 +49,7 @@ export interface DragItem {
   id: string;
   type: string;
 }
+
+export type Subset<K> = {
+  [attr in keyof K]?: K[attr] extends object ? Subset<K[attr]> : K[attr];
+};

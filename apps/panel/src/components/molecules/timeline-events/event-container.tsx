@@ -15,7 +15,7 @@ export enum EventIconColor {
   DEFAULT = "text-grey-50",
 }
 
-type EventContainerProps = {
+export type EventContainerProps = {
   icon: React.ReactNode;
   iconColor?: EventIconColor;
   title: string;

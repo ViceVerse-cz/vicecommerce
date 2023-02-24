@@ -1,9 +1,9 @@
-import React, { forwardRef, MutableRefObject, ReactElement, RefAttributes, useContext, useRef } from 'react';
-import type { GroupBase, Props, SelectInstance } from 'react-select';
-import ReactSelect from 'react-select';
-import { ModalContext } from '../../../modal';
-import { AdjacentContainer } from '../components';
-import { useSelectProps } from '../use-select-props';
+import { forwardRef, MutableRefObject, ReactElement, RefAttributes, useContext, useRef } from "react";
+import type { GroupBase, Props, SelectInstance } from "react-select";
+import ReactSelect from "react-select";
+import { ModalContext } from "../../../modal";
+import { AdjacentContainer } from "../components";
+import { useSelectProps } from "../use-select-props";
 
 export type SelectComponent = <
   Option = unknown,
@@ -32,12 +32,14 @@ const Select = forwardRef(
       <AdjacentContainer
         ref={containerRef}
         label={label}
+        htmlFor={name}
         helperText={helperText}
         required={required}
         name={name}
         errors={errors}
       >
         <ReactSelect
+          aria-labelledby={`${name}_label`}
           ref={ref}
           name={name}
           {...selectProps}

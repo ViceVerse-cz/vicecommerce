@@ -1,6 +1,5 @@
-import { useAdminStore } from 'medusa-react';
-import React, { useContext, useEffect, useState } from 'react';
-import { AccountContext } from './account';
+import { useAdminGetSession, useAdminStore } from "medusa-react";
+import React, { useContext, useEffect, useState } from "react";
 
 export const defaultFeatureFlagContext: {
   featureToggleList: Record<string, boolean>;
@@ -15,19 +14,19 @@ export const defaultFeatureFlagContext: {
 export const FeatureFlagContext = React.createContext(defaultFeatureFlagContext);
 
 export const FeatureFlagProvider = ({ children }) => {
-  const { isLoggedIn } = useContext(AccountContext);
+  const { user, isLoading } = useAdminGetSession();
 
   const [featureFlags, setFeatureFlags] = useState<{ key: string; value: boolean }[]>([]);
 
   const { store, isFetching } = useAdminStore();
 
   useEffect(() => {
-    if (isFetching || !store || !isLoggedIn || !store['feature_flags']?.length) {
+    if (isFetching || !store || !(user || isLoading) || !store["feature_flags"]?.length) {
       return;
     }
 
-    setFeatureFlags(store['feature_flags']);
-  }, [isFetching, store, isLoggedIn]);
+    setFeatureFlags(store["feature_flags"]);
+  }, [isFetching, store, user, isLoading]);
 
   const featureToggleList = featureFlags.reduce((acc, flag) => ({ ...acc, [flag.key]: flag.value }), {});
 
@@ -44,7 +43,7 @@ export const useFeatureFlag = () => {
   const context = useContext(FeatureFlagContext);
 
   if (!context) {
-    throw new Error('useFeatureFlag must be used within a FeatureFlagProvider');
+    throw new Error("useFeatureFlag must be used within a FeatureFlagProvider");
   }
 
   return context;

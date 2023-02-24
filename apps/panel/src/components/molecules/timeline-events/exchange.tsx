@@ -1,16 +1,12 @@
-import {
-  useAdminCancelReturn,
-  useAdminCancelSwap,
-  useAdminOrder,
-  useAdminReceiveReturn,
-  useAdminStore,
-} from "medusa-react";
 import { ReturnItem } from "@medusajs/medusa";
+import { useAdminCancelReturn, useAdminCancelSwap, useAdminOrder, useAdminStore } from "medusa-react";
 import React, { useEffect, useState } from "react";
 
 import CreateFulfillmentModal from "../../../domain/orders/details/create-fulfillment";
-import ReceiveMenu from "../../../domain/orders/details/returns/receive-menu";
 import { ExchangeEvent } from "../../../hooks/use-build-timeline";
+import { ReceiveReturnMenu } from "../../../domain/orders/details/receive-return";
+import { orderReturnableFields } from "../../../domain/orders/details/utils/order-returnable-fields";
+import useOrdersExpandParam from "../../../domain/orders/details/utils/use-admin-expand-paramter";
 import useNotification from "../../../hooks/use-notification";
 import Medusa from "../../../services/api";
 import { getErrorMessage } from "../../../utils/error-messages";
@@ -71,9 +67,11 @@ const Exchange: React.FC<ExchangeProps> = ({ event, refetch }) => {
   const [paymentFormatWarning, setPaymentFormatWarning] = useState<string | undefined>(undefined);
   const [payable, setPayable] = useState(true);
   const { store } = useAdminStore();
-  const { order } = useAdminOrder(event.orderId);
-
-  const { mutateAsync: receiveReturn } = useAdminReceiveReturn(event.returnId);
+  const { orderRelations } = useOrdersExpandParam();
+  const { order } = useAdminOrder(event.orderId, {
+    expand: orderRelations,
+    fields: orderReturnableFields,
+  });
 
   const notification = useNotification();
 
@@ -102,7 +100,7 @@ const Exchange: React.FC<ExchangeProps> = ({ event, refetch }) => {
     if (event.exchangeCartId) {
       setDifferenceCardId(store.swap_link_template?.replace(/\{cart_id\}/, event.exchangeCartId));
     }
-  }, [store?.swap_link_template, event.exchangeCartId, event.paymentStatus]);
+  }, [store?.swap_link_template, event.exchangeCartId, event.paymentStatus, store]);
 
   const paymentLink = getPaymentLink(payable, differenceCardId, paymentFormatWarning, event.exchangeCartId);
 
@@ -114,17 +112,6 @@ const Exchange: React.FC<ExchangeProps> = ({ event, refetch }) => {
   const handleCancelReturn = async () => {
     await cancelReturn.mutateAsync();
     refetch();
-  };
-
-  const handleReceiveReturn = async (items: { item_id: string; quantity: number }[]) => {
-    await receiveReturn(
-      { items },
-      {
-        onSuccess: () => {
-          refetch();
-        },
-      },
-    );
   };
 
   const handleProcessSwapPayment = () => {
@@ -161,7 +148,7 @@ const Exchange: React.FC<ExchangeProps> = ({ event, refetch }) => {
   }
 
   if (
-    !(event.isCanceled ||event.canceledAt ) &&
+    !(event.isCanceled || event.canceledAt) &&
     event.fulfillmentStatus !== "fulfilled" &&
     event.fulfillmentStatus !== "shipped"
   ) {
@@ -182,7 +169,7 @@ const Exchange: React.FC<ExchangeProps> = ({ event, refetch }) => {
     noNotification: event.noNotification,
     topNode: getActions(event, actions),
     children: [
-      <div className='flex flex-col gap-y-base'>
+      <div className='flex flex-col gap-y-base' key={event.id}>
         {event.canceledAt && (
           <div>
             <span className='mr-2 inter-small-semibold'>Vyžádáno dne:</span>
@@ -232,11 +219,10 @@ const Exchange: React.FC<ExchangeProps> = ({ event, refetch }) => {
         />
       )}
       {showReceiveReturn && order && (
-        <ReceiveMenu
+        <ReceiveReturnMenu
           order={order}
           returnRequest={event.raw.return_order}
-          onReceiveSwap={handleReceiveReturn}
-          onDismiss={() => setShowReceiveReturn(false)}
+          onClose={() => setShowReceiveReturn(false)}
         />
       )}
       {showCreateFulfillment && (
@@ -255,8 +241,8 @@ function getNewItems(event: ExchangeEvent) {
     <div className='flex flex-col gap-y-small'>
       <span className='inter-small-regular text-grey-50'>Nové položky</span>
       <div>
-        {event.newItems.map((i) => (
-          <EventItemContainer item={i} />
+        {event.newItems.map((i, index) => (
+          <EventItemContainer key={index} item={i} />
         ))}
       </div>
     </div>
@@ -288,7 +274,7 @@ function getReturnItems(event: ExchangeEvent) {
         {event.returnItems
           .filter((i) => !!i)
           .map((i: ReturnItem) => (
-            <EventItemContainer item={{ ...i, quantity: i.requestedQuantity }} />
+            <EventItemContainer item={{ ...i, quantity: i.requestedQuantity }} key={i.id} />
           ))}
       </div>
     </div>
