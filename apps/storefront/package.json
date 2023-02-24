@@ -41,7 +41,7 @@
     "react-instantsearch-hooks-web": "^6.29.0",
     "react-intersection-observer": "^9.3.4",
     "redis-commands": "1.x",
-    "sharp": "^0.30.7",
+    "sharp": "^0.31.3",
     "typeorm": "0.2.x",
     "webpack": ">=2"
   },
