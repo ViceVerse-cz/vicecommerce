@@ -1,26 +1,26 @@
-import { ClaimItem, LineItem, Order } from '@medusajs/medusa';
+import { ClaimItem, LineItem, Order } from "@medusajs/medusa";
 
-export const filterItems = (order: Omit<Order, 'beforeInserts'>, isClaim: boolean) => {
+export const getAllReturnableItems = (order: Omit<Order, "beforeInserts">, isClaim: boolean) => {
   let orderItems = order.items.reduce(
     (map, obj) =>
       map.set(obj.id, {
         ...obj,
       }),
-    new Map<string, Omit<LineItem, 'beforeInsert'>>(),
+    new Map<string, Omit<LineItem, "beforeInsert">>(),
   );
 
   let claimedItems: ClaimItem[] = [];
 
-  if (order.claims && order.claims.length) {
+  if (order.claims?.length) {
     for (const claim of order.claims) {
       claim.claim_items = claim.claim_items ?? [];
       claimedItems = [...claimedItems, ...claim.claim_items];
 
-      if (claim.fulfillment_status === 'not_fulfilled' && claim.payment_status === 'na') {
+      if (claim.fulfillment_status === "not_fulfilled" && claim.payment_status === "na") {
         continue;
       }
 
-      if (claim.additional_items && claim.additional_items.length) {
+      if (claim.additional_items?.length) {
         orderItems = claim.additional_items
           .filter((it) => it.shipped_quantity || it.shipped_quantity === it.fulfilled_quantity)
           .reduce((map, obj) => map.set(obj.id, { ...obj }), orderItems);
@@ -29,7 +29,7 @@ export const filterItems = (order: Omit<Order, 'beforeInserts'>, isClaim: boolea
   }
 
   if (!isClaim) {
-    if (order.swaps && order.swaps.length) {
+    if (order.swaps?.length) {
       for (const swap of order.swaps) {
         orderItems = swap.additional_items.reduce(
           (map, obj) =>

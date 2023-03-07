@@ -1,8 +1,8 @@
-import clsx from 'clsx';
-import React, { ReactNode, useContext, useReducer } from 'react';
-import Button from '../../fundamentals/button';
-import ArrowLeftIcon from '../../fundamentals/icons/arrow-left-icon';
-import Modal, { ModalProps } from '../../molecules/modal';
+import clsx from "clsx";
+import React, { ReactNode, useContext, useReducer } from "react";
+import Button from "../../fundamentals/button";
+import ArrowLeftIcon from "../../fundamentals/icons/arrow-left-icon";
+import Modal, { ModalProps } from "../../molecules/modal";
 
 enum LayeredModalActions {
   PUSH,
@@ -10,17 +10,17 @@ enum LayeredModalActions {
   RESET,
 }
 
-type LayeredModalScreen = {
+export type LayeredModalScreen = {
   title: string;
   subtitle?: string;
   onBack: () => void;
-  onConfirm: () => void;
+  onConfirm?: () => void;
   view: ReactNode;
 };
 
 export type ILayeredModalContext = {
   screens: LayeredModalScreen[];
-  push: (screen: ReactNode) => void;
+  push: (screen: LayeredModalScreen) => void;
   pop: () => void;
   reset: () => void;
 };
@@ -77,13 +77,7 @@ export const LayeredModalProvider = ({ children }) => {
   );
 };
 
-const LayeredModal: React.FC<LayeredModalProps> = ({
-  context,
-  children,
-  handleClose,
-  open,
-  isLargeModal = true,
-}) => {
+const LayeredModal: React.FC<LayeredModalProps> = ({ context, children, handleClose, open, isLargeModal = true }) => {
   const emptyScreensAndClose = () => {
     context.reset();
     handleClose();
@@ -93,8 +87,8 @@ const LayeredModal: React.FC<LayeredModalProps> = ({
   return (
     <Modal open={open} isLargeModal={isLargeModal} handleClose={emptyScreensAndClose}>
       <Modal.Body
-        className={clsx('transition-transform translate-x-full flex flex-col justify-between duration-200', {
-          'translate-x-0': typeof screen !== 'undefined',
+        className={clsx("transition-transform flex flex-col justify-between duration-200", {
+          "translate-x-0": typeof screen !== "undefined",
         })}
       >
         {screen ? (
@@ -106,9 +100,7 @@ const LayeredModal: React.FC<LayeredModalProps> = ({
                 </Button>
                 <div className='flex items-center gap-x-2xsmall'>
                   <h2 className='inter-xlarge-semibold ml-5'>{screen.title}</h2>
-                  {screen.subtitle && (
-                    <span className='inter-xlarge-regular text-grey-50'>({screen.subtitle})</span>
-                  )}
+                  {screen.subtitle && <span className='inter-xlarge-regular text-grey-50'>({screen.subtitle})</span>}
                 </div>
               </div>
             </Modal.Header>
@@ -119,13 +111,13 @@ const LayeredModal: React.FC<LayeredModalProps> = ({
         )}
       </Modal.Body>
       <div
-        className={clsx('transition-transform duration-200', {
-          '-translate-x-full': typeof screen !== 'undefined',
+        className={clsx("transition-transform duration-200", {
+          "-translate-x-full": typeof screen !== "undefined",
         })}
       >
         <div
-          className={clsx('transition-display', {
-            'hidden opacity-0 delay-500': typeof screen !== 'undefined',
+          className={clsx("transition-display", {
+            "hidden opacity-0 delay-500": typeof screen !== "undefined",
           })}
         >
           {children}
@@ -138,7 +130,7 @@ const LayeredModal: React.FC<LayeredModalProps> = ({
 export const useLayeredModal = () => {
   const context = useContext(LayeredModalContext);
   if (context === null) {
-    throw new Error('useLayeredModal must be used within a LayeredModalProvider');
+    throw new Error("useLayeredModal must be used within a LayeredModalProvider");
   }
   return context;
 };

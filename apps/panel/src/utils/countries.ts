@@ -244,7 +244,7 @@ export const isoAlpha2Countries = {
   YE: "Yemen",
   ZM: "Zambia",
   ZW: "Zimbabwe",
-}
+};
 
 export const countries = [
   { alpha2: "AF", name: "Afghanistan", alpha3: "AFG", numeric: "004" },
@@ -612,27 +612,25 @@ export const countries = [
   { alpha2: "ZM", name: "Zambia", alpha3: "ZMB", numeric: "894" },
   { alpha2: "ZW", name: "Zimbabwe", alpha3: "ZWE", numeric: "716" },
   { alpha2: "AX", name: "Åland Islands", alpha3: "ALA", numeric: "248" },
-]
+];
 
 export function countryLookup(isoCountryCode) {
   if (!isoCountryCode) {
-    return
+    return;
   }
 
-  const normalizedIsoCountryCode = isoCountryCode.toUpperCase()
+  const normalizedIsoCountryCode = isoCountryCode.toUpperCase();
 
   if (isoAlpha2Countries[normalizedIsoCountryCode]) {
-    return isoAlpha2Countries[normalizedIsoCountryCode]
+    return isoAlpha2Countries[normalizedIsoCountryCode];
   } else {
     // try iso alpha 3
-    const isoRecord = countries.find(
-      (record) => record.alpha3 === normalizedIsoCountryCode
-    )
+    const isoRecord = countries.find((record) => record.alpha3 === normalizedIsoCountryCode);
 
     if (isoRecord) {
-      return isoRecord.name
+      return isoRecord.name;
     }
 
-    throw new Error("Invalid country code")
+    throw new Error("Invalid country code");
   }
 }

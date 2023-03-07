@@ -2,7 +2,7 @@ import { useAdminRegions } from "medusa-react";
 import React, { useEffect, useMemo } from "react";
 import { Controller, useWatch } from "react-hook-form";
 import { SteppedContext } from "../../../../components/molecules/modal/stepped-modal";
-import Select from "../../../../components/molecules/select";
+import { NextSelect } from "../../../../components/molecules/select/next-select";
 import { useNewOrderForm } from "../form";
 
 const SelectRegionScreen = () => {
@@ -45,7 +45,7 @@ const SelectRegionScreen = () => {
         control={control}
         name='region'
         render={({ field: { onChange, value } }) => {
-          return <Select label='Region' onChange={onChange} value={value} options={regionOptions} />;
+          return <NextSelect label='Region' onChange={onChange} value={value} options={regionOptions} />;
         }}
       />
     </div>

@@ -1,20 +1,18 @@
-import { AdminPostRegionsReq } from '@medusajs/medusa';
-import { useAdminCreateRegion } from 'medusa-react';
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import Button from '../../../../components/fundamentals/button';
-import CrossIcon from '../../../../components/fundamentals/icons/cross-icon';
-import FocusModal from '../../../../components/molecules/modal/focus-modal';
-import Accordion from '../../../../components/organisms/accordion';
-import { useFeatureFlag } from '../../../../context/feature-flag';
-import useNotification from '../../../../hooks/use-notification';
-import { getErrorMessage } from '../../../../utils/error-messages';
-import { nestedForm } from '../../../../utils/nested-form';
-import RegionDetailsForm, { RegionDetailsFormType } from '../components/region-form/region-details-form';
-import RegionProvidersForm, {
-  RegionProvidersFormType,
-} from '../components/region-form/region-providers-form';
+import { AdminPostRegionsReq } from "@medusajs/medusa";
+import { useAdminCreateRegion } from "medusa-react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import Button from "../../../../components/fundamentals/button";
+import CrossIcon from "../../../../components/fundamentals/icons/cross-icon";
+import FocusModal from "../../../../components/molecules/modal/focus-modal";
+import Accordion from "../../../../components/organisms/accordion";
+import { useFeatureFlag } from "../../../../context/feature-flag";
+import useNotification from "../../../../hooks/use-notification";
+import { getErrorMessage } from "../../../../utils/error-messages";
+import { nestedForm } from "../../../../utils/nested-form";
+import RegionDetailsForm, { RegionDetailsFormType } from "../components/region-form/region-details-form";
+import RegionProvidersForm, { RegionProvidersFormType } from "../components/region-form/region-providers-form";
 
 type Props = {
   onClose: () => void;
@@ -26,17 +24,9 @@ type NewRegionFormType = {
 };
 
 const NewRegion = ({ onClose }: Props) => {
-  const [sections, setSections] = useState(['details']);
+  const [sections, setSections] = useState(["details"]);
   const form = useForm<NewRegionFormType>({
-    defaultValues: {
-      details: {
-        countries: [],
-      },
-      providers: {
-        payment_providers: undefined,
-        fulfillment_providers: undefined,
-      },
-    },
+    defaultvalues: getDefaultValues(),
   });
   const {
     formState: { isDirty },
@@ -50,7 +40,7 @@ const NewRegion = ({ onClose }: Props) => {
   const { isFeatureEnabled } = useFeatureFlag();
 
   const closeAndReset = () => {
-    reset();
+    reset(getDefaultValues());
     onClose();
   };
 
@@ -66,24 +56,24 @@ const NewRegion = ({ onClose }: Props) => {
         tax_code: data.details.tax_code || undefined,
       };
 
-      if (isFeatureEnabled('tax_inclusive_pricing')) {
+      if (isFeatureEnabled("tax_inclusive_pricing")) {
         payload.includes_tax = data.details.includes_tax;
       }
 
       mutate(payload, {
         onSuccess: ({ region }) => {
-          notification('Úspěch', 'Vytvořená oblast', 'success');
+          notification("Úspěch", "Vytvořená oblast", "success");
           navigate(`/a/settings/regions/${region.id}`);
           closeAndReset();
         },
         onError: (error) => {
-          notification('Chyba', getErrorMessage(error), 'error');
+          notification("Chyba", getErrorMessage(error), "error");
         },
       });
     },
     (errors) => {
-      if (errors.providers && !sections.includes('providers')) {
-        setSections((oldSections) => [...oldSections, 'providers']);
+      if (errors.providers && !sections.includes("providers")) {
+        setSections((oldSections) => [...oldSections, "providers"]);
       }
     },
   );
@@ -97,13 +87,7 @@ const NewRegion = ({ onClose }: Props) => {
               <CrossIcon size={20} />
             </Button>
             <div className='gap-x-small flex'>
-              <Button
-                size='small'
-                variant='primary'
-                loading={isLoading}
-                disabled={!isDirty || isLoading}
-                type='submit'
-              >
+              <Button size='small' variant='primary' loading={isLoading} disabled={!isDirty || isLoading} type='submit'>
                 Vytvořit oblast
               </Button>
             </div>
@@ -114,13 +98,13 @@ const NewRegion = ({ onClose }: Props) => {
             <Accordion value={sections} onValueChange={setSections} type='multiple'>
               <Accordion.Item title='Details' value='details' forceMountContent required>
                 <p className='inter-base-regular text-grey-50 mb-xlarge'>Přidejte podrobnosti o regionu.</p>
-                <RegionDetailsForm form={nestedForm(form, 'details')} isCreate />
+                <RegionDetailsForm form={nestedForm(form, "details")} isCreate />
               </Accordion.Item>
               <Accordion.Item title='Providers' value='providers' forceMountContent required>
                 <p className='inter-base-regular text-grey-50 mb-xlarge'>
                   Doplňte, kteří poskytovatelé plnění a plateb by měli být v tomto regionu k dispozici.
                 </p>
-                <RegionProvidersForm form={nestedForm(form, 'providers')} />
+                <RegionProvidersForm form={nestedForm(form, "providers")} />
               </Accordion.Item>
             </Accordion>
           </div>
@@ -131,3 +115,15 @@ const NewRegion = ({ onClose }: Props) => {
 };
 
 export default NewRegion;
+
+const getDefaultValues = () => {
+  return {
+    details: {
+      countries: [],
+    },
+    providers: {
+      payment_providers: undefined,
+      fulfillment_providers: undefined,
+    },
+  };
+};

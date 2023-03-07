@@ -1,8 +1,8 @@
-import { useAdminRegionFulfillmentOptions, useAdminShippingProfiles } from 'medusa-react';
-import { useMemo } from 'react';
-import { ShippingOptionFormType } from '.';
-import { Option } from '../../../../../types/shared';
-import fulfillmentProvidersMapper from '../../../../../utils/fulfillment-providers.mapper';
+import { useAdminRegionFulfillmentOptions, useAdminShippingProfiles } from "medusa-react";
+import { useMemo } from "react";
+import { ShippingOptionFormType } from ".";
+import { Option } from "../../../../../types/shared";
+import fulfillmentProvidersMapper from "../../../../../utils/fulfillment-providers.mapper";
 
 type OptionType = {
   id: string;
@@ -56,7 +56,7 @@ export const useShippingOptionFormData = (regionId: string, isReturn = false) =>
       };
     });
 
-    const [providerIndex, optionIndex] = value.split('.');
+    const [providerIndex, optionIndex] = value.split(".");
     const { provider_id, options } = fOptions?.[providerIndex] || {};
 
     return { provider_id, data: options?.[optionIndex] || {} } as {
@@ -67,7 +67,7 @@ export const useShippingOptionFormData = (regionId: string, isReturn = false) =>
 
   const getRequirementsData = (data: ShippingOptionFormType) => {
     const requirements = Object.entries(data.requirements).reduce((acc, [key, value]) => {
-      if (value?.amount && value.amount > 0) {
+      if (typeof value?.amount === "number" && value.amount >= 0) {
         acc.push({
           type: key,
           amount: value.amount,

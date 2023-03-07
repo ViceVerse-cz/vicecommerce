@@ -1,15 +1,15 @@
-import { Region } from '@medusajs/medusa';
-import React from 'react';
-import { Controller, UseFormReturn } from 'react-hook-form';
-import IncludesTaxTooltip from '../../../../../components/atoms/includes-tax-tooltip';
-import Switch from '../../../../../components/atoms/switch';
-import InputHeader from '../../../../../components/fundamentals/input-header';
-import InputField from '../../../../../components/molecules/input';
-import { NextSelect } from '../../../../../components/molecules/select/next-select';
-import { Option, ShippingOptionPriceType } from '../../../../../types/shared';
-import FormValidator from '../../../../../utils/form-validator';
-import PriceFormInput from '../../../../products/components/prices-form/price-form-input';
-import { useShippingOptionFormData } from './use-shipping-option-form-data';
+import { Region } from "@medusajs/medusa";
+import React from "react";
+import { Controller, UseFormReturn } from "react-hook-form";
+import IncludesTaxTooltip from "../../../../../components/atoms/includes-tax-tooltip";
+import Switch from "../../../../../components/atoms/switch";
+import InputHeader from "../../../../../components/fundamentals/input-header";
+import InputField from "../../../../../components/molecules/input";
+import { NextSelect } from "../../../../../components/molecules/select/next-select";
+import { Option, ShippingOptionPriceType } from "../../../../../types/shared";
+import FormValidator from "../../../../../utils/form-validator";
+import PriceFormInput from "../../../../products/components/prices-form/price-form-input";
+import { useShippingOptionFormData } from "./use-shipping-option-form-data";
 
 type Requirement = {
   amount: number | null;
@@ -53,7 +53,7 @@ const ShippingOptionForm = ({ form, region, isEdit = false }: Props) => {
             <h3 className='inter-base-semibold mb-2xsmall'>Viditelné v obchodě</h3>
             <Controller
               control={control}
-              name={'store_option'}
+              name={"store_option"}
               render={({ field: { value, onChange } }) => {
                 return <Switch checked={value} onCheckedChange={onChange} />;
               }}
@@ -71,10 +71,10 @@ const ShippingOptionForm = ({ form, region, isEdit = false }: Props) => {
           <InputField
             label='Title'
             required
-            {...register('name', {
-              required: 'Title is required',
-              pattern: FormValidator.whiteSpaceRule('Title'),
-              minLength: FormValidator.minOneCharRule('Title'),
+            {...register("name", {
+              required: "Title is required",
+              pattern: FormValidator.whiteSpaceRule("Title"),
+              minLength: FormValidator.minOneCharRule("Title"),
             })}
             errors={errors}
           />
@@ -89,12 +89,12 @@ const ShippingOptionForm = ({ form, region, isEdit = false }: Props) => {
                     required
                     options={[
                       {
-                        label: 'Flat Rate',
-                        value: 'flat_rate',
+                        label: "Flat Rate",
+                        value: "flat_rate",
                       },
                       {
-                        label: 'Calculated',
-                        value: 'calculated',
+                        label: "Calculated",
+                        value: "calculated",
                       },
                     ]}
                     placeholder='Choose a price type'
@@ -104,13 +104,13 @@ const ShippingOptionForm = ({ form, region, isEdit = false }: Props) => {
                 );
               }}
             />
-            {watch('price_type')?.value === 'flat_rate' && (
+            {watch("price_type")?.value === "flat_rate" && (
               <Controller
                 control={control}
                 name='amount'
                 rules={{
-                  min: FormValidator.nonNegativeNumberRule('Price'),
-                  max: FormValidator.maxInteger('Price', region.currency_code),
+                  min: FormValidator.nonNegativeNumberRule("Price"),
+                  max: FormValidator.maxInteger("Price", region.currency_code),
                 }}
                 render={({ field: { value, onChange } }) => {
                   return (
@@ -180,16 +180,16 @@ const ShippingOptionForm = ({ form, region, isEdit = false }: Props) => {
             control={control}
             name='requirements.min_subtotal.amount'
             rules={{
-              min: FormValidator.nonNegativeNumberRule('Min. subtotal'),
-              max: FormValidator.maxInteger('Min. subtotal', region.currency_code),
+              min: FormValidator.nonNegativeNumberRule("Min. subtotal"),
+              max: FormValidator.maxInteger("Min. subtotal", region.currency_code),
               validate: (value) => {
-                if (!value) {
+                if (value === null) {
                   return true;
                 }
 
-                const maxSubtotal = form.getValues('requirements.max_subtotal.amount');
+                const maxSubtotal = form.getValues("requirements.max_subtotal.amount");
                 if (maxSubtotal && value > maxSubtotal) {
-                  return 'Min. subtotal must be less than max. subtotal';
+                  return "Min. subtotal must be less than max. subtotal";
                 }
                 return true;
               },
@@ -203,7 +203,7 @@ const ShippingOptionForm = ({ form, region, isEdit = false }: Props) => {
                     tooltip={<IncludesTaxTooltip includesTax={region.includes_tax} />}
                   />
                   <PriceFormInput
-                    amount={value || undefined}
+                    amount={typeof value === "number" ? value : undefined}
                     onChange={onChange}
                     name='requirements.min_subtotal.amount'
                     currencyCode={region.currency_code}
@@ -217,16 +217,16 @@ const ShippingOptionForm = ({ form, region, isEdit = false }: Props) => {
             control={control}
             name='requirements.max_subtotal.amount'
             rules={{
-              min: FormValidator.nonNegativeNumberRule('Max. subtotal'),
-              max: FormValidator.maxInteger('Max. subtotal', region.currency_code),
+              min: FormValidator.nonNegativeNumberRule("Max. subtotal"),
+              max: FormValidator.maxInteger("Max. subtotal", region.currency_code),
               validate: (value) => {
-                if (!value) {
+                if (value === null) {
                   return true;
                 }
 
-                const minSubtotal = form.getValues('requirements.min_subtotal.amount');
+                const minSubtotal = form.getValues("requirements.min_subtotal.amount");
                 if (minSubtotal && value < minSubtotal) {
-                  return 'Max. subtotal must be greater than min. subtotal';
+                  return "Max. subtotal must be greater than min. subtotal";
                 }
                 return true;
               },
@@ -240,7 +240,7 @@ const ShippingOptionForm = ({ form, region, isEdit = false }: Props) => {
                     tooltip={<IncludesTaxTooltip includesTax={region.includes_tax} />}
                   />
                   <PriceFormInput
-                    amount={value || undefined}
+                    amount={typeof value === "number" ? value : undefined}
                     onChange={onChange}
                     name='requirements.max_subtotal.amount'
                     currencyCode={region.currency_code}

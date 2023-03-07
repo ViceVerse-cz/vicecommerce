@@ -1,13 +1,12 @@
-import React from 'react';
-import { Controller } from 'react-hook-form';
-import Switch from '../../../../../components/atoms/switch';
-import FeatureToggle from '../../../../../components/fundamentals/feature-toggle';
-import InputField from '../../../../../components/molecules/input';
-import { NextSelect } from '../../../../../components/molecules/select/next-select';
-import { Option } from '../../../../../types/shared';
-import FormValidator from '../../../../../utils/form-validator';
-import { NestedForm } from '../../../../../utils/nested-form';
-import { useStoreData } from './use-store-data';
+import { Controller } from "react-hook-form";
+import Switch from "../../../../../components/atoms/switch";
+import FeatureToggle from "../../../../../components/fundamentals/feature-toggle";
+import InputField from "../../../../../components/molecules/input";
+import { NextSelect } from "../../../../../components/molecules/select/next-select";
+import { Option } from "../../../../../types/shared";
+import FormValidator from "../../../../../utils/form-validator";
+import { NestedForm } from "../../../../../utils/nested-form";
+import { useStoreData } from "./use-store-data";
 
 export type RegionDetailsFormType = {
   name: string;
@@ -39,18 +38,18 @@ const RegionDetailsForm = ({ form, isCreate = false }: Props) => {
           label='Název'
           placeholder='Evropa'
           required
-          {...register(path('name'), {
-            required: 'Vyžaduje se název',
-            minLength: FormValidator.minOneCharRule('Title'),
-            pattern: FormValidator.whiteSpaceRule('Title'),
+          {...register(path("name"), {
+            required: "Vyžaduje se název",
+            minLength: FormValidator.minOneCharRule("Title"),
+            pattern: FormValidator.whiteSpaceRule("Title"),
           })}
           errors={errors}
         />
         <Controller
           control={control}
-          name={path('currency_code')}
+          name={path("currency_code")}
           rules={{
-            required: 'Je vyžadován kód měny',
+            required: "Je vyžadován kód měny",
           }}
           render={({ field }) => {
             return (
@@ -60,7 +59,7 @@ const RegionDetailsForm = ({ form, isCreate = false }: Props) => {
                 required
                 {...field}
                 options={currencyOptions}
-                name={path('currency_code')}
+                name={path("currency_code")}
                 errors={errors}
               />
             );
@@ -73,30 +72,25 @@ const RegionDetailsForm = ({ form, isCreate = false }: Props) => {
               required
               placeholder='25'
               prefix='%'
-              step={0.01}
-              type={'number'}
-              {...register(path('tax_rate'), {
-                required: isCreate ? 'Je vyžadována sazba daně' : undefined,
+              step={1}
+              type={"number"}
+              {...register(path("tax_rate"), {
+                required: isCreate ? "Je vyžadována sazba daně" : undefined,
                 max: {
                   value: 100,
-                  message: 'Sazba daně musí být rovna nebo nižší než 100',
+                  message: "Sazba daně musí být rovna nebo nižší než 100",
                 },
-                min: FormValidator.nonNegativeNumberRule('Tax rate'),
+                min: FormValidator.nonNegativeNumberRule("Tax rate"),
                 valueAsNumber: true,
               })}
               errors={errors}
             />
-            <InputField
-              label='Výchozí daňový kód'
-              placeholder='1000'
-              {...register(path('tax_code'))}
-              errors={errors}
-            />
+            <InputField label='Výchozí daňový kód' placeholder='1000' {...register(path("tax_code"))} errors={errors} />
           </>
         )}
         <Controller
           control={control}
-          name={path('countries')}
+          name={path("countries")}
           render={({ field }) => {
             return (
               <NextSelect
@@ -105,7 +99,7 @@ const RegionDetailsForm = ({ form, isCreate = false }: Props) => {
                 isMulti
                 selectAll
                 {...field}
-                name={path('countries')}
+                name={path("countries")}
                 errors={errors}
                 options={countryOptions}
               />
@@ -123,7 +117,7 @@ const RegionDetailsForm = ({ form, isCreate = false }: Props) => {
           </div>
           <Controller
             control={control}
-            name={path('includes_tax')}
+            name={path("includes_tax")}
             render={({ field: { value, onChange } }) => {
               return <Switch checked={value} onCheckedChange={onChange} />;
             }}

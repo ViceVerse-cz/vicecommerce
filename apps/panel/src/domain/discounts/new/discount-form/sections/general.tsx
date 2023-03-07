@@ -19,7 +19,7 @@ const General: React.FC<GeneralProps> = ({ discount }) => {
 
   const [fixedRegionCurrency, setFixedRegionCurrency] = useState<string | undefined>(initialCurrency);
 
-  const { regions: opts } = useAdminRegions();
+  const { regions: opts, isLoading } = useAdminRegions();
   const { register, control, type } = useDiscountForm();
 
   const regions = useWatch({
@@ -49,14 +49,9 @@ const General: React.FC<GeneralProps> = ({ discount }) => {
     return opts?.map((r) => ({ value: r.id, label: r.name })) || [];
   }, [opts]);
 
-  const [render, setRender] = useState(false);
-  useEffect(() => {
-    setTimeout(() => setRender(true), 100);
-  }, []);
-
   return (
     <div className='pt-5'>
-      {render && (
+      {!isLoading && (
         <>
           <Controller
             name='regions'

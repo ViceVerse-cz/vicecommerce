@@ -185,7 +185,7 @@ const OptionsModal = ({ product, open, onClose }: Props) => {
           </Modal.Content>
           <Modal.Footer>
             <div className='flex items-center justify-end gap-xsmall w-full'>
-              <Button variant='secondary' size='small' type='button'>
+              <Button variant='secondary' size='small' type='button' onClick={handleClose}>
                 Zrušit
               </Button>
               <Button variant='primary' size='small' type='submit' disabled={!isDirty} loading={isSubmitting}>
