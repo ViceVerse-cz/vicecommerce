@@ -1,6 +1,5 @@
 {
-  "name": "medusa-admin",
-  "private": true,
+  "name": "@vicecommerce/panel",
   "description": "A proprietary Admin system to manage Medusa Stores",
   "version": "0.1.0",
   "author": "@medusajs",
@@ -8,6 +7,9 @@
     "devcert": "1.2.1",
     "postcss": "^8.4.5",
     "@types/react": "^18.0.21"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "dependencies": {
     "@hookform/error-message": "^2.0.1",

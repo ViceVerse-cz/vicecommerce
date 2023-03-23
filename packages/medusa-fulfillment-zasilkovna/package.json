@@ -1,10 +1,13 @@
 {
-  "name": "medusa-fulfillment-zasilkovna",
+  "name": "@vicecommerce/fulfillment-zasilkovna",
   "version": "0.0.1",
   "description": "Zasilkovna fulfillment implementation for Medusa",
   "scripts": {
     "build": "babel src --out-dir . --ignore **/__tests__ --extensions \".ts,.js\"",
     "watch": "babel -w src --out-dir . --ignore **/__tests__ --extensions \".ts,.js\""
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.18.6",

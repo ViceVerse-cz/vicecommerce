@@ -12,7 +12,8 @@
     "format": "rome format --write \"**/*.{ts,tsx,md}\"",
     "seed": "dotenv -- turbo run seed",
     "migrate": "dotenv -- turbo run migrate",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "publish-packages": "turbo run build lint test && changeset version && changeset publish"
   },
   "workspaces": [
     "packages/**"
