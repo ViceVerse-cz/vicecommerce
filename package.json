@@ -11,17 +11,10 @@
     "lint": "rome check --apply",
     "format": "rome format --write \"**/*.{ts,tsx,md}\"",
     "seed": "dotenv -- turbo run seed",
-    "seed:contentful": "dotenv -- turbo run seed:contentful",
-    "migrate:contentful": "dotenv -- turbo run migrate:contentful",
     "migrate": "dotenv -- turbo run migrate",
-    "prepare": "husky install",
-    "docker:build": "cross-env COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose -f docker-compose.yml build --parallel",
-    "docker:up": "docker-compose up -d",
-    "docker:down": "docker-compose down",
-    "docker:artillery": "pnpm artillery run ./e2e/artillery-vite.yml"
+    "prepare": "husky install"
   },
   "workspaces": [
-    "apps/**",
     "packages/**"
   ],
   "devDependencies": {
