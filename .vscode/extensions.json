@@ -1,6 +1,5 @@
 {
   "recommendations": [
-    "rome.rome",
-    "ms-playwright.playwright"
+    "rome.rome"
   ]
 }

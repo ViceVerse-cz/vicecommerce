@@ -32,56 +32,6 @@
     "lint": {
       "outputs": []
     },
-    "dev": {
-      "cache": false,
-      "env": [
-        "MEILISEARCH_HOST",
-        "NEXT_PUBLIC_INDEX_NAME",
-        "NEXT_PUBLIC_VERCEL_URL",
-        "NEXT_PUBLIC_MEDUSA_BACKEND_URL",
-        "FEATURE_SEARCH_ENABLED"
-      ]
-    },
-    "seed": {
-      "cache": false,
-      "env": [
-        "MEILISEARCH_HOST",
-        "NEXT_PUBLIC_INDEX_NAME",
-        "NEXT_PUBLIC_VERCEL_URL",
-        "NEXT_PUBLIC_MEDUSA_BACKEND_URL",
-        "FEATURE_SEARCH_ENABLED"
-      ]
-    },
-    "migrate": {
-      "cache": false,
-      "env": [
-        "MEILISEARCH_HOST",
-        "NEXT_PUBLIC_INDEX_NAME",
-        "NEXT_PUBLIC_VERCEL_URL",
-        "NEXT_PUBLIC_MEDUSA_BACKEND_URL",
-        "FEATURE_SEARCH_ENABLED"
-      ]
-    },
-    "migrate:contentful": {
-      "cache": false,
-      "env": [
-        "MEILISEARCH_HOST",
-        "NEXT_PUBLIC_INDEX_NAME",
-        "NEXT_PUBLIC_VERCEL_URL",
-        "NEXT_PUBLIC_MEDUSA_BACKEND_URL",
-        "FEATURE_SEARCH_ENABLED"
-      ]
-    },
-    "seed:contentful": {
-      "cache": false,
-      "env": [
-        "MEILISEARCH_HOST",
-        "NEXT_PUBLIC_INDEX_NAME",
-        "NEXT_PUBLIC_VERCEL_URL",
-        "NEXT_PUBLIC_MEDUSA_BACKEND_URL",
-        "FEATURE_SEARCH_ENABLED"
-      ]
-    },
     "start": {
       "dependsOn": [
         "^build"
