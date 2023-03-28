@@ -653,7 +653,7 @@ var CloudflareR2Service = /*#__PURE__*/ (function (_AbstractFileService) {
                       _yield$this$client$up = _context.sent;
                       _Key = _yield$this$client$up.Key;
                       result = {
-                        url: "".concat(this.public_url_, "/").concat(this.bucket_, "/").concat(_Key),
+                        url: "".concat(this.public_url_, "/").concat(_Key),
                       };
                       return _context.abrupt("return", result);
                     case 12:
@@ -738,7 +738,7 @@ var CloudflareR2Service = /*#__PURE__*/ (function (_AbstractFileService) {
                       return _context3.abrupt("return", {
                         writeStream: pass,
                         promise: this.client.upload(params).promise(),
-                        url: "".concat(this.public_url_, "/").concat(this.bucket_, "/").concat(fileKey),
+                        url: "".concat(this.public_url_, "/").concat(fileKey),
                         fileKey: fileKey,
                       });
                     case 4:

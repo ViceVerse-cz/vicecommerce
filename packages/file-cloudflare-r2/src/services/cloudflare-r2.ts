@@ -92,7 +92,7 @@ export default class CloudflareR2Service extends AbstractFileService {
       const { Key } = await this.client.upload(params).promise();
 
       const result: FileServiceUploadResult = {
-        url: `${this.public_url_}/${this.bucket_}/${Key}`,
+        url: `${this.public_url_}/${Key}`,
       };
 
       return result;
@@ -125,7 +125,7 @@ export default class CloudflareR2Service extends AbstractFileService {
     return {
       writeStream: pass,
       promise: this.client.upload(params).promise(),
-      url: `${this.public_url_}/${this.bucket_}/${fileKey}`,
+      url: `${this.public_url_}/${fileKey}`,
       fileKey,
     };
   }
