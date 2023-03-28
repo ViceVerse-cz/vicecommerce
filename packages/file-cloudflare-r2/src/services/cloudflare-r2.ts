@@ -1,5 +1,6 @@
 import fs from "fs";
 import s3 from "aws-sdk/clients/s3";
+import { parse } from "path";
 import {
   AbstractFileService,
   DeleteFileType,
@@ -8,11 +9,9 @@ import {
   UploadStreamDescriptorType,
 } from "@medusajs/medusa";
 import stream from "stream";
-import { EntityManager } from "typeorm";
 
 interface Options {
   bucket: string;
-  prefix?: string;
   public_url: string;
   access_key_id: string;
   secret_access_key: string;
@@ -32,12 +31,9 @@ interface MulterFile {
 }
 
 export default class CloudflareR2Service extends AbstractFileService {
-  protected manager_: EntityManager;
-  protected transactionManager_: EntityManager;
   private client: s3;
 
   bucket_: string;
-  prefix_: string;
   public_url_: string;
   accessKeyId_: string;
   secretAccessKey_: string;
@@ -46,10 +42,9 @@ export default class CloudflareR2Service extends AbstractFileService {
   constructor(container, options: Options) {
     super(container);
 
-    const { bucket, prefix = "", public_url, access_key_id, secret_access_key, s3_endpoint } = options;
+    const { bucket, public_url, access_key_id, secret_access_key, s3_endpoint } = options;
 
     this.bucket_ = bucket;
-    this.prefix_ = prefix;
     this.public_url_ = public_url;
     this.accessKeyId_ = access_key_id;
     this.secretAccessKey_ = secret_access_key;
@@ -78,7 +73,8 @@ export default class CloudflareR2Service extends AbstractFileService {
   async uploadFile(fileData: MulterFile, options?: { isProtected?: boolean; acl?: string }) {
     const { path, originalname, mimetype: ContentType } = fileData;
 
-    const Key = this.getFileKey(originalname);
+    const parsedFilename = parse(originalname);
+    const Key = `${parsedFilename.name}-${Date.now()}${parsedFilename.ext}`;
 
     const params: s3.PutObjectRequest = {
       ACL: options?.acl ?? (options?.isProtected ? "private" : "public-read"),
@@ -113,7 +109,7 @@ export default class CloudflareR2Service extends AbstractFileService {
   async getUploadStreamDescriptor(fileData: UploadStreamDescriptorType) {
     const pass = new stream.PassThrough();
 
-    const fileKey = this.getFileKey(`${fileData.name}.${fileData.ext}`);
+    const fileKey = `${fileData.name}.${fileData.ext}`;
 
     const params: s3.PutObjectRequest = {
       ACL: fileData.acl ?? "private",
@@ -147,10 +143,5 @@ export default class CloudflareR2Service extends AbstractFileService {
     };
 
     return await this.client.getSignedUrlPromise("getObject", params);
-  }
-
-  getFileKey(fileName: string) {
-    const prefixPath = this.prefix_.trim().length > 0 ? `${this.prefix_}/` : "";
-    return `${prefixPath}${fileName}`;
   }
 }
