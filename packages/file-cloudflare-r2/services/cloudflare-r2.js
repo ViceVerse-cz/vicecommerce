@@ -13,6 +13,7 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 var _fs = _interopRequireDefault(require("fs"));
 var _s = _interopRequireDefault(require("aws-sdk/clients/s3"));
+var _path = require("path");
 var _medusa = require("@medusajs/medusa");
 var _stream = _interopRequireDefault(require("stream"));
 function _interopRequireDefault(obj) {
@@ -564,20 +565,16 @@ var CloudflareR2Service = /*#__PURE__*/ (function (_AbstractFileService) {
     _defineProperty(_assertThisInitialized(_this), "transactionManager_", void 0);
     _defineProperty(_assertThisInitialized(_this), "client", void 0);
     _defineProperty(_assertThisInitialized(_this), "bucket_", void 0);
-    _defineProperty(_assertThisInitialized(_this), "prefix_", void 0);
     _defineProperty(_assertThisInitialized(_this), "public_url_", void 0);
     _defineProperty(_assertThisInitialized(_this), "accessKeyId_", void 0);
     _defineProperty(_assertThisInitialized(_this), "secretAccessKey_", void 0);
     _defineProperty(_assertThisInitialized(_this), "s3Endpoint_", void 0);
     var bucket = options.bucket;
-    var _options$prefix = options.prefix;
-    var prefix = _options$prefix === void 0 ? "" : _options$prefix;
     var public_url = options.public_url;
     var access_key_id = options.access_key_id;
     var secret_access_key = options.secret_access_key;
     var s3_endpoint = options.s3_endpoint;
     _this.bucket_ = bucket;
-    _this.prefix_ = prefix;
     _this.public_url_ = public_url;
     _this.accessKeyId_ = access_key_id;
     _this.secretAccessKey_ = secret_access_key;
@@ -621,6 +618,7 @@ var CloudflareR2Service = /*#__PURE__*/ (function (_AbstractFileService) {
             var path;
             var originalname;
             var ContentType;
+            var parsedFilename;
             var Key;
             var params;
             var _yield$this$client$up;
@@ -632,7 +630,8 @@ var CloudflareR2Service = /*#__PURE__*/ (function (_AbstractFileService) {
                   switch ((_context.prev = _context.next)) {
                     case 0:
                       (path = fileData.path), (originalname = fileData.originalname), (ContentType = fileData.mimetype);
-                      Key = this.getFileKey(originalname);
+                      parsedFilename = (0, _path.parse)(originalname);
+                      Key = "".concat(parsedFilename.name, "-").concat(Date.now()).concat(parsedFilename.ext);
                       params = {
                         ACL:
                           (_options$acl = options === null || options === void 0 ? void 0 : options.acl) !== null &&
@@ -646,28 +645,28 @@ var CloudflareR2Service = /*#__PURE__*/ (function (_AbstractFileService) {
                         ContentType: ContentType,
                         Key: Key,
                       };
-                      _context.prev = 3;
-                      _context.next = 6;
+                      _context.prev = 4;
+                      _context.next = 7;
                       return this.client.upload(params).promise();
-                    case 6:
+                    case 7:
                       _yield$this$client$up = _context.sent;
                       _Key = _yield$this$client$up.Key;
                       result = {
                         url: "".concat(this.public_url_, "/").concat(_Key),
                       };
                       return _context.abrupt("return", result);
-                    case 12:
-                      _context.prev = 12;
-                      _context.t0 = _context["catch"](3);
+                    case 13:
+                      _context.prev = 13;
+                      _context.t0 = _context["catch"](4);
                       throw new Error("Stala se chyba při nahrávání souboru");
-                    case 15:
+                    case 16:
                     case "end":
                       return _context.stop();
                   }
               },
               _callee,
               this,
-              [[3, 12]],
+              [[4, 13]],
             );
           }),
         );
@@ -725,7 +724,7 @@ var CloudflareR2Service = /*#__PURE__*/ (function (_AbstractFileService) {
                   switch ((_context3.prev = _context3.next)) {
                     case 0:
                       pass = new _stream["default"].PassThrough();
-                      fileKey = this.getFileKey("".concat(fileData.name, ".").concat(fileData.ext));
+                      fileKey = "".concat(fileData.name, ".").concat(fileData.ext);
                       params = {
                         ACL:
                           (_fileData$acl = fileData.acl) !== null && _fileData$acl !== void 0
@@ -824,13 +823,6 @@ var CloudflareR2Service = /*#__PURE__*/ (function (_AbstractFileService) {
         }
         return getPresignedDownloadUrl;
       })(),
-    },
-    {
-      key: "getFileKey",
-      value: function getFileKey(fileName) {
-        var prefixPath = this.prefix_.trim().length > 0 ? "".concat(this.prefix_, "/") : "";
-        return "".concat(prefixPath).concat(fileName);
-      },
     },
   ]);
   return CloudflareR2Service;
