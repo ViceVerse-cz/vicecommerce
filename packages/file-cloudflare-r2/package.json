@@ -1,6 +1,6 @@
 {
   "name": "@vicecommerce/file-cloudflare-r2",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A Medusa plugin to interface with Cloudflare R2",
   "author": "Atsukoro1",
   "license": "MIT",
