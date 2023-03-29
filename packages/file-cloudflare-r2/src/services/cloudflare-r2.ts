@@ -15,7 +15,6 @@ interface Options {
   public_url: string;
   access_key_id: string;
   secret_access_key: string;
-  region: string;
   s3_endpoint: string;
 }
 
