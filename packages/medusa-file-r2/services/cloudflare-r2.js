@@ -90,7 +90,8 @@ class CloudflareR2Service extends import_medusa.AbstractFileService {
       };
       return result;
     } catch (err) {
-      throw new Error("Stala se chyba p\u0159i nahr\xE1v\xE1n\xED souboru");
+      console.error(err);
+      throw new Error("Unable to upload file");
     }
   }
   async delete(file) {

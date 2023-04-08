@@ -15,7 +15,7 @@ interface Options {
   public_url: string;
   access_key_id: string;
   secret_access_key: string;
-  s3_endpoint: string;
+  account_id: string;
 }
 
 interface MulterFile {
@@ -41,13 +41,13 @@ export default class CloudflareR2Service extends AbstractFileService {
   constructor(container, options: Options) {
     super(container);
 
-    const { bucket, public_url, access_key_id, secret_access_key, s3_endpoint } = options;
+    const { bucket, public_url, access_key_id, secret_access_key, account_id } = options;
 
     this.bucket_ = bucket;
     this.public_url_ = public_url;
     this.accessKeyId_ = access_key_id;
     this.secretAccessKey_ = secret_access_key;
-    this.s3Endpoint_ = s3_endpoint;
+    this.s3Endpoint_ = `https://${account_id}.r2.cloudflarestorage.com`;
     this.client = this.createClient();
   }
 
