@@ -2,7 +2,7 @@
   "name": "@vicecommerce/medusa-file-r2",
   "version": "0.4.0",
   "description": "A Medusa plugin to interface with Cloudflare R2",
-  "author": "Atsukoro1",
+  "author": "ViceVerse",
   "license": "MIT",
   "files": ["services"],
   "scripts": {
@@ -26,7 +26,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/viceverse-cz/vicecommerce.git",
+    "url": "https://github.com/viceverse-cz/vicecommerce",
     "directory": "packages/medusa-file-r2"
-  }
+  },
+  "keywords": ["medusa-plugin", "medusa-plugin-file"]
 }

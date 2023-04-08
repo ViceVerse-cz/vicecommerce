@@ -1,7 +1,7 @@
 module.exports = {
   extends: ["@commitlint/config-conventional"],
   prompt: {
-    scopes: ["cloudflare-r2"],
+    scopes: ["medusa-file-r2"],
   },
   rules: {
     "body-leading-blank": [1, "always"],
