@@ -1,7 +1,7 @@
 A simple plugin to use Cloudflare R2 as the storage provider for Medusa.
 
 ```
-npm i medusa-file-cloudflare-r2
+npm i @vicecommerce/medusa-file-cloudflare-r2
 ```
 
 ```javascript
@@ -17,6 +17,5 @@ npm i medusa-file-cloudflare-r2
 }
 ```
 
-Where `prefix` is an optional path to prepend to every object.
-
-Other keys are required.
+### credits:
+https://github.com/contrebande-labs/medusa-file-cloudflare-r2
