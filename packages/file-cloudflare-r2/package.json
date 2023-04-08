@@ -1,6 +1,6 @@
 {
   "name": "@vicecommerce/file-cloudflare-r2",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "A Medusa plugin to interface with Cloudflare R2",
   "author": "Atsukoro1",
   "license": "MIT",
@@ -13,15 +13,15 @@
     "access": "public"
   },
   "dependencies": {
-    "aws-sdk": "^2.1345.0",
-    "body-parser": "^1.19.0",
-    "medusa-core-utils": "^1.2.0-rc.0",
-    "@medusajs/medusa": "1.8.0-20230307200025"
+    "aws-sdk": "^2.1350.0",
+    "body-parser": "^1.20.2",
+    "medusa-core-utils": "^1.2.0",
+    "@medusajs/medusa": "1.8.0"
   },
   "devDependencies": {
     "@types/node": "^18.11.18",
     "babel-preset-medusa-package": "^1.1.19",
-    "esbuild": "^0.17.3",
-    "medusa-interfaces": "^1.3.7-rc.0"
+    "esbuild": "^0.17.15",
+    "medusa-interfaces": "^1.3.7"
   }
 }
