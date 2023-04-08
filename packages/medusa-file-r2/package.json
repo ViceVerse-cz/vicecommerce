@@ -1,6 +1,6 @@
 {
   "name": "@vicecommerce/medusa-file-r2",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Medusa plugin to interface with Cloudflare R2",
   "author": "ViceVerse",
   "license": "MIT",
