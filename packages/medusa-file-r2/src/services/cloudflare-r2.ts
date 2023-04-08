@@ -92,7 +92,8 @@ export default class CloudflareR2Service extends AbstractFileService {
 
       return result;
     } catch (err) {
-      throw new Error("Stala se chyba při nahrávání souboru");
+      console.error(err);
+      throw new Error("Unable to upload file");
     }
   }
 
