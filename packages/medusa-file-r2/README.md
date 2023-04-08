@@ -17,5 +17,10 @@ npm i @vicecommerce/medusa-file-cloudflare-r2
 }
 ```
 
+###example env:
+![Screenshot 2023-04-08 at 11 20 27](https://user-images.githubusercontent.com/67194087/230713938-61084b23-f42e-45bf-afd1-7073259309d1.jpg)
+
+
+
 ### credits:
 https://github.com/contrebande-labs/medusa-file-cloudflare-r2
