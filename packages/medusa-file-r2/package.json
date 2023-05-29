@@ -16,7 +16,7 @@
     "aws-sdk": "^2.1350.0",
     "body-parser": "^1.20.2",
     "medusa-core-utils": "^1.2.0",
-    "@medusajs/medusa": "1.8.0"
+    "@medusajs/medusa": "1.11.0"
   },
   "devDependencies": {
     "@types/node": "^18.11.18",
